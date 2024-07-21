@@ -145,9 +145,9 @@ class LightModeTheme extends ThemeSetting {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF9489F5);
-  late Color secondary = const Color(0xFF39D2C0);
-  late Color tertiary = const Color(0xFF6D5FED);
+  late Color primary = const Color(0xFFED5A2F);
+  late Color secondary = const Color(0xFFFF5C00);
+  late Color tertiary = const Color(0xFFFFECDB);
   late Color alternate = const Color(0xFFE0E3E7);
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
@@ -159,8 +159,8 @@ class LightModeTheme extends ThemeSetting {
   late Color accent4 = const Color(0xCCFFFFFF);
   late Color success = const Color(0xFF24A891);
   late Color warning = const Color(0xFFCA6C45);
-  late Color error = const Color(0xFFE74852);
-  late Color info = const Color(0xFFFFFFFF);
+  late Color error = const Color(0xFFFF2B51);
+  late Color info = const Color(0xFF6E62FA);
 
   late Color divider = const Color(0xFFDCDFE3);
   late Color tertiaryText = const Color(0xFFF8F9FA);
@@ -171,15 +171,15 @@ class LightModeTheme extends ThemeSetting {
   late Color warningBackground = const Color(0xFFFFD159);
   late Color errorBackground = const Color(0xFFFF7387);
 
-  late Color common0 = const Color(0x00FFFFFF);
+  late Color common0 = const Color(0xFFE7E7E7);
+  late Color common1 = const Color(0xFFF3F3F3);
+  late Color common2 = const Color(0xFFF8F8F8);
   late Color common3 = const Color(0xFFFFFFFF);
-  late Color common1 = const Color(0x33000000);
-  late Color common5 = const Color(0xFFE0E3E7);
-  late Color common2 = const Color(0xFF57636C);
   late Color common4 = const Color(0x411D2429);
-  late Color grayLight = const Color(0xFF8B97A2);
+  late Color common5 = const Color(0xFFE0E3E7);
   late Color common6 = const Color(0xFF5633C1);
   late Color common7 = const Color(0xFFFF3B2F);
+  late Color grayLight = const Color(0xFF8B97A2);
 
   late AlertStyle alertStyle = AlertStyle(
     animationType: AnimationType.fromTop,
@@ -366,13 +366,13 @@ class DarkModeTheme extends ThemeSetting {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF9489F5);
-  late Color secondary = const Color(0xFF39D2C0);
-  late Color tertiary = const Color(0xFF6D5FED);
+  late Color primary = const Color(0xFFED5A2F);
+  late Color secondary = const Color(0xFFFF5C00);
+  late Color tertiary = const Color(0xFFFFECDB);
   late Color alternate = const Color(0xFF22282F);
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);
-  late Color primaryBackground = const Color(0xFF1A1F24);
+  late Color primaryBackground = const Color(0xFF383838);
   late Color secondaryBackground = const Color(0xFF101213);
   late Color accent1 = const Color(0x4C9489F5);
   late Color accent2 = const Color(0x4E39D2C0);
