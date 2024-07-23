@@ -19,7 +19,7 @@ export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:get_it/get_it.dart';
 export 'package:go_router/go_router.dart';
 export 'package:provider/provider.dart';
-export 'package:Soulna/utils/icon_button.dart';
+export 'package:Soulna/widgets/icon_button_widget.dart';
 
 var logger = Logger(
   printer: PrettyPrinter(
