@@ -1,17 +1,21 @@
 import 'dart:async';
 
 import 'package:Soulna/manager/social_manager.dart';
-import 'package:Soulna/pages/letter_list_page.dart';
-import 'package:Soulna/pages/login_page.dart';
-import 'package:Soulna/pages/main_page.dart';
-import 'package:Soulna/pages/profile_page.dart';
-import 'package:Soulna/pages/onboarding_page.dart';
+import 'package:Soulna/pages/auth/splash_screen.dart';
+import 'package:Soulna/pages/main_screen.dart';
+import 'package:Soulna/pages/old/letter_list_page.dart';
+import 'package:Soulna/pages/old/login_page.dart';
+import 'package:Soulna/pages/old/main_page.dart';
+import 'package:Soulna/pages/old/profile_page.dart';
+import 'package:Soulna/pages/old/onboarding_page.dart';
 import 'package:Soulna/provider/base_auth_user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:Soulna/pages/splash_page.dart';
+import 'package:Soulna/pages/old/splash_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:Soulna/utils/serialization_util.dart';
+
+import '../pages/auth/login_screen.dart';
 
 export 'package:go_router/go_router.dart';
 
@@ -90,7 +94,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, _) => const SplashPage(),
+      errorBuilder: (context, _) => const SplashScreen(),
       redirect: (context, state) {
         // final loggedIn = context.read<SocialManager>().loggedIn.value;
         // final isFirst = context.read<SocialManager>().isFirst.value;
@@ -102,33 +106,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         FFRoute(
           name: 'initialize',
           path: '/',
-          builder: (context, params) => const SplashPage(),
+          builder: (context, params) => const SplashScreen(),
         ),
         FFRoute(
-          name: 'MainPage',
-          path: '/mainPage',
-          builder: (context, params) => const MainPage(),
+          name: 'LoginScreen',
+          path: '/loginScreen',
+          builder: (context, params) => const LoginScreen(),
         ),
         FFRoute(
-          name: 'MyPage',
-          path: '/myPage',
-          builder: (context, params) => const ProfilePage(),
+          name: 'MainScreen',
+          path: '/mainScreen',
+          builder: (context, params) => const MainScreen(),
         ),
-        FFRoute(
-          name: 'LetterListPage',
-          path: '/letterListPage',
-          builder: (context, params) => const LetterListPage(),
-        ),
-        FFRoute(
-          name: 'LoginPage',
-          path: '/loginPage',
-          builder: (context, params) => const LoginPage(),
-        ),
-        FFRoute(
-          name: 'OnboardingPage',
-          path: '/onboardingPage',
-          builder: (context, params) => const OnboardingPage(),
-        ),
+
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       //urlPathStrategy: UrlPathStrategy.path,
     );

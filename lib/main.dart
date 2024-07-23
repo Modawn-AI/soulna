@@ -7,6 +7,7 @@ import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/utils/custom_timeago_messages.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/shared_preference.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -28,7 +29,7 @@ void main() async {
   clearSecureStorageOnReinstall();
   setupLocator();
 
-  await dotenv.load(fileName: ".env");
+  //await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final socialManager = SocialManager.getInstance();
@@ -154,6 +155,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(brightness: Brightness.light),
           darkTheme: ThemeData(brightness: Brightness.dark),
           themeMode: _themeMode,
+         // themeMode: ThemeMode.light,
           routeInformationProvider: _router.routeInformationProvider,
           routeInformationParser: _router.routeInformationParser,
           routerDelegate: _router.routerDelegate,

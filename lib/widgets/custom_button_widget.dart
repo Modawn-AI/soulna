@@ -52,6 +52,7 @@ class CustomButtonWidget extends StatefulWidget {
   const CustomButtonWidget({
     super.key,
     required this.text,
+     this.textIcon,
     required this.onPressed,
     this.icon,
     this.iconData,
@@ -61,6 +62,7 @@ class CustomButtonWidget extends StatefulWidget {
   });
 
   final String text;
+  final Widget? textIcon;
   final Widget? icon;
   final IconData? iconData;
   final Function()? onPressed;
@@ -89,7 +91,7 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
               ),
             ),
           )
-        : AutoSizeText(
+        : widget.textIcon ?? AutoSizeText(
             widget.text,
             style: widget.options.textStyle?.withoutColor(),
             maxLines: 1,

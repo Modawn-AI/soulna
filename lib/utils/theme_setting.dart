@@ -12,7 +12,8 @@ SharedPreferences? _prefs;
 abstract class ThemeSetting {
   late AlertStyle alertStyle;
 
-  static Future initialize() async => _prefs = await SharedPreferences.getInstance();
+  static Future initialize() async =>
+      _prefs = await SharedPreferences.getInstance();
   static ThemeMode get themeMode {
     final darkMode = _prefs?.getBool(kThemeModeKey);
     return darkMode == null
@@ -22,10 +23,14 @@ abstract class ThemeSetting {
             : ThemeMode.light;
   }
 
-  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system ? _prefs?.remove(kThemeModeKey) : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
+  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
+      ? _prefs?.remove(kThemeModeKey)
+      : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
 
   static ThemeSetting of(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark ? DarkModeTheme() : LightModeTheme();
+    return Theme.of(context).brightness == Brightness.dark
+        ? DarkModeTheme()
+        : LightModeTheme();
   }
 
   @Deprecated('Use primary instead')
@@ -38,6 +43,8 @@ abstract class ThemeSetting {
   late Color primary;
   late Color secondary;
   late Color tertiary;
+  late Color tertiary1;
+  late Color tertiary2;
   late Color alternate;
   late Color primaryText;
   late Color secondaryText;
@@ -71,6 +78,13 @@ abstract class ThemeSetting {
   late Color grayLight;
   late Color common6;
   late Color common7;
+
+  late Color linearContainer1;
+  late Color linearContainer2;
+  late Color linearContainer3;
+  late Color linearContainer4;
+  late Color linearContainer5;
+  late Color linearContainer6;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -133,6 +147,8 @@ abstract class ThemeSetting {
   TextStyle get bodySmall => typography.bodySmall;
   String get captionLargeFamily => typography.captionLargeFamily;
   TextStyle get captionLarge => typography.captionLarge;
+  String get captionMediumFamily => typography.captionMediumFamily;
+  TextStyle get captionMedium=> typography.captionMedium;
 
   CustomTypography get typography => ThemeTypography(this);
 }
@@ -148,6 +164,8 @@ class LightModeTheme extends ThemeSetting {
   late Color primary = const Color(0xFFED5A2F);
   late Color secondary = const Color(0xFFFF5C00);
   late Color tertiary = const Color(0xFFFFECDB);
+  late Color tertiary1 = const Color(0xFFFFD1A6);
+  late Color tertiary2 = const Color(0xFFFFDDD0);
   late Color alternate = const Color(0xFFE0E3E7);
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
@@ -181,6 +199,13 @@ class LightModeTheme extends ThemeSetting {
   late Color common7 = const Color(0xFFFF3B2F);
   late Color grayLight = const Color(0xFF8B97A2);
 
+  late Color linearContainer1 = const Color(0xFFFFB36D);
+  late Color linearContainer2 = const Color(0xFFFE61AE);
+  late Color linearContainer3 = const Color(0xFFE0ADFF);
+  late Color linearContainer4 = const Color(0xFF562DF3);
+  late Color linearContainer5 = const Color(0xFFFF8ADE);
+  late Color linearContainer6 = const Color(0xFF9755F2);
+
   late AlertStyle alertStyle = AlertStyle(
     animationType: AnimationType.fromTop,
     isCloseButton: false,
@@ -189,6 +214,7 @@ class LightModeTheme extends ThemeSetting {
     descTextAlign: TextAlign.start,
     animationDuration: const Duration(milliseconds: 300),
     backgroundColor: secondaryBackground,
+
     alertPadding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
     descPadding: const EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 0.0),
     buttonAreaPadding: const EdgeInsets.fromLTRB(14.0, 14.0, 14.0, 20.0),
@@ -200,6 +226,7 @@ class LightModeTheme extends ThemeSetting {
       ),
     ),
     titleStyle: typography.headlineLarge,
+
     titleTextAlign: TextAlign.start,
     alertAlignment: Alignment.center,
   );
@@ -238,6 +265,8 @@ abstract class CustomTypography {
   TextStyle get bodySmall;
   String get captionLargeFamily;
   TextStyle get captionLarge;
+  String get captionMediumFamily;
+  TextStyle get captionMedium;
 }
 
 class ThemeTypography extends CustomTypography {
@@ -245,116 +274,158 @@ class ThemeTypography extends CustomTypography {
 
   final ThemeSetting theme;
 
-  String get displayLargeFamily => 'Urbanist';
-  TextStyle get displayLarge => GoogleFonts.getFont(
-        'Urbanist',
+//large Title 1= labelLarge
+//large Title 2 = labelMedium
+//large Title 3 = labelSmall
+// Title 1 = titleLarge
+// Title 2 = titleMedium
+// Header 1 = headlineLarge
+// Header 2 = headlineMedium
+// Body 1 = bodyLarge
+// Body 2 = bodyMedium
+// Caption 1 = displayLarge
+// Caption 2 = displayMedium
+// Small = displaySmall
+
+  static FontWeight regularFont = FontWeight.w400;
+  static FontWeight mediumFont = FontWeight.w500;
+  static FontWeight semiBoldFont = FontWeight.w600;
+  static FontWeight boldFont = FontWeight.w700;
+  static FontWeight extraBoldFont = FontWeight.w800;
+
+  static double largeTitle1Font = 30;
+  static double largeTitle2Font = 28;
+  static double largeTitle3Font = 24;
+  static double title1Font = 22;
+  static double title2Font = 18;
+  static double header1Font = 16;
+  static double header2Font = 15;
+  static double body1Font = 17;
+  static double body2Font = 15;
+  static double caption1Font = 13;
+  static double caption2Font = 12;
+  static double smallFont = 10;
+
+  String get displayLargeFamily => 'Pretendard';
+  TextStyle get displayLarge => TextStyle(
+        fontFamily: 'Pretendard',
         color: theme.primaryText,
         fontWeight: FontWeight.bold,
         fontSize: 57.0,
       );
-  String get displayMediumFamily => 'Urbanist';
-  TextStyle get displayMedium => GoogleFonts.getFont(
-        'Urbanist',
+  String get displayMediumFamily => 'Pretendard';
+  TextStyle get displayMedium => TextStyle(
+        fontFamily: 'Pretendard',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 45.0,
       );
-  String get displaySmallFamily => 'Urbanist';
-  TextStyle get displaySmall => GoogleFonts.getFont(
-        'Urbanist',
-        color: theme.primaryText,
-        fontWeight: FontWeight.w600,
-        fontSize: 36.0,
+  String get displaySmallFamily => 'Pretendard';
+  TextStyle get displaySmall => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: regularFont,
+        color: theme.secondaryBackground,
+        fontSize: smallFont,
       );
-  String get headlineLargeFamily => 'Urbanist';
-  TextStyle get headlineLarge => GoogleFonts.getFont(
-        'Urbanist',
-        color: theme.primaryText,
-        fontWeight: FontWeight.normal,
-        fontSize: 32.0,
+  String get headlineLargeFamily => 'Pretendard';
+  TextStyle get headlineLarge => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: mediumFont,
+        color: theme.secondaryBackground,
+        fontSize: header1Font,
       );
-  String get headlineMediumFamily => 'Urbanist';
-  TextStyle get headlineMedium => GoogleFonts.getFont(
-        'Urbanist',
-        color: theme.primaryText,
-        fontWeight: FontWeight.w500,
-        fontSize: 28.0,
+  String get headlineMediumFamily => 'Pretendard';
+  TextStyle get headlineMedium => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: mediumFont,
+        color: theme.secondaryBackground,
+        fontSize: header2Font,
       );
-  String get headlineSmallFamily => 'Urbanist';
-  TextStyle get headlineSmall => GoogleFonts.getFont(
-        'Urbanist',
+  String get headlineSmallFamily => 'Pretendard';
+  TextStyle get headlineSmall => TextStyle(
+        fontFamily: 'Pretendard',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 20.0,
       );
-  String get titleLargeFamily => 'Manrope';
-  TextStyle get titleLarge => GoogleFonts.getFont(
-        'Manrope',
+  String get titleLargeFamily => 'Pretendard';
+  TextStyle get titleLarge => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: semiBoldFont,
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
-        fontSize: 22.0,
+        fontSize: title1Font,
       );
-  String get titleMediumFamily => 'Manrope';
-  TextStyle get titleMedium => GoogleFonts.getFont(
-        'Manrope',
-        color: theme.info,
-        fontWeight: FontWeight.w500,
-        fontSize: 18.0,
+  String get titleMediumFamily => 'Pretendard';
+  TextStyle get titleMedium => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: semiBoldFont,
+        color: theme.primaryText,
+        fontSize: title2Font,
       );
-  String get titleSmallFamily => 'Manrope';
-  TextStyle get titleSmall => GoogleFonts.getFont(
-        'Manrope',
-        color: theme.info,
+  String get titleSmallFamily => 'Pretendard';
+  TextStyle get titleSmall => TextStyle(
+        fontFamily: 'Pretendard',
+        color: theme.secondaryBackground,
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
       );
-  String get labelLargeFamily => 'Manrope';
-  TextStyle get labelLarge => GoogleFonts.getFont(
-        'Manrope',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.w500,
-        fontSize: 14.0,
-      );
-  String get labelMediumFamily => 'Manrope';
-  TextStyle get labelMedium => GoogleFonts.getFont(
-        'Manrope',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.w500,
-        fontSize: 12.0,
-      );
-  String get labelSmallFamily => 'Manrope';
-  TextStyle get labelSmall => GoogleFonts.getFont(
-        'Manrope',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.w500,
-        fontSize: 11.0,
-      );
-  String get bodyLargeFamily => 'Manrope';
-  TextStyle get bodyLarge => GoogleFonts.getFont(
-        'Manrope',
+  String get labelLargeFamily => 'Pretendard';
+  TextStyle get labelLarge => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: semiBoldFont,
         color: theme.primaryText,
-        fontSize: 16.0,
+        letterSpacing: -1,
+        fontSize: largeTitle1Font,
       );
-  String get bodyMediumFamily => 'Manrope';
-  TextStyle get bodyMedium => GoogleFonts.getFont(
-        'Manrope',
+  String get labelMediumFamily => 'Pretendard';
+  TextStyle get labelMedium => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: semiBoldFont,
+        color: theme.primaryText,
+        fontSize: largeTitle2Font,
+      );
+  String get labelSmallFamily => 'Pretendard';
+  TextStyle get labelSmall => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: semiBoldFont,
+        color: theme.primaryText,
+        fontSize: largeTitle3Font,
+      );
+  String get bodyLargeFamily => 'Pretendard';
+  TextStyle get bodyLarge => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: mediumFont,
+        color: theme.primaryText,
+        fontSize: body1Font,
+      );
+  String get bodyMediumFamily => 'Pretendard';
+  TextStyle get bodyMedium => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: mediumFont,
+        color: theme.primaryText,
+        fontSize: body2Font,
+      );
+  String get bodySmallFamily => 'Pretendard';
+  TextStyle get bodySmall => TextStyle(
+        fontFamily: 'Pretendard',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 14.0,
-      );
-  String get bodySmallFamily => 'Manrope';
-  TextStyle get bodySmall => GoogleFonts.getFont(
-        'Manrope',
-        color: theme.primaryText,
-        fontWeight: FontWeight.normal,
         fontSize: 12.0,
       );
-  String get captionLargeFamily => 'Plus Jakarta Sans';
-  TextStyle get captionLarge => GoogleFonts.getFont(
-        'Plus Jakarta Sans',
+  String get captionLargeFamily => 'Pretendard';
+  TextStyle get captionLarge => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: mediumFont,
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
-        fontSize: 10.0,
+        fontSize: caption1Font,
+      );
+
+  String get captionMediumFamily => 'Pretendard';
+  TextStyle get captionMedium => TextStyle(
+        fontFamily: 'Pretendard',
+        fontWeight: mediumFont,
+        color: theme.primaryText,
+        fontSize: caption2Font,
       );
 }
 
@@ -369,6 +440,8 @@ class DarkModeTheme extends ThemeSetting {
   late Color primary = const Color(0xFFED5A2F);
   late Color secondary = const Color(0xFFFF5C00);
   late Color tertiary = const Color(0xFFFFECDB);
+  late Color tertiary1 = const Color(0xFFFFD1A6);
+  late Color tertiary2 = const Color(0xFFFFDDD0);
   late Color alternate = const Color(0xFF22282F);
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);

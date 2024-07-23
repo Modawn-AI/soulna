@@ -9,6 +9,8 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.9.0' // 또는 최신 버전
 }
 
+//com.modawn.dearme
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
@@ -50,20 +52,20 @@ android {
         versionName flutterVersionName
     }
 
-    signingConfigs {
-        debug {
-            storeFile file("./debug.keystore")
-            storePassword "android"
-            keyAlias "debugkey"
-            keyPassword "android"
-        }
-        release {
-            storeFile file("./release.keystore")
-            storePassword "android"
-            keyAlias "releasekey"
-            keyPassword "android"
-        }
-    }
+    //signingConfigs {
+//        debug {
+//            storeFile file("./debug.keystore")
+//            storePassword "android"
+//            keyAlias "debugkey"
+//            keyPassword "android"
+//        }
+//        release {
+//            storeFile file("./release.keystore")
+//            storePassword "android"
+//            keyAlias "releasekey"
+//            keyPassword "android"
+//        }
+   // }
 
     buildTypes {
         release {

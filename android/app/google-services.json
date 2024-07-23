@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1001165366805:android:76a4904a72f71cb9e4101c",
         "android_client_info": {
-          "package_name": "com.modawn.dearme"
+          "package_name": "com.modawn.soulna"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "1001165366805-37fepqumcvvhg1n3a8pmgafon47g9mv3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.modawn.dearme",
+            "package_name": "com.modawn.soulna",
             "certificate_hash": "b0be0b2716c0273270e2a1354a126faaa85d23ab"
           }
         },
@@ -25,7 +25,7 @@
           "client_id": "1001165366805-b5j2ljve6dt483fgb3gl0ak7outioajs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.modawn.dearme",
+            "package_name": "com.modawn.soulna",
             "certificate_hash": "b016fc15c784fcde70b492caffda55a43dfad334"
           }
         },
@@ -33,7 +33,7 @@
           "client_id": "1001165366805-fhutd5al4bpjg54qn9vj0v6impgca29b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.modawn.dearme",
+            "package_name": "com.modawn.soulna",
             "certificate_hash": "06d7ea2faebe790d1c2d09aa52defcd614aa0ec5"
           }
         },
@@ -41,7 +41,7 @@
           "client_id": "1001165366805-nk122q3gsk4ltk18j0nik8j11lfto9a7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.modawn.dearme",
+            "package_name": "com.modawn.soulna",
             "certificate_hash": "ad5c04d9bc67355c84248d464203e53e4a7c1c65"
           }
         },
@@ -49,7 +49,7 @@
           "client_id": "1001165366805-rcf0mri7mhrc0ahhdfvqb9t8kgr0isav.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.modawn.dearme",
+            "package_name": "com.modawn.soulna",
             "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
           }
         },
@@ -57,7 +57,7 @@
           "client_id": "1001165366805-sasb99ls2h9lghmn28qqmfch2i0op2ik.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.modawn.dearme",
+            "package_name": "com.modawn.soulna",
             "certificate_hash": "99e4dd223ee55c58a8ae39a87b0e906c2b209f3a"
           }
         },
