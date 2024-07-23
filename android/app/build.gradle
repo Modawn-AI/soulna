@@ -28,7 +28,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.modawn.dearme"
+    namespace "com.modawn.soulna"
     compileSdk 34
     ndkVersion flutter.ndkVersion
 
