@@ -4,10 +4,6 @@ import 'package:Soulna/auth/firebase_user_provider.dart';
 import 'package:Soulna/firebase_options.dart';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/user_model.dart';
-import 'package:Soulna/pages/letter_list_page.dart';
-import 'package:Soulna/pages/main_page.dart';
-import 'package:Soulna/pages/profile_page.dart';
-import 'package:Soulna/provider/base_auth_user_provider.dart';
 import 'package:Soulna/utils/custom_timeago_messages.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/shared_preference.dart';
@@ -154,7 +150,7 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp.router(
-          title: 'Dear Me',
+          title: 'Soulna',
           theme: ThemeData(brightness: Brightness.light),
           darkTheme: ThemeData(brightness: Brightness.dark),
           themeMode: _themeMode,
@@ -173,146 +169,6 @@ class _MyAppState extends State<MyApp> {
           },
         );
       },
-    );
-  }
-}
-
-class NavBarPage extends StatefulWidget {
-  const NavBarPage({super.key, this.initialPage, this.page, this.initialId});
-
-  final String? initialPage;
-  final Widget? page;
-  final String? initialId;
-
-  @override
-  _NavBarPageState createState() => _NavBarPageState();
-}
-
-class _NavBarPageState extends State<NavBarPage> with SingleTickerProviderStateMixin {
-  String _currentPageName = 'MainPage';
-  late Widget? _currentPage;
-  String? id = '';
-  int currentIndex = 1;
-
-  late AnimationController? _controller;
-  late Animation<double>? _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentPageName = widget.initialPage ?? _currentPageName;
-    _currentPage = widget.page;
-    id = widget.initialId;
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 150),
-      vsync: this,
-    );
-    _animation = Tween<double>(begin: 1.0, end: 0.85).animate(
-      CurvedAnimation(parent: _controller!, curve: Curves.easeInOut),
-    );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      currentIndex = index;
-      _controller!.forward().then((_) => _controller!.reverse());
-      HapticFeedback.lightImpact();
-    });
-  }
-
-  Widget _buildAnimatedIcon(String activePath, String inactivePath, int index) {
-    bool isActive = currentIndex == index;
-    return AnimatedBuilder(
-      animation: _animation!,
-      builder: (context, child) {
-        return Transform.scale(
-          scale: isActive ? _animation!.value : 1.0,
-          child: Image.asset(
-            isActive ? activePath : inactivePath,
-            width: isActive ? 24.0 : 20.0,
-            height: isActive ? 24.0 : 20.0,
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final tabs = {
-      'LetterListPage': const LetterListPage(),
-      'MainPage': const MainPage(),
-      'ProfilePage': ProfilePage(initialId: id),
-    };
-    final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
-    return Scaffold(
-      body: _currentPage ?? tabs[_currentPageName],
-      extendBody: true,
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(vertical: 4.w),
-        decoration: BoxDecoration(
-          color: ThemeSetting.of(context).primaryBackground,
-          border: Border(
-            top: BorderSide(
-              color: ThemeSetting.of(context).primary,
-              width: 1.h,
-            ),
-          ),
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: ThemeSetting.of(context).primaryBackground,
-          elevation: 0,
-          currentIndex: currentIndex,
-          selectedFontSize: 10.sp,
-          unselectedFontSize: 10.sp,
-          unselectedLabelStyle: ThemeSetting.of(context).bodyLarge,
-          selectedLabelStyle: ThemeSetting.of(context).bodyLarge,
-          selectedItemColor: ThemeSetting.of(context).primaryText,
-          unselectedItemColor: ThemeSetting.of(context).secondaryText,
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            _onItemTapped(index);
-            _currentPage = null;
-            _currentPageName = tabs.keys.toList()[index];
-            id = null;
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: Container(
-                margin: EdgeInsets.only(bottom: 4.h),
-                child: _buildAnimatedIcon(
-                  'assets/icons/icon_play_active.png',
-                  'assets/icons/icon_play_inactive.png',
-                  0,
-                ),
-              ),
-              label: "List",
-            ),
-            BottomNavigationBarItem(
-              icon: Container(
-                margin: EdgeInsets.only(bottom: 4.h),
-                child: _buildAnimatedIcon(
-                  'assets/icons/icon_store_active.png',
-                  'assets/icons/icon_store_inactive.png',
-                  1,
-                ),
-              ),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Container(
-                margin: EdgeInsets.only(bottom: 4.h),
-                child: _buildAnimatedIcon(
-                  'assets/icons/icon_my_active.png',
-                  'assets/icons/icon_my_inactive.png',
-                  2,
-                ),
-              ),
-              label: "Profile",
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

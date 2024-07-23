@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/utils/package_exporter.dart';
-import 'package:flutter/gestures.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

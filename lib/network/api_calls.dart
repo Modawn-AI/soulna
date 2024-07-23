@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:Soulna/utils/json.dart';
 import 'package:Soulna/models/notification_model.dart';
 import 'package:Soulna/utils/package_exporter.dart';
-import 'package:Soulna/utils/shared_preference.dart';
 
 class ApiCalls {
   Future<String> versionInfo() async {

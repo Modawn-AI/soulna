@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:Soulna/main.dart';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/pages/letter_list_page.dart';
 import 'package:Soulna/pages/login_page.dart';
@@ -108,17 +107,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         FFRoute(
           name: 'MainPage',
           path: '/mainPage',
-          builder: (context, params) => params.isEmpty ? const NavBarPage(initialPage: 'MainPage') : const MainPage(),
+          builder: (context, params) => const MainPage(),
         ),
         FFRoute(
           name: 'MyPage',
           path: '/myPage',
-          builder: (context, params) => params.isEmpty ? const NavBarPage(initialPage: 'MyPage') : const ProfilePage(),
+          builder: (context, params) => const ProfilePage(),
         ),
         FFRoute(
           name: 'LetterListPage',
           path: '/letterListPage',
-          builder: (context, params) => params.isEmpty ? const NavBarPage(initialPage: 'StorePage') : const LetterListPage(),
+          builder: (context, params) => const LetterListPage(),
         ),
         FFRoute(
           name: 'LoginPage',
