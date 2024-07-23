@@ -119,38 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                       children: [
                         TextSpan(
-                          text: context.locale.languageCode == "ko" ? "이용약관" : "Terms of Service",
-                          style: ThemeSetting.of(context).captionLarge.override(
-                                color: ThemeSetting.of(context).primaryText,
-                                decoration: TextDecoration.underline,
-                              ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              context.pushNamed("WebViewPage", queryParameters: {
-                                "url": context.locale.languageCode == "ko" ? kTermsUrlKo : kTermsUrlEn,
-                                "title": LocaleKeys.help_navi_title.tr(),
-                              });
-                            },
-                        ),
-                        TextSpan(
                           text: context.locale.languageCode == "ko" ? " 및 " : "and",
                           style: ThemeSetting.of(context).captionLarge.copyWith(
                                 color: ThemeSetting.of(context).grey900,
                               ),
-                        ),
-                        TextSpan(
-                          text: context.locale.languageCode == "ko" ? "개인정보 처리방침" : "Privacy Policy",
-                          style: ThemeSetting.of(context).captionLarge.override(
-                                color: ThemeSetting.of(context).primaryText,
-                                decoration: TextDecoration.underline,
-                              ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              context.pushNamed("WebViewPage", queryParameters: {
-                                "url": context.locale.languageCode == "ko" ? kPrivacyUrlKo : kPrivacyUrlEn,
-                                "title": LocaleKeys.privacy_navi_title.tr(),
-                              });
-                            },
                         ),
                         TextSpan(
                           text: context.locale.languageCode == "ko" ? "에 동의합니다." : "I agree to the",

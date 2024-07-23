@@ -140,30 +140,6 @@ class _ProfilePageState extends State<ProfilePage> with RouteAware {
               trailing: Icon(Icons.chevron_right, color: ThemeSetting.of(context).primaryText),
               onTap: () {},
             ),
-            ListTile(
-              leading: Icon(Icons.shield_outlined, color: ThemeSetting.of(context).primaryText),
-              title: Text('Terms of Service', style: TextStyle(color: ThemeSetting.of(context).primaryText)),
-              trailing: Icon(Icons.chevron_right, color: ThemeSetting.of(context).primaryText),
-              onTap: () {
-                context.pushNamed("WebViewPage", queryParameters: {
-                  "url": context.locale.languageCode == "ko" ? kTermsUrlKo : kTermsUrlEn,
-                  "title": LocaleKeys.settings_terms_list_title.tr(),
-                  "buttonTitle": "",
-                });
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.privacy_tip_outlined, color: ThemeSetting.of(context).primaryText),
-              title: Text('Privacy Policy', style: TextStyle(color: ThemeSetting.of(context).primaryText)),
-              trailing: Icon(Icons.chevron_right, color: ThemeSetting.of(context).primaryText),
-              onTap: () {
-                context.pushNamed("WebViewPage", queryParameters: {
-                  "url": context.locale.languageCode == "ko" ? kPrivacyUrlKo : kPrivacyUrlEn,
-                  "title": LocaleKeys.settings_privacy_list_title.tr(),
-                  "buttonTitle": "",
-                });
-              },
-            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
