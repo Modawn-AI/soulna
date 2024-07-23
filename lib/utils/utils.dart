@@ -11,32 +11,32 @@ import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
-  static Future<String> createDeeplink(String deepLinkUrl, String parameterName, Map<String, String> parameter) async {
-    DynamicLinkParameters dynamicLinkParams = DynamicLinkParameters(
-      uriPrefix: kDeepLinkCreatePrefix,
-      link: Uri.parse('$deepLinkUrl?$parameterName=${parameter['param'] ?? ''}'),
-      androidParameters: const AndroidParameters(
-        packageName: kGooglePackageName,
-        minimumVersion: 1,
-      ),
-      iosParameters: const IOSParameters(
-        bundleId: kAppleBundleId,
-        minimumVersion: '0',
-        appStoreId: kAppStoreId,
-      ),
-      socialMetaTagParameters: SocialMetaTagParameters(
-        title: parameter['title'],
-        description: parameter['description'],
-        imageUrl: Uri.parse(parameter['imageUrl']!),
-      ),
-    );
+  // static Future<String> createDeeplink(String deepLinkUrl, String parameterName, Map<String, String> parameter) async {
+  //   DynamicLinkParameters dynamicLinkParams = DynamicLinkParameters(
+  //     uriPrefix: kDeepLinkCreatePrefix,
+  //     link: Uri.parse('$deepLinkUrl?$parameterName=${parameter['param'] ?? ''}'),
+  //     androidParameters: const AndroidParameters(
+  //       packageName: kGooglePackageName,
+  //       minimumVersion: 1,
+  //     ),
+  //     iosParameters: const IOSParameters(
+  //       bundleId: kAppleBundleId,
+  //       minimumVersion: '0',
+  //       appStoreId: kAppStoreId,
+  //     ),
+  //     socialMetaTagParameters: SocialMetaTagParameters(
+  //       title: parameter['title'],
+  //       description: parameter['description'],
+  //       imageUrl: Uri.parse(parameter['imageUrl']!),
+  //     ),
+  //   );
 
-    // final dynamicLink = await FirebaseDynamicLinks.instance.buildLink(dynamicLinkParams);
-    // return dynamicLink.toString();
+  //   // final dynamicLink = await FirebaseDynamicLinks.instance.buildLink(dynamicLinkParams);
+  //   // return dynamicLink.toString();
 
-    final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
-    return dynamicLink.shortUrl.toString();
-  }
+  //   final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
+  //   return dynamicLink.shortUrl.toString();
+  // }
 
   static void launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
