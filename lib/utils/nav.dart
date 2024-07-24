@@ -108,6 +108,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: 'initialize',
           path: '/',
           builder: (context, params) => const SplashScreen(),
+         // builder: (context, params) => const MainScreen(),
         ),
         FFRoute(
           name: 'AuthScreen',
