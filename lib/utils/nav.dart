@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:Soulna/utils/serialization_util.dart';
 
+import '../pages/auth/auth_screen.dart';
 import '../pages/auth/login_screen.dart';
 
 export 'package:go_router/go_router.dart';
@@ -107,6 +108,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: 'initialize',
           path: '/',
           builder: (context, params) => const SplashScreen(),
+        ),
+        FFRoute(
+          name: 'AuthScreen',
+          path: '/AuthScreen',
+          builder: (context, params) => const AuthScreen(),
         ),
         FFRoute(
           name: 'LoginScreen',

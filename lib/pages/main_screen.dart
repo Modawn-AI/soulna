@@ -118,13 +118,13 @@ class _MainScreenState extends State<MainScreen> {
                               border: Border(
                                   right: BorderSide(
                                       color: ThemeSetting.of(context)
-                                          .secondaryBackground),
+                                          .secondaryBackground,width: 1.5),
                                   left: BorderSide(
                                       color: ThemeSetting.of(context)
-                                          .secondaryBackground),
+                                          .secondaryBackground,width: 1.5),
                                   top: BorderSide(
                                       color: ThemeSetting.of(context)
-                                          .secondaryBackground)),
+                                          .secondaryBackground,width: 1.5)),
                               borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(20),
                                   topRight: Radius.circular(20))),

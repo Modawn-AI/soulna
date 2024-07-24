@@ -206,6 +206,7 @@ class LightModeTheme extends ThemeSetting {
   late Color linearContainer5 = const Color(0xFFFF8ADE);
   late Color linearContainer6 = const Color(0xFF9755F2);
 
+
   late AlertStyle alertStyle = AlertStyle(
     animationType: AnimationType.fromTop,
     isCloseButton: false,
