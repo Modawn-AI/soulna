@@ -1,14 +1,17 @@
-class AppAssets{
+class AppAssets {
   //appicon
   static const String logo = 'assets/appicon/logo.png';
 
- //images
+  //images
   static const String hello = 'assets/images/hello.png';
   static const String character = 'assets/images/character.png';
   static const String soulnaText = 'assets/images/soulna_text.png';
   static const String image1 = 'assets/images/image1.png';
   static const String image2 = 'assets/images/image2.png';
   static const String image3 = 'assets/images/image3.png';
+  static const String man = 'assets/images/man.png';
+  static const String woman = 'assets/images/woman.png';
+  static const String user = 'assets/images/user.png';
 
   //icons
   static const String apple = 'assets/icon/apple.png';
@@ -23,6 +26,20 @@ class AppAssets{
   static const String unProfile = 'assets/icon/unprofile.png';
   static const String star = 'assets/icon/star.png';
   static const String start = 'assets/icon/start.png';
+  static const String check = 'assets/icon/check.png';
+
+  static const String iconBack = 'assets/icon/icon_back.png';
+  static const String iconDiary = 'assets/icon/icon_diary.png';
+  static const String iconEdit = 'assets/icon/icon_edit.png';
+  static const String iconFortune = 'assets/icon/icon_fortune.png';
+  static const String iconInstagram = 'assets/icon/icon_instagram.png';
+  static const String iconNotice = 'assets/icon/icon_notice.png';
+  static const String iconService = 'assets/icon/icon_service.png';
+  static const String iconSettings = 'assets/icon/icon_settings.png';
+  static const String iconTerm = 'assets/icon/icon_term.png';
+  static const String iconVersion = 'assets/icon/icon_version.png';
+  static const String iconAccount = 'assets/icon/icon_account.png';
+  static const String iconNotification = 'assets/icon/icon_notification.png';
 
   //header icon
   static const String backArrow = 'assets/icon/headerIcon/back_arrow.png';

@@ -85,6 +85,10 @@ abstract class ThemeSetting {
   late Color linearContainer4;
   late Color linearContainer5;
   late Color linearContainer6;
+  late Color container1;
+  late Color container2;
+  late Color black1;
+  late Color black2;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -206,6 +210,11 @@ class LightModeTheme extends ThemeSetting {
   late Color linearContainer5 = const Color(0xFFFF8ADE);
   late Color linearContainer6 = const Color(0xFF9755F2);
 
+  late Color container1 = const Color(0xFFFF7046);
+  late Color container2 = const Color(0xFFF96337);
+
+  late Color black1 = const Color(0xFF212126);
+  late Color black2 = const Color(0xFF000000);
 
   late AlertStyle alertStyle = AlertStyle(
     animationType: AnimationType.fromTop,
@@ -475,6 +484,9 @@ class DarkModeTheme extends ThemeSetting {
   late Color grayLight = const Color(0xFF8B97A2);
   late Color common6 = const Color(0xFF5633C1);
   late Color common7 = const Color(0xFFFF3B2F);
+
+  late Color container1 = const Color(0xFFFF7046);
+  late Color container2 = const Color(0xFFF96337);
 }
 
 extension TextStyleHelper on TextStyle {
