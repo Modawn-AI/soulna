@@ -122,7 +122,7 @@ GoRouter createRouter(
           name: 'initialize',
           path: '/',
           //builder: (context, params) => const SignUpScreen(),
-          builder: (context, params) => const NotificationSettings(),
+          builder: (context, params) => const LoginScreen(),
         ),
         FFRoute(
           name: 'AuthScreen',
@@ -151,7 +151,7 @@ GoRouter createRouter(
         ),
         FFRoute(
           name: 'NotificationSettings',
-          path: '/notificationSettings',
+          path: '/otificationSettings',
           builder: (context, params) => const NotificationSettings(),
         ),
         // FFRoute(
