@@ -7,7 +7,7 @@ class CustomCheckbox extends StatefulWidget {
   final String? text2;
   final Color? color1;
   final Color? color2;
-  final ValueChanged<bool>? onChanged;
+  final void Function()? onChanged;
 
   const CustomCheckbox(
       {Key? key,
@@ -32,19 +32,19 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
     _isChecked = widget.initialValue;
   }
 
-  void _toggleCheckbox() {
-    setState(() {
-      _isChecked = !_isChecked;
-    });
-    if (widget.onChanged != null) {
-      widget.onChanged!(_isChecked);
-    }
-  }
+  // void _toggleCheckbox() {
+  //   setState(() {
+  //     _isChecked = !_isChecked;
+  //   });
+  //   if (widget.onChanged != null) {
+  //     widget.onChanged!(_isChecked);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _toggleCheckbox,
+      onTap: widget.onChanged,
       child: Row(
         children: [
           Container(
@@ -52,11 +52,11 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
             width: 20,
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: _isChecked
+              color: widget.initialValue
                   ? ThemeSetting.of(context).primary
                   : ThemeSetting.of(context).common1,
               border: Border.all(
-                  color: _isChecked
+                  color: widget.initialValue
                       ? ThemeSetting.of(context).primary
                       : ThemeSetting.of(context).common1,
                   width: 2),
@@ -64,16 +64,14 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
             ),
             child: Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: _isChecked
-                    ? Image.asset(
-                        AppAssets.check,
-                        width: 12,
-                        height: 12,
-                        color: _isChecked
-                            ? ThemeSetting.of(context).secondaryBackground
-                            : ThemeSetting.of(context).grayLight,
-                      )
-                    : Container()),
+                child: Image.asset(
+                  AppAssets.check,
+                  width: 12,
+                  height: 12,
+                  color: widget.initialValue
+                      ? ThemeSetting.of(context).secondaryBackground
+                      : ThemeSetting.of(context).grayLight,
+                )),
           ),
           const SizedBox(
             width: 10,

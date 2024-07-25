@@ -15,20 +15,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () =>context.goNamed('AuthScreen') ,);
+    Timer(Duration(seconds: 3), () =>context.goNamed(authScreen) ,);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      backgroundColor: ThemeSetting.of(context).tertiary,
-      body: Center(
-          child: Image.asset(
-        AppAssets.logo,
-        height: 90,
-        width: 90,
-      )),
-    ));
+    return Scaffold(
+          backgroundColor: ThemeSetting.of(context).tertiary,
+          body: Center(
+      child: Image.asset(
+    AppAssets.logo,
+    height: 90,
+    width: 90,
+          )),
+        );
   }
 }

@@ -61,16 +61,17 @@ class ButtonWidget {
           required String text,
           VoidCallback? onTap,
           Color? color,
-            double? height,
+          double? height,
+          TextStyle? textStyle,
           BorderRadius? borderRadius}) =>
       CustomButtonWidget(
           text: text,
           onPressed: onTap,
           options: CustomButtonOptions(
               borderRadius: borderRadius ?? BorderRadius.circular(50),
-              height:height ?? 56,
+              height: height ?? 56,
               color: color ?? ThemeSetting.of(context).primary,
-              textStyle: ThemeSetting.of(context).headlineLarge));
+              textStyle: textStyle ?? ThemeSetting.of(context).headlineLarge));
 
   static gradientButton(
           {required BuildContext context,
@@ -98,31 +99,35 @@ class ButtonWidget {
   static gradientButtonWithImage({
     required BuildContext context,
     required String text,
+     String? imageString,
     VoidCallback? onTap,
   }) =>
-      Container(
-        height: 56,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            ThemeSetting.of(context).black1,
-            ThemeSetting.of(context).black2,
-          ]),
-          color: ThemeSetting.of(context).primary,
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(text, style: ThemeSetting.of(context).headlineLarge),
-            const SizedBox(
-              width: 5,
-            ),
-            Image.asset(
-              AppAssets.start,
-              width: 14,
-              height: 14,
-            )
-          ],
+      GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 56,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              ThemeSetting.of(context).black1,
+              ThemeSetting.of(context).black2,
+            ]),
+            color: ThemeSetting.of(context).primary,
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(text, style: ThemeSetting.of(context).headlineLarge),
+              const SizedBox(
+                width: 5,
+              ),
+              Image.asset(
+                imageString ??AppAssets.start,
+                width: 14,
+                height: 14,
+              )
+            ],
+          ),
         ),
       );
 

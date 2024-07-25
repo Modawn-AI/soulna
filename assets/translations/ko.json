@@ -13,10 +13,59 @@
   "create" : "",
   "create_your_journal" : "",
 
+  "enjoy_all_of_soluna_features_freely" : "",
+  "check_your_fortune_for_today_n" : "",
+  "check_today_diary" : "",
+  "check_your_Journal" : "",
+  "yearly" : "",
+  "monthly" : "",
+  "start" : "",
+  "restore_purchases" : "",
+  "purchases_des":"",
+
+
   "please_set_your_date_of_birth" : "",
   "please_provide_your_information_for_an_accurate_fortune_reading" : "",
    "time" : "",
   "i_dont_know_my_time_of_birth" : "",
+
+  "wait_a_moment" : "",
+  "a_day_of_learning_and_mastering_new_things": "",
+  "result": "",
+  "overall": "",
+  "description": "",
+  "academic": "",
+  "financial": "",
+  "health": "",
+  "love": "",
+  "business": "",
+  "more": "",
+  "outfit_that_brings_luck_and_love": "",
+  "outfit_that_brings_luck_and_love_des": "",
+  "things_that_bring_me_luck_today": "",
+  "green_color": "",
+  "french_cuisine": "",
+  "relatives": "",
+  "share_my_ai_diary_to_your_friend": "",
+  "share": "",
+  "share_link": "",
+  "share_instagram": "",
+
+  "stella_horoscope_for_today": "",
+  "select_photo": "",
+  "it_automatically_creates_a_diary_through_the_Ai_algorithm": "",
+  "set_timeline": "",
+  "drag_with_your_finger_to_set_a_timeline": "",
+  "select_a_total_of": " ",
+  "photos": "",
+
+  "would_you_like_to_make_a_diary_with_that_picture" : "",
+  "a_total_of" : "",
+  "photos_have_been_selected" : " ",
+  "create_a_diary" : "",
+
+  "i_went_on_an_eating_trip_to_gangneung": "",
+
 
   "enter_your_email" : "",
   "enter_your_password" : "",
@@ -80,6 +129,7 @@
   "change_password" : "",
   "optional_terms_agreement" : "",
   "withdrawal_from_membership" : "",
+  "change_password_and_log_in" : "",
 
   "edit_profile" : "",
   "date" : "",
@@ -125,4 +175,5 @@
   "date_of_birth" : "",
   "camera" : "",
   "gallery" : ""
+
 }

@@ -1,8 +1,18 @@
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
+import '../../widgets/button/button_widget.dart';
+import '../../widgets/custom_checkbox_widget.dart';
+import '../../widgets/custom_timer_picker.dart';
 import '../../widgets/header/header_widget.dart';
 
+class DataOfBirthScreen extends StatelessWidget {
+  const DataOfBirthScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
 
 class DateOfBirthScreen extends StatefulWidget {
   const DateOfBirthScreen({super.key});
@@ -14,54 +24,330 @@ class DateOfBirthScreen extends StatefulWidget {
 class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   DateTime selectedDate = DateTime(1990, 1, 1);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerWithTitle(context: context, title:''),
-      body: Container(
-        color: ThemeSetting.of(context).secondaryBackground,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          child: Column(
-            children: [
-              Text(
-                LocaleKeys.please_set_your_date_of_birth.tr(),
-                style: ThemeSetting.of(context)
-                    .labelSmall
-                    .copyWith(
-                  color: ThemeSetting.of(context).primaryText,
-                ),
+      appBar: HeaderWidget.headerWithTitle(context: context, title: ''),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              LocaleKeys.please_set_your_date_of_birth.tr(),
+              style: ThemeSetting.of(context).labelSmall.copyWith(
+                    color: ThemeSetting.of(context).primaryText,
+                  ),
+            ),
+            // SizedBox(
+            //   height: 100,
+            //   child: CupertinoTheme(
+            //     data: CupertinoThemeData(
+            //       textTheme: CupertinoTextThemeData(
+            //         dateTimePickerTextStyle: ThemeSetting.of(context).headlineLarge.copyWith(
+            //           color: ThemeSetting.of(context).primary,
+            //         ),
+            //       ),
+            //     ),
+            //     child: CupertinoDatePicker(
+            //
+            //       initialDateTime: selectedDate,
+            //       mode: CupertinoDatePickerMode.date,
+            //       maximumYear: DateTime.now().year,
+            //
+            //       maximumDate: DateTime.now(),
+            //       onDateTimeChanged: (DateTime newDateTime) {
+            //         setState(() {
+            //           selectedDate = newDateTime;
+            //         });
+            //       },
+            //     ),
+            //   ),
+            // ),
+            SizedBox(height: 20.h),
+            SizedBox(
+              height: 80,
+              child: CustomDatePicker(
+                initialDate: selectedDate,
+                minimumDate: DateTime(1900),
+                maximumDate: DateTime.now(),
+                onDateTimeChanged: (DateTime newDateTime) {
+                  setState(() {
+                    selectedDate = newDateTime;
+                  });
+                },
               ),
-              SizedBox(
-                height: 100,
-                child: CupertinoTheme(
-                  data: CupertinoThemeData(
-                    textTheme: CupertinoTextThemeData(
-                      dateTimePickerTextStyle: ThemeSetting.of(context).headlineLarge.copyWith(
-                        color: ThemeSetting.of(context).primary,
+            ),
+            SizedBox(height: 20.h),
+            Text(
+              LocaleKeys.time.tr(),
+              style: ThemeSetting.of(context).captionMedium.copyWith(
+                    color: ThemeSetting.of(context).primary,
+                  ),
+            ),
+            SizedBox(height: 20.h),
+            RangeTimePicker(
+              initialStartTime: const TimeOfDay(hour: 9, minute: 0),
+              initialEndTime: const TimeOfDay(hour: 17, minute: 0),
+              onStartTimeChanged: (startTime) {
+                print("Start Time: ${startTime.format(context)}");
+              },
+              onEndTimeChanged: (endTime) {
+                print("End Time: ${endTime.format(context)}");
+              },
+            ),
+            SizedBox(height: 10.h),
+            Row(
+              children: [
+                CustomCheckbox(
+                  initialValue: false,
+                  onChanged: () {},
+                ),
+                Text(
+                  LocaleKeys.i_dont_know_my_time_of_birth.tr(),
+                  style: ThemeSetting.of(context).captionMedium.copyWith(
+                        color: ThemeSetting.of(context).primaryText,
                       ),
-                    ),
-                  ),
-                  child: CupertinoDatePicker(
+                ),
+              ],
+            ),
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.h),
+              child: ButtonWidget.roundedButtonOrange(
+                context: context,
+                //  width: double.infinity,
+                color: ThemeSetting.of(context).primaryText,
+                text: LocaleKeys.save.tr(),
+                onTap: () {},
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-                    initialDateTime: selectedDate,
-                    mode: CupertinoDatePickerMode.date,
-                    maximumYear: DateTime.now().year,
+class CustomDatePicker extends StatefulWidget {
+  final DateTime initialDate;
+  final DateTime minimumDate;
+  final DateTime maximumDate;
+  final ValueChanged<DateTime> onDateTimeChanged;
 
-                    maximumDate: DateTime.now(),
-                    onDateTimeChanged: (DateTime newDateTime) {
-                      setState(() {
-                        selectedDate = newDateTime;
-                      });
-                    },
-                  ),
+  const CustomDatePicker({
+    required this.initialDate,
+    required this.minimumDate,
+    required this.maximumDate,
+    required this.onDateTimeChanged,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _CustomDatePickerState createState() => _CustomDatePickerState();
+}
+
+class _CustomDatePickerState extends State<CustomDatePicker> {
+  late int selectedDay;
+  late int selectedMonth;
+  late int selectedYear;
+
+  final List<String> monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    selectedDay = widget.initialDate.day;
+    selectedMonth = widget.initialDate.month;
+    selectedYear = widget.initialDate.year;
+  }
+
+  List<int> _generateDays(int month, int year) {
+    int daysInMonth = DateTime(year, month + 1, 0).day;
+    return List<int>.generate(daysInMonth, (index) => index + 1);
+  }
+
+  List<int> _generateYears() {
+    return List<int>.generate(
+      widget.maximumDate.year - widget.minimumDate.year + 1,
+      (index) => widget.minimumDate.year + index,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildPicker(
+              context,
+              List<int>.generate(12, (index) => index + 1),
+              selectedMonth,
+              (value) {
+                setState(() {
+                  selectedMonth = value;
+                  widget.onDateTimeChanged(
+                      DateTime(selectedYear, selectedMonth, selectedDay));
+                });
+              },
+              isMonth: true,
+            ),
+            _buildPicker(
+              context,
+              _generateDays(selectedMonth, selectedYear),
+              selectedDay,
+              (value) {
+                setState(() {
+                  selectedDay = value;
+                  widget.onDateTimeChanged(
+                      DateTime(selectedYear, selectedMonth, selectedDay));
+                });
+              },
+            ),
+            _buildPicker(
+              context,
+              _generateYears(),
+              selectedYear,
+              (value) {
+                setState(() {
+                  selectedYear = value;
+                  widget.onDateTimeChanged(
+                      DateTime(selectedYear, selectedMonth, selectedDay));
+                });
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPicker(BuildContext context, List<int> items, int selectedItem,
+      ValueChanged<int> onSelectedItemChanged,
+      {bool isMonth = false}) {
+    return Expanded(
+      child: ListWheelScrollView.useDelegate(
+        controller: FixedExtentScrollController(
+            initialItem: items.indexOf(selectedItem)),
+        itemExtent: 30,
+        perspective: 0.005,
+        diameterRatio: 1.2,
+        physics: const FixedExtentScrollPhysics(),
+        onSelectedItemChanged: (index) => onSelectedItemChanged(items[index]),
+        childDelegate: ListWheelChildBuilderDelegate(
+          builder: (context, index) {
+            return Center(
+              child: Text(
+                isMonth
+                    ? monthNames[items[index] - 1]
+                    : items[index].toString(),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: items[index] == selectedItem
+                      ? Colors.blueAccent
+                      : Colors.black,
                 ),
               ),
+            );
+          },
+          childCount: items.length,
+        ),
+      ),
+    );
+  }
+}
 
-            ],
-          ),
+class RangeTimePicker extends StatefulWidget {
+  final TimeOfDay initialStartTime;
+  final TimeOfDay initialEndTime;
+  final ValueChanged<TimeOfDay> onStartTimeChanged;
+  final ValueChanged<TimeOfDay> onEndTimeChanged;
+
+  const RangeTimePicker({
+    required this.initialStartTime,
+    required this.initialEndTime,
+    required this.onStartTimeChanged,
+    required this.onEndTimeChanged,
+    super.key,
+  });
+
+  @override
+  _RangeTimePickerState createState() => _RangeTimePickerState();
+}
+
+class _RangeTimePickerState extends State<RangeTimePicker> {
+  late TimeOfDay startTime;
+  late TimeOfDay endTime;
+
+  @override
+  void initState() {
+    super.initState();
+    startTime = widget.initialStartTime;
+    endTime = widget.initialEndTime;
+  }
+
+  Future<void> _selectTimeRange(BuildContext context) async {
+    final TimeOfDay? pickedStartTime = await showCustomTimePicker(
+      context: context,
+      initialTime: startTime,
+    );
+    if (pickedStartTime != null) {
+      final TimeOfDay? pickedEndTime = await showCustomTimePicker(
+        context: context,
+        initialTime: endTime,
+      );
+      if (pickedEndTime != null && pickedEndTime != pickedStartTime) {
+        setState(() {
+          startTime = pickedStartTime;
+          endTime = pickedEndTime;
+          widget.onStartTimeChanged(startTime);
+          widget.onEndTimeChanged(endTime);
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.h,
+      decoration: BoxDecoration(
+        border: Border.all(color: ThemeSetting.of(context).common0),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: GestureDetector(
+        onTap: () => _selectTimeRange(context),
+        child: Row(
+          children: [
+            Text(
+              "   ${startTime.format(context)} ~ ${endTime.format(context)}",
+              style: ThemeSetting.of(context).headlineLarge.copyWith(
+                    color: ThemeSetting.of(context).primaryText,
+                  ),
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: () => _selectTimeRange(context),
+              icon: const Icon(Icons.keyboard_arrow_down),
+            ),
+          ],
         ),
       ),
     );

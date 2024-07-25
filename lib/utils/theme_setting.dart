@@ -89,6 +89,10 @@ abstract class ThemeSetting {
   late Color container2;
   late Color black1;
   late Color black2;
+  late Color green;
+  late Color lightGreen;
+  late Color lightPurple;
+  late Color extraGray;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -152,7 +156,7 @@ abstract class ThemeSetting {
   String get captionLargeFamily => typography.captionLargeFamily;
   TextStyle get captionLarge => typography.captionLarge;
   String get captionMediumFamily => typography.captionMediumFamily;
-  TextStyle get captionMedium=> typography.captionMedium;
+  TextStyle get captionMedium => typography.captionMedium;
 
   CustomTypography get typography => ThemeTypography(this);
 }
@@ -216,6 +220,11 @@ class LightModeTheme extends ThemeSetting {
   late Color black1 = const Color(0xFF212126);
   late Color black2 = const Color(0xFF000000);
 
+  late Color green = const Color(0xFF206A0D);
+  late Color lightGreen = const Color(0xFFF2F6D4);
+  late Color lightPurple = const Color(0xFFE9E0F3);
+  late Color extraGray = const Color(0xFFE0EAF3);
+
   late AlertStyle alertStyle = AlertStyle(
     animationType: AnimationType.fromTop,
     isCloseButton: false,
@@ -224,7 +233,6 @@ class LightModeTheme extends ThemeSetting {
     descTextAlign: TextAlign.start,
     animationDuration: const Duration(milliseconds: 300),
     backgroundColor: secondaryBackground,
-
     alertPadding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
     descPadding: const EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 0.0),
     buttonAreaPadding: const EdgeInsets.fromLTRB(14.0, 14.0, 14.0, 20.0),
@@ -236,7 +244,6 @@ class LightModeTheme extends ThemeSetting {
       ),
     ),
     titleStyle: typography.headlineLarge,
-
     titleTextAlign: TextAlign.start,
     alertAlignment: Alignment.center,
   );

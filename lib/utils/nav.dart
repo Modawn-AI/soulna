@@ -4,27 +4,26 @@ import 'dart:developer';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/pages/auth/find_password.dart';
 import 'package:Soulna/pages/auth/signUp_additionalInfo.dart';
-import 'package:Soulna/pages/auth/signUp_screen.dart';
+import 'package:Soulna/pages/auth/signUp_agree.dart';
+import 'package:Soulna/pages/auth/signUp_email.dart';
+import 'package:Soulna/pages/auth/signUp_password.dart';
 import 'package:Soulna/pages/auth/splash_screen.dart';
+import 'package:Soulna/pages/book/book_details_screen.dart';
 import 'package:Soulna/pages/main_screen.dart';
-import 'package:Soulna/pages/myInfo/my_info_screen.dart';
 import 'package:Soulna/pages/notification/notification_settings.dart';
-import 'package:Soulna/pages/old/letter_list_page.dart';
-import 'package:Soulna/pages/old/login_page.dart';
-import 'package:Soulna/pages/old/main_page.dart';
-import 'package:Soulna/pages/old/profile_page.dart';
-import 'package:Soulna/pages/old/onboarding_page.dart';
+
 import 'package:Soulna/pages/profile/edit_profile.dart';
 import 'package:Soulna/provider/base_auth_user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Soulna/pages/old/splash_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:Soulna/utils/serialization_util.dart';
 
 import '../pages/auth/auth_screen.dart';
 import '../pages/auth/login_screen.dart';
+import '../pages/past_fortune_screen/past_fortune_calenderview_screen.dart';
+import '../pages/past_fortune_screen/past_fortune_screen.dart';
 import '../pages/settings/account_setting_screen.dart';
 import '../pages/settings/data_of_birth_screen.dart';
 import '../pages/settings/new_password_screen.dart';
@@ -104,6 +103,25 @@ class AppStateNotifier extends ChangeNotifier {
   }
 }
 
+String splashScreen = 'SplashScreen';
+String authScreen = 'AuthScreen';
+String loginScreen = 'LoginScreen';
+String findPassword = 'FindPassword';
+String editProfile = 'EditProfile';
+String notificationSettings = 'NotificationSettings';
+String signUpAgree = 'SignUpAgree';
+String signUpEmail = 'SignUpEmail';
+String signUpPassword = 'SignUpPassword';
+String signUpAdditionalInfo = 'SignUpAdditionalInfo';
+String mainScreen = 'MainScreen';
+String settingsScreen = 'SettingsScreen';
+String accountSettingScreen = 'AccountSettingScreen';
+String newPasswordScreen = 'NewPasswordScreen';
+String dateOfBirthScreen = 'DateOfBirthScreen';
+String bookDetailScreen = 'BookDetailScreen';
+String pastFortuneScreen = 'pastFortuneScreen';
+String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
+//String myInfoScreen = 'myInfoScreen';
 GoRouter createRouter(
         AppStateNotifier appStateNotifier, SocialManager socialManager) =>
     GoRouter(
@@ -123,84 +141,80 @@ GoRouter createRouter(
           name: 'initialize',
           path: '/',
           //builder: (context, params) => const SignUpScreen(),
-          builder: (context, params) => const MyInfoScreen(),
+          builder: (context, params) => const BookDetailsScreen(),
         ),
         FFRoute(
-          name: 'AuthScreen',
-          path: '/AuthScreen',
+          name: authScreen,
           builder: (context, params) => const AuthScreen(),
         ),
         FFRoute(
-          name: 'LoginScreen',
-          path: '/loginScreen',
+          name: loginScreen,
           builder: (context, params) => const LoginScreen(),
         ),
         FFRoute(
-          name: 'SignUpScreen',
-          path: '/signUpScreen',
-          builder: (context, params) => const SignUpScreen(),
-        ),
-        FFRoute(
-          name: 'FindPassword',
-          path: '/findPassword',
+          name: findPassword,
           builder: (context, params) => const FindPassword(),
         ),
         FFRoute(
-          name: 'EditProfile',
-          path: '/editProfile',
+          name: editProfile,
           builder: (context, params) => const EditProfile(),
         ),
         FFRoute(
-          name: 'NotificationSettings',
-          path: '/otificationSettings',
+          name: notificationSettings,
           builder: (context, params) => const NotificationSettings(),
         ),
-        // FFRoute(
-        //   name: 'SignUpAgree',
-        //   path: '/signUpAgree',
-        //   builder: (context, params) => const SignUpScreen(),
-        // ),
-        // FFRoute(
-        //   name: 'SignUpEmail',
-        //   path: '/signUpEmail',
-        //   builder: (context, params) => const SignUpScreen(),
-        // ),
-        // FFRoute(
-        //   name: 'SignUpPassword',
-        //   path: '/signUpPassword',
-        //   builder: (context, params) => const SignUpScreen(),
-        // ),
-        // FFRoute(
-        //   name: 'SignUpAdditionalInfo',
-        //   path: '/signUpAdditionalInfo',
-        //   builder: (context, params) =>
-        //       const SignUpAdditionalInfo(controller: PageController()),
-        // ),
         FFRoute(
-          name: 'MainScreen',
-          path: '/mainScreen',
+          name: signUpAgree,
+          builder: (context, params) => const SignupAgree(),
+        ),
+        FFRoute(
+          name: signUpEmail,
+          builder: (context, params) => const SignupEmail(),
+        ),
+        FFRoute(
+          name: signUpPassword,
+          builder: (context, params) => const SignUpPassword(),
+        ),
+        FFRoute(
+          name: signUpAdditionalInfo,
+          builder: (context, params) => const SignUpAdditionalInfo(),
+        ),
+        FFRoute(
+          name: mainScreen,
           builder: (context, params) => const MainScreen(),
         ),
         FFRoute(
-          name: 'SettingsScreen',
-          path: '/SettingsScreen',
+          name: settingsScreen,
           builder: (context, params) => const SettingsScreen(),
         ),
         FFRoute(
-          name: 'AccountSettingScreen',
-          path: '/AccountSettingScreen',
+          name: accountSettingScreen,
           builder: (context, params) => const AccountSettingScreen(),
         ),
         FFRoute(
-          name: 'NewPasswordScreen',
-          path: '/NewPasswordScreen',
+          name: newPasswordScreen,
           builder: (context, params) => const NewPasswordScreen(),
         ),
         FFRoute(
-          name: 'DateOfBirthScreen',
-          path: '/DateOfBirthScreen',
+          name: dateOfBirthScreen,
           builder: (context, params) => const DateOfBirthScreen(),
         ),
+        FFRoute(
+          name: bookDetailScreen,
+          builder: (context, params) => const BookDetailsScreen(),
+        ),
+        FFRoute(
+          name: pastFortuneScreen,
+          builder: (context, params) => const PastFortuneScreen(),
+        ),
+        // FFRoute(
+        //   name: pastFortuneCalenderViewScreen,
+        //   builder: (context, params) => PastFortuneCalenderViewScreen(),
+        // ),
+        // FFRoute(
+        //   name: myInfoScreen,
+        //   builder: (context, params) => const MyInfoScreen(),
+        // ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       //urlPathStrategy: UrlPathStrategy.path,
     );
@@ -294,7 +308,7 @@ class FFParameters {
 class FFRoute {
   const FFRoute({
     required this.name,
-    required this.path,
+    this.path,
     required this.builder,
     this.requireAuth = false,
     this.asyncParams = const {},
@@ -302,7 +316,7 @@ class FFRoute {
   });
 
   final String name;
-  final String path;
+  final String? path;
   final bool requireAuth;
   final Map<String, Future<dynamic> Function(String)> asyncParams;
   final Widget Function(BuildContext, FFParameters) builder;
@@ -310,7 +324,7 @@ class FFRoute {
 
   GoRoute toRoute(AppStateNotifier appStateNotifier) => GoRoute(
         name: name,
-        path: path,
+        path: path ?? '/$name',
         pageBuilder: (context, state) {
           final ffParams = FFParameters(state, asyncParams);
           final page = ffParams.hasFutures

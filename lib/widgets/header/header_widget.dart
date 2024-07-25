@@ -1,13 +1,14 @@
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../utils/app_assets.dart';
 
 class HeaderWidget {
   static AppBar headerBack(
-          {required BuildContext context, void Function()? onTap}) =>
+          {required BuildContext context, void Function()? onTap,Color? backgroundColor}) =>
       AppBar(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        backgroundColor: backgroundColor ??ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -200,16 +201,19 @@ class HeaderWidget {
           ]);
 
   static AppBar headerSettings(
-          {required BuildContext context, required GestureTapCallback onTap}) =>
+          {required BuildContext context, required GestureTapCallback onTap, GestureTapCallback? onTapOnMenu}) =>
       AppBar(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 18.w, top: 11.h),
-          child: Image.asset(
-            AppAssets.backArrow,
-            height: 30.h,
-            width: 30.w,
+        leading: GestureDetector(
+          onTap: onTapOnMenu,
+          child: Padding(
+            padding: EdgeInsets.only(left: 18.w, top: 11.h),
+            child: Image.asset(
+              AppAssets.backArrow,
+              height: 30.h,
+              width: 30.w,
+            ),
           ),
         ),
         actions: [

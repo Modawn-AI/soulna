@@ -8,7 +8,8 @@ import '../utils/theme_setting.dart';
 import 'custom_button_widget.dart';
 
 class CustomGenderToggleButton extends StatefulWidget {
-  const CustomGenderToggleButton({super.key});
+  final Function(String) onGenderSelected;
+  const CustomGenderToggleButton({super.key,required this.onGenderSelected});
 
   @override
   _CustomGenderToggleButtonState createState() =>
@@ -17,9 +18,16 @@ class CustomGenderToggleButton extends StatefulWidget {
 
 class _CustomGenderToggleButtonState extends State<CustomGenderToggleButton> {
   List<bool> isSelected = [
-    true,
+    false,
     false
   ]; // Assuming 'Male' is selected by default
+
+  void _selectGender(int index) {
+    setState(() {
+      isSelected = [index == 0, index == 1];
+    });
+    widget.onGenderSelected(index == 0 ? 'Male' : 'Female');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +57,7 @@ class _CustomGenderToggleButtonState extends State<CustomGenderToggleButton> {
                     ),
                   ],
                 ),
-                onPressed: () {
-                  setState(() {
-                    isSelected = [true, false];
-                  });
-                },
+                onPressed: () =>_selectGender(0),
                 options: CustomButtonOptions(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
@@ -89,11 +93,7 @@ class _CustomGenderToggleButtonState extends State<CustomGenderToggleButton> {
                     ),
                   ],
                 ),
-                onPressed: () {
-                  setState(() {
-                    isSelected = [false, true];
-                  });
-                },
+                onPressed: () => _selectGender(1),
                 options: CustomButtonOptions(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(

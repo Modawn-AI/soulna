@@ -61,7 +61,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       controller: widget.controller,
       focusNode: widget.focusNode,
       style: ThemeSetting.of(context).bodySmall,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+     autovalidateMode: AutovalidateMode.onUserInteraction,
       textInputAction: widget.inputAction,
       keyboardType: widget.inputType,
       cursorColor: ThemeSetting.of(context).primary,
@@ -70,11 +70,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
       autofocus: widget.autoFocus,
       //onChanged: widget.isSearch ? widget.languageProvider.searchLanguage : null,
       obscureText: widget.isPassword ? _obscureText : false,
-      inputFormatters: widget.inputType == TextInputType.phone
-          ? <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp('[0-9+]'))
-            ]
-          : null,
+     // inputFormatters:
+      // widget.inputType == TextInputType.phone
+      //     ? <TextInputFormatter>[
+      //         FilteringTextInputFormatter.allow(RegExp('[0-9+]'))
+      //       ]
+      //     : null,
       decoration: InputDecoration(
         hintText: widget.hintText,
         labelText: widget.labelText,

@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:Soulna/models/image_model.dart';
+import 'package:Soulna/pages/drawer/drawer_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,15 +21,29 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   List<ImageModel> images = [];
-  bool showBottomSheet = false;
 
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-    Timer(
-      Duration(seconds: 1),
-      () => showBottomSheet = true,
-    );
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Timer(
+        const Duration(seconds: 1),
+        () {
+          showModalBottomSheet(
+            elevation: 0,
+            isScrollControlled: true,
+            //isDismissible: false,
+            backgroundColor:
+                ThemeSetting.of(context).primaryText.withOpacity(0.5),
+            context: context,
+            builder: (context) {
+              return bottomSheetWidget(context);
+            },
+          );
+        },
+      );
+    });
   }
 
   @override
@@ -48,13 +66,15 @@ class _MainScreenState extends State<MainScreen> {
           text: LocaleKeys.create_your_journal.tr()),
     ];
 
-    return SafeArea(
-        child: Scaffold(
-      bottomSheet: bottomSheetWidget(context),
+    return Scaffold(
+      key: scaffoldKey,
+      drawer: DrawerScreen.drawerWidget(context: context),
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
       body: ListView(
         children: [
-          HeaderWidget.headerWithLogoAndInstagram(context: context),
+          HeaderWidget.headerWithLogoAndInstagram(
+              context: context,
+              onTap: () => scaffoldKey.currentState?.openDrawer()),
           const SizedBox(
             height: 32,
           ),
@@ -105,8 +125,8 @@ class _MainScreenState extends State<MainScreen> {
             height: 350,
             width: 202,
             child: CarouselSlider(
-              items: images.map((e) {
-                ImageModel image = e;
+              items: images.asMap().entries.map((e) {
+                ImageModel image = e.value;
                 return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     height: 300,
@@ -194,9 +214,10 @@ class _MainScreenState extends State<MainScreen> {
               options: CarouselOptions(
                   viewportFraction: 0.8,
                   disableCenter: true,
+                  enableInfiniteScroll: false,
                   reverse: false,
                   padEnds: true,
-                  aspectRatio: 0.9,
+                  aspectRatio: 0.7,
                   height: 500,
                   onPageChanged: (index, reason) {
                     setState(() {
@@ -221,7 +242,7 @@ class _MainScreenState extends State<MainScreen> {
                       // margin: const EdgeInsets.symmetric(
                       //     vertical: 8.0, horizontal: 4.0),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.horizontal(
+                          borderRadius: const BorderRadius.horizontal(
                             left: Radius.circular(3),
                           ),
                           color: currentIndex == entry.key
@@ -308,169 +329,170 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-    ));
+    );
   }
 
   bottomSheetWidget(BuildContext context) {
-    // return  ListView(
-    //   padding: EdgeInsets.only(top: 30, right: 25, left: 25),
-    //   children: [
-    //     Image.asset(
-    //       AppAssets.logo,
-    //       height: 37,
-    //       width: 37,
-    //     ),
-    //     Padding(
-    //       padding: EdgeInsets.only(left: 31, right: 30, top: 30),
-    //       child: Text(
-    //         AppString.title,
-    //         textAlign: TextAlign.center,
-    //         style: Theme.of(context).textTheme.labelLarge,
-    //       ),
-    //     ),
-    //     SizedBox(
-    //       height: 40,
-    //     ),
-    //     MainScreenWidget.rawWidget(text: AppString.bodyText1),
-    //     Config.sizedBox(
-    //       height: 10,
-    //     ),
-    //     MainScreenWidget.rawWidget(text: AppString.bodyText2),
-    //     Config.sizedBox(
-    //       height: 10,
-    //     ),
-    //     MainScreenWidget.rawWidget(text: AppString.bodyText3),
-    //     Config.sizedBox(
-    //       height: 31,
-    //     ),
-    //     Stack(
-    //       children: [
-    //         Container(
-    //           margin: Config.kScreenPaddingOnly(top: 11),
-    //           padding: Config.kScreenPaddingOnly(
-    //               left: 15, right: 15, top: 20, bottom: 19),
-    //           decoration: BoxDecoration(
-    //               border: Border.all(color: AppColor.black),
-    //               color: AppColor.primaryColor,
-    //               borderRadius:
-    //               BorderRadius.circular(Config.kBorderRadius12)),
-    //           height: 80.h,
-    //           child: Row(
-    //             crossAxisAlignment: CrossAxisAlignment.center,
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: [
-    //               Text(
-    //                 AppString.yearly,
-    //                 style: Theme.of(context).textTheme.headlineMedium,
-    //               ),
-    //               Flexible(
-    //                   flex: 5,
-    //                   child: Column(
-    //                     children: [
-    //                       Text(
-    //                         '\$39.99',
-    //                         style: Theme.of(context)
-    //                             .textTheme
-    //                             .headlineMedium
-    //                             ?.copyWith(fontWeight: AppFonts.semiBoldFont),
-    //                       ),
-    //                       Text(
-    //                         '\$3.33/month',
-    //                         style: Theme.of(context)
-    //                             .textTheme
-    //                             .displayMedium
-    //                             ?.copyWith(color: AppColor.grey),
-    //                       ),
-    //                     ],
-    //                   ))
-    //             ],
-    //           ),
-    //         ),
-    //         Config.sizedBox(height: 1.h),
-    //         Container(
-    //           height: 23.h,
-    //           width: 61.w,
-    //           margin: Config.kScreenPaddingOnly(left: 14),
-    //           alignment: Alignment.center,
-    //           decoration: BoxDecoration(
-    //               color: AppColor.black,
-    //               borderRadius:
-    //               BorderRadius.circular(Config.kBorderRadius25)),
-    //           child: Text(
-    //             'Save 72%',
-    //             style: Theme.of(context).textTheme.displaySmall,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     Config.sizedBox(height: 10),
-    //     Container(
-    //       padding: Config.kScreenPaddingOnly(left: 15, right: 15),
-    //       decoration: BoxDecoration(
-    //           color: AppColor.white,
-    //           borderRadius: BorderRadius.circular(Config.kBorderRadius12)),
-    //       height: 70.h,
-    //       child: Row(
-    //         crossAxisAlignment: CrossAxisAlignment.center,
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         children: [
-    //           Text(
-    //             AppString.monthly,
-    //             style: Theme.of(context).textTheme.headlineLarge,
-    //           ),
-    //           Text(
-    //             '\$11.99/month',
-    //             style: Theme.of(context).textTheme.headlineLarge,
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //     Config.sizedBox(height: 30),
-    //     GestureDetector(
-    //       onTap: () => Get.toNamed(NavigationScreen.settingsScreen),
-    //       child: Container(
-    //         height: 56.h,
-    //         decoration: BoxDecoration(
-    //             gradient: const LinearGradient(
-    //                 colors: [AppColor.blackLinear1, AppColor.black]),
-    //             borderRadius: BorderRadius.circular(Config.kBorderRadius50)),
-    //         child: Row(
-    //           crossAxisAlignment: CrossAxisAlignment.center,
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: [
-    //             Text(
-    //               AppString.start,
-    //               style: Theme.of(context).textTheme.headlineLarge,
-    //             ),
-    //             Padding(
-    //               padding: Config.kScreenPaddingOnly(left: 5),
-    //               child: Image.asset(
-    //                 AppImage.star,
-    //                 height: 14,
-    //                 width: 14,
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //     Config.sizedBox(height: 30),
-    //     Center(
-    //       child: Text(
-    //         AppString.restorePurchases,
-    //         style: Theme.of(context).textTheme.displayMedium,
-    //       ),
-    //     ),
-    //     Config.sizedBox(height: 5),
-    //     Center(
-    //       child: Text(
-    //         AppString.purchasesDes,
-    //         style: Theme.of(context).textTheme.displaySmall,
-    //         textAlign: TextAlign.center,
-    //       ),
-    //     ),
-    //     Config.sizedBox(height: 40)
-    //   ],
-    // );
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.85,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1))],
+        color: ThemeSetting.of(context).tertiary,
+      ),
+      child: ListView(
+        padding: const EdgeInsets.only(top: 30, right: 25, left: 25),
+        children: [
+          Image.asset(
+            AppAssets.logo,
+            height: 37,
+            width: 37,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 31, right: 30, top: 30),
+            child: Text(
+              LocaleKeys.enjoy_all_of_soluna_features_freely.tr(),
+              textAlign: TextAlign.center,
+              style: ThemeSetting.of(context).labelLarge,
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          rawWidget(text: LocaleKeys.check_your_fortune_for_today_n.tr()),
+          const SizedBox(
+            height: 10,
+          ),
+          rawWidget(text: LocaleKeys.check_today_diary.tr()),
+          const SizedBox(
+            height: 10,
+          ),
+          rawWidget(text: LocaleKeys.check_your_Journal.tr()),
+          const SizedBox(
+            height: 31,
+          ),
+          Stack(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(top: 11),
+                padding: const EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                ),
+                decoration: BoxDecoration(
+                    border:
+                        Border.all(color: ThemeSetting.of(context).primaryText),
+                    color: ThemeSetting.of(context).primary,
+                    borderRadius: BorderRadius.circular(12)),
+                height: 80.h,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(LocaleKeys.yearly.tr(),
+                        style: ThemeSetting.of(context).headlineLarge),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('\$39.99',
+                            style: ThemeSetting.of(context).headlineLarge),
+                        Text(
+                          '\$3.33/month',
+                          style: ThemeSetting.of(context).captionLarge.copyWith(
+                              color: ThemeSetting.of(context)
+                                  .secondaryBackground
+                                  .withOpacity(0.5)),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 1.h),
+              Container(
+                height: 23.h,
+                width: 61.w,
+                margin: const EdgeInsets.only(left: 14),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: ThemeSetting.of(context).primaryText,
+                    borderRadius: BorderRadius.circular(25)),
+                child: Text('Save 72%',
+                    style: ThemeSetting.of(context).bodySmall.copyWith(
+                          color: ThemeSetting.of(context).secondaryBackground,
+                        )),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            decoration: BoxDecoration(
+                color: ThemeSetting.of(context).secondaryBackground,
+                borderRadius: BorderRadius.circular(12)),
+            height: 70.h,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  LocaleKeys.monthly.tr(),
+                  style: ThemeSetting.of(context)
+                      .headlineLarge
+                      .copyWith(color: ThemeSetting.of(context).primaryText),
+                ),
+                Text('\$11.99/month',
+                    style: ThemeSetting.of(context)
+                        .headlineLarge
+                        .copyWith(color: ThemeSetting.of(context).primaryText)),
+              ],
+            ),
+          ),
+          const SizedBox(height: 30),
+          ButtonWidget.gradientButtonWithImage(
+              context: context,
+              text: LocaleKeys.start.tr(),
+              onTap: () => context.pop()),
+          SizedBox(height: 30),
+          Center(
+            child: Text(
+              LocaleKeys.restore_purchases.tr(),
+              style: ThemeSetting.of(context).captionMedium,
+            ),
+          ),
+          const SizedBox(height: 5),
+          Center(
+            child: Text(
+              LocaleKeys.purchases_des.tr(),
+              style: ThemeSetting.of(context).displaySmall.copyWith(
+                  color: ThemeSetting.of(context).primaryText.withOpacity(0.7)),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 40)
+        ],
+      ),
+    );
+  }
+
+  rawWidget({required String text}) {
+    return Row(
+      children: [
+        Image.asset(
+          AppAssets.check,
+          width: 14,
+          height: 14,
+          color: ThemeSetting.of(context).primaryText,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Text(
+          text,
+          style: ThemeSetting.of(context).bodyMedium,
+        ),
+      ],
+    );
   }
 }

@@ -13,8 +13,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import 'bindings/master_bindings.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -160,8 +163,9 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return MaterialApp.router(
+        return GetMaterialApp.router(
           title: 'Soulna',
+
           theme: ThemeData(brightness: Brightness.light),
           darkTheme: ThemeData(brightness: Brightness.dark),
           themeMode: _themeMode,
@@ -174,6 +178,7 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           key: navigatorKey,
+          initialBinding: MasterBindings(),
           // builder: (context, child) {
           //   AlertManager().initialize(context);
           //   // init 호출을 main.dart에서 한 번만 수행
