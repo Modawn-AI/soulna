@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/pages/auth/find_password.dart';
@@ -122,7 +123,7 @@ GoRouter createRouter(
           name: 'initialize',
           path: '/',
           //builder: (context, params) => const SignUpScreen(),
-          builder: (context, params) => const LoginScreen(),
+          builder: (context, params) => const MyInfoScreen(),
         ),
         FFRoute(
           name: 'AuthScreen',
@@ -225,9 +226,10 @@ extension _GoRouterStateExtensions on GoRouterState {
     ..addAll(uri.queryParameters)
     ..addAll(extraMap);
 
-  TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
-      ? extraMap[kTransitionInfoKey] as TransitionInfo
-      : TransitionInfo.appDefault();
+  TransitionInfo get transitionInfo => TransitionInfo.appDefault();
+  // TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
+  //     ? extraMap[kTransitionInfoKey] as TransitionInfo
+  //     : TransitionInfo.appDefault();
 }
 
 class FFParameters {
@@ -320,34 +322,20 @@ class FFRoute {
           final child = page;
 
           final transitionInfo = state.transitionInfo;
-          return transitionInfo.hasTransition
-              ? CustomTransitionPage(
-                  key: state.pageKey,
-                  child: child,
-                  transitionDuration: transitionInfo.duration,
-                  transitionsBuilder: PageTransition(
-                    type: transitionInfo.transitionType,
-                    duration: transitionInfo.duration,
-                    reverseDuration: transitionInfo.duration,
-                    alignment: transitionInfo.alignment,
-                    child: child,
-                  ).transitionsBuilder,
-                )
-              : MaterialPage(key: state.pageKey, child: child);
-          // return transitionInfo.hasTransition
-          //     ? CustomTransitionPage(
-          //         key: state.pageKey,
-          //         child: child,
-          //         transitionDuration: transitionInfo.duration,
-          //         transitionsBuilder: PageTransition(
-          //           type: transitionInfo.transitionType,
-          //           duration: transitionInfo.duration,
-          //           reverseDuration: transitionInfo.duration,
-          //           alignment: transitionInfo.alignment,
-          //           child: child,
-          //         ).transitionsBuilder,
-          //       )
-          //     : MaterialPage(key: state.pageKey, child: child);
+          log('Transition info: ${transitionInfo.hasTransition}');
+          return CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: child,
+            transitionDuration: Duration(milliseconds: 200),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1, 0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child),
+          );
         },
         routes: routes,
       );
@@ -357,7 +345,7 @@ class TransitionInfo {
   const TransitionInfo({
     required this.hasTransition,
     this.transitionType = PageTransitionType.rightToLeft,
-    this.duration = const Duration(milliseconds: 900),
+    this.duration = const Duration(microseconds: 400),
     this.alignment,
   });
 
@@ -367,5 +355,7 @@ class TransitionInfo {
   final Alignment? alignment;
 
   static TransitionInfo appDefault() => const TransitionInfo(
-      hasTransition: false, transitionType: PageTransitionType.rightToLeft);
+      hasTransition: true,
+      transitionType: PageTransitionType.rightToLeft,
+      duration: Duration(seconds: 1));
 }

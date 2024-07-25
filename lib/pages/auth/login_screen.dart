@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
               ButtonWidget.orangeBorderButton(
                   context: context,
                   text: LocaleKeys.sing_up.tr(),
-                  onTap: () => context.pushNamed('SignUpScreen')),
+                  onTap: () => context.pushNamed('SignUpScreen'),),
             ],
           ),
         ],
