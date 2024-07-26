@@ -62,9 +62,9 @@
   "would_you_like_to_make_a_diary_with_that_picture" : "",
   "a_total_of" : "",
   "photos_have_been_selected" : " ",
+  "make_a_diary_for" : "",
   "create_a_diary" : "",
-
-  "i_went_on_an_eating_trip_to_gangneung": "",
+  "today_keyword" : "",
 
 
   "enter_your_email" : "",
@@ -174,6 +174,18 @@
   "change": "",
   "date_of_birth" : "",
   "camera" : "",
-  "gallery" : ""
+  "gallery" : "",
+
+  "hello_this_is_soulna": "",
+  "Other" : "",
+  "service": "",
+  "article_1": "",
+  "article_1_des": "",
+  "article_2": "",
+  "article_2_des": "",
+  "enter_inquiry_name": "",
+  "enter_inquiry_des": "",
+  "you_can_upload_up_to_5_images": "",
+  "please_enter_inquiry_or_select_category": ""
 
 }

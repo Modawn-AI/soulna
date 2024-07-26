@@ -2,17 +2,9 @@ import 'package:Soulna/utils/package_exporter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../widgets/button/button_widget.dart';
 import '../../widgets/custom_checkbox_widget.dart';
-import '../../widgets/custom_timer_picker.dart';
+import '../../widgets/custom_time_range_widget.dart';
 import '../../widgets/header/header_widget.dart';
 
-class DataOfBirthScreen extends StatelessWidget {
-  const DataOfBirthScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
 
 class DateOfBirthScreen extends StatefulWidget {
   const DateOfBirthScreen({super.key});
@@ -28,7 +20,9 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerWithTitle(context: context, title: ''),
+      appBar: HeaderWidget.headerBack(
+        context: context,
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         child: Column(
@@ -79,15 +73,15 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 },
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 40.h),
             Text(
               LocaleKeys.time.tr(),
               style: ThemeSetting.of(context).captionMedium.copyWith(
                     color: ThemeSetting.of(context).primary,
                   ),
             ),
-            SizedBox(height: 20.h),
-            RangeTimePicker(
+            SizedBox(height: 10.h),
+            CustomRangeTimePicker(
               initialStartTime: const TimeOfDay(hour: 9, minute: 0),
               initialEndTime: const TimeOfDay(hour: 17, minute: 0),
               onStartTimeChanged: (startTime) {
@@ -97,7 +91,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 print("End Time: ${endTime.format(context)}");
               },
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 15.h),
             Row(
               children: [
                 CustomCheckbox(
@@ -113,14 +107,18 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
               ],
             ),
             const Spacer(),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h),
-              child: ButtonWidget.roundedButtonOrange(
-                context: context,
-                //  width: double.infinity,
-                color: ThemeSetting.of(context).primaryText,
-                text: LocaleKeys.save.tr(),
-                onTap: () {},
+            Container(
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h),
+                child: ButtonWidget.roundedButtonOrange(
+                  context: context,
+                  color: ThemeSetting.of(context).primaryText,
+                  text: LocaleKeys.save.tr(),
+                  onTap: () {
+                    context.pushNamed(animationScreen);
+                  },
+                ),
               ),
             ),
           ],
@@ -273,83 +271,83 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     );
   }
 }
-
-class RangeTimePicker extends StatefulWidget {
-  final TimeOfDay initialStartTime;
-  final TimeOfDay initialEndTime;
-  final ValueChanged<TimeOfDay> onStartTimeChanged;
-  final ValueChanged<TimeOfDay> onEndTimeChanged;
-
-  const RangeTimePicker({
-    required this.initialStartTime,
-    required this.initialEndTime,
-    required this.onStartTimeChanged,
-    required this.onEndTimeChanged,
-    super.key,
-  });
-
-  @override
-  _RangeTimePickerState createState() => _RangeTimePickerState();
-}
-
-class _RangeTimePickerState extends State<RangeTimePicker> {
-  late TimeOfDay startTime;
-  late TimeOfDay endTime;
-
-  @override
-  void initState() {
-    super.initState();
-    startTime = widget.initialStartTime;
-    endTime = widget.initialEndTime;
-  }
-
-  Future<void> _selectTimeRange(BuildContext context) async {
-    final TimeOfDay? pickedStartTime = await showCustomTimePicker(
-      context: context,
-      initialTime: startTime,
-    );
-    if (pickedStartTime != null) {
-      final TimeOfDay? pickedEndTime = await showCustomTimePicker(
-        context: context,
-        initialTime: endTime,
-      );
-      if (pickedEndTime != null && pickedEndTime != pickedStartTime) {
-        setState(() {
-          startTime = pickedStartTime;
-          endTime = pickedEndTime;
-          widget.onStartTimeChanged(startTime);
-          widget.onEndTimeChanged(endTime);
-        });
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50.h,
-      decoration: BoxDecoration(
-        border: Border.all(color: ThemeSetting.of(context).common0),
-        borderRadius: BorderRadius.circular(8.r),
-      ),
-      child: GestureDetector(
-        onTap: () => _selectTimeRange(context),
-        child: Row(
-          children: [
-            Text(
-              "   ${startTime.format(context)} ~ ${endTime.format(context)}",
-              style: ThemeSetting.of(context).headlineLarge.copyWith(
-                    color: ThemeSetting.of(context).primaryText,
-                  ),
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () => _selectTimeRange(context),
-              icon: const Icon(Icons.keyboard_arrow_down),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//
+// class RangeTimePicker extends StatefulWidget {
+//   final TimeOfDay initialStartTime;
+//   final TimeOfDay initialEndTime;
+//   final ValueChanged<TimeOfDay> onStartTimeChanged;
+//   final ValueChanged<TimeOfDay> onEndTimeChanged;
+//
+//   const RangeTimePicker({
+//     required this.initialStartTime,
+//     required this.initialEndTime,
+//     required this.onStartTimeChanged,
+//     required this.onEndTimeChanged,
+//     super.key,
+//   });
+//
+//   @override
+//   _RangeTimePickerState createState() => _RangeTimePickerState();
+// }
+//
+// class _RangeTimePickerState extends State<RangeTimePicker> {
+//   late TimeOfDay startTime;
+//   late TimeOfDay endTime;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     startTime = widget.initialStartTime;
+//     endTime = widget.initialEndTime;
+//   }
+//
+//   Future<void> _selectTimeRange(BuildContext context) async {
+//     final TimeOfDay? pickedStartTime = await showCustomTimePicker(
+//       context: context,
+//       initialTime: startTime,
+//     );
+//     if (pickedStartTime != null) {
+//       final TimeOfDay? pickedEndTime = await showCustomTimePicker(
+//         context: context,
+//         initialTime: endTime,
+//       );
+//       if (pickedEndTime != null && pickedEndTime != pickedStartTime) {
+//         setState(() {
+//           startTime = pickedStartTime;
+//           endTime = pickedEndTime;
+//           widget.onStartTimeChanged(startTime);
+//           widget.onEndTimeChanged(endTime);
+//         });
+//       }
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 50.h,
+//       decoration: BoxDecoration(
+//         border: Border.all(color: ThemeSetting.of(context).common0),
+//         borderRadius: BorderRadius.circular(8.r),
+//       ),
+//       child: GestureDetector(
+//         onTap: () => _selectTimeRange(context),
+//         child: Row(
+//           children: [
+//             Text(
+//               "   ${startTime.format(context)} ~ ${endTime.format(context)}",
+//               style: ThemeSetting.of(context).headlineLarge.copyWith(
+//                     color: ThemeSetting.of(context).primaryText,
+//                   ),
+//             ),
+//             const Spacer(),
+//             IconButton(
+//               onPressed: () => _selectTimeRange(context),
+//               icon: const Icon(Icons.keyboard_arrow_down),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

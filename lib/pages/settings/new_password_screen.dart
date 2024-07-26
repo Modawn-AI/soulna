@@ -64,10 +64,11 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 text: LocaleKeys.change_password_and_log_in.tr(),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    if(authCon.newPasswordCon.value.text != authCon.conPasswordCon.value.text){
+                    if (authCon.newPasswordCon.value.text !=
+                        authCon.conPasswordCon.value.text) {
                       CustomSnackBarWidget.showSnackBar(
                         context: context,
-                        text: 'LocaleKeys..tr()',
+                        message: '',
                         color: Colors.red,
                       );
                       return;

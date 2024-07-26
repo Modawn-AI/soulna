@@ -53,17 +53,20 @@ class _MainScreenState extends State<MainScreen> {
           linear1: ThemeSetting.of(context).linearContainer1,
           linear2: ThemeSetting.of(context).linearContainer2,
           image: AppAssets.image1,
-          text: LocaleKeys.check_your_fortune_for_today.tr()),
+          text: LocaleKeys.check_your_fortune_for_today.tr(),
+          route: dateOfBirthMain),
       ImageModel(
           linear1: ThemeSetting.of(context).linearContainer3,
           linear2: ThemeSetting.of(context).linearContainer4,
           image: AppAssets.image2,
-          text: LocaleKeys.create_today_diary.tr()),
+          text: LocaleKeys.create_today_diary.tr(),
+          route: selectPhotoScreen),
       ImageModel(
           linear1: ThemeSetting.of(context).linearContainer5,
           linear2: ThemeSetting.of(context).linearContainer6,
           image: AppAssets.image3,
-          text: LocaleKeys.create_your_journal.tr()),
+          text: LocaleKeys.create_your_journal.tr(),
+          route: autobiographyScreen),
     ];
 
     return Scaffold(
@@ -127,88 +130,93 @@ class _MainScreenState extends State<MainScreen> {
             child: CarouselSlider(
               items: images.asMap().entries.map((e) {
                 ImageModel image = e.value;
-                return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    height: 300,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [image.linear1, image.linear2],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter),
-                        border: Border.all(
-                            color: ThemeSetting.of(context).primaryText),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Container(
-                          height: double.infinity,
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 22),
-                          margin:
-                              const EdgeInsets.only(top: 8, left: 8, right: 8),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  right: BorderSide(
+                return GestureDetector(
+                  onTap: () => context.pushNamed("${image.route}"),
+                  child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      height: 300,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [image.linear1, image.linear2],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter),
+                          border: Border.all(
+                              color: ThemeSetting.of(context).primaryText),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            padding: const EdgeInsets.only(top: 22),
+                            margin: const EdgeInsets.only(
+                                top: 8, left: 8, right: 8),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    right: BorderSide(
+                                        color: ThemeSetting.of(context)
+                                            .secondaryBackground,
+                                        width: 1.5),
+                                    left: BorderSide(
+                                        color: ThemeSetting.of(context)
+                                            .secondaryBackground,
+                                        width: 1.5),
+                                    top: BorderSide(
+                                        color: ThemeSetting.of(context)
+                                            .secondaryBackground,
+                                        width: 1.5)),
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20))),
+                            child: Text(
+                              image.text,
+                              style: ThemeSetting.of(context)
+                                  .titleLarge
+                                  .copyWith(
                                       color: ThemeSetting.of(context)
-                                          .secondaryBackground,
-                                      width: 1.5),
-                                  left: BorderSide(
-                                      color: ThemeSetting.of(context)
-                                          .secondaryBackground,
-                                      width: 1.5),
-                                  top: BorderSide(
-                                      color: ThemeSetting.of(context)
-                                          .secondaryBackground,
-                                      width: 1.5)),
+                                          .secondaryBackground),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Image.asset(
+                              image.image,
+                              width: 165,
+                              height: 195,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: ThemeSetting.of(context).primaryText,
                               borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20))),
-                          child: Text(
-                            image.text,
-                            style: ThemeSetting.of(context).titleLarge.copyWith(
-                                color: ThemeSetting.of(context)
-                                    .secondaryBackground),
-                            textAlign: TextAlign.center,
+                                  bottomLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20)),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  LocaleKeys.create.tr(),
+                                  style: ThemeSetting.of(context).headlineLarge,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Image.asset(
+                                  AppAssets.start,
+                                  height: 14,
+                                  width: 14,
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 40),
-                          child: Image.asset(
-                            image.image,
-                            width: 165,
-                            height: 195,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: ThemeSetting.of(context).primaryText,
-                            borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20)),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                LocaleKeys.create.tr(),
-                                style: ThemeSetting.of(context).headlineLarge,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Image.asset(
-                                AppAssets.start,
-                                height: 14,
-                                width: 14,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ));
+                        ],
+                      )),
+                );
               }).toList(),
               carouselController: CarouselController(),
               options: CarouselOptions(

@@ -337,17 +337,53 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     height: 20,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: ButtonWidget.gradientButtonWithImage(
                         context: context,
                         text: LocaleKeys.share.tr(),
-                        imageString: AppAssets.heart),
+                        imageString: AppAssets.heart,
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return showLinksDialog();
+                            },
+                          );
+                        }),
                   )
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget showLinksDialog() {
+    return Container(
+
+      height: MediaQuery.of(context).size.height * 0.20,
+      width: MediaQuery.of(context).size.width ,
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+          color: ThemeSetting.of(context).secondaryBackground,
+          borderRadius: const BorderRadius.horizontal(
+              right: Radius.circular(15), left: Radius.circular(15))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            LocaleKeys.share_link.tr(),
+            style: ThemeSetting.of(context).bodyMedium,
+          ),
+          SizedBox(height: 25,),
+          Text(
+            LocaleKeys.share_instagram.tr(),
+            style: ThemeSetting.of(context).bodyMedium,
+          )
+        ],
       ),
     );
   }
