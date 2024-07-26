@@ -22,6 +22,7 @@ class AppAssets {
   static const String three = 'assets/images/3.png';
   static const String four = 'assets/images/4.png';
   static const String five = 'assets/images/5.png';
+  static const String rectangle = 'assets/images/rectangle.png';
 
   //icons
   static const String apple = 'assets/icon/apple.png';
@@ -56,6 +57,7 @@ class AppAssets {
   static const String backArrow = 'assets/icon/headerIcon/back_arrow.png';
   static const String btnMore = 'assets/icon/headerIcon/btn_more.png';
   static const String calendar = 'assets/icon/headerIcon/calendar.png';
+  static const String menu = 'assets/icon/headerIcon/menu.png';
   static const String delete = 'assets/icon/headerIcon/delete.png';
   static const String instagram = 'assets/icon/headerIcon/instagram.png';
   static const String list = 'assets/icon/headerIcon/list.png';

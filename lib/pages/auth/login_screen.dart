@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
         CustomTextField(
           controller: authCon.passwordCon.value,
           hintText: LocaleKeys.enter_your_password.tr(),
+          isPassword: true,
           validator: CustomValidatorWidget.validatePassword(
               value: authCon.passwordCon.value.text),
         ),

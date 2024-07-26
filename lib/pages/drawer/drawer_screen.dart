@@ -12,27 +12,27 @@ class DrawerScreen {
       {
         'image': AppAssets.iconFortune,
         'title': LocaleKeys.past_fortune.tr(),
-        'route':"pastFortuneScreen",
+        'route':pastFortuneScreen,
       },
       {
         'image': AppAssets.iconDiary,
         'title': LocaleKeys.past_diary.tr(),
-        'route':'',
+        'route':pastDiary,
       },
       {
         'image': AppAssets.iconNotice,
         'title': LocaleKeys.notice.tr(),
-        'route':'',
+        'route':noticeScreen,
       },
       {
         'image': AppAssets.iconService,
         'title': LocaleKeys.customer_service.tr(),
-        'route':'',
+        'route':customerService,
       },
       {
         'image': AppAssets.iconTerm,
         'title': LocaleKeys.terms_and_conditions.tr(),
-        'route':'',
+        'route':termAndConditions,
       },
       {
         'image': AppAssets.iconVersion,
@@ -126,9 +126,9 @@ class DrawerScreen {
             (index) {
               return SettingsWidget(
                 onTap: () {
-                  if(settingList[index]['route'] != null){
+                  if(index != settingList.length - 1){
                     log(settingList[index]['route']);
-                    context.pushNamed(settingList[index]['route']);
+                    context.pushNamed("${settingList[index]['route']}");
                   }
                 },
                 image: settingList[index]['image'],

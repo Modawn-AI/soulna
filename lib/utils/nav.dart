@@ -9,6 +9,10 @@ import 'package:Soulna/pages/auth/signUp_email.dart';
 import 'package:Soulna/pages/auth/signUp_password.dart';
 import 'package:Soulna/pages/auth/splash_screen.dart';
 import 'package:Soulna/pages/book/book_details_screen.dart';
+import 'package:Soulna/pages/drawer/customer_service.dart';
+import 'package:Soulna/pages/drawer/notice_screen.dart';
+import 'package:Soulna/pages/drawer/past_diary.dart';
+import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
 import 'package:Soulna/pages/main_screen.dart';
 import 'package:Soulna/pages/notification/notification_settings.dart';
 
@@ -23,7 +27,7 @@ import 'package:Soulna/utils/serialization_util.dart';
 import '../pages/auth/auth_screen.dart';
 import '../pages/auth/login_screen.dart';
 import '../pages/past_fortune_screen/past_fortune_calenderview_screen.dart';
-import '../pages/past_fortune_screen/past_fortune_screen.dart';
+import '../pages/drawer/past_fortune_screen.dart';
 import '../pages/settings/account_setting_screen.dart';
 import '../pages/settings/data_of_birth_screen.dart';
 import '../pages/settings/new_password_screen.dart';
@@ -119,8 +123,12 @@ String accountSettingScreen = 'AccountSettingScreen';
 String newPasswordScreen = 'NewPasswordScreen';
 String dateOfBirthScreen = 'DateOfBirthScreen';
 String bookDetailScreen = 'BookDetailScreen';
-String pastFortuneScreen = 'pastFortuneScreen';
-String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
+String pastFortuneScreen = 'PastFortuneScreen';
+String pastDiary = 'PastDiary';
+String noticeScreen = 'NoticeScreen';
+String customerService = 'CustomerService';
+String termAndConditions = 'TermAndConditions';
+//String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
 //String myInfoScreen = 'myInfoScreen';
 GoRouter createRouter(
         AppStateNotifier appStateNotifier, SocialManager socialManager) =>
@@ -206,6 +214,23 @@ GoRouter createRouter(
         FFRoute(
           name: pastFortuneScreen,
           builder: (context, params) => const PastFortuneScreen(),
+        ),
+        FFRoute(
+          name: pastDiary,
+          builder: (context, params) => const PastDiary(),
+        ),
+        FFRoute(
+          name: noticeScreen,
+          builder: (context, params) => const NoticeScreen(),
+        ),
+
+        FFRoute(
+          name: customerService,
+          builder: (context, params) => const CustomerService(),
+        ),
+        FFRoute(
+          name: termAndConditions,
+          builder: (context, params) => const TermsAndCondition(),
         ),
         // FFRoute(
         //   name: pastFortuneCalenderViewScreen,

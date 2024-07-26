@@ -6,9 +6,12 @@ import '../../utils/app_assets.dart';
 
 class HeaderWidget {
   static AppBar headerBack(
-          {required BuildContext context, void Function()? onTap,Color? backgroundColor}) =>
+          {required BuildContext context,
+          void Function()? onTap,
+          Color? backgroundColor}) =>
       AppBar(
-        backgroundColor: backgroundColor ??ThemeSetting.of(context).secondaryBackground,
+        backgroundColor:
+            backgroundColor ?? ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -201,7 +204,9 @@ class HeaderWidget {
           ]);
 
   static AppBar headerSettings(
-          {required BuildContext context, required GestureTapCallback onTap, GestureTapCallback? onTapOnMenu}) =>
+          {required BuildContext context,
+          required GestureTapCallback onTap,
+          GestureTapCallback? onTapOnMenu}) =>
       AppBar(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
@@ -225,6 +230,62 @@ class HeaderWidget {
                 AppAssets.iconSettings,
                 height: 30.h,
                 width: 30.w,
+              ),
+            ),
+          )
+        ],
+      );
+
+  static headerCalendar(
+          {required BuildContext context,
+          required String title,
+          void Function()? onTap,
+          String? image}) =>
+      AppBar(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        elevation: 00,
+        leadingWidth: 48,
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Padding(
+            padding: EdgeInsets.only(left: 18.w, top: 11.h),
+            child: Image.asset(
+              AppAssets.backArrow,
+              height: 30,
+              width: 30,
+            ),
+          ),
+        ),
+        title: Padding(
+          padding: EdgeInsets.only(top: 11.h),
+          child: Row(
+            children: [
+              Text(
+                title,
+                style: ThemeSetting.of(context).labelMedium.copyWith(
+                      fontSize: 20.sp,
+                    ),
+              ),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.keyboard_arrow_down_sharp,
+                    color: ThemeSetting.of(context).primaryText,
+                    size: 20.sp,
+                  ))
+            ],
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15, top: 11),
+            child: InkWell(
+              onTap: onTap,
+              child: Image.asset(
+                image ?? AppAssets.calendar,
+                color: ThemeSetting.of(context).primaryText,
+                height: 30,
+                width: 30,
               ),
             ),
           )
