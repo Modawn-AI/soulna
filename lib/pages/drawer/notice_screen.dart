@@ -18,7 +18,39 @@ class _NoticeScreenState extends State<NoticeScreen> {
     LocaleKeys.Other.tr(),
   ];
 
+  List allList = [
+    {"title": "Notice", "description": "Privacy policy update notice", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Update", "description": "iOS Error Update Notification", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Other", "description": "Inactive User Deactivation Notice", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Information", "description": "Instructions for using Soluna", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Notice", "description": "Privacy policy update notice", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Update", "description": "iOS Error Update Notification", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Other", "description": "Inactive User Deactivation Notice", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Information", "description": "Instructions for using Soluna", "date": "January 1st, 1990 2:20 PM"},
+
+
+  ];
+
+  List filterList = [];
   int selectedIndex = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    filterList = allList; // Initialize filterList with allList
+  }
+
+
+  void filterListByTitle(String title) {
+    setState(() {
+      if (title == LocaleKeys.all.tr()) {
+        filterList = allList;
+      } else {
+        filterList = allList.where((item) => item['title'] == title).toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +74,10 @@ class _NoticeScreenState extends State<NoticeScreen> {
                   bool isSelected = selectedIndex == index;
                   return GestureDetector(
                     onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
+                     setState(() {
+                       selectedIndex = index;
+                     });
+                     filterListByTitle(noticeList[index]);
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 0.0),
@@ -80,12 +113,12 @@ class _NoticeScreenState extends State<NoticeScreen> {
 
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: filterList.length,
               itemBuilder: (context, index) {
                 return listTile(
-                  title: LocaleKeys.notice.tr(),
-                  description: LocaleKeys.privacy_policy_update_notice.tr(), context: context,
-                  date: 'January 1st, 1990 2:20 PM',
+                  title:filterList[index]['title'],
+                  description:filterList[index]['description'], context: context,
+                  date: filterList[index]['date'],
                   onTap: () {
                     context.pushNamed(privacyPolicyUpdateNoticeScreen);
                   },
