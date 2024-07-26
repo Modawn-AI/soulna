@@ -141,7 +141,7 @@ GoRouter createRouter(
           name: 'initialize',
           path: '/',
           //builder: (context, params) => const SignUpScreen(),
-          builder: (context, params) => const BookDetailsScreen(),
+          builder: (context, params) => const MainScreen(),
         ),
         FFRoute(
           name: authScreen,
