@@ -24,6 +24,17 @@ class AppAssets {
   static const String five = 'assets/images/5.png';
   static const String rectangle = 'assets/images/rectangle.png';
 
+  static const String tarot01BlackM = 'assets/tarot/01_black_m.png';
+  static const String tarot01BlackF = 'assets/tarot/01_black_f.png';
+  static const String tarot01WhiteM = 'assets/tarot/01_white_m.png';
+  static const String tarot01WhiteF = 'assets/tarot/01_white_f.png';
+  static const String tarot01BlueM = 'assets/tarot/01_blue_m.png';
+  static const String tarot01BlueF = 'assets/tarot/01_blue_f.png';
+  static const String tarot01RedM = 'assets/tarot/01_red_m.png';
+  static const String tarot01RedF = 'assets/tarot/01_red_f.png';
+  static const String tarot01YellowM = 'assets/tarot/01_yellow_m.png';
+  static const String tarot01YellowF = 'assets/tarot/01_yellow_f.png';
+
   //icons
   static const String apple = 'assets/icon/apple.png';
   static const String google = 'assets/icon/google.png';
