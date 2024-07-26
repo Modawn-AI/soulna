@@ -264,10 +264,7 @@ GoRouter createRouter(
           name: animationScreen,
           builder: (context, params) => const AnimationScreen(route: '',),
         ),
-        FFRoute(
-          name: noticeScreen,
-          builder: (context, params) =>  NoticeScreen(),
-        ),
+
         FFRoute(
           name: privacyPolicyUpdateNoticeScreen,
           builder: (context, params) =>  PrivacyPolicyUpdateNoticeScreen(),
@@ -277,14 +274,7 @@ GoRouter createRouter(
           builder: (context, params) =>  AwaitingResponseScreen(),
         ),
 
-        FFRoute(
-          name: customerService,
-          builder: (context, params) =>  CustomerService(),
-        ),
-        FFRoute(
-          name: termAndConditions,
-          builder: (context, params) =>  TermsAndCondition(),
-        ),
+
         FFRoute(
           name: responseCompletedScreen,
           builder: (context, params) => const ResponseCompletedScreen(),

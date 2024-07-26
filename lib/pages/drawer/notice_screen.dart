@@ -77,7 +77,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
             ),
           ),
           SizedBox(height: 10.h),
-      if(selectedIndex == 0)
+
           Expanded(
             child: ListView.builder(
               itemCount: 10,
@@ -93,28 +93,30 @@ class _NoticeScreenState extends State<NoticeScreen> {
               },
             ),
           ),
-      if(selectedIndex == 1)
-           Expanded(
-            child: Center(child: Text(LocaleKeys.notice.tr())),
-          ),
-      if(selectedIndex == 2)
-           Expanded(
-            child: Expanded(
-              child: Center(child: Text(LocaleKeys.update.tr())),
-            ),
-          ),
-      if(selectedIndex == 3)
-           Expanded(
-            child: Center(child: Text(LocaleKeys.information.tr())),
-          ),
-      if(selectedIndex == 4)
-           Expanded(
-            child:  Center(child: Text(LocaleKeys.Other.tr())),
-          ),
+      // if(selectedIndex == 1)
+      //      Expanded(
+      //       child: Center(child: Text(LocaleKeys.notice.tr())),
+      //     ),
+      // if(selectedIndex == 2)
+      //      Expanded(
+      //       child: Expanded(
+      //         child: Center(child: Text(LocaleKeys.update.tr())),
+      //       ),
+      //     ),
+      // if(selectedIndex == 3)
+      //      Expanded(
+      //       child: Center(child: Text(LocaleKeys.information.tr())),
+      //     ),
+      // if(selectedIndex == 4)
+      //      Expanded(
+      //       child:  Center(child: Text(LocaleKeys.Other.tr())),
+      //     ),
         ],
       ),
     );
   }
+
+
   listTile({required String title, required String description,
   required BuildContext context,
     required GestureTapCallback onTap,
