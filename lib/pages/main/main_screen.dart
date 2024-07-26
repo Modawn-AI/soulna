@@ -22,20 +22,6 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   List<ImageModel> images = [];
 
-  int currentImageIndex = 0;
-  List<String> tarotImages = [
-    AppAssets.tarot01BlackM,
-    AppAssets.tarot01BlackF,
-    AppAssets.tarot01WhiteM,
-    AppAssets.tarot01WhiteF,
-    AppAssets.tarot01BlueM,
-    AppAssets.tarot01BlueF,
-    AppAssets.tarot01RedM,
-    AppAssets.tarot01RedF,
-    AppAssets.tarot01YellowM,
-    AppAssets.tarot01YellowF,
-  ];
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -48,7 +34,8 @@ class _MainScreenState extends State<MainScreen> {
             elevation: 0,
             isScrollControlled: true,
             //isDismissible: false,
-            backgroundColor: ThemeSetting.of(context).primaryText.withOpacity(0.5),
+            backgroundColor:
+                ThemeSetting.of(context).primaryText.withOpacity(0.5),
             context: context,
             builder: (context) {
               return bottomSheetWidget(context);
@@ -62,9 +49,24 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     images = [
-      ImageModel(linear1: ThemeSetting.of(context).linearContainer1, linear2: ThemeSetting.of(context).linearContainer2, image: AppAssets.image1, text: LocaleKeys.check_your_fortune_for_today.tr()),
-      ImageModel(linear1: ThemeSetting.of(context).linearContainer3, linear2: ThemeSetting.of(context).linearContainer4, image: AppAssets.image2, text: LocaleKeys.create_today_diary.tr()),
-      ImageModel(linear1: ThemeSetting.of(context).linearContainer5, linear2: ThemeSetting.of(context).linearContainer6, image: AppAssets.image3, text: LocaleKeys.create_your_journal.tr()),
+      ImageModel(
+          linear1: ThemeSetting.of(context).linearContainer1,
+          linear2: ThemeSetting.of(context).linearContainer2,
+          image: AppAssets.image1,
+          text: LocaleKeys.check_your_fortune_for_today.tr(),
+          route: dateOfBirthMain),
+      ImageModel(
+          linear1: ThemeSetting.of(context).linearContainer3,
+          linear2: ThemeSetting.of(context).linearContainer4,
+          image: AppAssets.image2,
+          text: LocaleKeys.create_today_diary.tr(),
+          route: selectPhotoScreen),
+      ImageModel(
+          linear1: ThemeSetting.of(context).linearContainer5,
+          linear2: ThemeSetting.of(context).linearContainer6,
+          image: AppAssets.image3,
+          text: LocaleKeys.create_your_journal.tr(),
+          route: autobiographyScreen),
     ];
 
     return Scaffold(
@@ -73,7 +75,9 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
       body: ListView(
         children: [
-          HeaderWidget.headerWithLogoAndInstagram(context: context, onTap: () => scaffoldKey.currentState?.openDrawer()),
+          HeaderWidget.headerWithLogoAndInstagram(
+              context: context,
+              onTap: () => scaffoldKey.currentState?.openDrawer()),
           const SizedBox(
             height: 32,
           ),
@@ -98,15 +102,22 @@ class _MainScreenState extends State<MainScreen> {
             margin: const EdgeInsets.only(right: 148, left: 149),
             padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
-              border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+              border: Border.all(
+                  color: ThemeSetting.of(context).tertiary1, width: 1),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Container(
               alignment: Alignment.center,
-              decoration: BoxDecoration(border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1), borderRadius: BorderRadius.circular(50), color: ThemeSetting.of(context).tertiary1),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: ThemeSetting.of(context).tertiary1, width: 1),
+                  borderRadius: BorderRadius.circular(50),
+                  color: ThemeSetting.of(context).tertiary1),
               child: Text(
                 'July 8',
-                style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
+                style: ThemeSetting.of(context)
+                    .bodyMedium
+                    .copyWith(fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -120,17 +131,17 @@ class _MainScreenState extends State<MainScreen> {
               items: images.asMap().entries.map((e) {
                 ImageModel image = e.value;
                 return GestureDetector(
-                  onTap: () async {
-                    setState(() {
-                      currentImageIndex = (currentImageIndex + 1) % tarotImages.length;
-                    });
-                  },
+                  onTap: () => context.pushNamed("${image.route}"),
                   child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 20),
                       height: 300,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [image.linear1, image.linear2], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-                          border: Border.all(color: ThemeSetting.of(context).primaryText),
+                          gradient: LinearGradient(
+                              colors: [image.linear1, image.linear2],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter),
+                          border: Border.all(
+                              color: ThemeSetting.of(context).primaryText),
                           borderRadius: BorderRadius.circular(20)),
                       child: Stack(
                         alignment: Alignment.bottomCenter,
@@ -138,38 +149,52 @@ class _MainScreenState extends State<MainScreen> {
                           Container(
                             height: double.infinity,
                             width: double.infinity,
-                            // padding: const EdgeInsets.only(top: 22),
-                            margin: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                            padding: const EdgeInsets.only(top: 22),
+                            margin: const EdgeInsets.only(
+                                top: 8, left: 8, right: 8),
                             decoration: BoxDecoration(
                                 border: Border(
-                                    right: BorderSide(color: ThemeSetting.of(context).secondaryBackground, width: 1.5),
-                                    left: BorderSide(color: ThemeSetting.of(context).secondaryBackground, width: 1.5),
-                                    top: BorderSide(color: ThemeSetting.of(context).secondaryBackground, width: 1.5)),
-                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-                            // child: Text(
-                            //   image.text,
-                            //   style: ThemeSetting.of(context).titleLarge.copyWith(color: ThemeSetting.of(context).secondaryBackground),
-                            //   textAlign: TextAlign.center,
-                            // ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.asset(
-                                tarotImages[currentImageIndex],
-                                width: 165,
-                                height: 195,
-                                fit: BoxFit.contain,
-                              ),
+                                    right: BorderSide(
+                                        color: ThemeSetting.of(context)
+                                            .secondaryBackground,
+                                        width: 1.5),
+                                    left: BorderSide(
+                                        color: ThemeSetting.of(context)
+                                            .secondaryBackground,
+                                        width: 1.5),
+                                    top: BorderSide(
+                                        color: ThemeSetting.of(context)
+                                            .secondaryBackground,
+                                        width: 1.5)),
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20))),
+                            child: Text(
+                              image.text,
+                              style: ThemeSetting.of(context)
+                                  .titleLarge
+                                  .copyWith(
+                                      color: ThemeSetting.of(context)
+                                          .secondaryBackground),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(bottom: 40),
-                          //   child:
-                          // ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Image.asset(
+                              image.image,
+                              width: 165,
+                              height: 195,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                           Container(
                             height: 50,
                             decoration: BoxDecoration(
                               color: ThemeSetting.of(context).primaryText,
-                              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20)),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -228,7 +253,9 @@ class _MainScreenState extends State<MainScreen> {
                           borderRadius: const BorderRadius.horizontal(
                             left: Radius.circular(3),
                           ),
-                          color: currentIndex == entry.key ? ThemeSetting.of(context).primary : ThemeSetting.of(context).common1)),
+                          color: currentIndex == entry.key
+                              ? ThemeSetting.of(context).primary
+                              : ThemeSetting.of(context).common1)),
                 );
               }).toList(),
             ),
@@ -253,7 +280,9 @@ class _MainScreenState extends State<MainScreen> {
           Container(
             padding: const EdgeInsets.all(15),
             margin: const EdgeInsets.symmetric(horizontal: 17),
-            decoration: BoxDecoration(color: ThemeSetting.of(context).tertiary2, borderRadius: BorderRadius.circular(10)),
+            decoration: BoxDecoration(
+                color: ThemeSetting.of(context).tertiary2,
+                borderRadius: BorderRadius.circular(10)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -262,7 +291,9 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     Text(
                       LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
-                      style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w700),
+                      style: ThemeSetting.of(context)
+                          .bodyMedium
+                          .copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 8,
@@ -357,20 +388,29 @@ class _MainScreenState extends State<MainScreen> {
                   left: 15,
                   right: 15,
                 ),
-                decoration: BoxDecoration(border: Border.all(color: ThemeSetting.of(context).primaryText), color: ThemeSetting.of(context).primary, borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                    border:
+                        Border.all(color: ThemeSetting.of(context).primaryText),
+                    color: ThemeSetting.of(context).primary,
+                    borderRadius: BorderRadius.circular(12)),
                 height: 80.h,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(LocaleKeys.yearly.tr(), style: ThemeSetting.of(context).headlineLarge),
+                    Text(LocaleKeys.yearly.tr(),
+                        style: ThemeSetting.of(context).headlineLarge),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('\$39.99', style: ThemeSetting.of(context).headlineLarge),
+                        Text('\$39.99',
+                            style: ThemeSetting.of(context).headlineLarge),
                         Text(
                           '\$3.33/month',
-                          style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).secondaryBackground.withOpacity(0.5)),
+                          style: ThemeSetting.of(context).captionLarge.copyWith(
+                              color: ThemeSetting.of(context)
+                                  .secondaryBackground
+                                  .withOpacity(0.5)),
                         ),
                       ],
                     )
@@ -383,7 +423,9 @@ class _MainScreenState extends State<MainScreen> {
                 width: 61.w,
                 margin: const EdgeInsets.only(left: 14),
                 alignment: Alignment.center,
-                decoration: BoxDecoration(color: ThemeSetting.of(context).primaryText, borderRadius: BorderRadius.circular(25)),
+                decoration: BoxDecoration(
+                    color: ThemeSetting.of(context).primaryText,
+                    borderRadius: BorderRadius.circular(25)),
                 child: Text('Save 72%',
                     style: ThemeSetting.of(context).bodySmall.copyWith(
                           color: ThemeSetting.of(context).secondaryBackground,
@@ -394,7 +436,9 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
-            decoration: BoxDecoration(color: ThemeSetting.of(context).secondaryBackground, borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(
+                color: ThemeSetting.of(context).secondaryBackground,
+                borderRadius: BorderRadius.circular(12)),
             height: 70.h,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -402,14 +446,22 @@ class _MainScreenState extends State<MainScreen> {
               children: [
                 Text(
                   LocaleKeys.monthly.tr(),
-                  style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).primaryText),
+                  style: ThemeSetting.of(context)
+                      .headlineLarge
+                      .copyWith(color: ThemeSetting.of(context).primaryText),
                 ),
-                Text('\$11.99/month', style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).primaryText)),
+                Text('\$11.99/month',
+                    style: ThemeSetting.of(context)
+                        .headlineLarge
+                        .copyWith(color: ThemeSetting.of(context).primaryText)),
               ],
             ),
           ),
           const SizedBox(height: 30),
-          ButtonWidget.gradientButtonWithImage(context: context, text: LocaleKeys.start.tr(), onTap: () => context.pop()),
+          ButtonWidget.gradientButtonWithImage(
+              context: context,
+              text: LocaleKeys.start.tr(),
+              onTap: () => context.pop()),
           SizedBox(height: 30),
           Center(
             child: Text(
@@ -421,7 +473,8 @@ class _MainScreenState extends State<MainScreen> {
           Center(
             child: Text(
               LocaleKeys.purchases_des.tr(),
-              style: ThemeSetting.of(context).displaySmall.copyWith(color: ThemeSetting.of(context).primaryText.withOpacity(0.7)),
+              style: ThemeSetting.of(context).displaySmall.copyWith(
+                  color: ThemeSetting.of(context).primaryText.withOpacity(0.7)),
               textAlign: TextAlign.center,
             ),
           ),

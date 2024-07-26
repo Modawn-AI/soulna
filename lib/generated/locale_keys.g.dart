@@ -58,8 +58,9 @@ abstract class  LocaleKeys {
   static const would_you_like_to_make_a_diary_with_that_picture = 'would_you_like_to_make_a_diary_with_that_picture';
   static const a_total_of = 'a_total_of';
   static const photos_have_been_selected = 'photos_have_been_selected';
+  static const make_a_diary_for = 'make_a_diary_for';
   static const create_a_diary = 'create_a_diary';
-  static const i_went_on_an_eating_trip_to_gangneung = 'i_went_on_an_eating_trip_to_gangneung';
+  static const today_keyword = 'today_keyword';
   static const enter_your_email = 'enter_your_email';
   static const enter_your_password = 'enter_your_password';
   static const login = 'login';
@@ -151,5 +152,16 @@ abstract class  LocaleKeys {
   static const date_of_birth = 'date_of_birth';
   static const camera = 'camera';
   static const gallery = 'gallery';
+  static const hello_this_is_soulna = 'hello_this_is_soulna';
+  static const Other = 'Other';
+  static const service = 'service';
+  static const article_1 = 'article_1';
+  static const article_1_des = 'article_1_des';
+  static const article_2 = 'article_2';
+  static const article_2_des = 'article_2_des';
+  static const enter_inquiry_name = 'enter_inquiry_name';
+  static const enter_inquiry_des = 'enter_inquiry_des';
+  static const you_can_upload_up_to_5_images = 'you_can_upload_up_to_5_images';
+  static const please_enter_inquiry_or_select_category = 'please_enter_inquiry_or_select_category';
 
 }

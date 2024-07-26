@@ -46,15 +46,18 @@ class ButtonWidget {
   static squareButtonOrange(
           {required BuildContext context,
           required String text,
+            double? height,
+            TextStyle? textStyle,
+            Color? buttonBackgroundColor,
           VoidCallback? onTap}) =>
       CustomButtonWidget(
           text: text,
           onPressed: onTap,
           options: CustomButtonOptions(
               borderRadius: BorderRadius.circular(8),
-              height: 56,
-              color: ThemeSetting.of(context).primary,
-              textStyle: ThemeSetting.of(context).headlineLarge));
+              height:height?? 56,
+              color: buttonBackgroundColor??ThemeSetting.of(context).primary,
+              textStyle: textStyle??ThemeSetting.of(context).headlineLarge));
 
   static roundedButtonOrange(
           {required BuildContext context,
@@ -62,6 +65,7 @@ class ButtonWidget {
           VoidCallback? onTap,
           Color? color,
           double? height,
+            double? width,
           TextStyle? textStyle,
           BorderRadius? borderRadius}) =>
       CustomButtonWidget(
@@ -70,6 +74,7 @@ class ButtonWidget {
           options: CustomButtonOptions(
               borderRadius: borderRadius ?? BorderRadius.circular(50),
               height: height ?? 56,
+              width: width,
               color: color ?? ThemeSetting.of(context).primary,
               textStyle: textStyle ?? ThemeSetting.of(context).headlineLarge));
 

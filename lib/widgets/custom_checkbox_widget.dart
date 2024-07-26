@@ -50,6 +50,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
           Container(
             height: 20,
             width: 20,
+
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: widget.initialValue

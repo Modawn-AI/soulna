@@ -71,9 +71,12 @@ class HeaderWidget {
           ),
         ),
         titleSpacing: 5,
-        title: Text(
-          title ?? '',
-          style: ThemeSetting.of(context).titleLarge,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 11),
+          child: Text(
+            title ?? '',
+            style: ThemeSetting.of(context).titleLarge,
+          ),
         ),
         actions: [
           Padding(

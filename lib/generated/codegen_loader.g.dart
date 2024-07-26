@@ -72,8 +72,9 @@ class CodegenLoader extends AssetLoader{
   "would_you_like_to_make_a_diary_with_that_picture": "Would you like to make\na diary with that picture?",
   "a_total_of": "A total of 8 photos have been selected.\n",
   "photos_have_been_selected": " photos have been selected.",
+  "make_a_diary_for": "Make a diary for ",
   "create_a_diary": "Create a Diary",
-  "i_went_on_an_eating_trip_to_gangneung": "I went on an eating trip\nto Gangneung!",
+  "today_keyword": "Today's Keyword",
   "enter_your_email": "Enter your email.",
   "enter_your_password": "Enter your password.",
   "login": "Login",
@@ -165,7 +166,18 @@ class CodegenLoader extends AssetLoader{
   "change": "Change",
   "date_of_birth": "Date of birth",
   "camera": "Camera",
-  "gallery": "Gallery"
+  "gallery": "Gallery",
+  "hello_this_is_soulna": "Hello, this is Soulna.\nI am writing to inform you that our privacy policy has been revised starting this May. You can review the updated details under \"My Information\" > \"Privacy Policy.\" Soulna is committed to ensuring your safety and protecting your personal information.\nThank you.",
+  "Other": "Other",
+  "service": "Service",
+  "article_1": "Article 1 (Purpose)",
+  "article_1_des": "Thank you for using the services provided by ModOn Co., Ltd. (hereinafter referred to as the \"Company\"). The Company has established a unified login account system that allows you to conveniently access various internet and mobile services provided by the Company or its affiliates. In conjunction with this, we have formulated the 'ModOn Terms of Service' (hereinafter referred to as the \"Terms\"), which apply to this system. These Terms outline the rights, obligations, responsibilities, usage conditions, and procedures necessary for you to use the Kakao Account Service. Please take a moment to carefully read and understand these basic provisions.",
+  "article_2": "Article 2 (Effectiveness and Amendment of the Terms)",
+  "article_2_des": "① The content of these Terms will be posted on the ModOn website or on the screens of individual services, or notified through other means, and will take effect for all of you who agree to these Terms.\n\n② The Company may amend these Terms within the scope not violating relevant laws. When these Terms are amended, the Company will generally announce or notify you of the changes through the service notice at least 15 days before the effective date. If the amendments include terms disadvantageous to you, the Company will notify you individually through email sent to the email address registered in your Kakao Account (or through other electronic means such as sending a message within the service or displaying a notification message within the service) at least 30 days before the effective date, or through KakaoTalk message or text message to the mobile phone number you have registered. \n\n③ The Company will clearly notify that if you do not express your refusal to accept the amended Terms within 7 days from the date of notice or notification pursuant to the preceding clause, it will be deemed that you have accepted the amended Terms. If you do not agree to the amended Terms, you may terminate the service agreement.",
+  "enter_inquiry_name": "Enter inquiry Name",
+  "enter_inquiry_des": "Enter Your inquiry",
+  "you_can_upload_up_to_5_images": "You can upload up to 5 images.",
+  "please_enter_inquiry_or_select_category": "Please enter inquiry or select category."
 };
 static const Map<String,dynamic> ko = {
   "get_Started": "",
@@ -225,8 +237,9 @@ static const Map<String,dynamic> ko = {
   "would_you_like_to_make_a_diary_with_that_picture": "",
   "a_total_of": "",
   "photos_have_been_selected": " ",
+  "make_a_diary_for": "",
   "create_a_diary": "",
-  "i_went_on_an_eating_trip_to_gangneung": "",
+  "today_keyword": "",
   "enter_your_email": "",
   "enter_your_password": "",
   "login": "",
@@ -318,7 +331,18 @@ static const Map<String,dynamic> ko = {
   "change": "",
   "date_of_birth": "",
   "camera": "",
-  "gallery": ""
+  "gallery": "",
+  "hello_this_is_soulna": "",
+  "Other": "",
+  "service": "",
+  "article_1": "",
+  "article_1_des": "",
+  "article_2": "",
+  "article_2_des": "",
+  "enter_inquiry_name": "",
+  "enter_inquiry_des": "",
+  "you_can_upload_up_to_5_images": "",
+  "please_enter_inquiry_or_select_category": ""
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ko": ko};
 }

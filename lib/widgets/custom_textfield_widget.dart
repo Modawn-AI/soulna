@@ -22,6 +22,7 @@ class CustomTextField extends StatefulWidget {
   final Color? fillColor;
   final bool autoFocus;
   final Widget? suffix;
+  final int? maxLength;
 
   CustomTextField(
       {this.hintText = '',
@@ -42,7 +43,7 @@ class CustomTextField extends StatefulWidget {
       this.fillColor,
       this.isPassword = false,
       this.autoFocus = false,
-      this.suffix});
+      this.suffix,this.maxLength});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -55,7 +56,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       key: widget.key,
-
+      maxLength: widget.maxLength,
       readOnly: widget.readOnly,
       maxLines: widget.maxLines,
       controller: widget.controller,

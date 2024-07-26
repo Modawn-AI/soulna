@@ -23,6 +23,8 @@ class AppAssets {
   static const String four = 'assets/images/4.png';
   static const String five = 'assets/images/5.png';
   static const String rectangle = 'assets/images/rectangle.png';
+  static const String rectangle1 = 'assets/images/rectangle1.png';
+  static const String backgroundImage = 'assets/images/background_image.png';
 
   static const String tarot01BlackM = 'assets/tarot/01_black_m.png';
   static const String tarot01BlackF = 'assets/tarot/01_black_f.png';

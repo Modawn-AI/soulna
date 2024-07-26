@@ -5,7 +5,8 @@ import '../utils/package_exporter.dart';
 class CustomCalendarWidget extends StatelessWidget {
   final List<NeatCleanCalendarEvent> eventsList;
   final Widget? showEventWidget;
-  const CustomCalendarWidget({super.key,required this.eventsList,this.showEventWidget});
+  const CustomCalendarWidget(
+      {super.key, required this.eventsList, this.showEventWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,7 @@ class CustomCalendarWidget extends StatelessWidget {
                 color: ThemeSetting.of(context).common0,
                 thickness: 2,
               ),
-              Expanded(
-                child: showEventWidget ?? Container()
-              ),
+              Expanded(child: showEventWidget ?? Container()),
             ],
           ),
         );
