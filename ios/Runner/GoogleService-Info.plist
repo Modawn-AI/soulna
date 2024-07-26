@@ -2,24 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>1001165366805-g0vledgoov5vk6qbmon3bs6vgbjj9p6n.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1001165366805-g0vledgoov5vk6qbmon3bs6vgbjj9p6n</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>1001165366805-37fepqumcvvhg1n3a8pmgafon47g9mv3.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD7iPSwjuJx1OlJgwhKTDiEAPSQJ_szaXg</string>
+	<string>AIzaSyB9z23tZRelypgGVW8D_CaLyWh2_MbQdoc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1001165366805</string>
+	<string>335339482045</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.modawn.dearme</string>
+	<string>com.modawn.soulna</string>
 	<key>PROJECT_ID</key>
-	<string>dearme-b88e7</string>
+	<string>modawn-soulna</string>
 	<key>STORAGE_BUCKET</key>
-	<string>dearme-b88e7.appspot.com</string>
+	<string>modawn-soulna.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1001165366805:ios:c02007418e38ab48e4101c</string>
+	<string>1:335339482045:ios:1a74b65e787465ceb100d4</string>
 </dict>
 </plist>
