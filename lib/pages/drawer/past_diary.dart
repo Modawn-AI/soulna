@@ -1,5 +1,6 @@
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/custom_calendar_widget.dart';
+import 'package:Soulna/widgets/custom_ios_date_picker.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
@@ -73,6 +74,14 @@ class _PastDiaryState extends State<PastDiary> {
       appBar: HeaderWidget.headerCalendar(
         context: context,
         title: DateFormat.yMMMM().format(DateTime.now()),
+        onTapOnDownArrow: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return CustomDatePicker();
+            },
+          );
+        },
         onTap: () async {
           setState(() {
             if (index == 0) {

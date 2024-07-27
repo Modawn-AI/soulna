@@ -65,6 +65,22 @@
    "create_a_diary" : "Create a Diary",
    "today_keyword" : "Today's Keyword",
 
+   "update_my_diary" : "Update my diary",
+   "delete_my_diary" : "Delete my diary",
+   "would_you_like_to_delete_the_diary" : "Would you like to delete the diary?\nThis action cannot be undone.",
+   "delete" : "Delete",
+   "it_has_been_deleted" : "It has been deleted.",
+   "create_my_own_journal" : "Create my own Journal",
+   "how_do_you_want_it_to_be_made" : "How do you want it\nto be made?",
+   "it_automatically_creates_a_journal_through_the_Ai_algorithm" : "It automatically creates a journal\nthrough the Ai algorithm",
+   "my_album" : "My Album",
+   "choose_a_photo_to_create_your_own_journal" : "Choose a photo to create your own journal.",
+   "instagram" : "Instagram",
+   "link_instagram_to_import_and_create_data" : "Link Instagram to import and create data.",
+   "please_check_the_selected_photo" : "Please check the selected photo.",
+   "the_life_story_of_hopeful_stella" : "The life story of hopeful Stella.",
+   "my_journal_keyword" : "My Journal's Keyword",
+
    "enter_your_email" : "Enter your email.",
    "enter_your_password" : "Enter your password.",
    "login" : "Login",
@@ -185,5 +201,12 @@
    "enter_inquiry_name": "Enter inquiry Name",
    "enter_inquiry_des": "Enter Your inquiry",
    "you_can_upload_up_to_5_images": "You can upload up to 5 images.",
-   "please_enter_inquiry_or_select_category": "Please enter inquiry or select category."
+   "please_enter_inquiry_or_select_category": "Please enter inquiry or select category.",
+
+   "i_have_not_checked_my_fortune_yet": "I haven't checked my fortune yet.",   "i_have_not_written_a_diary_yet": "I haven't written a diary entry yet.",
+   "Instagram": "Instagram",
+   "pictures": "Pictures",
+   "edit": "Edit",
+   "to_unlock_please_subscribe": "To unlock,\nplease subscribe.",
+   "its_been_a_month_since_the_update": "It's been a month since the update."
 }

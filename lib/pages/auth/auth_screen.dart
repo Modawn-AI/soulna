@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import '../../utils/package_exporter.dart';
 

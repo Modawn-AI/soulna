@@ -61,6 +61,21 @@ abstract class  LocaleKeys {
   static const make_a_diary_for = 'make_a_diary_for';
   static const create_a_diary = 'create_a_diary';
   static const today_keyword = 'today_keyword';
+  static const update_my_diary = 'update_my_diary';
+  static const delete_my_diary = 'delete_my_diary';
+  static const would_you_like_to_delete_the_diary = 'would_you_like_to_delete_the_diary';
+  static const delete = 'delete';
+  static const it_has_been_deleted = 'it_has_been_deleted';
+  static const create_my_own_journal = 'create_my_own_journal';
+  static const how_do_you_want_it_to_be_made = 'how_do_you_want_it_to_be_made';
+  static const it_automatically_creates_a_journal_through_the_Ai_algorithm = 'it_automatically_creates_a_journal_through_the_Ai_algorithm';
+  static const my_album = 'my_album';
+  static const choose_a_photo_to_create_your_own_journal = 'choose_a_photo_to_create_your_own_journal';
+  static const instagram = 'instagram';
+  static const link_instagram_to_import_and_create_data = 'link_instagram_to_import_and_create_data';
+  static const please_check_the_selected_photo = 'please_check_the_selected_photo';
+  static const the_life_story_of_hopeful_stella = 'the_life_story_of_hopeful_stella';
+  static const my_journal_keyword = 'my_journal_keyword';
   static const enter_your_email = 'enter_your_email';
   static const enter_your_password = 'enter_your_password';
   static const login = 'login';
@@ -163,5 +178,12 @@ abstract class  LocaleKeys {
   static const enter_inquiry_des = 'enter_inquiry_des';
   static const you_can_upload_up_to_5_images = 'you_can_upload_up_to_5_images';
   static const please_enter_inquiry_or_select_category = 'please_enter_inquiry_or_select_category';
+  static const i_have_not_checked_my_fortune_yet = 'i_have_not_checked_my_fortune_yet';
+  static const i_have_not_written_a_diary_yet = 'i_have_not_written_a_diary_yet';
+  static const Instagram = 'Instagram';
+  static const pictures = 'pictures';
+  static const edit = 'edit';
+  static const to_unlock_please_subscribe = 'to_unlock_please_subscribe';
+  static const its_been_a_month_since_the_update = 'its_been_a_month_since_the_update';
 
 }

@@ -15,6 +15,8 @@ import 'package:Soulna/pages/drawer/customer_service.dart';
 import 'package:Soulna/pages/drawer/notice_screen.dart';
 import 'package:Soulna/pages/drawer/past_diary.dart';
 import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
+import 'package:Soulna/pages/main/create_journal.dart';
+import 'package:Soulna/pages/main/journal_screen.dart';
 import 'package:Soulna/pages/notification/notification_settings.dart';
 import 'package:Soulna/pages/settings/data_of_birth_screen.dart';
 import 'package:Soulna/pages/profile/edit_profile.dart';
@@ -24,22 +26,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:Soulna/utils/serialization_util.dart';
-
-import '../pages/auth/auth_screen.dart';
-import '../pages/auth/login_screen.dart';
-import '../pages/drawer/awaiting_response_screen.dart';
-import '../pages/drawer/one_to_one_screen.dart';
-import '../pages/drawer/privacy_policy_update_notice_screen.dart';
-import '../pages/drawer/response_completed_screen.dart';
-import '../pages/main/date_of_birth_main.dart';
-import '../pages/main/main_screen.dart';
-import '../pages/main/select_photo_screen.dart';
-import '../pages/past_fortune_screen/past_fortune_calenderview_screen.dart';
-import '../pages/drawer/past_fortune_screen.dart';
-import '../pages/settings/account_setting_screen.dart';
-import '../pages/settings/data_of_birth_screen.dart';
-import '../pages/settings/new_password_screen.dart';
-import '../pages/settings/settings_screen.dart';
+import '../pages/auth/auth.dart';
+import '../pages/drawer/drawer.dart';
+import '../pages/main/main.dart';
+import '../pages/settings/settings.dart';
 
 export 'package:go_router/go_router.dart';
 
@@ -133,7 +123,7 @@ String dateOfBirthScreen = 'DateOfBirthScreen';
 String dateOfBirthMain = 'DateOfBirthMain';
 String bookDetailScreen = 'BookDetailScreen';
 String pastFortuneScreen = 'PastFortuneScreen';
-String pastDiary = 'x PastDiary';
+String pastDiary = 'PastDiary';
 String noticeScreen = 'NoticeScreen';
 String customerService = 'CustomerService';
 String termAndConditions = 'TermAndConditions';
@@ -144,6 +134,11 @@ String oneToOneScreen = 'OneToOneScreen';
 String selectPhotoScreen = 'SelectPhotoScreen';
 String autobiographyScreen = 'AutobiographyScreen';
 String animationScreen = 'AnimationScreen';
+String journalScreen = 'JournalScreen';
+String noPastFortuneScreen = 'NoPastFortuneScreen';
+String noPastDiaryScreen = 'NoPastDiaryScreen';
+String selectAlbumsScreen = 'SelectAlbumsScreen';
+String createJournal = 'CreateJournal';
 //String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
 //String myInfoScreen = 'myInfoScreen';
 GoRouter createRouter(
@@ -241,7 +236,7 @@ GoRouter createRouter(
         ),
         FFRoute(
           name: noticeScreen,
-          builder: (context, params) =>  NoticeScreen(),
+          builder: (context, params) => NoticeScreen(),
         ),
 
         FFRoute(
@@ -258,22 +253,23 @@ GoRouter createRouter(
         ),
         FFRoute(
           name: autobiographyScreen,
-          builder: (context, params) =>  AutobiographyScreen(),
+          builder: (context, params) => AutobiographyScreen(),
         ),
         FFRoute(
           name: animationScreen,
-          builder: (context, params) => const AnimationScreen(route: '',),
+          builder: (context, params) => const AnimationScreen(
+            route: '',
+          ),
         ),
 
         FFRoute(
           name: privacyPolicyUpdateNoticeScreen,
-          builder: (context, params) =>  PrivacyPolicyUpdateNoticeScreen(),
+          builder: (context, params) => PrivacyPolicyUpdateNoticeScreen(),
         ),
         FFRoute(
           name: awaitingResponseScreen,
-          builder: (context, params) =>  AwaitingResponseScreen(),
+          builder: (context, params) => AwaitingResponseScreen(),
         ),
-
 
         FFRoute(
           name: responseCompletedScreen,
@@ -283,6 +279,27 @@ GoRouter createRouter(
           name: oneToOneScreen,
           builder: (context, params) => const OneToOneScreen(),
         ),
+        FFRoute(
+          name: journalScreen,
+          builder: (context, params) => const JournalScreen(),
+        ),
+        FFRoute(
+          name: noPastFortuneScreen,
+          builder: (context, params) => const NoPastFortuneScreen(),
+        ),
+        FFRoute(
+          name: noPastDiaryScreen,
+          builder: (context, params) => const NoPastDiaryScreen(),
+        ),
+        FFRoute(
+          name: selectAlbumsScreen,
+          builder: (context, params) => const SelectAlbumsScreen(),
+        ),
+        FFRoute(
+          name: createJournal,
+          builder: (context, params) => const CreateJournal(),
+        ),
+
         // FFRoute(
         //   name: pastFortuneCalenderViewScreen,
         //   builder: (context, params) => PastFortuneCalenderViewScreen(),

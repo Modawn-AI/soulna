@@ -1,19 +1,17 @@
-import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
-import 'package:Soulna/utils/sharedPref_string.dart';
-import 'package:Soulna/utils/shared_preference.dart';
-import 'package:Soulna/widgets/button/button_widget.dart';
-import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../utils/app_assets.dart';
+import '../../widgets/button/button_widget.dart';
+import '../../widgets/header/header_widget.dart';
 
-class SelectPhotoScreen extends StatefulWidget {
-  const SelectPhotoScreen({super.key});
+class SelectAlbumsScreen extends StatefulWidget {
+  const SelectAlbumsScreen({super.key});
 
   @override
-  State<SelectPhotoScreen> createState() => _SelectPhotoScreenState();
+  State<SelectAlbumsScreen> createState() => _SelectAlbumsScreenState();
 }
 
-class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
+class _SelectAlbumsScreenState extends State<SelectAlbumsScreen> {
   final List<Map<String, dynamic>> items = [
     {
       'date': DateTime.now(),
@@ -75,148 +73,6 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
     return totalImages;
   }
 
-  Widget bottomSheetForCreateDiary() {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.88,
-      decoration: BoxDecoration(
-          color: ThemeSetting.of(context).info,
-          borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(15), topLeft: Radius.circular(15))),
-      child: ListView(
-        children: [
-          const SizedBox(
-            height: 30,
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 18),
-              child: GestureDetector(
-                onTap: () => context.pop(),
-                child: Image.asset(
-                  AppAssets.delete,
-                  width: 30,
-                  height: 30,
-                  color: ThemeSetting.of(context).secondaryBackground,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            LocaleKeys.would_you_like_to_make_a_diary_with_that_picture.tr(),
-            textAlign: TextAlign.center,
-            style: ThemeSetting.of(context)
-                .labelLarge
-                .copyWith(color: ThemeSetting.of(context).secondaryBackground),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Text(
-              '${LocaleKeys.a_total_of.tr()} ${LocaleKeys.make_a_diary_for.tr()}July 8',
-              textAlign: TextAlign.center,
-              style: ThemeSetting.of(context).headlineLarge),
-          const SizedBox(
-            height: 50,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                squareWidget(image: AppAssets.rectangle),
-                const SizedBox(
-                  width: 8,
-                ),
-                squareWidget(image: AppAssets.rectangle, width: 150),
-                const SizedBox(
-                  width: 8,
-                ),
-                squareWidget(image: AppAssets.rectangle),
-                const SizedBox(
-                  width: 8,
-                ),
-                SizedBox(
-                  width: 100,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                squareWidget(image: AppAssets.rectangle),
-                const SizedBox(
-                  width: 8,
-                ),
-                squareWidget(image: AppAssets.rectangle, width: 150),
-                const SizedBox(
-                  width: 8,
-                ),
-                squareWidget(image: AppAssets.rectangle),
-                const SizedBox(
-                  width: 8,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                squareWidget(image: AppAssets.rectangle),
-                const SizedBox(
-                  width: 8,
-                ),
-                squareWidget(image: AppAssets.rectangle, width: 150),
-                const SizedBox(
-                  width: 8,
-                ),
-                squareWidget(image: AppAssets.rectangle),
-                const SizedBox(
-                  width: 8,
-                ),
-                SizedBox(
-                  width: 100,
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 100,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: ButtonWidget.gradientButtonWithImage(
-                context: context,
-                text: LocaleKeys.create_a_diary.tr(),
-                onTap: () {
-                  SharedPreferencesManager.setString(
-                      key: SharedprefString.animationScreen,
-                      value: autobiographyScreen);
-                  context.pushReplacementNamed(animationScreen);
-                }),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget squareWidget({required String image, double? width}) {
     return Container(
       width: width ?? 80,
@@ -249,31 +105,13 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
                   topRight: Radius.circular(15), topLeft: Radius.circular(15))),
           child: ListView(
             children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18),
-                    child: Text(
-                      LocaleKeys.set_timeline.tr(),
-                      style: ThemeSetting.of(context).titleLarge.copyWith(
-                          color: ThemeSetting.of(context).secondaryBackground),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color:
-                            ThemeSetting.of(context).black1.withOpacity(0.2)),
-                    child: Text(
-                      '  ${selectedImages.length}/${getTotalImages()}  ',
-                      style: ThemeSetting.of(context).captionLarge.copyWith(
-                          color: ThemeSetting.of(context).secondaryBackground),
-                    ),
-                  )
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 18),
+                child: Text(
+                  LocaleKeys.please_check_the_selected_photo.tr(),
+                  style: ThemeSetting.of(context).titleLarge.copyWith(
+                      color: ThemeSetting.of(context).secondaryBackground),
+                ),
               ),
               const SizedBox(
                 height: 30,
@@ -281,57 +119,44 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
               SizedBox(
                 height: 60,
                 //width: 60,
-                child: ReorderableListView(
+                child: ListView(
                   shrinkWrap: true,
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   scrollDirection: Axis.horizontal,
-                  onReorder: (oldIndex, newIndex) {
-                    setState(() {
-                      if (newIndex > oldIndex) {
-                        newIndex -= 1;
-                      }
-                      final item = selectedImages.removeAt(oldIndex);
-                      selectedImages.insert(newIndex, item);
-                      //_updateSelectedIndexes(context);
-                    });
-                    setState(() {});
-                  },
+                  // onReorder: (oldIndex, newIndex) {
+                  //   setState(() {
+                  //     if (newIndex > oldIndex) {
+                  //       newIndex -= 1;
+                  //     }
+                  //     final item = selectedImages.removeAt(oldIndex);
+                  //     selectedImages.insert(newIndex, item);
+                  //     //_updateSelectedIndexes(context);
+                  //   });
+                  //   setState(() {});
+                  // },
                   children: List.generate(
                     selectedImages.length,
                     (index) {
                       final image = selectedImages[index];
                       return Container(
-                          height: 60,
-                          width: 60,
-                          key: ValueKey(image),
-                          margin: const EdgeInsets.only(right: 5, left: 2),
-                          alignment: Alignment.topLeft,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: ThemeSetting.of(context)
-                                      .secondaryBackground),
-                              color: ThemeSetting.of(context).common4,
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  image['path'],
-                                ),
-                                fit: BoxFit.cover,
-                              )),
-                          child: Container(
-                            height: 22,
-                            width: 22,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10)),
-                              color:
-                                  ThemeSetting.of(context).secondaryBackground,
-                            ),
-                            child: Text(image['index'].toString(),
-                                style: ThemeSetting.of(context).bodySmall),
-                          ));
+                        height: 60,
+                        width: 60,
+                        key: ValueKey(image),
+                        margin: const EdgeInsets.only(right: 5, left: 2),
+                        alignment: Alignment.topLeft,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: ThemeSetting.of(context)
+                                    .secondaryBackground),
+                            color: ThemeSetting.of(context).common4,
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              image: AssetImage(
+                                image['path'],
+                              ),
+                              fit: BoxFit.cover,
+                            )),
+                      );
                     },
                   ),
                 ),
@@ -348,14 +173,8 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
                   color1: ThemeSetting.of(context).black1,
                   color2: ThemeSetting.of(context).black2,
                   onTap: () {
-                    showModalBottomSheet(
-                      elevation: 1,
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) {
-                        return bottomSheetForCreateDiary();
-                      },
-                    );
+                    context.pop();
+                    context.pop();
                   },
                 ),
               ),
@@ -375,37 +194,6 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
           context: context, title: LocaleKeys.select_photo.tr()),
       body: ListView(
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-            color: ThemeSetting.of(context).common0,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Image.asset(
-                    AppAssets.logo,
-                    height: 17,
-                    width: 17,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                  child: Text(
-                    LocaleKeys
-                        .it_automatically_creates_a_diary_through_the_Ai_algorithm
-                        .tr(),
-                    style: ThemeSetting.of(context).captionMedium,
-                  ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
           ListView.builder(
             shrinkWrap: true,
             itemCount: items.length,

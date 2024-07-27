@@ -1,9 +1,4 @@
-import 'dart:ui';
-
 import 'package:Soulna/utils/app_assets.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
-
 import '../../utils/package_exporter.dart';
 
 class ButtonWidget {
@@ -106,6 +101,8 @@ class ButtonWidget {
     required String text,
      String? imageString,
     VoidCallback? onTap,
+     Color? color1,
+     Color? color2
   }) =>
       GestureDetector(
         onTap: onTap,
@@ -113,8 +110,8 @@ class ButtonWidget {
           height: 56,
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-              ThemeSetting.of(context).black1,
-              ThemeSetting.of(context).black2,
+             color1?? ThemeSetting.of(context).black1,
+            color2??  ThemeSetting.of(context).black2,
             ]),
             color: ThemeSetting.of(context).primary,
             borderRadius: BorderRadius.circular(50),

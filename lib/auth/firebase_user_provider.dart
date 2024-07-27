@@ -65,7 +65,6 @@ class DearMeFirebaseUser extends BaseAuthUser {
       // 사용자 정보 다시 로드
       await refreshUser();
     } catch (e) {
-      print('Token refresh failed: $e');
       // 토큰 갱신 실패 시 로그아웃 처리
       await FirebaseAuth.instance.signOut();
       user = null;

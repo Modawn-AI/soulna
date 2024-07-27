@@ -1,13 +1,14 @@
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_snackbar_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/gestures.dart';
-import 'package:get/state_manager.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../utils/package_exporter.dart';
+import '../../widgets/custom_dialog_widget.dart';
+import '../../widgets/custom_hashtag_function.dart';
 
 class AutobiographyScreen extends StatefulWidget {
   const AutobiographyScreen({super.key});
@@ -34,7 +35,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
     "I went to Gangneung Gongneung Coffee where I filled my stomach hard. I ate brunch, cake, and americano here.",
   ];
 
-  List hashTag = [
+  List<String> hashTag = [
     "dreamy",
     "Hyundai Outlet",
     "sea",
@@ -56,6 +57,69 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
       children: [
         HeaderWidget.headerWithAction(
           context: context,
+          showMoreIconOnTap: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return Container(
+                  height: MediaQuery.of(context).size.height * 0.20,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                      color: ThemeSetting.of(context).secondaryBackground,
+                      borderRadius: const BorderRadius.horizontal(
+                          right: Radius.circular(15),
+                          left: Radius.circular(15))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          context.pop();
+                          context.pushReplacementNamed(selectPhotoScreen);
+                        },
+                        child: Text(
+                          LocaleKeys.update_my_diary.tr(),
+                          style: ThemeSetting.of(context).bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          context.pop();
+                          showDialog(
+                            context: context,
+                            builder: (context) => CustomDialogWidget(
+                              context: context,
+                              title: LocaleKeys.delete_my_diary.tr(),
+                              content: LocaleKeys
+                                  .would_you_like_to_delete_the_diary
+                                  .tr(),
+                              confirmText: LocaleKeys.delete.tr(),
+                              onConfirm: () {
+                                context.pop();
+                                CustomSnackBarWidget.showSnackBar(
+                                    context: context,
+                                    message:
+                                        LocaleKeys.it_has_been_deleted.tr());
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          LocaleKeys.delete_my_diary.tr(),
+                          style: ThemeSetting.of(context).bodyMedium,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            );
+          },
         ),
         const SizedBox(
           height: 10,
@@ -96,7 +160,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
           height: 40,
         ),
         carouselSlider(
-          scrollPhysics: NeverScrollableScrollPhysics(),
+          scrollPhysics: const NeverScrollableScrollPhysics(),
           onPageChanged: (p0, p1) {
             setState(() {
               showHeader = true;
@@ -198,13 +262,12 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                 //     }).toList(),
                 //   ),
                 // ),
-                Text(
-                  text[index],
-                  style: ThemeSetting.of(context).bodyLarge.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                RichText(
+                  text: CustomHashtagFunction.getStyledText(
+                      text: text[index], keywords: hashTag, context: context),
                 ),
-                if (showKeyword)
+
+                if (index == text.length - 1)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -245,7 +308,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                       const SizedBox(
                         height: 50,
                       ),
-                      Divider(),
+                      const Divider(),
                       const SizedBox(
                         height: 30,
                       ),
@@ -295,22 +358,20 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                   Container(
                     width: 310,
                     height: 230,
-                    margin: const EdgeInsets.only(right:18 ),
+                    margin: const EdgeInsets.only(right: 18),
                     decoration: BoxDecoration(
-                        border:
-                            Border.all(color: ThemeSetting.of(context).black1),
-                        borderRadius: BorderRadius.circular(10),
-                        image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(AppAssets.rectangle))),
+                      color: ThemeSetting.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(10),
+                      border:
+                          Border.all(color: ThemeSetting.of(context).black1),
+                    ),
                     child: Container(
                       margin: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                            color:
-                                ThemeSetting.of(context).secondaryBackground),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                          borderRadius: BorderRadius.circular(10),
+                          image: const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(AppAssets.rectangle))),
                     ),
                   ),
                   Positioned(
@@ -345,7 +406,8 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
             aspectRatio: 0.9,
             height: 500,
 
-            scrollPhysics: scrollPhysics ?? AlwaysScrollableScrollPhysics(),
+            scrollPhysics:
+                scrollPhysics ?? const AlwaysScrollableScrollPhysics(),
             onPageChanged: onPageChanged,
             // onPageChanged: (index, reason) {
             //   setState(() {

@@ -1,7 +1,5 @@
 import 'package:Soulna/utils/package_exporter.dart';
 
-import 'package:get/get.dart';
-
 class CustomSnackBarWidget {
   static void showSnackBar({
     required BuildContext context,
