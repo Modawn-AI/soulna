@@ -23,6 +23,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
       appBar: HeaderWidget.headerBack(
         context: context,
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

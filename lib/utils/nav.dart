@@ -160,7 +160,7 @@ GoRouter createRouter(
           name: 'initialize',
           path: '/',
           //builder: (context, params) => const SignUpScreen(),
-          builder: (context, params) => const MainScreen(),
+          builder: (context, params) => const SplashScreen(),
         ),
         FFRoute(
           name: authScreen,

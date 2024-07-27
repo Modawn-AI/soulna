@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:ui';
+
 import 'package:Soulna/models/image_model.dart';
 import 'package:Soulna/pages/drawer/drawer_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
@@ -8,6 +10,7 @@ import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,7 +21,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   int currentIndex = 0;
-  bool isPremium = true;
+  bool isPremium = false;
   int previousIndex = 0;
   List<ImageModel> images = [];
   late AnimationController _animationController;
@@ -276,36 +279,40 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
-                           if(!isPremium ) Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: ThemeSetting.of(context)
-                                      .primaryText
-                                      .withOpacity(0.8)),
-                            ),
-                            if(!isPremium ) Positioned(
-                              top: 110,
-                              child: Image.asset(
-                                AppAssets.lock,
-                                height: 50,
-                                width: 50,
+                            if (!isPremium)
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: ThemeSetting.of(context)
+                                        .primaryText
+                                        .withOpacity(0.8)),
                               ),
-                            ),
-                            if(!isPremium ) SizedBox(
-                              height: 10,
-                            ),
-                            if(!isPremium )  Positioned(
-                              top: 170,
-                              child: Text(
-                                LocaleKeys.to_unlock_please_subscribe.tr(),
-                                textAlign: TextAlign.center,
-                                style: ThemeSetting.of(context)
-                                    .bodyMedium
-                                    .copyWith(
-                                        color: ThemeSetting.of(context)
-                                            .secondaryBackground),
+                            if (!isPremium)
+                              Positioned(
+                                top: 110,
+                                child: Image.asset(
+                                  AppAssets.lock,
+                                  height: 50,
+                                  width: 50,
+                                ),
                               ),
-                            )
+                            if (!isPremium)
+                              SizedBox(
+                                height: 10,
+                              ),
+                            if (!isPremium)
+                              Positioned(
+                                top: 170,
+                                child: Text(
+                                  LocaleKeys.to_unlock_please_subscribe.tr(),
+                                  textAlign: TextAlign.center,
+                                  style: ThemeSetting.of(context)
+                                      .bodyMedium
+                                      .copyWith(
+                                          color: ThemeSetting.of(context)
+                                              .secondaryBackground),
+                                ),
+                              )
                           ],
                         )),
                   );
