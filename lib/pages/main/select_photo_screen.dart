@@ -58,7 +58,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
   void _updateSelectedIndexes(BuildContext context) {
     if (selectedImages.length > 1) {
       showModalBottomSheet(
-        elevation: 1,
+        elevation: 0,
         context: context,
         builder: (context) {
           return bottomSheet();
@@ -80,7 +80,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
 
   Widget bottomSheetForCreateDiary() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.98,
+      height: MediaQuery.of(context).size.height * 0.88,
       decoration: BoxDecoration(
           color: ThemeSetting.of(context).info,
           borderRadius: const BorderRadius.only(
@@ -213,7 +213,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
                 }),
           ),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
         ],
       ),
@@ -354,6 +354,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
                     showModalBottomSheet(
                       elevation: 1,
                       context: context,
+                      isScrollControlled: true,
                       builder: (context) {
                         return bottomSheetForCreateDiary();
                       },
