@@ -42,7 +42,7 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
             dialHandColor: ThemeSetting.of(context).primary,
             dialBackgroundColor: ThemeSetting.of(context).secondaryBackground,
             entryModeIconColor: ThemeSetting.of(context).primary,
-            hourMinuteTextColor: ThemeSetting.of(context).primaryText,
+            hourMinuteTextColor: ThemeSetting.of(context).secondaryBackground,
             hourMinuteColor: ThemeSetting.of(context).primary,
             // backgroundColor: ThemeSetting.of(context).secondaryBackground
             cancelButtonStyle: ButtonStyle(

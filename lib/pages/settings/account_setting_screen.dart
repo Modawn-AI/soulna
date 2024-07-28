@@ -101,7 +101,7 @@ class AccountSettingScreen extends StatelessWidget {
                   onTap: () {
                     showDialog(
                         context: context,
-                        builder: (_) => CommonDialog(
+                        builder: (_) => CustomDialogWidget(
                               context: context,
                               confirmText: LocaleKeys.Sure.tr(),
                               content: LocaleKeys

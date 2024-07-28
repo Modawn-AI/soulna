@@ -2,14 +2,14 @@ import 'package:Soulna/utils/package_exporter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 
-class CommonDialog extends StatelessWidget {
+class CustomDialogWidget extends StatelessWidget {
   final BuildContext context;
   final String title;
   final String content;
   final String confirmText;
   final VoidCallback onConfirm;
 
-  const CommonDialog({
+  const CustomDialogWidget({
     required this.context,
     required this.title,
     required this.content,

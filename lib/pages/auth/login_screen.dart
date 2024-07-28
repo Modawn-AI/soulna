@@ -18,15 +18,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   var authCon = Get.find<AuthController>();
-
-  @override
-  void initState() {
-    super.initState();
-    // 이메일과 패스워드 필드에 임시 기본값 설정
-    authCon.emailCon.value.text = 'example@email.com';
-    authCon.passwordCon.value.text = 'password123';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
               () => CustomTextField(
                 controller: authCon.emailCon.value,
                 hintText: LocaleKeys.enter_your_email.tr(),
-                validator: CustomValidatorWidget.validateEmail(value: authCon.emailCon.value.text),
+                validator: CustomValidatorWidget.validateEmail(
+                    value: authCon.emailCon.value.text),
               ),
             ),
             const SizedBox(
@@ -52,7 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: authCon.passwordCon.value,
               hintText: LocaleKeys.enter_your_password.tr(),
               isPassword: true,
-              validator: CustomValidatorWidget.validatePassword(value: authCon.passwordCon.value.text),
+              validator: CustomValidatorWidget.validatePassword(
+                  value: authCon.passwordCon.value.text),
             ),
             const SizedBox(
               height: 20,

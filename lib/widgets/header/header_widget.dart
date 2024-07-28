@@ -1,5 +1,4 @@
 import 'package:Soulna/utils/package_exporter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../utils/app_assets.dart';
@@ -20,6 +19,8 @@ class HeaderWidget {
             padding: const EdgeInsets.only(left: 15, top: 11),
             child: Image.asset(
               AppAssets.backArrow,
+              height: 30,
+              width: 30,
             ),
           ),
         ),
@@ -32,13 +33,15 @@ class HeaderWidget {
       AppBar(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
-        leadingWidth: 48,
+        leadingWidth: 43,
         leading: GestureDetector(
           onTap: onTap ?? () => Navigator.pop(context),
           child: Padding(
             padding: const EdgeInsets.only(left: 15, top: 11),
             child: Image.asset(
               AppAssets.backArrow,
+              height: 30,
+              width: 30,
             ),
           ),
         ),
@@ -52,11 +55,13 @@ class HeaderWidget {
         ),
       );
 
-  static AppBar headerWithAction(
-          {required BuildContext context,
-          String? title,
-          bool showMoreIcon = true,
-          void Function()? onTap}) =>
+  static AppBar headerWithAction({
+    required BuildContext context,
+    String? title,
+    bool showMoreIcon = true,
+    void Function()? onTap,
+    void Function()? showMoreIconOnTap,
+  }) =>
       AppBar(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
@@ -64,9 +69,11 @@ class HeaderWidget {
         leading: GestureDetector(
           onTap: onTap ?? () => Navigator.pop(context),
           child: Padding(
-            padding: const EdgeInsets.only(left: 18, top: 11),
+            padding: const EdgeInsets.only(left: 15, top: 11),
             child: Image.asset(
               AppAssets.backArrow,
+              height: 30,
+              width: 30,
             ),
           ),
         ),
@@ -88,19 +95,24 @@ class HeaderWidget {
             ),
           ),
           if (showMoreIcon == true)
-            Padding(
-              padding: const EdgeInsets.only(right: 15, top: 11),
-              child: Image.asset(
-                AppAssets.more,
-                height: 30,
-                width: 30,
+            GestureDetector(
+              onTap: showMoreIconOnTap,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15, top: 11),
+                child: Image.asset(
+                  AppAssets.more,
+                  height: 30,
+                  width: 30,
+                ),
               ),
             )
         ],
       );
 
   static AppBar headerWithLogoAndInstagram(
-          {required BuildContext context, void Function()? onTap}) =>
+          {required BuildContext context,
+          required Widget title,
+          void Function()? onTap}) =>
       AppBar(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         elevation: 00,
@@ -117,14 +129,7 @@ class HeaderWidget {
           ),
         ),
         centerTitle: true,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 11),
-          child: Image.asset(
-            AppAssets.logo,
-            height: 37,
-            width: 37,
-          ),
-        ),
+        title: title,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15, top: 11),
@@ -140,6 +145,7 @@ class HeaderWidget {
   static AppBar headerMy({required BuildContext context}) => AppBar(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
+        leadingWidth: 48,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15, top: 11),
@@ -209,18 +215,20 @@ class HeaderWidget {
   static AppBar headerSettings(
           {required BuildContext context,
           required GestureTapCallback onTap,
+          String? actionIcon,
           GestureTapCallback? onTapOnMenu}) =>
       AppBar(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
+        leadingWidth: 48,
         leading: GestureDetector(
           onTap: onTapOnMenu,
           child: Padding(
             padding: EdgeInsets.only(left: 18.w, top: 11.h),
             child: Image.asset(
               AppAssets.backArrow,
-              height: 30.h,
-              width: 30.w,
+              height: 30,
+              width: 30,
             ),
           ),
         ),
@@ -230,9 +238,9 @@ class HeaderWidget {
             child: InkWell(
               onTap: onTap,
               child: Image.asset(
-                AppAssets.iconSettings,
-                height: 30.h,
-                width: 30.w,
+                actionIcon ?? AppAssets.iconSettings,
+                height: 30,
+                width: 30,
               ),
             ),
           )
@@ -243,6 +251,7 @@ class HeaderWidget {
           {required BuildContext context,
           required String title,
           void Function()? onTap,
+          void Function()? onTapOnDownArrow,
           String? image}) =>
       AppBar(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
@@ -270,11 +279,11 @@ class HeaderWidget {
                     ),
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: onTapOnDownArrow,
                   icon: Icon(
                     Icons.keyboard_arrow_down_sharp,
                     color: ThemeSetting.of(context).primaryText,
-                    size: 20.sp,
+                    size: 20,
                   ))
             ],
           ),

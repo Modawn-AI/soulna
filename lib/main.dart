@@ -1,5 +1,4 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-import 'package:bot_toast/bot_toast.dart';
 import 'package:Soulna/auth/firebase_user_provider.dart';
 import 'package:Soulna/firebase_options.dart';
 import 'package:Soulna/manager/social_manager.dart';
@@ -12,7 +11,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;

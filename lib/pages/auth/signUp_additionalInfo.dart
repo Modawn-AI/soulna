@@ -1,22 +1,15 @@
 import 'dart:developer';
 
 import 'package:Soulna/controller/auth_controller.dart';
-import 'package:Soulna/generated/locale_keys.g.dart';
-import 'package:Soulna/utils/nav.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/custom_gender_button.dart';
 import 'package:Soulna/widgets/custom_textfield_widget.dart';
 import 'package:Soulna/widgets/custom_validator_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-
 import 'package:get/instance_manager.dart';
-
-import '../../utils/theme_setting.dart';
 import '../../widgets/button/button_widget.dart';
 
 class SignUpAdditionalInfo extends StatefulWidget {

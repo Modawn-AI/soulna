@@ -54,7 +54,7 @@ class SettingsScreen extends StatelessWidget {
           onTap: () {
             showDialog(
               context: context,
-              builder: (context) => CommonDialog(
+              builder: (context) => CustomDialogWidget(
                 context: context,
                 title: LocaleKeys.log_out.tr(),
                 content: LocaleKeys.are_you_sure_you_want_to_log_out.tr(),

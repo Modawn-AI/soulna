@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:Soulna/models/image_model.dart';
 import 'package:Soulna/pages/drawer/drawer_screen.dart';
@@ -18,32 +19,67 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   int currentIndex = 0;
+  bool isPremium = false;
+  int previousIndex = 0;
   List<ImageModel> images = [];
+  late AnimationController _animationController;
+  late Animation<Offset> _slideAnimation;
+
+  late AnimationController _logoAniCon;
+  late Animation<double> _logoAnimation;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(1, 0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+
+    _logoAniCon = AnimationController(
+      duration: const Duration(milliseconds: 900),
+      vsync: this,
+    );
+    _logoAnimation = Tween<double>(begin: 0, end: 0).animate(_logoAniCon);
+
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Timer(
-        const Duration(seconds: 1),
+        const Duration(milliseconds: 400),
         () {
-          showModalBottomSheet(
-            elevation: 0,
-            isScrollControlled: true,
-            //isDismissible: false,
-            backgroundColor:
-                ThemeSetting.of(context).primaryText.withOpacity(0.5),
-            context: context,
-            builder: (context) {
-              return bottomSheetWidget(context);
+          _animationController.forward().whenComplete(
+            () {
+              return showModalBottomSheet(
+                elevation: 0,
+                isScrollControlled: true,
+                //isDismissible: false,
+                backgroundColor:
+                    ThemeSetting.of(context).primaryText.withOpacity(0.5),
+                context: context,
+                builder: (context) {
+                  return bottomSheetWidget(context);
+                },
+              );
             },
           );
         },
       );
     });
+  }
+
+  void dispose() {
+    _animationController.dispose();
+    _logoAniCon.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
           linear2: ThemeSetting.of(context).linearContainer6,
           image: AppAssets.image3,
           text: LocaleKeys.create_your_journal.tr(),
-          route: autobiographyScreen),
+          route: createJournal),
     ];
 
     return Scaffold(
@@ -77,6 +113,20 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           HeaderWidget.headerWithLogoAndInstagram(
               context: context,
+              title: AnimatedBuilder(
+                animation: _logoAniCon,
+                builder: (context, child) {
+                  return Transform.rotate(
+                    angle: _logoAnimation.value * 2 * 3.141592653589793,
+                    child: child,
+                  );
+                },
+                child: Image.asset(
+                  AppAssets.logo,
+                  height: 37,
+                  width: 37,
+                ),
+              ),
               onTap: () => scaffoldKey.currentState?.openDrawer()),
           const SizedBox(
             height: 32,
@@ -127,137 +177,213 @@ class _MainScreenState extends State<MainScreen> {
           SizedBox(
             height: 350,
             width: 202,
-            child: CarouselSlider(
-              items: images.asMap().entries.map((e) {
-                ImageModel image = e.value;
-                return GestureDetector(
-                  onTap: () => context.pushNamed("${image.route}"),
-                  child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      height: 300,
-                      decoration: BoxDecoration(
+            child: AnimatedBuilder(
+              animation: _slideAnimation,
+              builder: (context, child) {
+                return SlideTransition(
+                  position: _slideAnimation,
+                  child: child,
+                );
+              },
+              child: CarouselSlider(
+                items: images.asMap().entries.map((e) {
+                  ImageModel image = e.value;
+                  return GestureDetector(
+                    onTap: () => context.pushNamed("${image.route}"),
+                    child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        height: 300,
+                        decoration: BoxDecoration(
                           gradient: LinearGradient(
                               colors: [image.linear1, image.linear2],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter),
                           border: Border.all(
                               color: ThemeSetting.of(context).primaryText),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          Container(
-                            height: double.infinity,
-                            width: double.infinity,
-                            padding: const EdgeInsets.only(top: 22),
-                            margin: const EdgeInsets.only(
-                                top: 8, left: 8, right: 8),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    right: BorderSide(
-                                        color: ThemeSetting.of(context)
-                                            .secondaryBackground,
-                                        width: 1.5),
-                                    left: BorderSide(
-                                        color: ThemeSetting.of(context)
-                                            .secondaryBackground,
-                                        width: 1.5),
-                                    top: BorderSide(
-                                        color: ThemeSetting.of(context)
-                                            .secondaryBackground,
-                                        width: 1.5)),
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20))),
-                            child: Text(
-                              image.text,
-                              style: ThemeSetting.of(context)
-                                  .titleLarge
-                                  .copyWith(
-                                      color: ThemeSetting.of(context)
-                                          .secondaryBackground),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 40),
-                            child: Image.asset(
-                              image.image,
-                              width: 165,
-                              height: 195,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: ThemeSetting.of(context).primaryText,
-                              borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20)),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Stack(
+                              alignment: Alignment.bottomCenter,
                               children: [
-                                Text(
-                                  LocaleKeys.create.tr(),
-                                  style: ThemeSetting.of(context).headlineLarge,
+                                Container(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.only(top: 22),
+                                  margin: const EdgeInsets.only(
+                                      top: 8, left: 8, right: 8),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              color: ThemeSetting.of(context)
+                                                  .secondaryBackground,
+                                              width: 1.5),
+                                          left: BorderSide(
+                                              color: ThemeSetting.of(context)
+                                                  .secondaryBackground,
+                                              width: 1.5),
+                                          top: BorderSide(
+                                              color: ThemeSetting.of(context)
+                                                  .secondaryBackground,
+                                              width: 1.5)),
+                                      borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20))),
+                                  child: Text(
+                                    image.text,
+                                    style: ThemeSetting.of(context)
+                                        .titleLarge
+                                        .copyWith(
+                                            color: ThemeSetting.of(context)
+                                                .secondaryBackground),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                                const SizedBox(
-                                  width: 5,
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 40),
+                                  child: Image.asset(
+                                    image.image,
+                                    width: 165,
+                                    height: 195,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
-                                Image.asset(
-                                  AppAssets.start,
-                                  height: 14,
-                                  width: 14,
-                                )
+                                Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: ThemeSetting.of(context).primaryText,
+                                    borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(20),
+                                        bottomRight: Radius.circular(20)),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        LocaleKeys.create.tr(),
+                                        style: ThemeSetting.of(context)
+                                            .headlineLarge,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Image.asset(
+                                        AppAssets.start,
+                                        height: 14,
+                                        width: 14,
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                        ],
-                      )),
-                );
-              }).toList(),
-              carouselController: CarouselController(),
-              options: CarouselOptions(
-                  viewportFraction: 0.8,
-                  disableCenter: true,
-                  enableInfiniteScroll: false,
-                  reverse: false,
-                  padEnds: true,
-                  aspectRatio: 0.7,
-                  height: 500,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  }),
+                            if (!isPremium)
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: ThemeSetting.of(context)
+                                        .primaryText
+                                        .withOpacity(0.8)),
+                              ),
+                            if (!isPremium)
+                              Positioned(
+                                top: 110,
+                                child: Image.asset(
+                                  AppAssets.lock,
+                                  height: 50,
+                                  width: 50,
+                                ),
+                              ),
+                            if (!isPremium)
+                              SizedBox(
+                                height: 10,
+                              ),
+                            if (!isPremium)
+                              Positioned(
+                                top: 170,
+                                child: Text(
+                                  LocaleKeys.to_unlock_please_subscribe.tr(),
+                                  textAlign: TextAlign.center,
+                                  style: ThemeSetting.of(context)
+                                      .bodyMedium
+                                      .copyWith(
+                                          color: ThemeSetting.of(context)
+                                              .secondaryBackground),
+                                ),
+                              )
+                          ],
+                        )),
+                  );
+                }).toList(),
+                carouselController: CarouselController(),
+                options: CarouselOptions(
+                    viewportFraction: 0.8,
+                    disableCenter: true,
+                    enableInfiniteScroll: false,
+                    scrollPhysics: isPremium == true
+                        ? const AlwaysScrollableScrollPhysics()
+                        : const NeverScrollableScrollPhysics(),
+                    reverse: false,
+                    padEnds: true,
+                    aspectRatio: 0.7,
+                    height: 500,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        if (index > previousIndex) {
+                          _logoAnimation = Tween<double>(
+                                  begin: _logoAnimation.value,
+                                  end: _logoAnimation.value + 0.25)
+                              .animate(_logoAniCon);
+                        } else {
+                          _logoAnimation = Tween<double>(
+                                  begin: _logoAnimation.value,
+                                  end: _logoAnimation.value - 0.25)
+                              .animate(_logoAniCon);
+                        }
+                        _logoAniCon.forward(from: 0);
+                        previousIndex = index;
+
+                        currentIndex = index;
+                      });
+                    }),
+              ),
             ),
           ),
           const SizedBox(
             height: 20,
           ),
-          SizedBox(
-            width: 202,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: images.asMap().entries.map((entry) {
-                return GestureDetector(
-                  //onTap: () => _controller.animateToPage(entry.key),
-                  child: Container(
-                      width: 85,
-                      height: 4,
-                      // margin: const EdgeInsets.symmetric(
-                      //     vertical: 8.0, horizontal: 4.0),
-                      decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.horizontal(
-                            left: Radius.circular(3),
-                          ),
-                          color: currentIndex == entry.key
-                              ? ThemeSetting.of(context).primary
-                              : ThemeSetting.of(context).common1)),
-                );
-              }).toList(),
+          AnimatedBuilder(
+            animation: _slideAnimation,
+            builder: (context, child) {
+              return SlideTransition(
+                position: _slideAnimation,
+                child: child,
+              );
+            },
+            child: SizedBox(
+              width: 202,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: images.asMap().entries.map((entry) {
+                  return GestureDetector(
+                    //onTap: () => _controller.animateToPage(entry.key),
+                    child: Container(
+                        width: 85,
+                        height: 4,
+                        // margin: const EdgeInsets.symmetric(
+                        //     vertical: 8.0, horizontal: 4.0),
+                        decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.horizontal(
+                              left: Radius.circular(3),
+                            ),
+                            color: currentIndex == entry.key
+                                ? ThemeSetting.of(context).primary
+                                : ThemeSetting.of(context).common1)),
+                  );
+                }).toList(),
+              ),
             ),
           ),
           const SizedBox(
@@ -461,8 +587,23 @@ class _MainScreenState extends State<MainScreen> {
           ButtonWidget.gradientButtonWithImage(
               context: context,
               text: LocaleKeys.start.tr(),
-              onTap: () => context.pop()),
-          SizedBox(height: 30),
+              onTap: () {
+                context.pop();
+                // _animationController = AnimationController(
+                //   duration: const Duration(milliseconds: 500),
+                //   vsync: this,
+                // );
+                // _slideAnimation = Tween<Offset>(
+                //   begin: const Offset(1, 0),
+                //   end: Offset.zero,
+                // ).animate(CurvedAnimation(
+                //   parent: _animationController,
+                //   curve: Curves.easeInOut,
+                // ));
+
+                // _animationController.forward();
+              }),
+          const SizedBox(height: 30),
           Center(
             child: Text(
               LocaleKeys.restore_purchases.tr(),

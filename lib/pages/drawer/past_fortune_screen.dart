@@ -2,9 +2,9 @@ import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/custom_calendar_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_neat_and_clean_calendar/date_picker_config.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
 import '../../utils/app_assets.dart';
+import '../../widgets/custom_ios_date_picker.dart';
 
 class PastFortuneScreen extends StatefulWidget {
   const PastFortuneScreen({super.key});
@@ -74,6 +74,14 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
       appBar: HeaderWidget.headerCalendar(
         context: context,
         title: DateFormat.yMMMM().format(DateTime.now()),
+        onTapOnDownArrow: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return CustomDatePicker();
+            },
+          );
+        },
         onTap: () async {
           setState(() {
             if (index == 0) {

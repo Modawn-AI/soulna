@@ -45,6 +45,8 @@ abstract class ThemeSetting {
   late Color tertiary;
   late Color tertiary1;
   late Color tertiary2;
+  late Color tertiary3;
+
   late Color alternate;
   late Color primaryText;
   late Color secondaryText;
@@ -174,6 +176,7 @@ class LightModeTheme extends ThemeSetting {
   late Color tertiary = const Color(0xFFFFECDB);
   late Color tertiary1 = const Color(0xFFFFD1A6);
   late Color tertiary2 = const Color(0xFFFFDDD0);
+  late Color tertiary3 = const Color(0xFFFCE8FF);
   late Color alternate = const Color(0xFFE0E3E7);
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);

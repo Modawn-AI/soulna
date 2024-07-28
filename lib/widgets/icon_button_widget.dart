@@ -90,10 +90,12 @@ class _CustomIconButtonState extends State<CustomIconButton> {
       ),
       iconColor: MaterialStateProperty.resolveWith<Color?>(
         (states) {
-          if (states.contains(MaterialState.disabled) && widget.disabledIconColor != null) {
+          if (states.contains(MaterialState.disabled) &&
+              widget.disabledIconColor != null) {
             return widget.disabledIconColor;
           }
-          if (states.contains(MaterialState.hovered) && widget.hoverIconColor != null) {
+          if (states.contains(MaterialState.hovered) &&
+              widget.hoverIconColor != null) {
             return widget.hoverIconColor;
           }
           return iconColor;
@@ -101,10 +103,12 @@ class _CustomIconButtonState extends State<CustomIconButton> {
       ),
       backgroundColor: MaterialStateProperty.resolveWith<Color?>(
         (states) {
-          if (states.contains(MaterialState.disabled) && widget.disabledColor != null) {
+          if (states.contains(MaterialState.disabled) &&
+              widget.disabledColor != null) {
             return widget.disabledColor;
           }
-          if (states.contains(MaterialState.hovered) && widget.hoverColor != null) {
+          if (states.contains(MaterialState.hovered) &&
+              widget.hoverColor != null) {
             return widget.hoverColor;
           }
 
@@ -121,7 +125,9 @@ class _CustomIconButtonState extends State<CustomIconButton> {
               child: Container(
                 width: iconSize,
                 height: iconSize,
-                color: widget.onPressed != null ? widget.fillColor : widget.disabledColor,
+                color: widget.onPressed != null
+                    ? widget.fillColor
+                    : widget.disabledColor,
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
                     iconColor ?? Colors.white,

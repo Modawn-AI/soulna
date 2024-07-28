@@ -1,9 +1,8 @@
 import 'package:Soulna/utils/sharedPref_string.dart';
 import 'package:Soulna/utils/shared_preference.dart';
+import 'package:Soulna/widgets/custom_ios_date_picker.dart';
 import 'package:Soulna/widgets/custom_time_range_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../utils/app_assets.dart';
 import '../../utils/package_exporter.dart';
 import '../../widgets/button/button_widget.dart';
@@ -18,6 +17,7 @@ class DateOfBirthMain extends StatefulWidget {
 }
 
 class _DateOfBirthMainState extends State<DateOfBirthMain> {
+
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
       appBar: HeaderWidget.headerBack(
         context: context,
+        backgroundColor: ThemeSetting.of(context).secondaryBackground
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
@@ -62,7 +63,10 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
                 )
               ],
             ),
-            SizedBox(height: 20.h),
+            SizedBox(
+              height: 20,
+            ),
+            CustomDatePicker(),
             Text(
               LocaleKeys.time.tr(),
               style: ThemeSetting.of(context).captionMedium.copyWith(
@@ -123,4 +127,6 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
       ),
     );
   }
+
+
 }

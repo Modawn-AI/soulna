@@ -19,15 +19,22 @@ Future<DateTime?> showCustomDatePicker({
           surfaceTintColor: ThemeSetting.of(context).secondaryBackground,
           backgroundColor: ThemeSetting.of(context).secondaryBackground,
           headerBackgroundColor: ThemeSetting.of(context).primary,
-          headerForegroundColor: ThemeSetting.of(context).primaryText,
-          dayOverlayColor: WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
-          todayBackgroundColor: WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
-          todayBorder: BorderSide(color: ThemeSetting.of(context).primary),
+          headerForegroundColor: ThemeSetting.of(context).secondaryBackground,
+          dayOverlayColor:
+              WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
+          todayBackgroundColor:
+              WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
+          todayForegroundColor: WidgetStateProperty.all<Color>(
+              ThemeSetting.of(context).secondaryBackground),
+          todayBorder:
+              BorderSide(color: ThemeSetting.of(context).secondaryBackground),
           cancelButtonStyle: ButtonStyle(
-            foregroundColor: WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
+            foregroundColor: WidgetStateProperty.all<Color>(
+                ThemeSetting.of(context).primary),
           ),
           confirmButtonStyle: ButtonStyle(
-            foregroundColor: WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
+            foregroundColor: WidgetStateProperty.all<Color>(
+                ThemeSetting.of(context).primary),
           ),
         ),
       ),

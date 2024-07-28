@@ -1,8 +1,6 @@
 import 'package:Soulna/utils/app_assets.dart';
-import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
 import '../generated/locale_keys.g.dart';
 import '../utils/theme_setting.dart';
 import 'custom_button_widget.dart';
