@@ -52,23 +52,24 @@ final _inquiryFormKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerBack(context: context),
         body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: 18),
       child: Form(
         key: _inquiryFormKey,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 10),
               Text(
              LocaleKeys.please_feel_free_to_inquire_about_any_questions_you_have.tr(),
                 style: ThemeSetting.of(context).labelSmall.copyWith(
                   color: ThemeSetting.of(context).primaryText,
                 ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 30),
               Text(
                 LocaleKeys.inquiry_category.tr(),
                 style: ThemeSetting.of(context).captionMedium.copyWith(
@@ -76,7 +77,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                   fontSize: 14.sp,
                 ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 10),
               CustomDropdownButton(
                 items: inquiryTList,
                 selectedItem: _selectedItem,
@@ -86,7 +87,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                   });
                 },
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 40 ),
               Text(
                 LocaleKeys.inquiries.tr(),
                 style: ThemeSetting.of(context).captionMedium.copyWith(
@@ -94,7 +95,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                   fontSize: 14.sp,
                 ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 10),
               CustomTextField(
                 controller: inquiryController,
                 hintText: LocaleKeys.enter_inquiry_name.tr(),
@@ -102,17 +103,18 @@ final _inquiryFormKey = GlobalKey<FormState>();
                     value:  LocaleKeys.enter_inquiry_name.tr(),
               ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 6),
               CustomTextField(
                 maxLength: 80,
                 controller: inquiryDescriptionController,
                 hintText: LocaleKeys.enter_inquiry_des.tr(),
                 maxLines: 8,
+                inputAction: TextInputAction.done,
                 validator: CustomValidatorWidget.validateName(
                     value:  LocaleKeys.enter_inquiry_des.tr(),
               ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 10),
 
               SingleChildScrollView(
                 scrollDirection:
@@ -164,13 +166,13 @@ final _inquiryFormKey = GlobalKey<FormState>();
                         }
                       },
                       child: Container(
-                        height: 60.h,
-                        width:  60.w,
+                        height: 60,
+                        width:  60,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
 
                           border: Border.all( color: ThemeSetting.of(context).common0),
-                          borderRadius: BorderRadius.circular(10.r),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -178,8 +180,8 @@ final _inquiryFormKey = GlobalKey<FormState>();
                           children: [
                            Image.asset(
                              AppAssets.camera,
-                              width: 24.w,
-                              height: 24.h,
+                              width: 24,
+                              height: 24,
                              color: ThemeSetting.of(context).primary,
                             ),
                             Text(
@@ -193,10 +195,10 @@ final _inquiryFormKey = GlobalKey<FormState>();
                         ),
                       ),
                     ),
-                    SizedBox(width: 6.w),
+                    SizedBox(width: 6),
                     selectedImages.isNotEmpty
                         ?  SizedBox(
-                          height: 60.h,
+                          height: 60,
                           child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
@@ -206,11 +208,11 @@ final _inquiryFormKey = GlobalKey<FormState>();
                               alignment: Alignment.topRight,
                               children: [
                                 Container(
-                                  height: 60.h,
-                                  width: 60.w,
-                                  margin: EdgeInsets.only(right: 6.w),
+                                  height: 60,
+                                  width: 60,
+                                  margin: EdgeInsets.only(right: 6),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.r),
+                                    borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
                                       image:
                                       FileImage(File(selectedImages[i].path)),
@@ -225,17 +227,17 @@ final _inquiryFormKey = GlobalKey<FormState>();
                                     });
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.only(bottom: 10.h),
-                                    height: 14.h,
-                                    width: 14.w,
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    height: 14,
+                                    width: 14,
                                     decoration: BoxDecoration(
                                       color: ThemeSetting.of(context).black2,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
                                       Icons.close,
-                                      color: ThemeSetting.of(context).secondaryBackground,
-                                      size: 8.sp,
+                                      color: ThemeSetting.of(context).white,
+                                      size: 8,
                                     ),
                                   ),
                                 ),
@@ -247,11 +249,11 @@ final _inquiryFormKey = GlobalKey<FormState>();
                   ],
                 ),
               ),
-              SizedBox(height: 100.h),
+              SizedBox(height: 40),
               ButtonWidget.roundedButtonOrange(
                 context: context,
                 width: double.infinity,
-                color: ThemeSetting.of(context).primaryText,
+                color: ThemeSetting.of(context).black2,
                 text: LocaleKeys.one_one_inquiry.tr(),
                 onTap: () {
                 if (_inquiryFormKey.currentState!.validate() && _selectedItem != null) {

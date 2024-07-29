@@ -10,7 +10,7 @@ class PrivacyPolicyUpdateNoticeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerBack(context: context),
         body: Padding(
           padding:  EdgeInsets.symmetric(horizontal: 20.w , vertical: 10.h),

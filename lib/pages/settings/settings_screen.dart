@@ -25,7 +25,8 @@ class SettingsScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+
         appBar: HeaderWidget.headerWithTitle(
             context: context, title: LocaleKeys.setting.tr()),
         body: Column(children: [

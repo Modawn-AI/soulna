@@ -7,9 +7,15 @@ class CustomSnackBarWidget {
     Color? color,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message),
-            backgroundColor: color ?? Theme.of(context).primaryColor,
+      SnackBar(
+        content: Text(
+          message,
+          style: ThemeSetting.of(context)
+              .headlineMedium
+
         ),
+        backgroundColor: color ?? ThemeSetting.of(context).primaryText,
+      ),
     );
   }
 }

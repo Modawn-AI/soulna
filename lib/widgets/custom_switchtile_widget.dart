@@ -8,6 +8,7 @@ class CustomSwitchTile extends StatefulWidget {
   final Color? activeColor;
   final Color? inactiveColor;
   final ValueChanged<bool>? onChanged;
+  // final void Function(bool)? onChanged
 
   const CustomSwitchTile({
     Key? key,
@@ -60,7 +61,7 @@ class _CustomSwitchTileState extends State<CustomSwitchTile> {
           ],
         ),
         value: _isSwitched,
-        onChanged: _toggleSwitch,
+        onChanged: widget.onChanged ?? _toggleSwitch,
         thumbColor: WidgetStateProperty.all(_isSwitched
             ? ThemeSetting.of(context).secondaryBackground
             : ThemeSetting.of(context).secondaryBackground),

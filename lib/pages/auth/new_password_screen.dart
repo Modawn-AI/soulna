@@ -4,6 +4,7 @@ import 'package:Soulna/widgets/custom_validator_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/instance_manager.dart';
 
+import '../../widgets/button/button_widget.dart';
 import '../../widgets/custom_snackbar_widget.dart';
 import '../../widgets/custom_textfield_widget.dart';
 import '../../widgets/header/header_widget.dart';
@@ -20,13 +21,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   var authCon = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: SafeArea(
-        child: Scaffold(
-          
-          appBar: HeaderWidget.headerWithTitle(context: context, title: ''),
-          body: ListView(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerWithTitle(context: context, title: ''),
+        body: Form(
+          key: _formKey,
+          child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             children: [
               Text(
@@ -55,39 +56,32 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 controller: authCon.conPasswordCon.value,
                 hintText: LocaleKeys.reEnter_your_new_password.tr(),
                 isPassword: true,
+                inputAction: TextInputAction.done,
                 validator: CustomValidatorWidget.validateConfirmPassword(
                     value: authCon.conPasswordCon.value.text),
               ),
               SizedBox(height: 50.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-                child: CustomButtonWidget(
-                  text: LocaleKeys.change_password_and_log_in.tr(),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (authCon.newPasswordCon.value.text !=
-                          authCon.conPasswordCon.value.text) {
-                        CustomSnackBarWidget.showSnackBar(
-                          context: context,
-                          message: '',
-                          color: Colors.red,
-                        );
-                        return;
+                child: ButtonWidget.gradientButton(
+                    context: context,
+                    text: LocaleKeys.change_password_and_log_in.tr(),
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        if (authCon.newPasswordCon.value.text !=
+                            authCon.conPasswordCon.value.text) {
+                          CustomSnackBarWidget.showSnackBar(
+                            context: context,
+                            message: 'Both password does not match',
+
+                          );
+                          return;
+                        }
+                        context.goNamed(loginScreen);
                       }
-                      context.goNamed(loginScreen);
-                    }
-                  },
-                  options: CustomButtonOptions(
-                    elevation: 0,
-                    height: 50.h,
-                    width: double.infinity,
-                    color: ThemeSetting.of(context).primaryText,
-                    borderRadius: BorderRadius.circular(50.r),
-                    textStyle: ThemeSetting.of(context)
-                        .headlineLarge
-                        .copyWith(fontWeight: FontWeight.w500),
-                  ),
-                ),
+                    },
+                    color1: ThemeSetting.of(context).black1,
+                    color2: ThemeSetting.of(context).black2),
               ),
             ],
           ),

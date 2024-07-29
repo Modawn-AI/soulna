@@ -1,11 +1,12 @@
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/utils/sharedPref_string.dart';
 import 'package:Soulna/widgets/custom_ios_date_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../utils/shared_preference.dart';
 import '../../widgets/button/button_widget.dart';
 import '../../widgets/custom_checkbox_widget.dart';
 import '../../widgets/custom_time_range_widget.dart';
 import '../../widgets/header/header_widget.dart';
-
 
 class DateOfBirthScreen extends StatefulWidget {
   const DateOfBirthScreen({super.key});
@@ -21,99 +22,80 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerBack(
           context: context,
-      
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                LocaleKeys.please_set_your_date_of_birth.tr(),
-                style: ThemeSetting.of(context).labelSmall.copyWith(
-                      color: ThemeSetting.of(context).primaryText,
-                    ),
-              ),
-              // SizedBox(
-              //   height: 100,
-              //   child: CupertinoTheme(
-              //     data: CupertinoThemeData(
-              //       textTheme: CupertinoTextThemeData(
-              //         dateTimePickerTextStyle: ThemeSetting.of(context).headlineLarge.copyWith(
-              //           color: ThemeSetting.of(context).primary,
-              //         ),
-              //       ),
-              //     ),
-              //     child: CupertinoDatePicker(
-              //
-              //       initialDateTime: selectedDate,
-              //       mode: CupertinoDatePickerMode.date,
-              //       maximumYear: DateTime.now().year,
-              //
-              //       maximumDate: DateTime.now(),
-              //       onDateTimeChanged: (DateTime newDateTime) {
-              //         setState(() {
-              //           selectedDate = newDateTime;
-              //         });
-              //       },
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: 20.h),
-              CustomDatePicker(),
-              SizedBox(height: 40.h),
-              Text(
-                LocaleKeys.time.tr(),
-                style: ThemeSetting.of(context).captionMedium.copyWith(
-                      color: ThemeSetting.of(context).primary,
-                    ),
-              ),
-              SizedBox(height: 10.h),
-              CustomRangeTimePicker(
-                initialStartTime: const TimeOfDay(hour: 9, minute: 0),
-                initialEndTime: const TimeOfDay(hour: 17, minute: 0),
-                onStartTimeChanged: (startTime) {
-                  print("Start Time: ${startTime.format(context)}");
-                },
-                onEndTimeChanged: (endTime) {
-                  print("End Time: ${endTime.format(context)}");
-                },
-              ),
-              SizedBox(height: 15.h),
-              Row(
-                children: [
-                  CustomCheckbox(
-                    initialValue: false,
-                    onChanged: () {},
-                  ),
-                  Text(
-                    LocaleKeys.i_dont_know_my_time_of_birth.tr(),
-                    style: ThemeSetting.of(context).captionMedium.copyWith(
-                          color: ThemeSetting.of(context).primaryText,
-                        ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Container(
-                width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  child: ButtonWidget.roundedButtonOrange(
-                    context: context,
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              LocaleKeys.please_set_your_date_of_birth.tr(),
+              style: ThemeSetting.of(context).labelSmall.copyWith(
                     color: ThemeSetting.of(context).primaryText,
-                    text: LocaleKeys.save.tr(),
-                    onTap: () {
-                      context.pushNamed(animationScreen);
-                    },
                   ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const CustomDatePicker(),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              LocaleKeys.time.tr(),
+              style: ThemeSetting.of(context).captionMedium.copyWith(
+                    color: ThemeSetting.of(context).primary,
+                  ),
+            ),
+            SizedBox(height: 10),
+            CustomRangeTimePicker(
+              initialStartTime: const TimeOfDay(hour: 9, minute: 0),
+              initialEndTime: const TimeOfDay(hour: 17, minute: 0),
+              onStartTimeChanged: (startTime) {
+                print("Start Time: ${startTime.format(context)}");
+              },
+              onEndTimeChanged: (endTime) {
+                print("End Time: ${endTime.format(context)}");
+              },
+            ),
+            SizedBox(height: 15),
+            Row(
+              children: [
+                CustomCheckbox(),
+                Text(
+                  LocaleKeys.i_dont_know_my_time_of_birth.tr(),
+                  style: ThemeSetting.of(context).captionMedium.copyWith(
+                        color: ThemeSetting.of(context).primaryText,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 210,
+            ),
+            Container(
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h),
+                child: ButtonWidget.roundedButtonOrange(
+                  context: context,
+                  color: ThemeSetting.of(context).black2,
+                  text: LocaleKeys.save.tr(),
+                  onTap: () {
+                    context.pop();
+                    // SharedPreferences.getInstance();
+                    // SharedPreferencesManager.setString(
+                    //     key: SharedprefString.animationScreen,
+                    //     value: bookDetailScreen);
+                    //context.pushReplacementNamed(animationScreen);
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

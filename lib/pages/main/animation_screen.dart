@@ -31,11 +31,11 @@ class _AnimationScreenState extends State<AnimationScreen>
         // setState(() {
         percent += 0.25;
         if (percent >= 1) {
-        String? ani = await  SharedPreferencesManager.getString(key: SharedprefString.animationScreen);
+          String? ani = await SharedPreferencesManager.getString(
+              key: SharedprefString.animationScreen);
           Timer(
             const Duration(milliseconds: 800),
-            () => context.pushReplacementNamed(
-                "${ani.toString()}"),
+            () => context.pushReplacementNamed("${ani.toString()}"),
           );
           setState(() {});
           timer.cancel();

@@ -1,8 +1,6 @@
 import '../utils/package_exporter.dart';
 
 class CustomDatePicker extends StatefulWidget {
-
-
   const CustomDatePicker({
     Key? key,
   }) : super(key: key);
@@ -12,8 +10,6 @@ class CustomDatePicker extends StatefulWidget {
 }
 
 class _CustomDatePickerState extends State<CustomDatePicker> {
-
-
   final List<String> months = [
     'January',
     'February',
@@ -30,7 +26,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   ];
   final List<int> dates = List.generate(31, (index) => index + 1);
   final List<int> years =
-  List.generate(DateTime.now().year - 1990 + 1, (index) => 1990 + index);
+      List.generate(DateTime.now().year - 1990 + 1, (index) => 1990 + index);
 
   int selectedMonth = DateTime.now().month - 1;
   int selectedDate = DateTime.now().day;
@@ -38,14 +34,21 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return   Container(
+    return Container(
+      decoration: BoxDecoration(
+          color: ThemeSetting.of(context).secondaryBackground,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+
       height: 150, // Height to show only 3 items
       child: Stack(
         children: [
           Center(
               child: Container(
                   height: 50,
-                  color: ThemeSetting.of(context).tertiary)),
+                  color: ThemeSetting.isLightTheme(context)
+                      ? ThemeSetting.of(context).tertiary
+                      : ThemeSetting.of(context).common2)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -91,7 +94,9 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                 style: TextStyle(
                   fontSize: 20,
                   color: index == selectedItem
-                      ? ThemeSetting.of(context).primary
+                      ? ThemeSetting.isLightTheme(context)
+                          ? ThemeSetting.of(context).primary
+                          : ThemeSetting.of(context).common0
                       : ThemeSetting.of(context).grayLight,
                 ),
               ),

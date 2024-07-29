@@ -28,6 +28,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor:  ThemeSetting.of(context).secondaryBackground,
 
             appBar: HeaderWidget.headerWithCustomAction(
       context: context,
@@ -67,6 +68,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
           CustomTextField(
             controller: authCon.newPasswordCon.value,
             hintText: LocaleKeys.enter_your_new_password.tr(),
+            inputAction: TextInputAction.done,
             validator: CustomValidatorWidget.validatePassword(
                 value: authCon.newPasswordCon.value.text),
           ),

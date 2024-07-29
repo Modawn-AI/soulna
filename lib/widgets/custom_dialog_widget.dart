@@ -22,9 +22,9 @@ class CustomDialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       elevation: 0,
-      
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
       content: SizedBox(
-        width: 300.w,
+        width: 300,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,

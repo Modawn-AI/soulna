@@ -185,5 +185,8 @@ abstract class  LocaleKeys {
   static const edit = 'edit';
   static const to_unlock_please_subscribe = 'to_unlock_please_subscribe';
   static const its_been_a_month_since_the_update = 'its_been_a_month_since_the_update';
+  static const howdy = 'howdy';
+  static const blue_ox = 'blue_ox';
+  static const avoid_today = 'avoid_today';
 
 }

@@ -41,18 +41,18 @@ class ButtonWidget {
   static squareButtonOrange(
           {required BuildContext context,
           required String text,
-            double? height,
-            TextStyle? textStyle,
-            Color? buttonBackgroundColor,
+          double? height,
+          TextStyle? textStyle,
+          Color? buttonBackgroundColor,
           VoidCallback? onTap}) =>
       CustomButtonWidget(
           text: text,
           onPressed: onTap,
           options: CustomButtonOptions(
               borderRadius: BorderRadius.circular(8),
-              height:height?? 56,
-              color: buttonBackgroundColor??ThemeSetting.of(context).primary,
-              textStyle: textStyle??ThemeSetting.of(context).headlineLarge));
+              height: height ?? 56,
+              color: buttonBackgroundColor ?? ThemeSetting.of(context).primary,
+              textStyle: textStyle ?? ThemeSetting.of(context).headlineLarge));
 
   static roundedButtonOrange(
           {required BuildContext context,
@@ -60,7 +60,7 @@ class ButtonWidget {
           VoidCallback? onTap,
           Color? color,
           double? height,
-            double? width,
+          double? width,
           TextStyle? textStyle,
           BorderRadius? borderRadius}) =>
       CustomButtonWidget(
@@ -71,7 +71,10 @@ class ButtonWidget {
               height: height ?? 56,
               width: width,
               color: color ?? ThemeSetting.of(context).primary,
-              textStyle: textStyle ?? ThemeSetting.of(context).headlineLarge));
+              textStyle: textStyle ??
+                  ThemeSetting.of(context)
+                      .headlineLarge
+                      .copyWith(color: ThemeSetting.of(context).white)));
 
   static gradientButton(
           {required BuildContext context,
@@ -96,22 +99,21 @@ class ButtonWidget {
         ),
       );
 
-  static gradientButtonWithImage({
-    required BuildContext context,
-    required String text,
-     String? imageString,
-    VoidCallback? onTap,
-     Color? color1,
-     Color? color2
-  }) =>
+  static gradientButtonWithImage(
+          {required BuildContext context,
+          required String text,
+          String? imageString,
+          VoidCallback? onTap,
+          Color? color1,
+          Color? color2}) =>
       GestureDetector(
         onTap: onTap,
         child: Container(
           height: 56,
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-             color1?? ThemeSetting.of(context).black1,
-            color2??  ThemeSetting.of(context).black2,
+              color1 ?? ThemeSetting.of(context).black1,
+              color2 ?? ThemeSetting.of(context).black2,
             ]),
             color: ThemeSetting.of(context).primary,
             borderRadius: BorderRadius.circular(50),
@@ -124,7 +126,7 @@ class ButtonWidget {
                 width: 5,
               ),
               Image.asset(
-                imageString ??AppAssets.start,
+                imageString ?? AppAssets.start,
                 width: 14,
                 height: 14,
               )
@@ -147,6 +149,6 @@ class ButtonWidget {
               borderSide: BorderSide(color: ThemeSetting.of(context).common1),
               color: ThemeSetting.of(context).common3,
               textStyle: ThemeSetting.of(context)
-                  .headlineLarge
-                  .copyWith(color: ThemeSetting.of(context).primaryText)));
+                  .headlineLarge.copyWith(color: ThemeSetting.of(context).black2)
+                  ));
 }

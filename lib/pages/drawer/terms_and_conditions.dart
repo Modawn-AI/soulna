@@ -36,7 +36,7 @@ class _TermsAndConditionState extends State<TermsAndCondition> with SingleTicker
   Widget build(BuildContext context) {
     return  SafeArea(
       child: Scaffold(
-
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerWithTitle(
           context: context,
           title:

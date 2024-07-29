@@ -27,6 +27,7 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor:  ThemeSetting.of(context).secondaryBackground,
 
         appBar: HeaderWidget.headerWithCustomAction(
           context: context,
@@ -57,6 +58,7 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
               CustomTextField(
                 controller: authCon.nameCon.value,
                 hintText: LocaleKeys.enter_your_name.tr(),
+                inputAction: TextInputAction.done,
                 validator: CustomValidatorWidget.validateName(
                     value: authCon.nameCon.value.text),
               ),

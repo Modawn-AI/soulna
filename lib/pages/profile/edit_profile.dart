@@ -18,7 +18,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-            
+            backgroundColor: ThemeSetting.of(context).secondaryBackground,
             appBar: HeaderWidget.headerWithTitle(
         context: context, title: LocaleKeys.edit_profile.tr()),
             body: ListView(
@@ -109,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
         ButtonWidget.roundedButtonOrange(
             context: context,
-            color: ThemeSetting.of(context).primaryText,
+            color: ThemeSetting.of(context).black2,
             text: LocaleKeys.save.tr(),
             onTap: () {}),
         const SizedBox(

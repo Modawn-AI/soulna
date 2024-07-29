@@ -11,7 +11,7 @@ class AwaitingResponseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerBack(context: context),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class AwaitingResponseScreen extends StatelessWidget {
               text:LocaleKeys.awaiting_response.tr(),
                buttonBackgroundColor: ThemeSetting.of(context).common0,
                textStyle: ThemeSetting.of(context).captionMedium.copyWith(
-                 color: ThemeSetting.of(context).primaryText,
+                 color: ThemeSetting.of(context).black2,
       ),
       onTap: (){},
         ) ,

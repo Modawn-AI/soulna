@@ -24,6 +24,7 @@ class _FindPasswordState extends State<FindPassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor:  ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerWithTitle(
             context: context, title: LocaleKeys.find_password.tr()),
         body: Form(
@@ -43,7 +44,10 @@ class _FindPasswordState extends State<FindPassword> {
                         context: context,
                         height: 30,
                         text: LocaleKeys.confirm.tr(),
-                        color: ThemeSetting.of(context).primaryText),
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                      },
+                      color: ThemeSetting.of(context).black2),
                   )),
               const SizedBox(
                 height: 10,
@@ -54,6 +58,7 @@ class _FindPasswordState extends State<FindPassword> {
                       hintText: LocaleKeys.enter_verification_code.tr(),
                       validator: CustomValidatorWidget.validateVerificationCode(
                           value: authCon.emailVerificationCodeCon.value.text),
+                      inputAction: TextInputAction.done,
                       suffix: Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 10),

@@ -4,7 +4,9 @@ import 'package:Soulna/widgets/custom_ios_date_picker.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
+import '../../bottomsheet/show_datePicker_bottomSheet.dart';
 import '../../utils/app_assets.dart';
+import '../../widgets/custom_divider_widget.dart';
 
 class PastDiary extends StatefulWidget {
   const PastDiary({super.key});
@@ -71,17 +73,13 @@ class _PastDiaryState extends State<PastDiary> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerCalendar(
           context: context,
           title: DateFormat.yMMMM().format(DateTime.now()),
           onTapOnDownArrow: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return CustomDatePicker();
-              },
-            );
+            ShowDatePickerBottomSheet.showDatePicker(context: context);
+
           },
           onTap: () async {
             setState(() {
@@ -108,7 +106,7 @@ class _PastDiaryState extends State<PastDiary> {
           description:
               'It\s a day where you can expect results proportional to your efforts.'),
       separatorBuilder: (BuildContext context, int index) {
-        return Divider(
+        return CustomDividerWidget(
           color: ThemeSetting.of(context).common0,
           thickness: 1,
         );
@@ -129,7 +127,7 @@ class _PastDiaryState extends State<PastDiary> {
                 description: event.summary);
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(
+            return CustomDividerWidget(
               color: ThemeSetting.of(context).common0,
               thickness: 1,
             );

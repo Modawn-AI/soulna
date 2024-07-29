@@ -26,6 +26,7 @@ class SettingsWidget extends StatelessWidget {
               image,
               width: 26.h,
               height: 26.h,
+              color: ThemeSetting.of(context).primaryText,
             ),
             SizedBox(width: 10.w),
             Text(

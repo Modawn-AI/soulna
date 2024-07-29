@@ -22,8 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerBack(context: context),
-
         body: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: authCon.passwordCon.value,
                 hintText: LocaleKeys.enter_your_password.tr(),
                 isPassword: true,
+                inputAction: TextInputAction.done,
                 validator: CustomValidatorWidget.validatePassword(
                     value: authCon.passwordCon.value.text),
               ),

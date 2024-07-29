@@ -2,23 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:Soulna/manager/social_manager.dart';
-import 'package:Soulna/pages/auth/find_password.dart';
-import 'package:Soulna/pages/auth/signUp_additionalInfo.dart';
-import 'package:Soulna/pages/auth/signUp_agree.dart';
-import 'package:Soulna/pages/auth/signUp_email.dart';
-import 'package:Soulna/pages/auth/signUp_password.dart';
-import 'package:Soulna/pages/auth/splash_screen.dart';
-import 'package:Soulna/pages/main/animation_screen.dart';
-import 'package:Soulna/pages/main/autobiography_screen.dart';
-import 'package:Soulna/pages/main/book_details_screen.dart';
-import 'package:Soulna/pages/drawer/customer_service.dart';
-import 'package:Soulna/pages/drawer/notice_screen.dart';
-import 'package:Soulna/pages/drawer/past_diary.dart';
-import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
-import 'package:Soulna/pages/main/create_journal.dart';
-import 'package:Soulna/pages/main/journal_screen.dart';
+import 'package:Soulna/pages/main/book_details_screen3.dart';
 import 'package:Soulna/pages/notification/notification_settings.dart';
-import 'package:Soulna/pages/settings/data_of_birth_screen.dart';
 import 'package:Soulna/pages/profile/edit_profile.dart';
 import 'package:Soulna/provider/base_auth_user_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,7 +13,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:Soulna/utils/serialization_util.dart';
 import '../pages/auth/auth.dart';
 import '../pages/drawer/drawer.dart';
+import '../pages/main/booke_details_screen2.dart';
 import '../pages/main/main.dart';
+import '../pages/profile/profile_settings_screen.dart';
 import '../pages/settings/settings.dart';
 
 export 'package:go_router/go_router.dart';
@@ -139,6 +126,10 @@ String noPastFortuneScreen = 'NoPastFortuneScreen';
 String noPastDiaryScreen = 'NoPastDiaryScreen';
 String selectAlbumsScreen = 'SelectAlbumsScreen';
 String createJournal = 'CreateJournal';
+String bookDetailsScreen2 = 'BookDetailsScreen2';
+String bookDetailsScreen3 = 'BookDetailsScreen3';
+String profileSettingsScreen = 'ProfileSettingsScreen';
+
 //String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
 //String myInfoScreen = 'myInfoScreen';
 GoRouter createRouter(
@@ -227,6 +218,10 @@ GoRouter createRouter(
           builder: (context, params) => const BookDetailsScreen(),
         ),
         FFRoute(
+          name: bookDetailsScreen2,
+          builder: (context, params) => const BookDetailsScreen2(),
+        ),
+        FFRoute(
           name: pastFortuneScreen,
           builder: (context, params) => const PastFortuneScreen(),
         ),
@@ -299,7 +294,14 @@ GoRouter createRouter(
           name: createJournal,
           builder: (context, params) => const CreateJournal(),
         ),
-
+        FFRoute(
+          name: profileSettingsScreen,
+          builder: (context, params) => const ProfileSettingsScreen(),
+        ),
+        FFRoute(
+          name: bookDetailsScreen3,
+          builder: (context, params) => const BookDetailsScreen3(),
+        ),
         // FFRoute(
         //   name: pastFortuneCalenderViewScreen,
         //   builder: (context, params) => PastFortuneCalenderViewScreen(),

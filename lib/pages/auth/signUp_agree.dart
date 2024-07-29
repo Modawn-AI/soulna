@@ -65,6 +65,7 @@ class _SignupAgreeState extends State<SignupAgree> {
     ];
     return SafeArea(
       child: Scaffold(
+        backgroundColor:  ThemeSetting.of(context).secondaryBackground,
 
             appBar: HeaderWidget.headerWithCustomAction(
       context: context,

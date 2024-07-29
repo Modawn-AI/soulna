@@ -6,47 +6,55 @@ import '../../generated/locale_keys.g.dart';
 import '../../utils/theme_setting.dart';
 import '../../widgets/header/header_widget.dart';
 
-class NotificationSettings extends StatelessWidget {
+class NotificationSettings extends StatefulWidget {
   const NotificationSettings({super.key});
 
+  @override
+  State<NotificationSettings> createState() => _NotificationSettingsState();
+}
+
+class _NotificationSettingsState extends State<NotificationSettings> {
+  bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-            
-            appBar: HeaderWidget.headerWithTitle(
-      context: context,
-      title: LocaleKeys.notification_settings.tr(),
-            ),
-            body: ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerWithTitle(
+          context: context,
+          title: LocaleKeys.notification_settings.tr(),
+        ),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  LocaleKeys.marketing_notifications.tr(),
-                  style: ThemeSetting.of(context).bodyMedium,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      LocaleKeys.marketing_notifications.tr(),
+                      style: ThemeSetting.of(context).bodyMedium,
+                    ),
+                    Text(
+                      LocaleKeys.information_about_events_and_benefits.tr(),
+                      style: ThemeSetting.of(context)
+                          .captionLarge
+                          .copyWith(color: ThemeSetting.of(context).grayLight),
+                    )
+                  ],
                 ),
-                Text(
-                  LocaleKeys.information_about_events_and_benefits.tr(),
-                  style: ThemeSetting.of(context)
-                      .captionLarge
-                      .copyWith(color: ThemeSetting.of(context).grayLight),
+                const CustomSwitchTile(
+
                 )
               ],
-            ),
-            CustomSwitchTile()
+            )
           ],
-        )
-      ],
-            ),
-          ),
+        ),
+      ),
     );
   }
 }

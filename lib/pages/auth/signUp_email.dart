@@ -22,6 +22,7 @@ class _SignupEmailState extends State<SignupEmail> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor:  ThemeSetting.of(context).secondaryBackground,
 
             appBar: HeaderWidget.headerWithCustomAction(
       context: context,
@@ -61,7 +62,7 @@ class _SignupEmailState extends State<SignupEmail> {
                     context: context,
                     height: 30,
                     text: LocaleKeys.confirm.tr(),
-                    color: ThemeSetting.of(context).primaryText,
+                    color: ThemeSetting.of(context).black2,
                     onTap: () {
                       authCon.showVerificationCode.value = true;
                       authCon.update();
@@ -74,6 +75,7 @@ class _SignupEmailState extends State<SignupEmail> {
               ? CustomTextField(
                   controller: authCon.emailVerificationCodeCon.value,
                   hintText: LocaleKeys.enter_verification_code.tr(),
+            inputAction: TextInputAction.done,
                   validator: CustomValidatorWidget.validateVerificationCode(
                       value: authCon.emailVerificationCodeCon.value.text),
                   suffix: Padding(

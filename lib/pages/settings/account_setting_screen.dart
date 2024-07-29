@@ -6,16 +6,25 @@ import '../../widgets/custom_checkbox_widget.dart';
 import '../../widgets/custom_textfield_widget.dart';
 import '../../widgets/header/header_widget.dart';
 
-class AccountSettingScreen extends StatelessWidget {
+class AccountSettingScreen extends StatefulWidget {
   const AccountSettingScreen({super.key});
 
   @override
+  State<AccountSettingScreen> createState() => _AccountSettingScreenState();
+}
+
+class _AccountSettingScreenState extends State<AccountSettingScreen> {
+
+  bool isChecked = false;
+  @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
-          
+          backgroundColor: ThemeSetting.of(context).secondaryBackground,
+
           appBar: HeaderWidget.headerWithTitle(
-              context: context, title: 'Account Settings'),
+              context: context, title: LocaleKeys.account_settings.tr()),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
             child: Column(
@@ -27,19 +36,19 @@ class AccountSettingScreen extends StatelessWidget {
                         color: ThemeSetting.of(context).primary,
                       ),
                 ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 10),
                 CustomTextField(
                   controller: TextEditingController(),
                   hintText: LocaleKeys.enter_your_email.tr(),
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height:40),
                 Text(
                   LocaleKeys.password.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(
                         color: ThemeSetting.of(context).primary,
                       ),
                 ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 10),
                 CustomTextField(
                   controller: TextEditingController(),
                   hintText: LocaleKeys.enter_your_password.tr(),
@@ -49,14 +58,14 @@ class AccountSettingScreen extends StatelessWidget {
                   readOnly: true,
                   suffix: const Icon(Icons.keyboard_arrow_right),
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 40),
                 Text(
                   LocaleKeys.optional_terms_agreement.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(
                         color: ThemeSetting.of(context).primary,
                       ),
                 ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     context.pushNamed(dateOfBirthScreen);
@@ -64,8 +73,12 @@ class AccountSettingScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       CustomCheckbox(
-                        initialValue: false,
-                        onChanged: () {},
+                        initialValue: isChecked,
+                        onChanged: () {
+                          setState(() {
+                            isChecked = !isChecked;
+                          });
+                        },
                       ),
                       Text(
                         LocaleKeys.select.tr(),
@@ -73,7 +86,7 @@ class AccountSettingScreen extends StatelessWidget {
                               color: ThemeSetting.of(context).secondaryText,
                             ),
                       ),
-                      SizedBox(width: 6.w),
+                      SizedBox(width: 6),
                       Text(
                         LocaleKeys.marketing_consent.tr(),
                         style: ThemeSetting.of(context).captionLarge.copyWith(

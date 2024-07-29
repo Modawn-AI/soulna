@@ -21,6 +21,7 @@ class HeaderWidget {
               AppAssets.backArrow,
               height: 30,
               width: 30,
+              color: ThemeSetting.of(context).primaryText,
             ),
           ),
         ),
@@ -31,7 +32,6 @@ class HeaderWidget {
           required String title,
           void Function()? onTap}) =>
       AppBar(
-        
         elevation: 0,
         leadingWidth: 43,
         leading: GestureDetector(
@@ -42,6 +42,7 @@ class HeaderWidget {
               AppAssets.backArrow,
               height: 30,
               width: 30,
+              color: ThemeSetting.of(context).primaryText,
             ),
           ),
         ),
@@ -63,7 +64,6 @@ class HeaderWidget {
     void Function()? showMoreIconOnTap,
   }) =>
       AppBar(
-        
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -74,6 +74,7 @@ class HeaderWidget {
               AppAssets.backArrow,
               height: 30,
               width: 30,
+              color: ThemeSetting.of(context).primaryText,
             ),
           ),
         ),
@@ -92,6 +93,7 @@ class HeaderWidget {
               AppAssets.share,
               height: 30,
               width: 30,
+              color: ThemeSetting.of(context).primaryText,
             ),
           ),
           if (showMoreIcon == true)
@@ -103,6 +105,7 @@ class HeaderWidget {
                   AppAssets.more,
                   height: 30,
                   width: 30,
+                  color: ThemeSetting.of(context).primaryText,
                 ),
               ),
             )
@@ -114,8 +117,6 @@ class HeaderWidget {
           required Widget title,
           void Function()? onTap}) =>
       AppBar(
-        
-        elevation: 00,
         leadingWidth: 48,
         leading: GestureDetector(
           onTap: onTap ?? () => Navigator.pop(context),
@@ -125,6 +126,7 @@ class HeaderWidget {
               AppAssets.btnMore,
               height: 30,
               width: 30,
+              color: ThemeSetting.of(context).primaryText,
             ),
           ),
         ),
@@ -137,13 +139,13 @@ class HeaderWidget {
               AppAssets.instagram,
               height: 30,
               width: 30,
+              color: ThemeSetting.of(context).primaryText,
             ),
           )
         ],
       );
 
   static AppBar headerMy({required BuildContext context}) => AppBar(
-        
         elevation: 0,
         leadingWidth: 48,
         actions: [
@@ -165,7 +167,6 @@ class HeaderWidget {
           String? pageIndex,
           double percent = 0.0}) =>
       AppBar(
-          
           elevation: 00,
           leadingWidth: 48,
           leading: GestureDetector(
@@ -176,6 +177,7 @@ class HeaderWidget {
                 AppAssets.backArrow,
                 height: 30,
                 width: 30,
+                color: ThemeSetting.of(context).primaryText,
               ),
             ),
           ),
@@ -199,7 +201,7 @@ class HeaderWidget {
                       text: pageIndex,
                       children: [
                         TextSpan(
-                            text: '/4',
+                            text: ' /4',
                             style: ThemeSetting.of(context)
                                 .captionLarge
                                 .copyWith(
@@ -216,9 +218,9 @@ class HeaderWidget {
           {required BuildContext context,
           required GestureTapCallback onTap,
           String? actionIcon,
-          GestureTapCallback? onTapOnMenu}) =>
+          GestureTapCallback? onTapOnMenu,
+          Widget? switchTile}) =>
       AppBar(
-        
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -229,6 +231,7 @@ class HeaderWidget {
               AppAssets.backArrow,
               height: 30,
               width: 30,
+              color: ThemeSetting.of(context).primaryText,
             ),
           ),
         ),
@@ -241,9 +244,13 @@ class HeaderWidget {
                 actionIcon ?? AppAssets.iconSettings,
                 height: 30,
                 width: 30,
+                color: ThemeSetting.of(context).primaryText,
               ),
             ),
-          )
+          ),
+          Padding(
+              padding: EdgeInsets.only(right: 18.w, top: 5.h),
+              child: switchTile ?? SizedBox.shrink())
         ],
       );
 
@@ -254,7 +261,6 @@ class HeaderWidget {
           void Function()? onTapOnDownArrow,
           String? image}) =>
       AppBar(
-        
         elevation: 00,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -265,6 +271,7 @@ class HeaderWidget {
               AppAssets.backArrow,
               height: 30,
               width: 30,
+              color: ThemeSetting.of(context).primaryText,
             ),
           ),
         ),
@@ -282,6 +289,7 @@ class HeaderWidget {
                   onPressed: onTapOnDownArrow,
                   icon: Icon(
                     Icons.keyboard_arrow_down_sharp,
+
                     color: ThemeSetting.of(context).primaryText,
                     size: 20,
                   ))
