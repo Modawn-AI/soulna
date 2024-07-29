@@ -29,8 +29,10 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
     endTime = widget.initialEndTime;
   }
 
-  showTimeDialog({ required BuildContext context,
-    required TimeOfDay initialTime,}) {
+  showTimeDialog({
+    required BuildContext context,
+    required TimeOfDay initialTime,
+  }) {
     return showTimePicker(
       context: context,
       initialTime: initialTime,
@@ -40,21 +42,23 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
             dayPeriodTextColor: ThemeSetting.of(context).primaryText,
             dayPeriodColor: ThemeSetting.of(context).primary,
             dialHandColor: ThemeSetting.of(context).primary,
-            dialBackgroundColor: ThemeSetting.of(context).secondaryBackground,
+
             entryModeIconColor: ThemeSetting.of(context).primary,
             hourMinuteTextColor: ThemeSetting.of(context).secondaryBackground,
             hourMinuteColor: ThemeSetting.of(context).primary,
             // backgroundColor: ThemeSetting.of(context).secondaryBackground
             cancelButtonStyle: ButtonStyle(
-              foregroundColor: WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
+              foregroundColor: WidgetStateProperty.all<Color>(
+                  ThemeSetting.of(context).primary),
             ),
             confirmButtonStyle: ButtonStyle(
-              foregroundColor: WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
+              foregroundColor: WidgetStateProperty.all<Color>(
+                  ThemeSetting.of(context).primary),
             ),
             inputDecorationTheme: InputDecorationTheme(
               labelStyle: ThemeSetting.of(context).headlineLarge.copyWith(
-                color: ThemeSetting.of(context).primary,
-              ),
+                    color: ThemeSetting.of(context).primary,
+                  ),
             ),
           ),
         ),
@@ -62,6 +66,7 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
       ),
     );
   }
+
   Future<void> _selectTimeRange(BuildContext context) async {
     final TimeOfDay? pickedStartTime = await showTimeDialog(
       context: context,
@@ -98,8 +103,8 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
             Text(
               "   ${startTime.format(context)} ~ ${endTime.format(context)}",
               style: ThemeSetting.of(context).headlineLarge.copyWith(
-                color: ThemeSetting.of(context).primaryText,
-              ),
+                    color: ThemeSetting.of(context).primaryText,
+                  ),
             ),
             const Spacer(),
             IconButton(

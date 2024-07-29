@@ -39,9 +39,11 @@ class _JournalScreenState extends State<JournalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      body: showHeader == false ? journalList() : journalScroll(),
+    return SafeArea(
+      child: Scaffold(
+        
+        body: showHeader == false ? journalList() : journalScroll(),
+      ),
     );
   }
 

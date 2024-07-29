@@ -54,97 +54,99 @@ class _NoticeScreenState extends State<NoticeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerWithTitle(
-        context: context,
-        title: LocaleKeys.notice.tr(),
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 10.h),
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 8.w),
-            child: SizedBox(
-              height: 40.h,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: noticeList.length,
-                itemBuilder: (context, index) {
-                  bool isSelected = selectedIndex == index;
-                  return GestureDetector(
-                    onTap: () {
-                     setState(() {
-                       selectedIndex = index;
-                     });
-                     filterListByTitle(noticeList[index]);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 0.0),
-                      margin: EdgeInsets.all(4.r),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? ThemeSetting.of(context).primaryText
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(50.r),
-                        border: Border.all(
+    return SafeArea(
+      child: Scaffold(
+
+        appBar: HeaderWidget.headerWithTitle(
+          context: context,
+          title: LocaleKeys.notice.tr(),
+        ),
+        body: Column(
+          children: [
+            SizedBox(height: 10.h),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 8.w),
+              child: SizedBox(
+                height: 40.h,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: noticeList.length,
+                  itemBuilder: (context, index) {
+                    bool isSelected = selectedIndex == index;
+                    return GestureDetector(
+                      onTap: () {
+                       setState(() {
+                         selectedIndex = index;
+                       });
+                       filterListByTitle(noticeList[index]);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 0.0),
+                        margin: EdgeInsets.all(4.r),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
                           color: isSelected
                               ? ThemeSetting.of(context).primaryText
-                              : ThemeSetting.of(context).common0,
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(50.r),
+                          border: Border.all(
+                            color: isSelected
+                                ? ThemeSetting.of(context).primaryText
+                                : ThemeSetting.of(context).common0,
+                          ),
                         ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 0.0),
-                        child: Text(
-                          noticeList[index],
-                          style: TextStyle(
-                            color: isSelected ?ThemeSetting.of(context).secondaryBackground: ThemeSetting.of(context).primaryText,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 0.0),
+                          child: Text(
+                            noticeList[index],
+                            style: TextStyle(
+                              color: isSelected ?ThemeSetting.of(context).secondaryBackground: ThemeSetting.of(context).primaryText,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 10.h),
+
+            Expanded(
+              child: ListView.builder(
+                itemCount: filterList.length,
+                itemBuilder: (context, index) {
+                  return listTile(
+                    title:filterList[index]['title'],
+                    description:filterList[index]['description'], context: context,
+                    date: filterList[index]['date'],
+                    onTap: () {
+                      context.pushNamed(privacyPolicyUpdateNoticeScreen);
+                    },
                   );
                 },
               ),
             ),
-          ),
-          SizedBox(height: 10.h),
-
-          Expanded(
-            child: ListView.builder(
-              itemCount: filterList.length,
-              itemBuilder: (context, index) {
-                return listTile(
-                  title:filterList[index]['title'],
-                  description:filterList[index]['description'], context: context,
-                  date: filterList[index]['date'],
-                  onTap: () {
-                    context.pushNamed(privacyPolicyUpdateNoticeScreen);
-                  },
-                );
-              },
-            ),
-          ),
-      // if(selectedIndex == 1)
-      //      Expanded(
-      //       child: Center(child: Text(LocaleKeys.notice.tr())),
-      //     ),
-      // if(selectedIndex == 2)
-      //      Expanded(
-      //       child: Expanded(
-      //         child: Center(child: Text(LocaleKeys.update.tr())),
-      //       ),
-      //     ),
-      // if(selectedIndex == 3)
-      //      Expanded(
-      //       child: Center(child: Text(LocaleKeys.information.tr())),
-      //     ),
-      // if(selectedIndex == 4)
-      //      Expanded(
-      //       child:  Center(child: Text(LocaleKeys.Other.tr())),
-      //     ),
-        ],
+        // if(selectedIndex == 1)
+        //      Expanded(
+        //       child: Center(child: Text(LocaleKeys.notice.tr())),
+        //     ),
+        // if(selectedIndex == 2)
+        //      Expanded(
+        //       child: Expanded(
+        //         child: Center(child: Text(LocaleKeys.update.tr())),
+        //       ),
+        //     ),
+        // if(selectedIndex == 3)
+        //      Expanded(
+        //       child: Center(child: Text(LocaleKeys.information.tr())),
+        //     ),
+        // if(selectedIndex == 4)
+        //      Expanded(
+        //       child:  Center(child: Text(LocaleKeys.Other.tr())),
+        //     ),
+          ],
+        ),
       ),
     );
   }

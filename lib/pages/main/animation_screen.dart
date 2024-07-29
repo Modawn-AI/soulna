@@ -58,51 +58,53 @@ class _AnimationScreenState extends State<AnimationScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).black1,
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedBuilder(
-              animation: _animation,
-              builder: (context, child) {
-                return Transform.rotate(
-                  angle: _animation.value * 2 * 3.141592653589793,
-                  child: child,
-                );
-              },
-              child: Image.asset(
-                AppAssets.logo,
-                height: 58,
-                width: 58,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).black1,
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return Transform.rotate(
+                    angle: _animation.value * 2 * 3.141592653589793,
+                    child: child,
+                  );
+                },
+                child: Image.asset(
+                  AppAssets.logo,
+                  height: 58,
+                  width: 58,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              LocaleKeys.wait_a_moment.tr(),
-              style: ThemeSetting.of(context).headlineLarge,
-            ),
-            const SizedBox(
-              height: 53,
-            ),
-            Container(
-              width: 200,
-              alignment: Alignment.center,
-              // padding: const EdgeInsets.only(left: 105,right: 60),
-              child: LinearPercentIndicator(
-                padding: EdgeInsets.zero,
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                LocaleKeys.wait_a_moment.tr(),
+                style: ThemeSetting.of(context).headlineLarge,
+              ),
+              const SizedBox(
+                height: 53,
+              ),
+              Container(
                 width: 200,
-                lineHeight: 6,
-                animation: true,
-                percent: percent,
-                barRadius: const Radius.circular(100),
-              ),
-            )
-          ],
+                alignment: Alignment.center,
+                // padding: const EdgeInsets.only(left: 105,right: 60),
+                child: LinearPercentIndicator(
+                  padding: EdgeInsets.zero,
+                  width: 200,
+                  lineHeight: 6,
+                  animation: true,
+                  percent: percent,
+                  barRadius: const Radius.circular(100),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

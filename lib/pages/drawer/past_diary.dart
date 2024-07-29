@@ -69,31 +69,33 @@ class _PastDiaryState extends State<PastDiary> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerCalendar(
-        context: context,
-        title: DateFormat.yMMMM().format(DateTime.now()),
-        onTapOnDownArrow: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return CustomDatePicker();
-            },
-          );
-        },
-        onTap: () async {
-          setState(() {
-            if (index == 0) {
-              index = 1;
-            } else {
-              index = 0;
-            }
-          });
-        },
-        image: index == 0 ? AppAssets.calendar : AppAssets.menu,
+    return SafeArea(
+      child: Scaffold(
+
+        appBar: HeaderWidget.headerCalendar(
+          context: context,
+          title: DateFormat.yMMMM().format(DateTime.now()),
+          onTapOnDownArrow: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return CustomDatePicker();
+              },
+            );
+          },
+          onTap: () async {
+            setState(() {
+              if (index == 0) {
+                index = 1;
+              } else {
+                index = 0;
+              }
+            });
+          },
+          image: index == 0 ? AppAssets.calendar : AppAssets.menu,
+        ),
+        body: index == 0 ? pastFortune() : pastFortuneCalenderView(),
       ),
-      body: index == 0 ? pastFortune() : pastFortuneCalenderView(),
     );
   }
 

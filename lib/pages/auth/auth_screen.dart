@@ -38,30 +38,32 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).tertiary,
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Spacer(flex: isContainerVisible ? 1 : 2),
-            SlideTransition(
-              position:
-                  Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-                      .animate(logoAnimationController),
-              child: Image.asset(AppAssets.logo, height: 90),
-            ),
-            if (isContainerVisible) ...[
-              const Spacer(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).tertiary,
+        body: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Spacer(flex: isContainerVisible ? 1 : 2),
               SlideTransition(
                 position:
                     Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-                        .animate(containerAnimationController),
-                child: _buildSecondaryWidget(),
+                        .animate(logoAnimationController),
+                child: Image.asset(AppAssets.logo, height: 90),
               ),
+              if (isContainerVisible) ...[
+                const Spacer(),
+                SlideTransition(
+                  position:
+                      Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
+                          .animate(containerAnimationController),
+                  child: _buildSecondaryWidget(),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

@@ -50,225 +50,227 @@ final _inquiryFormKey = GlobalKey<FormState>();
   String? _selectedItem;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerBack(context: context),
-  body: Padding(
-    padding: EdgeInsets.symmetric(horizontal: 16.w),
-    child: Form(
-      key: _inquiryFormKey,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-           LocaleKeys.please_feel_free_to_inquire_about_any_questions_you_have.tr(),
-              style: ThemeSetting.of(context).labelSmall.copyWith(
-                color: ThemeSetting.of(context).primaryText,
-              ),
-            ),
-            SizedBox(height: 20.h),
-            Text(
-              LocaleKeys.inquiry_category.tr(),
-              style: ThemeSetting.of(context).captionMedium.copyWith(
-                color: ThemeSetting.of(context).primary,
-                fontSize: 14.sp,
-              ),
-            ),
-            SizedBox(height: 10.h),
-            CustomDropdownButton(
-              items: inquiryTList,
-              selectedItem: _selectedItem,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedItem = newValue;
-                });
-              },
-            ),
-            SizedBox(height: 20.h),
-            Text(
-              LocaleKeys.inquiries.tr(),
-              style: ThemeSetting.of(context).captionMedium.copyWith(
-                color: ThemeSetting.of(context).primary,
-                fontSize: 14.sp,
-              ),
-            ),
-            SizedBox(height: 10.h),
-            CustomTextField(
-              controller: inquiryController,
-              hintText: LocaleKeys.enter_inquiry_name.tr(),
-              validator: CustomValidatorWidget.validateName(
-                  value:  LocaleKeys.enter_inquiry_name.tr(),
-            ),
-            ),
-            SizedBox(height: 10.h),
-            CustomTextField(
-              maxLength: 80,
-              controller: inquiryDescriptionController,
-              hintText: LocaleKeys.enter_inquiry_des.tr(),
-              maxLines: 8,
-              validator: CustomValidatorWidget.validateName(
-                  value:  LocaleKeys.enter_inquiry_des.tr(),
-            ),
-            ),
-            SizedBox(height: 10.h),
+    return SafeArea(
+      child: Scaffold(
 
-            SingleChildScrollView(
-              scrollDirection:
-              Axis.horizontal,
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: (){
-                      if(selectedImages.length < 5){
-                        showModalBottomSheet(
-                    backgroundColor: ThemeSetting.of(context).secondaryBackground,
-                      context: context, builder: (context) {
-                    return Container(
-                      alignment: Alignment.center,
-                      height: 150.h,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          listTileCameraGalleryPicker(
-                            context: context,
-                            onTap: () {
-                              getImage(ImageSource.camera);
-                              Navigator.pop(context);
-                            },
-                            title: LocaleKeys.camera.tr(),
-                             icon:   Icons.camera_alt,
-                          ),
-                          listTileCameraGalleryPicker(
-                            context: context,
-                            onTap: () {
-                              getImage(ImageSource.gallery);
-                              Navigator.pop(context);
-                            },
-                            title: LocaleKeys.gallery.tr(),
-                            icon: Icons.photo,
-                          ),
-
-                        ],
-                      ),
-                    );
+        appBar: HeaderWidget.headerBack(context: context),
+        body: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Form(
+        key: _inquiryFormKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+             LocaleKeys.please_feel_free_to_inquire_about_any_questions_you_have.tr(),
+                style: ThemeSetting.of(context).labelSmall.copyWith(
+                  color: ThemeSetting.of(context).primaryText,
+                ),
+              ),
+              SizedBox(height: 20.h),
+              Text(
+                LocaleKeys.inquiry_category.tr(),
+                style: ThemeSetting.of(context).captionMedium.copyWith(
+                  color: ThemeSetting.of(context).primary,
+                  fontSize: 14.sp,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              CustomDropdownButton(
+                items: inquiryTList,
+                selectedItem: _selectedItem,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedItem = newValue;
                   });
-                      } else {
-                        CustomSnackBarWidget.showSnackBar(
-                          context: context,
-                          message: LocaleKeys.you_can_upload_up_to_5_images.tr(),
-                          color: ThemeSetting.of(context).primaryText,
-                        );
-                      }
-                    },
-                    child: Container(
-                      height: 60.h,
-                      width:  60.w,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
+                },
+              ),
+              SizedBox(height: 20.h),
+              Text(
+                LocaleKeys.inquiries.tr(),
+                style: ThemeSetting.of(context).captionMedium.copyWith(
+                  color: ThemeSetting.of(context).primary,
+                  fontSize: 14.sp,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              CustomTextField(
+                controller: inquiryController,
+                hintText: LocaleKeys.enter_inquiry_name.tr(),
+                validator: CustomValidatorWidget.validateName(
+                    value:  LocaleKeys.enter_inquiry_name.tr(),
+              ),
+              ),
+              SizedBox(height: 10.h),
+              CustomTextField(
+                maxLength: 80,
+                controller: inquiryDescriptionController,
+                hintText: LocaleKeys.enter_inquiry_des.tr(),
+                maxLines: 8,
+                validator: CustomValidatorWidget.validateName(
+                    value:  LocaleKeys.enter_inquiry_des.tr(),
+              ),
+              ),
+              SizedBox(height: 10.h),
 
-                        border: Border.all( color: ThemeSetting.of(context).common0),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                         Image.asset(
-                           AppAssets.camera,
-                            width: 24.w,
-                            height: 24.h,
-                           color: ThemeSetting.of(context).primary,
-                          ),
-                          Text(
-                           "${selectedImages.length}/5",
-                            style: ThemeSetting.of(context).captionMedium.copyWith(
-                              color: ThemeSetting.of(context).disabledText,
+              SingleChildScrollView(
+                scrollDirection:
+                Axis.horizontal,
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: (){
+                        if(selectedImages.length < 5){
+                          showModalBottomSheet(
+
+                        context: context, builder: (context) {
+                      return Container(
+                        alignment: Alignment.center,
+                        height: 150.h,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            listTileCameraGalleryPicker(
+                              context: context,
+                              onTap: () {
+                                getImage(ImageSource.camera);
+                                Navigator.pop(context);
+                              },
+                              title: LocaleKeys.camera.tr(),
+                               icon:   Icons.camera_alt,
                             ),
-                          ),
+                            listTileCameraGalleryPicker(
+                              context: context,
+                              onTap: () {
+                                getImage(ImageSource.gallery);
+                                Navigator.pop(context);
+                              },
+                              title: LocaleKeys.gallery.tr(),
+                              icon: Icons.photo,
+                            ),
 
-                        ],
+                          ],
+                        ),
+                      );
+                    });
+                        } else {
+                          CustomSnackBarWidget.showSnackBar(
+                            context: context,
+                            message: LocaleKeys.you_can_upload_up_to_5_images.tr(),
+                            color: ThemeSetting.of(context).primaryText,
+                          );
+                        }
+                      },
+                      child: Container(
+                        height: 60.h,
+                        width:  60.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+
+                          border: Border.all( color: ThemeSetting.of(context).common0),
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                           Image.asset(
+                             AppAssets.camera,
+                              width: 24.w,
+                              height: 24.h,
+                             color: ThemeSetting.of(context).primary,
+                            ),
+                            Text(
+                             "${selectedImages.length}/5",
+                              style: ThemeSetting.of(context).captionMedium.copyWith(
+                                color: ThemeSetting.of(context).disabledText,
+                              ),
+                            ),
+
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 6.w),
-                  selectedImages.isNotEmpty
-                      ?  SizedBox(
-                        height: 60.h,
-                        child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: selectedImages.length,
-                        itemBuilder: (context, i) {
-                          return Stack(
-                            alignment: Alignment.topRight,
-                            children: [
-                              Container(
-                                height: 60.h,
-                                width: 60.w,
-                                margin: EdgeInsets.only(right: 6.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  image: DecorationImage(
-                                    image:
-                                    FileImage(File(selectedImages[i].path)),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    selectedImages.removeAt(i);
-                                  });
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(bottom: 10.h),
-                                  height: 14.h,
-                                  width: 14.w,
+                    SizedBox(width: 6.w),
+                    selectedImages.isNotEmpty
+                        ?  SizedBox(
+                          height: 60.h,
+                          child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: selectedImages.length,
+                          itemBuilder: (context, i) {
+                            return Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                Container(
+                                  height: 60.h,
+                                  width: 60.w,
+                                  margin: EdgeInsets.only(right: 6.w),
                                   decoration: BoxDecoration(
-                                    color: ThemeSetting.of(context).black2,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.close,
-                                    color: ThemeSetting.of(context).secondaryBackground,
-                                    size: 8.sp,
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    image: DecorationImage(
+                                      image:
+                                      FileImage(File(selectedImages[i].path)),
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        }),
-                      ):Container(),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedImages.removeAt(i);
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(bottom: 10.h),
+                                    height: 14.h,
+                                    width: 14.w,
+                                    decoration: BoxDecoration(
+                                      color: ThemeSetting.of(context).black2,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.close,
+                                      color: ThemeSetting.of(context).secondaryBackground,
+                                      size: 8.sp,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        ):Container(),
 
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 100.h),
-            ButtonWidget.roundedButtonOrange(
-              context: context,
-              width: double.infinity,
-              color: ThemeSetting.of(context).primaryText,
-              text: LocaleKeys.one_one_inquiry.tr(),
-              onTap: () {
-              if (_inquiryFormKey.currentState!.validate() && _selectedItem != null) {
-                context.pop();
-                }else{
-                CustomSnackBarWidget.showSnackBar(
-                  context: context,
-                  message: LocaleKeys.please_enter_inquiry_or_select_category.tr(),
-                  color: ThemeSetting.of(context).primaryText,
-                );
-              }
-              },
-            ),
-          ],
+              SizedBox(height: 100.h),
+              ButtonWidget.roundedButtonOrange(
+                context: context,
+                width: double.infinity,
+                color: ThemeSetting.of(context).primaryText,
+                text: LocaleKeys.one_one_inquiry.tr(),
+                onTap: () {
+                if (_inquiryFormKey.currentState!.validate() && _selectedItem != null) {
+                  context.pop();
+                  }else{
+                  CustomSnackBarWidget.showSnackBar(
+                    context: context,
+                    message: LocaleKeys.please_enter_inquiry_or_select_category.tr(),
+                    color: ThemeSetting.of(context).primaryText,
+                  );
+                }
+                },
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  ),
+        ),
+      ),
     );
   }
   listTileCameraGalleryPicker({

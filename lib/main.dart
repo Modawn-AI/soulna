@@ -1,3 +1,4 @@
+import 'package:Soulna/utils/theme_setting.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:Soulna/auth/firebase_user_provider.dart';
 import 'package:Soulna/firebase_options.dart';
@@ -26,6 +27,10 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.black,
+  ));
 
   clearSecureStorageOnReinstall();
   setupLocator();
@@ -164,7 +169,13 @@ class _MyAppState extends State<MyApp> {
         return GetMaterialApp.router(
           title: 'Soulna',
 
-          theme: ThemeData(brightness: Brightness.light),
+          theme: ThemeData(
+              brightness: Brightness.light,
+              appBarTheme: AppBarTheme(
+                  backgroundColor:
+                      ThemeSetting.of(context).secondaryBackground),
+              scaffoldBackgroundColor:
+                  ThemeSetting.of(context).secondaryBackground),
           darkTheme: ThemeData(brightness: Brightness.dark),
           themeMode: _themeMode,
           // themeMode: ThemeMode.light,

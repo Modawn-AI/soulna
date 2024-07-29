@@ -46,10 +46,12 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        body:
-            showHeader == false ? autoBiographyList() : autoBiographyScroll());
+    return SafeArea(
+      child: Scaffold(
+
+          body:
+              showHeader == false ? autoBiographyList() : autoBiographyScroll()),
+    );
   }
 
   autoBiographyList() {

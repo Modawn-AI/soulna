@@ -85,21 +85,23 @@ class _CustomerServiceState extends State<CustomerService>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerWithTitle(
-          context: context, title: LocaleKeys.customer_service.tr()),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: CustomTabBar(
-        tabs: [
-          Tab(text: LocaleKeys.FAQ.tr()),
-          Tab(text: LocaleKeys.one_one_inquiry.tr()),
-        ],
-        tabViews: [
-          faqWidget(context: context),
-          inquiryWidget(context: context),
-        ],
-        tabController: _tabController,
+    return SafeArea(
+      child: Scaffold(
+
+        appBar: HeaderWidget.headerWithTitle(
+            context: context, title: LocaleKeys.customer_service.tr()),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: CustomTabBar(
+          tabs: [
+            Tab(text: LocaleKeys.FAQ.tr()),
+            Tab(text: LocaleKeys.one_one_inquiry.tr()),
+          ],
+          tabViews: [
+            faqWidget(context: context),
+            inquiryWidget(context: context),
+          ],
+          tabController: _tabController,
+        ),
       ),
     );
   }

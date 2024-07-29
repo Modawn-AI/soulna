@@ -9,8 +9,8 @@ class HeaderWidget {
           void Function()? onTap,
           Color? backgroundColor}) =>
       AppBar(
-        backgroundColor:
-            backgroundColor ?? ThemeSetting.of(context).secondaryBackground,
+        // backgroundColor:
+        //     backgroundColor ?? ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -31,7 +31,7 @@ class HeaderWidget {
           required String title,
           void Function()? onTap}) =>
       AppBar(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        
         elevation: 0,
         leadingWidth: 43,
         leading: GestureDetector(
@@ -63,7 +63,7 @@ class HeaderWidget {
     void Function()? showMoreIconOnTap,
   }) =>
       AppBar(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -114,7 +114,7 @@ class HeaderWidget {
           required Widget title,
           void Function()? onTap}) =>
       AppBar(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        
         elevation: 00,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -143,7 +143,7 @@ class HeaderWidget {
       );
 
   static AppBar headerMy({required BuildContext context}) => AppBar(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        
         elevation: 0,
         leadingWidth: 48,
         actions: [
@@ -165,7 +165,7 @@ class HeaderWidget {
           String? pageIndex,
           double percent = 0.0}) =>
       AppBar(
-          backgroundColor: ThemeSetting.of(context).secondaryBackground,
+          
           elevation: 00,
           leadingWidth: 48,
           leading: GestureDetector(
@@ -218,7 +218,7 @@ class HeaderWidget {
           String? actionIcon,
           GestureTapCallback? onTapOnMenu}) =>
       AppBar(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -254,7 +254,7 @@ class HeaderWidget {
           void Function()? onTapOnDownArrow,
           String? image}) =>
       AppBar(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        
         elevation: 00,
         leadingWidth: 48,
         leading: GestureDetector(

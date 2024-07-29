@@ -20,14 +20,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-          backgroundColor: ThemeSetting.of(context).tertiary,
-          body: Center(
-      child: Image.asset(
-    AppAssets.logo,
-    height: 90,
-    width: 90,
-          )),
-        );
+    return SafeArea(
+      child: Scaffold(
+            backgroundColor: ThemeSetting.of(context).tertiary,
+            body: Center(
+        child: Image.asset(
+      AppAssets.logo,
+      height: 90,
+      width: 90,
+            )),
+          ),
+    );
   }
 }

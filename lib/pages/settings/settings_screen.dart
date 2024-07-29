@@ -23,50 +23,52 @@ class SettingsScreen extends StatelessWidget {
       },
     ];
 
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerWithTitle(
-          context: context, title: LocaleKeys.setting.tr()),
-      body: Column(children: [
-        ...List.generate(
-          settingList.length,
-          (index) {
-            return SettingsWidget(
-              onTap: () {
-                if (index == 0) {
-                  context.pushNamed(accountSettingScreen);
-                } else if (index == 1) {
-                  context.pushNamed(notificationSettings);
-                }
-              },
-              image: settingList[index]['image'],
-              context: context,
-              title: settingList[index]['title'],
-            );
-          },
-        ),
-        Spacer(),
-        ButtonWidget.borderButton(
-          context: context,
-          borderColor: ThemeSetting.of(context).common0,
-          textColor: ThemeSetting.of(context).primary,
-          text: LocaleKeys.log_out.tr(),
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => CustomDialogWidget(
+    return SafeArea(
+      child: Scaffold(
+        
+        appBar: HeaderWidget.headerWithTitle(
+            context: context, title: LocaleKeys.setting.tr()),
+        body: Column(children: [
+          ...List.generate(
+            settingList.length,
+            (index) {
+              return SettingsWidget(
+                onTap: () {
+                  if (index == 0) {
+                    context.pushNamed(accountSettingScreen);
+                  } else if (index == 1) {
+                    context.pushNamed(notificationSettings);
+                  }
+                },
+                image: settingList[index]['image'],
                 context: context,
-                title: LocaleKeys.log_out.tr(),
-                content: LocaleKeys.are_you_sure_you_want_to_log_out.tr(),
-                confirmText: LocaleKeys.log_out.tr(),
-                onConfirm: () =>
-                    Navigator.of(context).pushReplacementNamed('LoginScreen'),
-              ),
-            );
-          },
-        ),
-        SizedBox(height: 40.h),
-      ]),
+                title: settingList[index]['title'],
+              );
+            },
+          ),
+          Spacer(),
+          ButtonWidget.borderButton(
+            context: context,
+            borderColor: ThemeSetting.of(context).common0,
+            textColor: ThemeSetting.of(context).primary,
+            text: LocaleKeys.log_out.tr(),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => CustomDialogWidget(
+                  context: context,
+                  title: LocaleKeys.log_out.tr(),
+                  content: LocaleKeys.are_you_sure_you_want_to_log_out.tr(),
+                  confirmText: LocaleKeys.log_out.tr(),
+                  onConfirm: () =>
+                      Navigator.of(context).pushReplacementNamed('LoginScreen'),
+                ),
+              );
+            },
+          ),
+          SizedBox(height: 40.h),
+        ]),
+      ),
     );
   }
 }

@@ -62,7 +62,7 @@
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       key: scaffoldKey,
-//       backgroundColor: ThemeSetting.of(context).secondaryBackground,
+//       
 //       appBar: AppBar(
 //         title: Text(
 //           'Dear Me',

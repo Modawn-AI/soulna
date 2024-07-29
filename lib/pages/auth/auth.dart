@@ -5,5 +5,4 @@ export 'signUp_additionalInfo.dart';
 export 'signUp_agree.dart';
 export 'signUp_email.dart';
 export 'signUp_password.dart';
-export 'signUp_screen.dart';
 export 'splash_screen.dart';
