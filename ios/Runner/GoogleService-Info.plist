@@ -2,18 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>360411427664-f6rgvvm0smkgint4des6kpg43sb4em0t.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.360411427664-f6rgvvm0smkgint4des6kpg43sb4em0t</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB9z23tZRelypgGVW8D_CaLyWh2_MbQdoc</string>
+	<string>AIzaSyDWfG70fZaLpai4bwaYXBdZp4sdHKAWBZ4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>335339482045</string>
+	<string>360411427664</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.modawn.soulna</string>
 	<key>PROJECT_ID</key>
-	<string>modawn-soulna</string>
+	<string>soulna-1170e</string>
 	<key>STORAGE_BUCKET</key>
-	<string>modawn-soulna.appspot.com</string>
+	<string>soulna-1170e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:335339482045:ios:1a74b65e787465ceb100d4</string>
+	<string>1:360411427664:ios:eb599285819c56d5613255</string>
 </dict>
 </plist>

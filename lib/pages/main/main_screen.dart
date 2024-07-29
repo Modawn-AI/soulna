@@ -21,7 +21,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   int currentIndex = 0;
-  bool isPremium = false;
+  bool isPremium = true;
   int previousIndex = 0;
   List<ImageModel> images = [];
   late AnimationController _animationController;
@@ -62,8 +62,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 elevation: 0,
                 isScrollControlled: true,
                 //isDismissible: false,
-                backgroundColor:
-                    ThemeSetting.of(context).primaryText.withOpacity(0.5),
+                backgroundColor: ThemeSetting.of(context).primaryText.withOpacity(0.5),
                 context: context,
                 builder: (context) {
                   return bottomSheetWidget(context);
@@ -109,75 +108,207 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       key: scaffoldKey,
       drawer: DrawerScreen.drawerWidget(context: context),
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      body: ListView(
-        children: [
-          HeaderWidget.headerWithLogoAndInstagram(
-              context: context,
-              title: AnimatedBuilder(
-                animation: _logoAniCon,
+      body: SafeArea(
+        child: ListView(
+          children: [
+            HeaderWidget.headerWithLogoAndInstagram(
+                context: context,
+                title: AnimatedBuilder(
+                  animation: _logoAniCon,
+                  builder: (context, child) {
+                    return Transform.rotate(
+                      angle: _logoAnimation.value * 2 * 3.141592653589793,
+                      child: child,
+                    );
+                  },
+                  child: Image.asset(
+                    AppAssets.logo,
+                    height: 37,
+                    width: 37,
+                  ),
+                ),
+                onTap: () => scaffoldKey.currentState?.openDrawer()),
+            const SizedBox(
+              height: 32,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${LocaleKeys.hey.tr()} Stella,',
+                  style: ThemeSetting.of(context).labelLarge,
+                ),
+                Text(
+                  LocaleKeys.hows_you_day_going.tr(),
+                  style: ThemeSetting.of(context).labelLarge,
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 39,
+              margin: const EdgeInsets.only(right: 148, left: 149),
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1), borderRadius: BorderRadius.circular(50), color: ThemeSetting.of(context).tertiary1),
+                child: Text(
+                  'July 8',
+                  style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            SizedBox(
+              height: 350,
+              width: 202,
+              child: AnimatedBuilder(
+                animation: _slideAnimation,
                 builder: (context, child) {
-                  return Transform.rotate(
-                    angle: _logoAnimation.value * 2 * 3.141592653589793,
+                  return SlideTransition(
+                    position: _slideAnimation,
                     child: child,
                   );
                 },
-                child: Image.asset(
-                  AppAssets.logo,
-                  height: 37,
-                  width: 37,
+                child: CarouselSlider(
+                  items: images.asMap().entries.map((e) {
+                    ImageModel image = e.value;
+                    return GestureDetector(
+                      onTap: () => context.pushNamed("${image.route}"),
+                      child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          height: 300,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [image.linear1, image.linear2], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                            border: Border.all(color: ThemeSetting.of(context).primaryText),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Container(
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.only(top: 22),
+                                    margin: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            right: BorderSide(color: ThemeSetting.of(context).secondaryBackground, width: 1.5),
+                                            left: BorderSide(color: ThemeSetting.of(context).secondaryBackground, width: 1.5),
+                                            top: BorderSide(color: ThemeSetting.of(context).secondaryBackground, width: 1.5)),
+                                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                                    child: Text(
+                                      image.text,
+                                      style: ThemeSetting.of(context).titleLarge.copyWith(color: ThemeSetting.of(context).secondaryBackground),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 40),
+                                    child: Image.asset(
+                                      image.image,
+                                      width: 165,
+                                      height: 195,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: ThemeSetting.of(context).primaryText,
+                                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          LocaleKeys.create.tr(),
+                                          style: ThemeSetting.of(context).headlineLarge,
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Image.asset(
+                                          AppAssets.start,
+                                          height: 14,
+                                          width: 14,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              if (!isPremium)
+                                Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ThemeSetting.of(context).primaryText.withOpacity(0.8)),
+                                ),
+                              if (!isPremium)
+                                Positioned(
+                                  top: 110,
+                                  child: Image.asset(
+                                    AppAssets.lock,
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                              if (!isPremium)
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              if (!isPremium)
+                                Positioned(
+                                  top: 170,
+                                  child: Text(
+                                    LocaleKeys.to_unlock_please_subscribe.tr(),
+                                    textAlign: TextAlign.center,
+                                    style: ThemeSetting.of(context).bodyMedium.copyWith(color: ThemeSetting.of(context).secondaryBackground),
+                                  ),
+                                )
+                            ],
+                          )),
+                    );
+                  }).toList(),
+                  carouselController: CarouselController(),
+                  options: CarouselOptions(
+                      viewportFraction: 0.8,
+                      disableCenter: true,
+                      enableInfiniteScroll: false,
+                      scrollPhysics: isPremium == true ? const AlwaysScrollableScrollPhysics() : const NeverScrollableScrollPhysics(),
+                      reverse: false,
+                      padEnds: true,
+                      aspectRatio: 0.7,
+                      height: 500,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          if (index > previousIndex) {
+                            _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value + 0.25).animate(_logoAniCon);
+                          } else {
+                            _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value - 0.25).animate(_logoAniCon);
+                          }
+                          _logoAniCon.forward(from: 0);
+                          previousIndex = index;
+
+                          currentIndex = index;
+                        });
+                      }),
                 ),
               ),
-              onTap: () => scaffoldKey.currentState?.openDrawer()),
-          const SizedBox(
-            height: 32,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '${LocaleKeys.hey.tr()} Stella,',
-                style: ThemeSetting.of(context).labelLarge,
-              ),
-              Text(
-                LocaleKeys.hows_you_day_going.tr(),
-                style: ThemeSetting.of(context).labelLarge,
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 39,
-            margin: const EdgeInsets.only(right: 148, left: 149),
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              border: Border.all(
-                  color: ThemeSetting.of(context).tertiary1, width: 1),
-              borderRadius: BorderRadius.circular(50),
             ),
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: ThemeSetting.of(context).tertiary1, width: 1),
-                  borderRadius: BorderRadius.circular(50),
-                  color: ThemeSetting.of(context).tertiary1),
-              child: Text(
-                'July 8',
-                style: ThemeSetting.of(context)
-                    .bodyMedium
-                    .copyWith(fontWeight: FontWeight.w600),
-              ),
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          SizedBox(
-            height: 350,
-            width: 202,
-            child: AnimatedBuilder(
+            AnimatedBuilder(
               animation: _slideAnimation,
               builder: (context, child) {
                 return SlideTransition(
@@ -185,283 +316,101 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   child: child,
                 );
               },
-              child: CarouselSlider(
-                items: images.asMap().entries.map((e) {
-                  ImageModel image = e.value;
-                  return GestureDetector(
-                    onTap: () => context.pushNamed("${image.route}"),
-                    child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        height: 300,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [image.linear1, image.linear2],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter),
-                          border: Border.all(
-                              color: ThemeSetting.of(context).primaryText),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: double.infinity,
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.only(top: 22),
-                                  margin: const EdgeInsets.only(
-                                      top: 8, left: 8, right: 8),
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          right: BorderSide(
-                                              color: ThemeSetting.of(context)
-                                                  .secondaryBackground,
-                                              width: 1.5),
-                                          left: BorderSide(
-                                              color: ThemeSetting.of(context)
-                                                  .secondaryBackground,
-                                              width: 1.5),
-                                          top: BorderSide(
-                                              color: ThemeSetting.of(context)
-                                                  .secondaryBackground,
-                                              width: 1.5)),
-                                      borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20))),
-                                  child: Text(
-                                    image.text,
-                                    style: ThemeSetting.of(context)
-                                        .titleLarge
-                                        .copyWith(
-                                            color: ThemeSetting.of(context)
-                                                .secondaryBackground),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 40),
-                                  child: Image.asset(
-                                    image.image,
-                                    width: 165,
-                                    height: 195,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: ThemeSetting.of(context).primaryText,
-                                    borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(20),
-                                        bottomRight: Radius.circular(20)),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        LocaleKeys.create.tr(),
-                                        style: ThemeSetting.of(context)
-                                            .headlineLarge,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Image.asset(
-                                        AppAssets.start,
-                                        height: 14,
-                                        width: 14,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            if (!isPremium)
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: ThemeSetting.of(context)
-                                        .primaryText
-                                        .withOpacity(0.8)),
+              child: SizedBox(
+                width: 202,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: images.asMap().entries.map((entry) {
+                    return GestureDetector(
+                      //onTap: () => _controller.animateToPage(entry.key),
+                      child: Container(
+                          width: 85,
+                          height: 4,
+                          // margin: const EdgeInsets.symmetric(
+                          //     vertical: 8.0, horizontal: 4.0),
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.horizontal(
+                                left: Radius.circular(3),
                               ),
-                            if (!isPremium)
-                              Positioned(
-                                top: 110,
-                                child: Image.asset(
-                                  AppAssets.lock,
-                                  height: 50,
-                                  width: 50,
-                                ),
-                              ),
-                            if (!isPremium)
-                              SizedBox(
-                                height: 10,
-                              ),
-                            if (!isPremium)
-                              Positioned(
-                                top: 170,
-                                child: Text(
-                                  LocaleKeys.to_unlock_please_subscribe.tr(),
-                                  textAlign: TextAlign.center,
-                                  style: ThemeSetting.of(context)
-                                      .bodyMedium
-                                      .copyWith(
-                                          color: ThemeSetting.of(context)
-                                              .secondaryBackground),
-                                ),
-                              )
-                          ],
-                        )),
-                  );
-                }).toList(),
-                carouselController: CarouselController(),
-                options: CarouselOptions(
-                    viewportFraction: 0.8,
-                    disableCenter: true,
-                    enableInfiniteScroll: false,
-                    scrollPhysics: isPremium == true
-                        ? const AlwaysScrollableScrollPhysics()
-                        : const NeverScrollableScrollPhysics(),
-                    reverse: false,
-                    padEnds: true,
-                    aspectRatio: 0.7,
-                    height: 500,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        if (index > previousIndex) {
-                          _logoAnimation = Tween<double>(
-                                  begin: _logoAnimation.value,
-                                  end: _logoAnimation.value + 0.25)
-                              .animate(_logoAniCon);
-                        } else {
-                          _logoAnimation = Tween<double>(
-                                  begin: _logoAnimation.value,
-                                  end: _logoAnimation.value - 0.25)
-                              .animate(_logoAniCon);
-                        }
-                        _logoAniCon.forward(from: 0);
-                        previousIndex = index;
-
-                        currentIndex = index;
-                      });
-                    }),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          AnimatedBuilder(
-            animation: _slideAnimation,
-            builder: (context, child) {
-              return SlideTransition(
-                position: _slideAnimation,
-                child: child,
-              );
-            },
-            child: SizedBox(
-              width: 202,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: images.asMap().entries.map((entry) {
-                  return GestureDetector(
-                    //onTap: () => _controller.animateToPage(entry.key),
-                    child: Container(
-                        width: 85,
-                        height: 4,
-                        // margin: const EdgeInsets.symmetric(
-                        //     vertical: 8.0, horizontal: 4.0),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.horizontal(
-                              left: Radius.circular(3),
-                            ),
-                            color: currentIndex == entry.key
-                                ? ThemeSetting.of(context).primary
-                                : ThemeSetting.of(context).common1)),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Divider(
-            color: ThemeSetting.of(context).common2,
-            thickness: 3,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, top: 10),
-            child: Text(
-              LocaleKeys.recommended_fortune.tr(),
-              style: ThemeSetting.of(context).captionLarge,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.all(15),
-            margin: const EdgeInsets.symmetric(horizontal: 17),
-            decoration: BoxDecoration(
-                color: ThemeSetting.of(context).tertiary2,
-                borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
-                      style: ThemeSetting.of(context)
-                          .bodyMedium
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          LocaleKeys.check.tr(),
-                          style: ThemeSetting.of(context).captionLarge,
-                        ),
-                        Image.asset(
-                          AppAssets.next,
-                          height: 14,
-                          width: 14,
-                        ),
-                      ],
-                    ),
-                  ],
+                              color: currentIndex == entry.key ? ThemeSetting.of(context).primary : ThemeSetting.of(context).common1)),
+                    );
+                  }).toList(),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      AppAssets.star,
-                      height: 20,
-                      width: 20,
-                    ),
-                    Image.asset(
-                      AppAssets.character,
-                      height: 52,
-                      width: 57,
-                    ),
-                  ],
-                )
-              ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 35,
-          ),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            Divider(
+              color: ThemeSetting.of(context).common2,
+              thickness: 3,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 10),
+              child: Text(
+                LocaleKeys.recommended_fortune.tr(),
+                style: ThemeSetting.of(context).captionLarge,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              margin: const EdgeInsets.symmetric(horizontal: 17),
+              decoration: BoxDecoration(color: ThemeSetting.of(context).tertiary2, borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
+                        style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w700),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            LocaleKeys.check.tr(),
+                            style: ThemeSetting.of(context).captionLarge,
+                          ),
+                          Image.asset(
+                            AppAssets.next,
+                            height: 14,
+                            width: 14,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        AppAssets.star,
+                        height: 20,
+                        width: 20,
+                      ),
+                      Image.asset(
+                        AppAssets.character,
+                        height: 52,
+                        width: 57,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 35,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -514,29 +463,20 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   left: 15,
                   right: 15,
                 ),
-                decoration: BoxDecoration(
-                    border:
-                        Border.all(color: ThemeSetting.of(context).primaryText),
-                    color: ThemeSetting.of(context).primary,
-                    borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(border: Border.all(color: ThemeSetting.of(context).primaryText), color: ThemeSetting.of(context).primary, borderRadius: BorderRadius.circular(12)),
                 height: 80.h,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(LocaleKeys.yearly.tr(),
-                        style: ThemeSetting.of(context).headlineLarge),
+                    Text(LocaleKeys.yearly.tr(), style: ThemeSetting.of(context).headlineLarge),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('\$39.99',
-                            style: ThemeSetting.of(context).headlineLarge),
+                        Text('\$39.99', style: ThemeSetting.of(context).headlineLarge),
                         Text(
                           '\$3.33/month',
-                          style: ThemeSetting.of(context).captionLarge.copyWith(
-                              color: ThemeSetting.of(context)
-                                  .secondaryBackground
-                                  .withOpacity(0.5)),
+                          style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).secondaryBackground.withOpacity(0.5)),
                         ),
                       ],
                     )
@@ -549,9 +489,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 width: 61.w,
                 margin: const EdgeInsets.only(left: 14),
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: ThemeSetting.of(context).primaryText,
-                    borderRadius: BorderRadius.circular(25)),
+                decoration: BoxDecoration(color: ThemeSetting.of(context).primaryText, borderRadius: BorderRadius.circular(25)),
                 child: Text('Save 72%',
                     style: ThemeSetting.of(context).bodySmall.copyWith(
                           color: ThemeSetting.of(context).secondaryBackground,
@@ -562,9 +500,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           const SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
-            decoration: BoxDecoration(
-                color: ThemeSetting.of(context).secondaryBackground,
-                borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: ThemeSetting.of(context).secondaryBackground, borderRadius: BorderRadius.circular(12)),
             height: 70.h,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -572,14 +508,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               children: [
                 Text(
                   LocaleKeys.monthly.tr(),
-                  style: ThemeSetting.of(context)
-                      .headlineLarge
-                      .copyWith(color: ThemeSetting.of(context).primaryText),
+                  style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).primaryText),
                 ),
-                Text('\$11.99/month',
-                    style: ThemeSetting.of(context)
-                        .headlineLarge
-                        .copyWith(color: ThemeSetting.of(context).primaryText)),
+                Text('\$11.99/month', style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).primaryText)),
               ],
             ),
           ),
@@ -614,8 +545,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           Center(
             child: Text(
               LocaleKeys.purchases_des.tr(),
-              style: ThemeSetting.of(context).displaySmall.copyWith(
-                  color: ThemeSetting.of(context).primaryText.withOpacity(0.7)),
+              style: ThemeSetting.of(context).displaySmall.copyWith(color: ThemeSetting.of(context).primaryText.withOpacity(0.7)),
               textAlign: TextAlign.center,
             ),
           ),

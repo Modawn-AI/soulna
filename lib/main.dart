@@ -6,6 +6,7 @@ import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/utils/custom_timeago_messages.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/shared_preference.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,7 +32,7 @@ void main() async {
   setupLocator();
 
   //await dotenv.load(fileName: ".env");
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await _initializeFirebase();
 
   final socialManager = SocialManager.getInstance();
   timeago.setLocaleMessages("ko", KoCustomMessages());
@@ -51,6 +52,17 @@ void main() async {
       ),
     ),
   );
+}
+
+Future<void> _initializeFirebase() async {
+  try {
+    // Check if Firebase app is already initialized
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp();
+    }
+  } catch (e) {
+    print('Firebase initialization error: $e');
+  }
 }
 
 Future clearSecureStorageOnReinstall() async {
@@ -153,11 +165,9 @@ class _MyAppState extends State<MyApp> {
       builder: (_, child) {
         return GetMaterialApp.router(
           title: 'Soulna',
-
           theme: ThemeData(brightness: Brightness.light),
           darkTheme: ThemeData(brightness: Brightness.dark),
           themeMode: _themeMode,
-          // themeMode: ThemeMode.light,
           routeInformationProvider: _router.routeInformationProvider,
           routeInformationParser: _router.routeInformationParser,
           routerDelegate: _router.routerDelegate,

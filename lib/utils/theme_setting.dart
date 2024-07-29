@@ -12,8 +12,7 @@ SharedPreferences? _prefs;
 abstract class ThemeSetting {
   late AlertStyle alertStyle;
 
-  static Future initialize() async =>
-      _prefs = await SharedPreferences.getInstance();
+  static Future initialize() async => _prefs = await SharedPreferences.getInstance();
   static ThemeMode get themeMode {
     final darkMode = _prefs?.getBool(kThemeModeKey);
     return darkMode == null
@@ -23,14 +22,10 @@ abstract class ThemeSetting {
             : ThemeMode.light;
   }
 
-  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
-      ? _prefs?.remove(kThemeModeKey)
-      : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
+  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system ? _prefs?.remove(kThemeModeKey) : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
 
   static ThemeSetting of(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark
-        ? DarkModeTheme()
-        : LightModeTheme();
+    return Theme.of(context).brightness == Brightness.dark ? DarkModeTheme() : LightModeTheme();
   }
 
   @Deprecated('Use primary instead')
@@ -462,6 +457,7 @@ class DarkModeTheme extends ThemeSetting {
   late Color tertiary = const Color(0xFFFFECDB);
   late Color tertiary1 = const Color(0xFFFFD1A6);
   late Color tertiary2 = const Color(0xFFFFDDD0);
+  late Color tertiary3 = const Color(0xFFFCE8FF);
   late Color alternate = const Color(0xFF22282F);
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);
@@ -495,8 +491,23 @@ class DarkModeTheme extends ThemeSetting {
   late Color common6 = const Color(0xFF5633C1);
   late Color common7 = const Color(0xFFFF3B2F);
 
+  late Color linearContainer1 = const Color(0xFFFFB36D);
+  late Color linearContainer2 = const Color(0xFFFE61AE);
+  late Color linearContainer3 = const Color(0xFFE0ADFF);
+  late Color linearContainer4 = const Color(0xFF562DF3);
+  late Color linearContainer5 = const Color(0xFFFF8ADE);
+  late Color linearContainer6 = const Color(0xFF9755F2);
+
   late Color container1 = const Color(0xFFFF7046);
   late Color container2 = const Color(0xFFF96337);
+
+  late Color black1 = const Color(0xFF212126);
+  late Color black2 = const Color(0xFF000000);
+
+  late Color green = const Color(0xFF206A0D);
+  late Color lightGreen = const Color(0xFFF2F6D4);
+  late Color lightPurple = const Color(0xFFE9E0F3);
+  late Color extraGray = const Color(0xFFE0EAF3);
 }
 
 extension TextStyleHelper on TextStyle {

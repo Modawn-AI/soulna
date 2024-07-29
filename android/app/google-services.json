@@ -1,26 +1,43 @@
 {
   "project_info": {
-    "project_number": "335339482045",
-    "project_id": "modawn-soulna",
-    "storage_bucket": "modawn-soulna.appspot.com"
+    "project_number": "360411427664",
+    "project_id": "soulna-1170e",
+    "storage_bucket": "soulna-1170e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:335339482045:android:53c4e25ae0694578b100d4",
+        "mobilesdk_app_id": "1:360411427664:android:f6fcc2be38071bd3613255",
         "android_client_info": {
           "package_name": "com.modawn.soulna"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "360411427664-jc9b2gceguqs2nsucpvs5knmmr8mlkdf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAyL99MIrIVl8yv1CT7bzEV8qHgmsybzaE"
+          "current_key": "AIzaSyBaBZLgZvC05TiD2xZR5dqiXJie6vpbx58"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360411427664-jc9b2gceguqs2nsucpvs5knmmr8mlkdf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "360411427664-f6rgvvm0smkgint4des6kpg43sb4em0t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.modawn.soulna"
+              }
+            }
+          ]
         }
       }
     }

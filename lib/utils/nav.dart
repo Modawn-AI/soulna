@@ -69,8 +69,7 @@ class AppStateNotifier extends ChangeNotifier {
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
   void update(BaseAuthUser newUser) async {
-    final shouldUpdate =
-        user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
+    final shouldUpdate = user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
     user = newUser;
 
@@ -141,9 +140,7 @@ String selectAlbumsScreen = 'SelectAlbumsScreen';
 String createJournal = 'CreateJournal';
 //String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
 //String myInfoScreen = 'myInfoScreen';
-GoRouter createRouter(
-        AppStateNotifier appStateNotifier, SocialManager socialManager) =>
-    GoRouter(
+GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialManager) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
@@ -318,15 +315,12 @@ GoRouter createRouter(
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value!)),
+        entries.where((e) => e.value != null).map((e) => MapEntry(e.key, e.value!)),
       );
 }
 
 extension _GoRouterStateExtensions on GoRouterState {
-  Map<String, dynamic> get extraMap =>
-      extra != null ? extra as Map<String, dynamic> : {};
+  Map<String, dynamic> get extraMap => extra != null ? extra as Map<String, dynamic> : {};
 
   Map<String, dynamic> get allParams => <String, dynamic>{}
     ..addAll(pathParameters)
@@ -349,21 +343,16 @@ class FFParameters {
 
   // Parameters are empty if the params map is empty or if the only parameter
   // present is the special extra parameter reserved for the transition info.
-  bool get isEmpty =>
-      state.allParams.isEmpty ||
-      (state.extraMap.length == 1 &&
-          state.extraMap.containsKey(kTransitionInfoKey));
+  bool get isEmpty => state.allParams.isEmpty || (state.extraMap.length == 1 && state.extraMap.containsKey(kTransitionInfoKey));
 
-  bool isAsyncParam(MapEntry<String, dynamic> param) =>
-      asyncParams.containsKey(param.key) && param.value is String;
+  bool isAsyncParam(MapEntry<String, dynamic> param) => asyncParams.containsKey(param.key) && param.value is String;
 
   bool get hasFutures => state.allParams.entries.any(isAsyncParam);
 
   Future<bool> completeFutures() => Future.wait(
         state.allParams.entries.where(isAsyncParam).map(
           (param) async {
-            final doc = await asyncParams[param.key]!(param.value)
-                .onError((_, __) => null);
+            final doc = await asyncParams[param.key]!(param.value).onError((_, __) => null);
             if (doc != null) {
               futureParamValues[param.key] = doc;
               return true;
@@ -434,14 +423,12 @@ class FFRoute {
             key: state.pageKey,
             child: child,
             transitionDuration: Duration(milliseconds: 200),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(1, 0),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(1, 0),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child),
           );
         },
         routes: routes,
@@ -461,8 +448,5 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(
-      hasTransition: true,
-      transitionType: PageTransitionType.rightToLeft,
-      duration: Duration(seconds: 1));
+  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: true, transitionType: PageTransitionType.rightToLeft, duration: Duration(seconds: 1));
 }
