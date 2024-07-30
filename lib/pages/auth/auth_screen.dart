@@ -200,7 +200,9 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           text: LocaleKeys.continue_with_Email.tr(),
           onPressed: () => context.pushNamed(loginScreen),
           options: CustomButtonOptions(
-              textStyle: ThemeSetting.of(context).titleSmall,
+              textStyle: ThemeSetting.of(context)
+                  .titleSmall
+                  .copyWith(color: ThemeSetting.of(context).black2),
               height: 50,
               width: double.infinity,
               borderRadius: BorderRadius.circular(12),

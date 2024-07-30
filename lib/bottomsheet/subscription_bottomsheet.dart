@@ -1,4 +1,3 @@
-
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../utils/app_assets.dart';
@@ -8,6 +7,12 @@ class Subscription {
   static subscriptionWidget({required BuildContext context}) {
     return showModalBottomSheet(
       elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
       isScrollControlled: true,
       //isDismissible: false,
       backgroundColor: ThemeSetting.of(context).primaryText.withOpacity(0.5),
@@ -16,8 +21,10 @@ class Subscription {
         return Container(
           height: MediaQuery.of(context).size.height * 0.85,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(30), right: Radius.circular(30)),
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
             boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1))],
             color: ThemeSetting.of(context).tertiary,
           ),
@@ -87,9 +94,11 @@ class Subscription {
                               style: ThemeSetting.of(context)
                                   .captionLarge
                                   .copyWith(
-                                      color: ThemeSetting.of(context)
-                                          .secondaryBackground
-                                          .withOpacity(0.5)),
+                                      color: ThemeSetting.isLightTheme(context)
+                                          ? ThemeSetting.of(context)
+                                              .secondaryBackground
+                                              .withOpacity(0.5)
+                                          : ThemeSetting.of(context).white),
                             ),
                           ],
                         )
@@ -117,7 +126,7 @@ class Subscription {
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 decoration: BoxDecoration(
-                    color: ThemeSetting.of(context).secondaryBackground,
+                    color: ThemeSetting.of(context).white,
                     borderRadius: BorderRadius.circular(12)),
                 height: 70.h,
                 child: Row(
@@ -126,12 +135,14 @@ class Subscription {
                   children: [
                     Text(
                       LocaleKeys.monthly.tr(),
-                      style: ThemeSetting.of(context).headlineLarge.copyWith(
-                          color: ThemeSetting.of(context).primaryText),
+                      style: ThemeSetting.of(context)
+                          .headlineLarge
+                          .copyWith(color: ThemeSetting.of(context).black2),
                     ),
                     Text('\$11.99/month',
-                        style: ThemeSetting.of(context).headlineLarge.copyWith(
-                            color: ThemeSetting.of(context).primaryText)),
+                        style: ThemeSetting.of(context)
+                            .headlineLarge
+                            .copyWith(color: ThemeSetting.of(context).black2)),
                   ],
                 ),
               ),
