@@ -1,4 +1,5 @@
-import '../utils/package_exporter.dart';
+
+import 'package:Soulna/utils/package_exporter.dart';
 
 class SettingsWidget extends StatelessWidget {
   final String title;

@@ -2,10 +2,11 @@ import 'dart:async';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/sharedPref_string.dart';
+import 'package:Soulna/utils/shared_preference.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import '../../utils/shared_preference.dart';
+// This file defines the AnimationScreen widget, which is used for displaying animations.
 
 class AnimationScreen extends StatefulWidget {
   final String route;

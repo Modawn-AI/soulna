@@ -1,17 +1,17 @@
 import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/generated/locale_keys.g.dart';
 import 'package:Soulna/utils/nav.dart';
+import 'package:Soulna/utils/theme_setting.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_textfield_widget.dart';
+import 'package:Soulna/widgets/custom_validator_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 
-import '../../utils/theme_setting.dart';
-import '../../widgets/custom_validator_widget.dart';
-
+//This file defines the SignUpPassword widget, which collects the user's password during the sign-up process.
+//step 3
 class SignUpPassword extends StatefulWidget {
   const SignUpPassword({
     super.key,

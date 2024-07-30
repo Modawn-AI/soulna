@@ -1,14 +1,16 @@
+import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/sharedPref_string.dart';
 import 'package:Soulna/utils/shared_preference.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_checkbox_widget.dart';
 import 'package:Soulna/widgets/custom_ios_date_picker.dart';
 import 'package:Soulna/widgets/custom_time_range_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../utils/app_assets.dart';
-import '../../utils/package_exporter.dart';
-import '../../widgets/button/button_widget.dart';
-import '../../widgets/custom_checkbox_widget.dart';
-import '../../widgets/header/header_widget.dart';
 
+// This file defines the DateOfBirthMain widget, which is used for entering the date of birth.
+//Main screen -> set date of birth
 class DateOfBirthMain extends StatefulWidget {
   const DateOfBirthMain({super.key});
 
@@ -27,7 +29,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
           context: context,
         ),
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
 
           children: [
             Text(
@@ -36,7 +38,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
                     color: ThemeSetting.of(context).primaryText,
                   ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -74,7 +76,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
                     color: ThemeSetting.of(context).primary,
                   ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             CustomRangeTimePicker(
               initialStartTime: const TimeOfDay(hour: 9, minute: 0),
               initialEndTime: const TimeOfDay(hour: 17, minute: 0),
@@ -85,7 +87,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
                 print("End Time: ${endTime.format(context)}");
               },
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               children: [
                 CustomCheckbox(
@@ -105,9 +107,9 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
               ],
             ),
             const SizedBox(
-              height: 210,
+              height: 180,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.h),

@@ -1,13 +1,14 @@
 import 'dart:developer';
 
+import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_checkbox_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../utils/app_assets.dart';
-import '../../utils/package_exporter.dart';
-
+//This file defines the SignUpAgree widget, which presents terms and conditions for users to agree to during the sign-up process.
+//step 1
 class SignupAgree extends StatefulWidget {
   const SignupAgree({
     super.key,

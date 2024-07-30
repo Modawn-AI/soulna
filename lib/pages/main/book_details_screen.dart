@@ -2,8 +2,12 @@ import 'package:Soulna/models/bookDetail/book_detail_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+// This file defines the BookDetailsScreen widget, which is used for displaying book details.
+// MainScreen -> card 1->  set date of birth -> daily vibe check
 
 class BookDetailsScreen extends StatefulWidget {
   const BookDetailsScreen({super.key});
@@ -64,7 +68,9 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).tertiary1,
+        backgroundColor: ThemeSetting.isLightTheme(context)
+            ? ThemeSetting.of(context).tertiary1
+            : ThemeSetting.of(context).common2,
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ListView(
@@ -131,36 +137,55 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Image.asset(
-                            AppAssets.dotLine,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Image.asset(
+                              AppAssets.dotLine,
+                              color: ThemeSetting.of(context).primaryText,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Image.asset(
-                          AppAssets.result,
-                          height: 30,
-                          width: 67,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(
-                          child: Image.asset(
-                            AppAssets.dotLine,
+                          const SizedBox(
+                            width: 10,
                           ),
-                        ),
-                      ],
+                          Container(
+                            height: 30,
+                            width: 67,
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                              image: AssetImage(
+                                AppAssets.result,
+                              ),
+                            )),
+                            child: Center(
+                              child: Text(
+                                LocaleKeys.result.tr(),
+                                style: ThemeSetting.of(context).captionMedium,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            child: Image.asset(
+                              AppAssets.dotLine,
+                              color: ThemeSetting.of(context).primaryText,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 40,
                     ),
                     Image.asset(
-                      AppAssets.details1,
+                      ThemeSetting.isLightTheme(context)
+                          ? AppAssets.details1
+                          : AppAssets.detailsDark,
                       height: 270,
                     ),
                     const SizedBox(
@@ -180,8 +205,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             child: Container(
                                 width: MediaQuery.of(context).size.width * .80,
                                 decoration: BoxDecoration(
-                                    color: detail.backgroundColor ??
-                                        ThemeSetting.of(context).tertiary,
+                                    color: ThemeSetting.isLightTheme(context)
+                                        ? detail.backgroundColor ??
+                                            ThemeSetting.of(context).tertiary
+                                        : ThemeSetting.of(context).common2,
                                     borderRadius: BorderRadius.circular(15)),
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 20),
@@ -194,9 +221,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                         style: ThemeSetting.of(context)
                                             .titleMedium
                                             .copyWith(
-                                                color: detail.textColor ??
-                                                    ThemeSetting.of(context)
-                                                        .primary),
+                                                color: ThemeSetting
+                                                        .isLightTheme(context)
+                                                    ? detail.textColor ??
+                                                        ThemeSetting.of(context)
+                                                            .primary
+                                                    : ThemeSetting.of(context)
+                                                        .white),
                                       ),
                                     ),
                                     const SizedBox(
@@ -206,8 +237,16 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                       flex: 4,
                                       child: Text(
                                         detail.des.toString(),
-                                        style:
-                                            ThemeSetting.of(context).bodyMedium,
+                                        style: ThemeSetting.of(context)
+                                            .bodyMedium
+                                            .copyWith(
+                                                color: ThemeSetting
+                                                        .isLightTheme(context)
+                                                    ? ThemeSetting.of(context)
+                                                        .black2
+                                                    : ThemeSetting.of(context)
+                                                        .common0
+                                                        .withOpacity(0.4)),
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -233,17 +272,19 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Divider(
-                      color: ThemeSetting.of(context).common0,
+                    const CustomDividerWidget(
+                      thickness: 2,
                     ),
                     const SizedBox(
                       height: 40,
                     ),
                     CircleAvatar(
                       radius: 45,
-                      backgroundColor: ThemeSetting.of(context).common1,
+                      backgroundColor: ThemeSetting.of(context).common2,
                       child: Image.asset(
-                        AppAssets.character,
+                        ThemeSetting.isLightTheme(context)
+                            ? AppAssets.character
+                            : AppAssets.characterDark,
                         height: 60,
                       ),
                     ),
@@ -278,7 +319,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 context: context,
                                 text: hashTag[index],
                                 height: 30,
-                                color: ThemeSetting.of(context).tertiary,
+                                color: ThemeSetting.of(context).alternate,
                                 textStyle: ThemeSetting.of(context)
                                     .captionLarge
                                     .copyWith(
@@ -289,11 +330,23 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Divider(
-                      color: ThemeSetting.of(context).common0,
+                    const CustomDividerWidget(
+                      thickness: 2,
+                      // color: ThemeSetting.of(context).common2,
                     ),
                     const SizedBox(
                       height: 40,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Text(
+                        LocaleKeys.things_that_bring_me_luck_today.tr(),
+                        style: ThemeSetting.of(context).titleLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -312,6 +365,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 avatar: Image.asset(
                                   detail.image!,
                                   height: 30,
+                                  // color: ThemeSetting.of(context).common2,
                                 ),
                                 backgroundColor: ThemeSetting.of(context)
                                     .secondaryBackground,
@@ -321,7 +375,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 ),
                                 shape: RoundedRectangleBorder(
                                     side: BorderSide(
-                                      color: ThemeSetting.of(context).common0,
+                                      color: ThemeSetting.of(context).common2,
                                     ),
                                     borderRadius: BorderRadius.circular(50)),
                               );
@@ -367,7 +421,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.20,
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
           color: ThemeSetting.of(context).secondaryBackground,
           borderRadius: const BorderRadius.horizontal(
@@ -380,7 +434,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             LocaleKeys.share_link.tr(),
             style: ThemeSetting.of(context).bodyMedium,
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           Text(

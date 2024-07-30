@@ -2,9 +2,13 @@ import 'package:Soulna/models/bookDetail/book_detail_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+
+//Not linked to any screen
+//Same as book details screen with some changes
 class BookDetailsScreen3 extends StatefulWidget {
   const BookDetailsScreen3({super.key});
 
@@ -24,13 +28,13 @@ class _BookDetailsScreen3State extends State<BookDetailsScreen3> {
           title: LocaleKeys.overall.tr(),
           backgroundColor: ThemeSetting.of(context).tertiary,
           des:
-          'A day of learning and mastering new things. There\'s no end to studying. It\'s not just about academic learning; everything necessary in daily life can be a subject of study. Overreaching ambitions can lead to failure.',
+              'A day of learning and mastering new things. There\'s no end to studying. It\'s not just about academic learning; everything necessary in daily life can be a subject of study. Overreaching ambitions can lead to failure.',
           textColor: ThemeSetting.of(context).primary),
       BookDetailModel(
           title: LocaleKeys.financial.tr(),
           backgroundColor: ThemeSetting.of(context).lightGreen,
           des:
-          'A day of learning and mastering new things. There\'s no end to studying. It\'s not just about academic learning; everything necessary in daily life can be a subject of study. Overreaching ambitions can lead to failure.',
+              'A day of learning and mastering new things. There\'s no end to studying. It\'s not just about academic learning; everything necessary in daily life can be a subject of study. Overreaching ambitions can lead to failure.',
           textColor: ThemeSetting.of(context).green),
     ];
 
@@ -64,7 +68,9 @@ class _BookDetailsScreen3State extends State<BookDetailsScreen3> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).blueAccent,
+        backgroundColor: ThemeSetting.isLightTheme(context)
+            ? ThemeSetting.of(context).blueAccent
+            : ThemeSetting.of(context).common2,
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ListView(
@@ -131,30 +137,47 @@ class _BookDetailsScreen3State extends State<BookDetailsScreen3> {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Image.asset(
-                            AppAssets.dotLine,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Image.asset(
+                              AppAssets.dotLine,
+                              color: ThemeSetting.of(context).primaryText,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Image.asset(
-                          AppAssets.result,
-                          height: 30,
-                          width: 67,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(
-                          child: Image.asset(
-                            AppAssets.dotLine,
+                          const SizedBox(
+                            width: 10,
                           ),
-                        ),
-                      ],
+                          Container(
+                            height: 30,
+                            width: 67,
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    AppAssets.result,
+                                  ),
+                                )),
+                            child: Center(
+                              child: Text(
+                                LocaleKeys.result.tr(),
+                                style: ThemeSetting.of(context).captionMedium,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            child: Image.asset(
+                              AppAssets.dotLine,
+                              color: ThemeSetting.of(context).primaryText,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 40,
@@ -173,22 +196,24 @@ class _BookDetailsScreen3State extends State<BookDetailsScreen3> {
                     const SizedBox(
                       height: 11,
                     ),
-                    Image.asset(AppAssets.bookImage,height: 250,width: 202,),
+                    Image.asset(
+                      AppAssets.bookImage,
+                      height: 250,
+                      width: 202,
+                    ),
                     const SizedBox(
                       height: 22,
                     ),
-                    Divider(
-                      color: ThemeSetting.of(context).common0,
-                    ),
-
+                   CustomDividerWidget(thickness: 2,),
                     const SizedBox(
                       height: 40,
                     ),
                     CircleAvatar(
                       radius: 45,
-                      backgroundColor: ThemeSetting.of(context).common1,
+
+                      backgroundColor: ThemeSetting.of(context).common2,
                       child: Image.asset(
-                        AppAssets.character,
+                        ThemeSetting.isLightTheme(context) ? AppAssets.character: AppAssets.characterDark,
                         height: 60,
                       ),
                     ),
@@ -218,17 +243,17 @@ class _BookDetailsScreen3State extends State<BookDetailsScreen3> {
                         spacing: 5,
                         children: List.generate(
                           hashTag.length,
-                              (index) {
+                          (index) {
                             return ButtonWidget.roundedButtonOrange(
                                 context: context,
                                 text: hashTag[index],
                                 height: 30,
-                                color: ThemeSetting.of(context).tertiary,
+                                color: ThemeSetting.of(context).alternate,
                                 textStyle: ThemeSetting.of(context)
                                     .captionLarge
                                     .copyWith(
-                                    color:
-                                    ThemeSetting.of(context).primary));
+                                        color:
+                                            ThemeSetting.of(context).primary));
                           },
                         )),
                     const SizedBox(
@@ -248,11 +273,11 @@ class _BookDetailsScreen3State extends State<BookDetailsScreen3> {
                           alignment: WrapAlignment.center,
                           children: List.generate(
                             thingsList.length,
-                                (index) {
+                            (index) {
                               BookDetailModel detail = thingsList[index];
                               return Chip(
                                 materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                                    MaterialTapTargetSize.shrinkWrap,
                                 padding: const EdgeInsets.all(2),
                                 avatar: Image.asset(
                                   detail.image!,
@@ -266,7 +291,7 @@ class _BookDetailsScreen3State extends State<BookDetailsScreen3> {
                                 ),
                                 shape: RoundedRectangleBorder(
                                     side: BorderSide(
-                                      color: ThemeSetting.of(context).common0,
+                                      color: ThemeSetting.of(context).common2,
                                     ),
                                     borderRadius: BorderRadius.circular(50)),
                               );

@@ -1,10 +1,13 @@
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_gender_button.dart';
 import 'package:Soulna/widgets/custom_textfield_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../widgets/button/button_widget.dart';
+
+// This file defines the EditProfile widget, which provides a screen for users to edit their profile information.
+// Drawer -> profile -> edit icon
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

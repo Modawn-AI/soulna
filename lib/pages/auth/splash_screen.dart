@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/package_exporter.dart';
 
-import '../../utils/package_exporter.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

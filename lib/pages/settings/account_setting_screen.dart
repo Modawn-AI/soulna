@@ -1,11 +1,13 @@
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_checkbox_widget.dart';
 import 'package:Soulna/widgets/custom_dialog_widget.dart';
+import 'package:Soulna/widgets/custom_textfield_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../widgets/button/button_widget.dart';
-import '../../widgets/custom_checkbox_widget.dart';
-import '../../widgets/custom_textfield_widget.dart';
-import '../../widgets/header/header_widget.dart';
 
+// This file defines the AccountSettingScreen widget, which provides a screen for users to manage their account settings.
+//Drawer -> settings icon -> account settings
 class AccountSettingScreen extends StatefulWidget {
   const AccountSettingScreen({super.key});
 
@@ -36,19 +38,19 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                         color: ThemeSetting.of(context).primary,
                       ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 CustomTextField(
                   controller: TextEditingController(),
                   hintText: LocaleKeys.enter_your_email.tr(),
                 ),
-                SizedBox(height:40),
+                const SizedBox(height:40),
                 Text(
                   LocaleKeys.password.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(
                         color: ThemeSetting.of(context).primary,
                       ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 CustomTextField(
                   controller: TextEditingController(),
                   hintText: LocaleKeys.enter_your_password.tr(),
@@ -58,14 +60,14 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                   readOnly: true,
                   suffix: const Icon(Icons.keyboard_arrow_right),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Text(
                   LocaleKeys.optional_terms_agreement.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(
                         color: ThemeSetting.of(context).primary,
                       ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     context.pushNamed(dateOfBirthScreen);
@@ -86,7 +88,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                               color: ThemeSetting.of(context).secondaryText,
                             ),
                       ),
-                      SizedBox(width: 6),
+                      const SizedBox(width: 6),
                       Text(
                         LocaleKeys.marketing_consent.tr(),
                         style: ThemeSetting.of(context).captionLarge.copyWith(

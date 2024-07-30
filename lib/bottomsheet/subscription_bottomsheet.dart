@@ -1,13 +1,14 @@
+import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../utils/app_assets.dart';
-import '../widgets/button/button_widget.dart';
+
 
 class Subscription {
   static subscriptionWidget({required BuildContext context}) {
     return showModalBottomSheet(
       elevation: 0,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
@@ -21,7 +22,7 @@ class Subscription {
         return Container(
           height: MediaQuery.of(context).size.height * 0.85,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),

@@ -1,16 +1,15 @@
+import 'package:Soulna/bottomsheet/show_datePicker_bottomSheet.dart';
+import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_calendar_widget.dart';
+import 'package:Soulna/widgets/custom_divider_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_neat_and_clean_calendar/neat_and_clean_calendar_event.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../bottomsheet/show_datePicker_bottomSheet.dart';
-import '../../generated/locale_keys.g.dart';
-import '../../utils/app_assets.dart';
-import '../../utils/theme_setting.dart';
-import '../../widgets/custom_calendar_widget.dart';
-import '../../widgets/custom_divider_widget.dart';
-import '../../widgets/custom_ios_date_picker.dart';
-import '../../widgets/header/header_widget.dart';
+
+//Not linked to any screen
+// This file defines the NoPastFortuneScreen widget, which displays a screen indicating that there are no past fortune entries.
 
 class NoPastFortuneScreen extends StatefulWidget {
   const NoPastFortuneScreen({super.key});

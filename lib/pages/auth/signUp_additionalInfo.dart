@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_gender_button.dart';
 import 'package:Soulna/widgets/custom_textfield_widget.dart';
 import 'package:Soulna/widgets/custom_validator_widget.dart';
@@ -10,8 +11,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:get/instance_manager.dart';
-import '../../widgets/button/button_widget.dart';
 
+//This file defines the SignUpAdditionalInfo widget, which collects additional information from users during the sign-up process.
+//step 4
 class SignUpAdditionalInfo extends StatefulWidget {
   const SignUpAdditionalInfo({super.key});
 

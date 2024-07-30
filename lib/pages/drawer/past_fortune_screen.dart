@@ -1,12 +1,13 @@
+import 'package:Soulna/bottomsheet/show_datePicker_bottomSheet.dart';
+import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/custom_calendar_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
-import '../../bottomsheet/show_datePicker_bottomSheet.dart';
-import '../../utils/app_assets.dart';
-import '../../widgets/custom_ios_date_picker.dart';
+
+// This file defines the PastFortuneScreen widget, which displays past fortune entries.
 
 class PastFortuneScreen extends StatefulWidget {
   const PastFortuneScreen({super.key});

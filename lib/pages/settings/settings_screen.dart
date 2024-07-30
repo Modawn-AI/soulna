@@ -1,12 +1,13 @@
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_dialog_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
+import 'package:Soulna/widgets/settings_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../widgets/custom_dialog_widget.dart';
-import '../../widgets/header/header_widget.dart';
-import '../../widgets/settings_widget.dart';
-
+// This file defines the SettingsScreen widget, which provides a screen for users to
+//  Drawer -> settings icon
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -26,7 +27,6 @@ class SettingsScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
-
         appBar: HeaderWidget.headerWithTitle(
             context: context, title: LocaleKeys.setting.tr()),
         body: Column(children: [

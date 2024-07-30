@@ -1,7 +1,9 @@
+import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/custom_tab_bar_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../utils/package_exporter.dart';
-import '../../widgets/custom_tab_bar_widget.dart';
-import '../../widgets/header/header_widget.dart';
+
+// This file defines the TermsAndConditions widget, which displays the terms and conditions of the application.
 
 class TermsAndCondition extends StatefulWidget {
   const TermsAndCondition({super.key});

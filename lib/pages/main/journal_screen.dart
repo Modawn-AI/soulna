@@ -1,15 +1,17 @@
 import 'dart:developer';
 
 import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/custom_hashtag_function.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../utils/package_exporter.dart';
-import '../../widgets/button/button_widget.dart';
-
+// This file defines the JournalScreen widget, which is used for displaying journals.
+//Main screen -> create journal -> select album screen  -> click on create journal
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
 
@@ -41,7 +43,7 @@ class _JournalScreenState extends State<JournalScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         body: showHeader == false ? journalList() : journalScroll(),
       ),
     );
@@ -117,7 +119,7 @@ class _JournalScreenState extends State<JournalScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: ThemeSetting.of(context).tertiary,
+                  color: ThemeSetting.of(context).alternate,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Text(
@@ -133,7 +135,7 @@ class _JournalScreenState extends State<JournalScreen> {
         const SizedBox(
           height: 50,
         ),
-        const Divider(),
+        CustomDividerWidget(),
         const SizedBox(
           height: 30,
         ),
@@ -251,7 +253,10 @@ class _JournalScreenState extends State<JournalScreen> {
                         chapter[index].toString(),
                         style: ThemeSetting.of(context).headlineMedium.copyWith(
                             color: chapterIndex == index
-                                ? ThemeSetting.of(context).secondaryBackground
+                                ? ThemeSetting.isLightTheme(context)
+                                    ? ThemeSetting.of(context)
+                                        .secondaryBackground
+                                    : ThemeSetting.of(context).primaryText
                                 : ThemeSetting.of(context).primaryText),
                       )),
                 ),
@@ -291,7 +296,9 @@ class _JournalScreenState extends State<JournalScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 6.18),
                     child: Image.asset(
-                      AppAssets.character,
+                      ThemeSetting.isLightTheme(context)
+                          ? AppAssets.character
+                          : AppAssets.characterDark,
                       width: 65,
                       height: 59,
                     ),
@@ -355,7 +362,9 @@ class _JournalScreenState extends State<JournalScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 6.18),
                         child: Image.asset(
-                          AppAssets.character,
+                          ThemeSetting.isLightTheme(context)
+                              ? AppAssets.character
+                              : AppAssets.characterDark,
                           width: 65,
                           height: 59,
                         ),
@@ -418,7 +427,7 @@ class _JournalScreenState extends State<JournalScreen> {
         decoration: BoxDecoration(
           color: ThemeSetting.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: ThemeSetting.of(context).black1, width: 2),
+          border: Border.all(color: ThemeSetting.of(context).primaryText, width: 2),
         ),
         child: Container(
           margin: const EdgeInsets.all(3),

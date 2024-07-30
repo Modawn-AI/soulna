@@ -1,4 +1,5 @@
-import '../utils/package_exporter.dart';
+
+import 'package:Soulna/utils/package_exporter.dart';
 
 class CustomHashtagFunction{
  static TextSpan getStyledText({required BuildContext context,required String text, required List<String> keywords}) {

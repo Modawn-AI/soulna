@@ -1,6 +1,5 @@
 import 'package:Soulna/utils/package_exporter.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 
 class CustomTextField extends StatefulWidget {
   final bool readOnly;

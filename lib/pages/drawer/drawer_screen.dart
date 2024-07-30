@@ -1,13 +1,12 @@
 import 'dart:developer';
-import 'dart:ui';
-
+import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
-import 'package:Soulna/widgets/custom_switchtile_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:Soulna/widgets/settings_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../utils/app_assets.dart';
-import '../../widgets/header/header_widget.dart';
+
+// This file defines the DrawerScreen widget, which is used for the navigation drawer in the application.
 
 class DrawerScreen {
   static Widget drawerWidget({required BuildContext context, Widget? switchTile}) {

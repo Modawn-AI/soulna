@@ -1,8 +1,9 @@
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../widgets/button/button_widget.dart';
-import '../../widgets/header/header_widget.dart';
+// This file defines the AwaitingResponseScreen widget, which displays a screen indicating that a response is awaited.
 
 class AwaitingResponseScreen extends StatelessWidget {
   const AwaitingResponseScreen({super.key});

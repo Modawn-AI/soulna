@@ -1,12 +1,13 @@
 import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/sharedPref_string.dart';
 import 'package:Soulna/utils/shared_preference.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../utils/package_exporter.dart';
-
+// This file defines the CreateJournal widget, which is used for creating a journal.
+//MainScreen -> CreateJournal
 class CreateJournal extends StatefulWidget {
   const CreateJournal({super.key});
 
@@ -22,7 +23,7 @@ class _CreateJournalState extends State<CreateJournal> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
@@ -32,13 +33,14 @@ class _CreateJournalState extends State<CreateJournal> {
             width: double.infinity,
             text: "${LocaleKeys.create_my_own_journal.tr()} 💫",
             textStyle: ThemeSetting.of(context).captionMedium.copyWith(
-                  color: ThemeSetting.of(context).secondaryBackground,
+                  color: ThemeSetting.of(context).white,
                   fontSize: 16.sp,
                 ),
             onTap: () {
               if (isMyAlbumSelected == true || isInstagramSelected == true) {
                 SharedPreferencesManager.setString(
-                    key: SharedprefString.animationScreen, value: journalScreen);
+                    key: SharedprefString.animationScreen,
+                    value: journalScreen);
                 context.pushReplacementNamed(animationScreen);
               }
             },
@@ -86,6 +88,7 @@ class _CreateJournalState extends State<CreateJournal> {
                       onTap: () {
                         setState(() {
                           isMyAlbumSelected = !isMyAlbumSelected;
+                          context.pushNamed(selectAlbumsScreen);
                           isInstagramSelected = false;
                         });
                       }),
@@ -317,12 +320,13 @@ class _CreateJournalState extends State<CreateJournal> {
                               text: LocaleKeys.edit.tr(),
                               buttonBackgroundColor:
                                   ThemeSetting.of(context).primaryText,
-                              textStyle:
-                                  ThemeSetting.of(context).captionMedium.copyWith(
-                                        color: ThemeSetting.of(context)
-                                            .secondaryBackground,
-                                        fontSize: 12.sp,
-                                      ),
+                              textStyle: ThemeSetting.of(context)
+                                  .captionMedium
+                                  .copyWith(
+                                    color: ThemeSetting.of(context)
+                                        .secondaryBackground,
+                                    fontSize: 12.sp,
+                                  ),
                             ),
                           ],
                         ),
@@ -374,14 +378,18 @@ class _CreateJournalState extends State<CreateJournal> {
           decoration: BoxDecoration(
             border: Border.all(
               color: showBorder == true
-                  ? ThemeSetting.of(context).black2
+                  ? ThemeSetting.isLightTheme(context)
+                      ? ThemeSetting.of(context).black2
+                      : ThemeSetting.of(context).white
                   : Colors.transparent,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(10.r),
-            color: isAlbum == true
-                ? ThemeSetting.of(context).tertiary
-                : ThemeSetting.of(context).tertiary3,
+            color: ThemeSetting.isLightTheme(context)
+                ? isAlbum == true
+                    ? ThemeSetting.of(context).tertiary
+                    : ThemeSetting.of(context).tertiary3
+                : ThemeSetting.of(context).common2,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -390,12 +398,18 @@ class _CreateJournalState extends State<CreateJournal> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset(image, width: 30, height: 30),
+                  Image.asset(
+                    image,
+                    width: 30,
+                    height: 30,
+                    color: ThemeSetting.of(context).primaryText,
+                  ),
                   if (showBorder == true)
                     Image.asset(
                       AppAssets.check,
                       height: 14,
                       width: 14,
+                      color: ThemeSetting.of(context).primaryText,
                     )
                 ],
               ),

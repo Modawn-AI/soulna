@@ -7,7 +7,7 @@ import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/instance_manager.dart';
-
+//This file defines the LoginScreen widget, which provides a screen for users to log in to the application.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

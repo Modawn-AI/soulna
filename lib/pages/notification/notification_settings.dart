@@ -1,10 +1,11 @@
+import 'package:Soulna/generated/locale_keys.g.dart';
+import 'package:Soulna/utils/theme_setting.dart';
 import 'package:Soulna/widgets/custom_switchtile_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../generated/locale_keys.g.dart';
-import '../../utils/theme_setting.dart';
-import '../../widgets/header/header_widget.dart';
+// This file defines the NotificationSettings widget, which is used for the notification settings screen.
 
 class NotificationSettings extends StatefulWidget {
   const NotificationSettings({super.key});
@@ -47,8 +48,13 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                     )
                   ],
                 ),
-                const CustomSwitchTile(
-
+                CustomSwitchTile(
+                  initialValue: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitched = value;
+                    });
+                  },
                 )
               ],
             )

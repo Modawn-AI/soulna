@@ -5,9 +5,10 @@ import 'package:Soulna/widgets/custom_textfield_widget.dart';
 import 'package:Soulna/widgets/custom_validator_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
-import 'package:get/state_manager.dart';
 
+//This file defines the FindPassword widget, which provides a screen for users to recover their password.
 class FindPassword extends StatefulWidget {
   const FindPassword({
     super.key,

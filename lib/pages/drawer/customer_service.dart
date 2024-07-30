@@ -1,9 +1,11 @@
+import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
+import 'package:Soulna/widgets/custom_tab_bar_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../utils/package_exporter.dart';
-import '../../widgets/custom_tab_bar_widget.dart';
+
+// This file defines the CustomerService widget, which provides a screen for customer service interactions.
 
 class CustomerService extends StatefulWidget {
   const CustomerService({super.key});

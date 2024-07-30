@@ -1,6 +1,6 @@
+import 'package:Soulna/utils/package_exporter.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
 
-import '../utils/package_exporter.dart';
 
 class CustomCalendarWidget extends StatelessWidget {
   final List<NeatCleanCalendarEvent> eventsList;

@@ -1,24 +1,17 @@
 import 'dart:async';
-import 'dart:ui';
-
 import 'package:Soulna/models/image_model.dart';
 import 'package:Soulna/pages/drawer/drawer_screen.dart';
 import 'package:Soulna/bottomsheet/subscription_bottomsheet.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
-import 'package:Soulna/utils/theme_setting.dart';
-import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
+import 'package:Soulna/widgets/custom_switchtile_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:get/route_manager.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../widgets/custom_switchtile_widget.dart';
+// This file defines the MainScreen widget, which is the main screen of the application.
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -113,18 +106,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           route: createJournal),
     ];
 
-    void changeTheme() async {
-      SharedPreferences _prefs = await SharedPreferences.getInstance();
-      setState(() {
-        bool isDarkMode = _prefs.getBool(kThemeModeKey) ?? false;
-        isDarkMode = !isDarkMode;
-        ThemeSetting.saveThemeMode(
-            isDarkMode ? ThemeMode.dark : ThemeMode.light);
-        _prefs.setBool(kThemeModeKey, isDarkMode);
-        Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
-      });
-    }
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
@@ -132,9 +113,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         drawer: DrawerScreen.drawerWidget(
           context: context,
           switchTile: CustomSwitchTile(
-            initialValue: true,
+            initialValue: ThemeSetting.isLightTheme(context) ? false : true,
             onChanged: (bool value) {
-              changeTheme();
+              setState(() {
+                ThemeSetting.changeTheme();
+              });
             },
           ),
         ),
@@ -267,7 +250,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                           .titleLarge
                                           .copyWith(
                                               color: ThemeSetting.of(context)
-                                                  .secondaryBackground),
+                                                  .white),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),

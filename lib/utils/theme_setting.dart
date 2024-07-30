@@ -1,6 +1,8 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
 import 'package:flutter/material.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -36,6 +38,19 @@ abstract class ThemeSetting {
   static bool isLightTheme(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light;
   }
+
+  static void changeTheme() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+      bool isDarkMode = _prefs.getBool(kThemeModeKey) ?? false;
+      isDarkMode = !isDarkMode;
+      ThemeSetting.saveThemeMode(
+          isDarkMode ? ThemeMode.dark : ThemeMode.light);
+      _prefs.setBool(kThemeModeKey, isDarkMode);
+      Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+
+  }
+
 
   @Deprecated('Use primary instead')
   Color get primaryColor => primary;
@@ -192,7 +207,7 @@ class LightModeTheme extends ThemeSetting {
 
   late Color tertiary3 = const Color(0xFFFCE8FF);
   late Color tertiary2 = const Color(0xFFFFDDD0);
-  late Color alternate = const Color(0xFFE0E3E7);
+  late Color alternate = const Color(0xFFFFECDB);
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
 
@@ -488,7 +503,7 @@ class DarkModeTheme extends ThemeSetting {
 
   late Color tertiary3 = const Color(0xFFFCE8FF);
   late Color tertiary2 = const Color(0xFFFFDDD0);
-  late Color alternate = const Color(0xFF22282F);
+  late Color alternate = const Color(0xFF512E10);
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);
   late Color common2 = const Color(0xFF484848);
@@ -502,7 +517,7 @@ class DarkModeTheme extends ThemeSetting {
   late Color success = const Color(0xFF24A891);
   late Color warning = const Color(0xFFCA6C45);
   late Color error = const Color(0xFFE74852);
-  late Color info = const Color(0xFFFFFFFF);
+  late Color info = const Color(0xFF6E62FA);
 
   late Color divider = const Color(0xFF3D323B);
   late Color tertiaryText = const Color(0xFFA33B68);

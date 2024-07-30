@@ -8,6 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/state_manager.dart';
 
+//This file defines the SignUpEmail widget, which collects the user's email address during the sign-up process.
+//step 2
 class SignupEmail extends StatefulWidget {
   const SignupEmail({super.key});
 

@@ -1,14 +1,14 @@
 import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_snackbar_widget.dart';
+import 'package:Soulna/widgets/custom_textfield_widget.dart';
 import 'package:Soulna/widgets/custom_validator_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/instance_manager.dart';
 
-import '../../widgets/button/button_widget.dart';
-import '../../widgets/custom_snackbar_widget.dart';
-import '../../widgets/custom_textfield_widget.dart';
-import '../../widgets/header/header_widget.dart';
-
+//This file defines the NewPasswordScreen widget, which allows users to set a new password.
 class NewPasswordScreen extends StatefulWidget {
   const NewPasswordScreen({super.key});
 

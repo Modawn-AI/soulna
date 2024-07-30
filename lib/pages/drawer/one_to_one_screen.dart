@@ -1,18 +1,20 @@
 import 'dart:io';
-
 import 'package:Soulna/generated/locale_keys.g.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/nav.dart';
+import 'package:Soulna/utils/theme_setting.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_snackbar_widget.dart';
+import 'package:Soulna/widgets/custom_textfield_widget.dart';
+import 'package:Soulna/widgets/custom_validator_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../utils/theme_setting.dart';
-import '../../widgets/button/button_widget.dart';
-import '../../widgets/custom_snackbar_widget.dart';
-import '../../widgets/custom_textfield_widget.dart';
-import '../../widgets/custom_validator_widget.dart';
+
+// This file defines the OneToOneScreen widget, which provides a screen for one-to-one interactions.
+// The user can make inquiries and upload images.
 
 class OneToOneScreen extends StatefulWidget {
   const OneToOneScreen({super.key});
@@ -55,21 +57,21 @@ final _inquiryFormKey = GlobalKey<FormState>();
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerBack(context: context),
         body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Form(
         key: _inquiryFormKey,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
              LocaleKeys.please_feel_free_to_inquire_about_any_questions_you_have.tr(),
                 style: ThemeSetting.of(context).labelSmall.copyWith(
                   color: ThemeSetting.of(context).primaryText,
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Text(
                 LocaleKeys.inquiry_category.tr(),
                 style: ThemeSetting.of(context).captionMedium.copyWith(
@@ -77,7 +79,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                   fontSize: 14.sp,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomDropdownButton(
                 items: inquiryTList,
                 selectedItem: _selectedItem,
@@ -87,7 +89,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                   });
                 },
               ),
-              SizedBox(height: 40 ),
+              const SizedBox(height: 40 ),
               Text(
                 LocaleKeys.inquiries.tr(),
                 style: ThemeSetting.of(context).captionMedium.copyWith(
@@ -95,7 +97,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                   fontSize: 14.sp,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextField(
                 controller: inquiryController,
                 hintText: LocaleKeys.enter_inquiry_name.tr(),
@@ -103,7 +105,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                     value:  LocaleKeys.enter_inquiry_name.tr(),
               ),
               ),
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
               CustomTextField(
                 maxLength: 80,
                 controller: inquiryDescriptionController,
@@ -114,7 +116,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                     value:  LocaleKeys.enter_inquiry_des.tr(),
               ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               SingleChildScrollView(
                 scrollDirection:
@@ -195,7 +197,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                         ),
                       ),
                     ),
-                    SizedBox(width: 6),
+                    const SizedBox(width: 6),
                     selectedImages.isNotEmpty
                         ?  SizedBox(
                           height: 60,
@@ -210,7 +212,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                                 Container(
                                   height: 60,
                                   width: 60,
-                                  margin: EdgeInsets.only(right: 6),
+                                  margin: const EdgeInsets.only(right: 6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
@@ -227,7 +229,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                                     });
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.only(bottom: 10),
+                                    margin: const EdgeInsets.only(bottom: 10),
                                     height: 14,
                                     width: 14,
                                     decoration: BoxDecoration(
@@ -249,7 +251,7 @@ final _inquiryFormKey = GlobalKey<FormState>();
                   ],
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               ButtonWidget.roundedButtonOrange(
                 context: context,
                 width: double.infinity,

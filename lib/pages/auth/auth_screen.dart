@@ -1,8 +1,8 @@
-import 'package:Soulna/widgets/custom_gender_button.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:Soulna/utils/app_assets.dart';
-import '../../utils/package_exporter.dart';
+import 'package:Soulna/utils/package_exporter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+//This file defines the AuthScreen widget, which serves as the main authentication screen for the application.
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
