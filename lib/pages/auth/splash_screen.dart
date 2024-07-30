@@ -7,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:Soulna/utils/package_exporter.dart';
 
 import '../../utils/package_exporter.dart';
 
@@ -143,14 +144,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThemeSetting.of(context).tertiary,
-      body: Center(
-        child: Image.asset(
-          AppAssets.logo,
-          height: 90,
-          width: 90,
-        ),
-      ),
-    );
+          backgroundColor: ThemeSetting.of(context).tertiary,
+          body: Center(
+      child: Image.asset(
+    AppAssets.logo,
+    height: 90,
+    width: 90,
+          )),
+        );
   }
 }

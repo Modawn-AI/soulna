@@ -20,13 +20,21 @@ import 'bindings/master_bindings.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+const kThemeModeKey = '__theme_mode__';
+SharedPreferences? _prefs;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  _prefs = await SharedPreferences.getInstance();
   await SystemChrome.setPreferredOrientations([
     // 화면 세로모드 고정
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.black,
+  ));
 
   clearSecureStorageOnReinstall();
   setupLocator();
@@ -100,12 +108,24 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String authStatus = 'Unknown';
-  ThemeMode _themeMode = ThemeSetting.themeMode;
+  // ThemeMode _themeMode = ThemeSetting.themeMode;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
 
   late Stream<BaseAuthUser> userStream;
+
+  ThemeMode _themeMode = _prefs?.getBool(kThemeModeKey) ?? false
+      ? ThemeMode.dark
+      : ThemeMode.light;
+
+  void _toggleTheme() {
+    setState(() {
+      _themeMode =
+          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      _prefs?.setBool(kThemeModeKey, _themeMode == ThemeMode.dark);
+    });
+  }
 
   @override
   void initState() {
@@ -165,9 +185,34 @@ class _MyAppState extends State<MyApp> {
       builder: (_, child) {
         return GetMaterialApp.router(
           title: 'Soulna',
-          theme: ThemeData(brightness: Brightness.light),
-          darkTheme: ThemeData(brightness: Brightness.dark),
+          theme: ThemeData(
+              brightness: Brightness.light,
+              scaffoldBackgroundColor:
+                  ThemeSetting.of(context).secondaryBackground,
+              appBarTheme: AppBarTheme(
+                  elevation: 00,
+
+                  actionsIconTheme: IconThemeData(
+                      color: ThemeSetting.of(context).primaryText),
+                  iconTheme: IconThemeData(
+                      color: ThemeSetting.of(context).primaryText),
+                  backgroundColor: Colors.transparent,
+                  scrolledUnderElevation: 00)),
+          darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              scaffoldBackgroundColor:
+                  ThemeSetting.of(context).secondaryBackground,
+              appBarTheme: AppBarTheme(
+                  elevation: 00,
+
+                  actionsIconTheme: IconThemeData(
+                      color: ThemeSetting.of(context).primaryText),
+                  iconTheme: IconThemeData(
+                      color: ThemeSetting.of(context).primaryText),
+                  backgroundColor: Colors.transparent,
+                  scrolledUnderElevation: 00)),
           themeMode: _themeMode,
+
           routeInformationProvider: _router.routeInformationProvider,
           routeInformationParser: _router.routeInformationParser,
           routerDelegate: _router.routerDelegate,

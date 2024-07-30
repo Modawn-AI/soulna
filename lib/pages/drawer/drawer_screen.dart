@@ -1,45 +1,50 @@
 import 'dart:developer';
-
+import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/custom_divider_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:Soulna/widgets/settings_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../utils/app_assets.dart';
-import '../../widgets/header/header_widget.dart';
+
+// This file defines the DrawerScreen widget, which is used for the navigation drawer in the application.
 
 class DrawerScreen {
-  static Widget drawerWidget({required BuildContext context}) {
+  static Widget drawerWidget({required BuildContext context, Widget? switchTile}) {
     List<Map<String, dynamic>> settingList = [
       {
         'image': AppAssets.iconFortune,
         'title': LocaleKeys.past_fortune.tr(),
-        'route':pastFortuneScreen,
+        'route': pastFortuneScreen,
       },
       {
         'image': AppAssets.iconDiary,
         'title': LocaleKeys.past_diary.tr(),
-        'route':pastDiary,
+        'route': pastDiary,
       },
       {
         'image': AppAssets.iconNotice,
         'title': LocaleKeys.notice.tr(),
-        'route':noticeScreen,
+        'route': noticeScreen,
       },
       {
         'image': AppAssets.iconService,
         'title': LocaleKeys.customer_service.tr(),
-        'route':customerService,
+        'route': customerService,
       },
       {
         'image': AppAssets.iconTerm,
         'title': LocaleKeys.terms_and_conditions.tr(),
-        'route':termAndConditions,
+        'route': termAndConditions,
       },
       {
         'image': AppAssets.iconVersion,
         'title': LocaleKeys.version_information.tr(),
-        'route':'',
+        'route': '',
       },
     ];
+
+
+
     return Container(
       alignment: Alignment.center,
       color: ThemeSetting.of(context).secondaryBackground,
@@ -47,9 +52,11 @@ class DrawerScreen {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           HeaderWidget.headerSettings(
-              onTapOnMenu: () => context.pop(),
-              context: context,
-              onTap: () => context.pushNamed(settingsScreen)),
+            onTapOnMenu: () => context.pop(),
+            context: context,
+            onTap: () => context.pushNamed(settingsScreen),
+            switchTile: switchTile
+          ),
           Stack(
             alignment: Alignment.bottomRight,
             children: [
@@ -96,12 +103,14 @@ class DrawerScreen {
                     AppAssets.iconInstagram,
                     width: 20.w,
                     height: 20.h,
+                    color: Colors.white,
                   ),
                   SizedBox(width: 5.w),
                   Text(
                     LocaleKeys.connect_with_instagram.tr(),
+
                     style: ThemeSetting.of(context).bodyMedium.copyWith(
-                          color: ThemeSetting.of(context).tertiaryText,
+                      color: Colors.white,
                         ),
                   ),
                 ],
@@ -109,16 +118,13 @@ class DrawerScreen {
               options: CustomButtonOptions(
                 elevation: 0,
                 height: 50.h,
-                color: ThemeSetting.of(context).primaryText,
+                color: Colors.black,
                 borderRadius: BorderRadius.circular(50.r),
               ),
             ),
           ),
-          Divider(
-            color: ThemeSetting.of(context).common2,
-            thickness: 3,
-          ),
-          SizedBox(
+          CustomDividerWidget(),
+          const SizedBox(
             height: 10,
           ),
           ...List.generate(
@@ -126,7 +132,7 @@ class DrawerScreen {
             (index) {
               return SettingsWidget(
                 onTap: () {
-                  if(index != settingList.length - 1){
+                  if (index != settingList.length - 1) {
                     log(settingList[index]['route']);
                     context.pushNamed("${settingList[index]['route']}");
                   }
@@ -144,7 +150,7 @@ class DrawerScreen {
                     : Container(),
               );
             },
-          )
+          ),
         ],
       ),
     );

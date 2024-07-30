@@ -1,6 +1,6 @@
+import 'package:Soulna/utils/theme_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../utils/theme_setting.dart';
 
 class CustomTabBar extends StatelessWidget {
   final List<Tab> tabs;

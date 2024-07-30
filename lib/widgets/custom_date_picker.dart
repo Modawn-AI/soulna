@@ -1,6 +1,6 @@
+import 'package:Soulna/utils/theme_setting.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/theme_setting.dart';
 
 Future<DateTime?> showCustomDatePicker({
   required BuildContext context,
@@ -17,7 +17,7 @@ Future<DateTime?> showCustomDatePicker({
       data: Theme.of(context).copyWith(
         datePickerTheme: DatePickerThemeData(
           surfaceTintColor: ThemeSetting.of(context).secondaryBackground,
-          backgroundColor: ThemeSetting.of(context).secondaryBackground,
+          
           headerBackgroundColor: ThemeSetting.of(context).primary,
           headerForegroundColor: ThemeSetting.of(context).secondaryBackground,
           dayOverlayColor:

@@ -1,6 +1,8 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
 import 'package:flutter/material.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -27,6 +29,23 @@ abstract class ThemeSetting {
   static ThemeSetting of(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark ? DarkModeTheme() : LightModeTheme();
   }
+
+  static bool isLightTheme(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light;
+  }
+
+  static void changeTheme() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+      bool isDarkMode = _prefs.getBool(kThemeModeKey) ?? false;
+      isDarkMode = !isDarkMode;
+      ThemeSetting.saveThemeMode(
+          isDarkMode ? ThemeMode.dark : ThemeMode.light);
+      _prefs.setBool(kThemeModeKey, isDarkMode);
+      Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+
+  }
+
 
   @Deprecated('Use primary instead')
   Color get primaryColor => primary;
@@ -86,10 +105,16 @@ abstract class ThemeSetting {
   late Color container2;
   late Color black1;
   late Color black2;
+  late Color white;
   late Color green;
   late Color lightGreen;
   late Color lightPurple;
   late Color extraGray;
+
+  late Color indigoAccent;
+  late Color blueAccent;
+  late Color redAccent;
+  late Color redBorder;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -170,13 +195,19 @@ class LightModeTheme extends ThemeSetting {
   late Color secondary = const Color(0xFFFF5C00);
   late Color tertiary = const Color(0xFFFFECDB);
   late Color tertiary1 = const Color(0xFFFFD1A6);
-  late Color tertiary2 = const Color(0xFFFFDDD0);
+  late Color secondaryBackground = const Color(0xFFFFFFFF);
+  late Color primaryBackground = const Color(0xFFF1F4F8);
+  late Color common0 = const Color(0xFFE7E7E7);
+  late Color common2 = const Color(0xFFF8F8F8);
+
+
   late Color tertiary3 = const Color(0xFFFCE8FF);
-  late Color alternate = const Color(0xFFE0E3E7);
+  late Color tertiary2 = const Color(0xFFFFDDD0);
+  late Color alternate = const Color(0xFFFFECDB);
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
-  late Color primaryBackground = const Color(0xFFF1F4F8);
-  late Color secondaryBackground = const Color(0xFFFFFFFF);
+
+
   late Color accent1 = const Color(0x4D9489F5);
   late Color accent2 = const Color(0x4E39D2C0);
   late Color accent3 = const Color(0x4D6D5FED);
@@ -195,9 +226,9 @@ class LightModeTheme extends ThemeSetting {
   late Color warningBackground = const Color(0xFFFFD159);
   late Color errorBackground = const Color(0xFFFF7387);
 
-  late Color common0 = const Color(0xFFE7E7E7);
+
   late Color common1 = const Color(0xFFF3F3F3);
-  late Color common2 = const Color(0xFFF8F8F8);
+
   late Color common3 = const Color(0xFFFFFFFF);
   late Color common4 = const Color(0x411D2429);
   late Color common5 = const Color(0xFFE0E3E7);
@@ -217,11 +248,18 @@ class LightModeTheme extends ThemeSetting {
 
   late Color black1 = const Color(0xFF212126);
   late Color black2 = const Color(0xFF000000);
+  late Color white = const Color(0xFFFFFFFF);
 
   late Color green = const Color(0xFF206A0D);
   late Color lightGreen = const Color(0xFFF2F6D4);
   late Color lightPurple = const Color(0xFFE9E0F3);
   late Color extraGray = const Color(0xFFE0EAF3);
+
+  late Color indigoAccent = const Color(0xFF0C83F0);
+  late Color blueAccent =const Color(0xFFA7CFFF);
+  late Color redAccent =const Color(0xFFFFB0A6);
+  late Color redBorder =const Color(0xFFFF0000);
+  //late Color greenAccent =const Color(0xFFA0EBCC);
 
   late AlertStyle alertStyle = AlertStyle(
     animationType: AnimationType.fromTop,
@@ -346,7 +384,7 @@ class ThemeTypography extends CustomTypography {
   TextStyle get headlineLarge => TextStyle(
         fontFamily: 'Pretendard',
         fontWeight: mediumFont,
-        color: theme.secondaryBackground,
+        color: theme.white,
         fontSize: header1Font,
       );
   String get headlineMediumFamily => 'Pretendard';
@@ -454,15 +492,20 @@ class DarkModeTheme extends ThemeSetting {
 
   late Color primary = const Color(0xFFED5A2F);
   late Color secondary = const Color(0xFFFF5C00);
-  late Color tertiary = const Color(0xFFFFECDB);
-  late Color tertiary1 = const Color(0xFFFFD1A6);
-  late Color tertiary2 = const Color(0xFFFFDDD0);
+  late Color tertiary = const Color(0xFF383838);
+  late Color tertiary1 = const Color(0xFF6D6D6D);
+  late Color primaryBackground = const Color(0xFF000000);
+  late Color secondaryBackground = const Color(0xFF383838);
+
   late Color tertiary3 = const Color(0xFFFCE8FF);
-  late Color alternate = const Color(0xFF22282F);
+  late Color tertiary2 = const Color(0xFFFFDDD0);
+  late Color alternate = const Color(0xFF512E10);
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);
-  late Color primaryBackground = const Color(0xFF383838);
-  late Color secondaryBackground = const Color(0xFF101213);
+  late Color common2 = const Color(0xFF484848);
+  late Color common0 = const Color(0xFFE7E7E7);
+ // late Color secondaryBackground = const Color(0xFF101213);
+
   late Color accent1 = const Color(0x4C9489F5);
   late Color accent2 = const Color(0x4E39D2C0);
   late Color accent3 = const Color(0x4D6D5FED);
@@ -470,28 +513,28 @@ class DarkModeTheme extends ThemeSetting {
   late Color success = const Color(0xFF24A891);
   late Color warning = const Color(0xFFCA6C45);
   late Color error = const Color(0xFFE74852);
-  late Color info = const Color(0xFFFFFFFF);
+  late Color info = const Color(0xFF6E62FA);
 
   late Color divider = const Color(0xFF3D323B);
   late Color tertiaryText = const Color(0xFFA33B68);
-  late Color disabledText = const Color(0xFF58D1A1);
+  late Color disabledText = const Color(0xFFADB5BD);
   late Color disabledBackground = const Color(0xFF29746E);
   late Color grey900 = const Color(0xFF212529);
   late Color successBackground = const Color(0xFF89E768);
   late Color warningBackground = const Color(0xFFFFD159);
   late Color errorBackground = const Color(0xFFFF7387);
 
-  late Color common0 = const Color(0x00FFFFFF);
+
   late Color common3 = const Color(0xFFFFFFFF);
   late Color common1 = const Color(0x33000000);
   late Color common5 = const Color(0xFFE0E3E7);
-  late Color common2 = const Color(0xFF57636C);
+
   late Color common4 = const Color(0x411D2429);
   late Color grayLight = const Color(0xFF8B97A2);
   late Color common6 = const Color(0xFF5633C1);
   late Color common7 = const Color(0xFFFF3B2F);
-
   late Color linearContainer1 = const Color(0xFFFFB36D);
+
   late Color linearContainer2 = const Color(0xFFFE61AE);
   late Color linearContainer3 = const Color(0xFFE0ADFF);
   late Color linearContainer4 = const Color(0xFF562DF3);
@@ -503,11 +546,18 @@ class DarkModeTheme extends ThemeSetting {
 
   late Color black1 = const Color(0xFF212126);
   late Color black2 = const Color(0xFF000000);
+  late Color white = const Color(0xFFFFFFFF);
 
   late Color green = const Color(0xFF206A0D);
   late Color lightGreen = const Color(0xFFF2F6D4);
   late Color lightPurple = const Color(0xFFE9E0F3);
   late Color extraGray = const Color(0xFFE0EAF3);
+
+  late Color indigoAccent = const Color(0xFF0C83F0);
+  late Color blueAccent =const Color(0xFFA7CFFF);
+  late Color redAccent =const Color(0xFFFFB0A6);
+  late Color redBorder =const Color(0xFFFF0000);
+
 }
 
 extension TextStyleHelper on TextStyle {

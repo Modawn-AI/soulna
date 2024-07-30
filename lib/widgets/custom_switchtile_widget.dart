@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 
 class CustomSwitchTile extends StatefulWidget {
@@ -8,6 +7,7 @@ class CustomSwitchTile extends StatefulWidget {
   final Color? activeColor;
   final Color? inactiveColor;
   final ValueChanged<bool>? onChanged;
+  // final void Function(bool)? onChanged
 
   const CustomSwitchTile({
     Key? key,
@@ -59,17 +59,17 @@ class _CustomSwitchTileState extends State<CustomSwitchTile> {
                   style: TextStyle(color: widget.inactiveColor)),
           ],
         ),
-        value: _isSwitched,
-        onChanged: _toggleSwitch,
-        thumbColor: WidgetStateProperty.all(_isSwitched
+        value:  widget.initialValue,
+        onChanged: widget.onChanged ?? _toggleSwitch,
+        thumbColor: WidgetStateProperty.all( widget.initialValue
             ? ThemeSetting.of(context).secondaryBackground
             : ThemeSetting.of(context).secondaryBackground),
         trackOutlineColor: WidgetStateProperty.all(
-          _isSwitched
+          widget.initialValue
               ? ThemeSetting.of(context).primary
               : ThemeSetting.of(context).common1,
         ),
-        selectedTileColor: _isSwitched
+        selectedTileColor:  widget.initialValue
             ? ThemeSetting.of(context).secondaryBackground
             : ThemeSetting.of(context).primary,
         activeColor:

@@ -9,11 +9,9 @@ export 'package:Soulna/network/api_calls.dart';
 export 'package:Soulna/network/error_code.dart';
 export 'package:Soulna/network/network_manager.dart';
 export 'package:Soulna/utils/const.dart';
-
 export 'package:Soulna/utils/theme_setting.dart';
 export 'package:Soulna/utils/utils.dart';
 export 'package:Soulna/widgets/custom_button_widget.dart';
-
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:get_it/get_it.dart';
 export 'package:provider/provider.dart';

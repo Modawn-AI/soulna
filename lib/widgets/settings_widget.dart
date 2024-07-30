@@ -1,4 +1,5 @@
-import '../utils/package_exporter.dart';
+
+import 'package:Soulna/utils/package_exporter.dart';
 
 class SettingsWidget extends StatelessWidget {
   final String title;
@@ -26,6 +27,7 @@ class SettingsWidget extends StatelessWidget {
               image,
               width: 26.h,
               height: 26.h,
+              color: ThemeSetting.of(context).primaryText,
             ),
             SizedBox(width: 10.w),
             Text(

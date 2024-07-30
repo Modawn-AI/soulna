@@ -6,17 +6,17 @@ import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-// This file defines the BookDetailsScreen widget, which is used for displaying book details.
-// MainScreen -> card 1->  set date of birth -> daily vibe check
 
-class BookDetailsScreen extends StatefulWidget {
-  const BookDetailsScreen({super.key});
+//Not linked to any screen
+//Same as book details screen with some changes
+class BookDetailsScreen3 extends StatefulWidget {
+  const BookDetailsScreen3({super.key});
 
   @override
-  State<BookDetailsScreen> createState() => _BookDetailsScreenState();
+  State<BookDetailsScreen3> createState() => _BookDetailsScreen3State();
 }
 
-class _BookDetailsScreenState extends State<BookDetailsScreen> {
+class _BookDetailsScreen3State extends State<BookDetailsScreen3> {
   List hashTag = ['#dreamy', '#Hyundai Outlet'];
 
   List<BookDetailModel> overAllList = [];
@@ -69,7 +69,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.isLightTheme(context)
-            ? ThemeSetting.of(context).tertiary1
+            ? ThemeSetting.of(context).blueAccent
             : ThemeSetting.of(context).common2,
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -156,10 +156,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             padding: const EdgeInsets.all(2),
                             decoration: const BoxDecoration(
                                 image: DecorationImage(
-                              image: AssetImage(
-                                AppAssets.result,
-                              ),
-                            )),
+                                  image: AssetImage(
+                                    AppAssets.result,
+                                  ),
+                                )),
                             child: Center(
                               child: Text(
                                 LocaleKeys.result.tr(),
@@ -182,109 +182,38 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     const SizedBox(
                       height: 40,
                     ),
+                    Text(
+                      LocaleKeys.avoid_today.tr(),
+                      style: ThemeSetting.of(context).titleLarge,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      LocaleKeys.blue_ox.tr(),
+                      style: ThemeSetting.of(context).titleLarge,
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
                     Image.asset(
-                      ThemeSetting.isLightTheme(context)
-                          ? AppAssets.details1
-                          : AppAssets.detailsDark,
-                      height: 270,
+                      AppAssets.bookImage,
+                      height: 250,
+                      width: 202,
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 22,
                     ),
-                    Container(
-                      height: 170,
-                      child: ListView.builder(
-                        itemCount: overAllList.length,
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          BookDetailModel detail = overAllList[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Container(
-                                width: MediaQuery.of(context).size.width * .80,
-                                decoration: BoxDecoration(
-                                    color: ThemeSetting.isLightTheme(context)
-                                        ? detail.backgroundColor ??
-                                            ThemeSetting.of(context).tertiary
-                                        : ThemeSetting.of(context).common2,
-                                    borderRadius: BorderRadius.circular(15)),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        detail.title,
-                                        style: ThemeSetting.of(context)
-                                            .titleMedium
-                                            .copyWith(
-                                                color: ThemeSetting
-                                                        .isLightTheme(context)
-                                                    ? detail.textColor ??
-                                                        ThemeSetting.of(context)
-                                                            .primary
-                                                    : ThemeSetting.of(context)
-                                                        .white),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Flexible(
-                                      flex: 4,
-                                      child: Text(
-                                        detail.des.toString(),
-                                        style: ThemeSetting.of(context)
-                                            .bodyMedium
-                                            .copyWith(
-                                                color: ThemeSetting
-                                                        .isLightTheme(context)
-                                                    ? ThemeSetting.of(context)
-                                                        .black2
-                                                    : ThemeSetting.of(context)
-                                                        .common0
-                                                        .withOpacity(0.4)),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Flexible(
-                                      child: Text(
-                                        'more',
-                                        style:
-                                            ThemeSetting.of(context).bodyMedium,
-                                        maxLines: 4,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    const CustomDividerWidget(
-                      thickness: 2,
-                    ),
+                   CustomDividerWidget(thickness: 2,),
                     const SizedBox(
                       height: 40,
                     ),
                     CircleAvatar(
                       radius: 45,
+
                       backgroundColor: ThemeSetting.of(context).common2,
                       child: Image.asset(
-                        ThemeSetting.isLightTheme(context)
-                            ? AppAssets.character
-                            : AppAssets.characterDark,
+                        ThemeSetting.isLightTheme(context) ? AppAssets.character: AppAssets.characterDark,
                         height: 60,
                       ),
                     ),
@@ -330,23 +259,11 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const CustomDividerWidget(
-                      thickness: 2,
-                      // color: ThemeSetting.of(context).common2,
+                    Divider(
+                      color: ThemeSetting.of(context).common0,
                     ),
                     const SizedBox(
                       height: 40,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Text(
-                        LocaleKeys.things_that_bring_me_luck_today.tr(),
-                        style: ThemeSetting.of(context).titleLarge,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -365,7 +282,6 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 avatar: Image.asset(
                                   detail.image!,
                                   height: 30,
-                                  // color: ThemeSetting.of(context).common2,
                                 ),
                                 backgroundColor: ThemeSetting.of(context)
                                     .secondaryBackground,

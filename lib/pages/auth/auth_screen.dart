@@ -34,28 +34,36 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  List<bool> isSelected = [true, false];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).tertiary,
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Spacer(flex: isContainerVisible ? 1 : 2),
-            SlideTransition(
-              position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(logoAnimationController),
-              child: Image.asset(AppAssets.logo, height: 90),
-            ),
-            if (isContainerVisible) ...[
-              const Spacer(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).tertiary,
+        body: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Spacer(flex: isContainerVisible ? 1 : 2),
               SlideTransition(
-                position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(containerAnimationController),
-                child: _buildSecondaryWidget(),
+                position:
+                    Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
+                        .animate(logoAnimationController),
+                child: Image.asset(AppAssets.logo, height: 90),
               ),
+              if (isContainerVisible) ...[
+                const Spacer(),
+                SlideTransition(
+                  position:
+                      Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
+                          .animate(containerAnimationController),
+                  child: _buildSecondaryWidget(),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -65,158 +73,166 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     return Container(
       padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
-        color: ThemeSetting.of(context).secondaryBackground,
+        color: ThemeSetting.of(context).white,
+        border: Border.all(color: ThemeSetting.of(context).white),
         boxShadow: [const BoxShadow(blurRadius: 5, offset: Offset(0, 3))],
         borderRadius: const BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            AppAssets.hello,
-            width: 50,
-            height: 50,
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        LocaleKeys.get_Started.tr(),
-                        style: ThemeSetting.of(context).titleMedium.copyWith(
-                              color: ThemeSetting.of(context).primaryText,
-                            ),
-                      ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Image.asset(
-                        AppAssets.soulnaText,
-                        height: 20,
-                        width: 96,
-                        color: ThemeSetting.of(context).primaryText,
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  Text(
-                    LocaleKeys.join_now_and_check_your_fortune.tr(),
-                    style: ThemeSetting.of(context).bodySmall,
-                  )
-                ],
-              ),
-              Image.asset(
-                AppAssets.character,
-                width: 68,
-                height: 62,
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: CustomButtonWidget(
-                  text: '',
-                  onPressed: () async {
-                    setState(() {
-                      isLoading = true; // 로딩 시작
-                    });
-                    try {
-                      await SocialManager.getInstance().loginWithApple(callback: (value) {
-                        if (value.isNotEmpty) {
-                          context.goNamed(mainScreen);
-                        }
-                      });
-                    } finally {
-                      setState(() {
-                        isLoading = false; // 로딩 종료
-                      });
-                    }
-                  },
-                  options: CustomButtonOptions(
-                    height: 50,
-                    borderRadius: BorderRadius.circular(12),
-                    color: ThemeSetting.of(context).primaryText,
-                  ),
-                  textIcon: Image.asset(
-                    AppAssets.apple,
-                    height: 20,
-                    width: 20,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 9,
-              ),
-              Expanded(
-                child: CustomButtonWidget(
-                  text: '',
-                  onPressed: () async {
-                    setState(() {
-                      isLoading = true; // 로딩 시작
-                    });
-                    try {
-                      await SocialManager.getInstance().loginWithGoogle(callback: (value) {
-                        if (value.isNotEmpty) {
-                          context.goNamed(mainScreen);
-                        }
-                      });
-                    } finally {
-                      setState(() {
-                        isLoading = false; // 로딩 종료
-                      });
-                    }
-                  },
-                  options: CustomButtonOptions(
-                    height: 50,
-                    borderRadius: BorderRadius.circular(12),
-                    color: ThemeSetting.of(context).secondaryBackground,
-                    borderSide: BorderSide(
-                      color: ThemeSetting.of(context).common0,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Image.asset(
+          AppAssets.hello,
+          width: 50,
+          height: 50,
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      LocaleKeys.get_Started.tr(),
+                      style: ThemeSetting.of(context).titleMedium.copyWith(
+                            color: ThemeSetting.of(context).black2,
+                          ),
                     ),
-                  ),
-                  textIcon: Image.asset(
-                    AppAssets.google,
-                    height: 20,
-                    width: 20,
-                  ),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Image.asset(
+                      AppAssets.soulnaText,
+                      height: 20,
+                      width: 96,
+                      color: ThemeSetting.of(context).black2,
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomButtonWidget(
-            text: LocaleKeys.continue_with_Email.tr(),
-            onPressed: () => context.pushNamed(loginScreen),
-            options: CustomButtonOptions(
-                textStyle: ThemeSetting.of(context).titleSmall.copyWith(color: ThemeSetting.of(context).primaryText),
-                height: 50,
-                width: double.infinity,
-                borderRadius: BorderRadius.circular(12),
-                color: ThemeSetting.of(context).secondaryBackground,
-                borderSide: BorderSide(color: ThemeSetting.of(context).common0)),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-        ],
-      ),
+                const SizedBox(
+                  height: 6,
+                ),
+                Text(
+                  LocaleKeys.join_now_and_check_your_fortune.tr(),
+                  style: ThemeSetting.of(context)
+                      .bodySmall
+                      .copyWith(color: ThemeSetting.of(context).black2),
+                )
+              ],
+            ),
+            Image.asset(
+              AppAssets.character,
+              width: 68,
+              height: 62,
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+                child: CustomButtonWidget(
+                    text: 'text',
+                    textIcon: Image.asset(
+                      AppAssets.apple,
+                      height: 16,
+                      width: 16,
+                      color: isSelected.first == true
+                          ? ThemeSetting.of(context).white
+                          : ThemeSetting.of(context).black2,
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        isSelected = [true, false];
+                        isLoading = true; // 로딩 시작
+                      });
+                      try {
+                        await SocialManager.getInstance().loginWithApple(callback: (value) {
+                          if (value.isNotEmpty) {
+                            context.goNamed(mainScreen);
+                          }
+                        });
+                      } finally {
+                        setState(() {
+                          isLoading = false; // 로딩 종료
+                        });
+                      }
+                    },
+                    options: CustomButtonOptions(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide:
+                            BorderSide(color: ThemeSetting.of(context).common0),
+                        height: 56,
+                        color: isSelected.first == true
+                            ? ThemeSetting.of(context).black2
+                            : ThemeSetting.of(context).white,
+                        textStyle: ThemeSetting.of(context).headlineLarge))),
+            const SizedBox(width: 8),
+            Expanded(
+                child: CustomButtonWidget(
+                    text: 'text',
+                    textIcon: Image.asset(
+                      AppAssets.google,
+                      height: 16,
+                      width: 16,
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        isSelected = [false, true];
+                        isLoading = true; // 로딩 시작
+                      });
+                      try {
+                        await SocialManager.getInstance().loginWithGoogle(callback: (value) {
+                          if (value.isNotEmpty) {
+                            context.goNamed(mainScreen);
+                          }
+                        });
+                      } finally {
+                        setState(() {
+                          isLoading = false; // 로딩 종료
+                        });
+                      }
+                    },
+                    options: CustomButtonOptions(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide:
+                            BorderSide(color: ThemeSetting.of(context).common0),
+                        height: 56,
+                        color: isSelected.last == true
+                            ? ThemeSetting.of(context).black2
+                            : ThemeSetting.of(context).white,
+                        textStyle: ThemeSetting.of(context)
+                            .headlineLarge))), // Spacing between buttons
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        CustomButtonWidget(
+          text: LocaleKeys.continue_with_Email.tr(),
+          onPressed: () => context.pushNamed(loginScreen),
+          options: CustomButtonOptions(
+              textStyle: ThemeSetting.of(context)
+                  .titleSmall
+                  .copyWith(color: ThemeSetting.of(context).black2),
+              height: 50,
+              width: double.infinity,
+              borderRadius: BorderRadius.circular(12),
+              color: ThemeSetting.of(context).white,
+              borderSide: BorderSide(color: ThemeSetting.of(context).common0)),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+      ]),
     );
   }
 }

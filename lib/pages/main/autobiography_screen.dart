@@ -1,14 +1,16 @@
+import 'package:Soulna/bottomsheet/update_delete_diary_bottomSheet.dart';
 import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
-import 'package:Soulna/widgets/custom_snackbar_widget.dart';
+import 'package:Soulna/widgets/custom_divider_widget.dart';
+import 'package:Soulna/widgets/custom_hashtag_function.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../utils/package_exporter.dart';
-import '../../widgets/custom_dialog_widget.dart';
-import '../../widgets/custom_hashtag_function.dart';
+// This file defines the AutobiographyScreen widget, which is used for displaying autobiographies.
+// MainScreen -> card 2 -> select photos -> create diary
 
 class AutobiographyScreen extends StatefulWidget {
   const AutobiographyScreen({super.key});
@@ -46,10 +48,15 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        body:
-            showHeader == false ? autoBiographyList() : autoBiographyScroll());
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: ThemeSetting.isLightTheme(context)
+              ? ThemeSetting.of(context).secondaryBackground
+              : ThemeSetting.of(context).common2,
+          body: showHeader == false
+              ? autoBiographyList()
+              : autoBiographyScroll()),
+    );
   }
 
   autoBiographyList() {
@@ -58,67 +65,8 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         HeaderWidget.headerWithAction(
           context: context,
           showMoreIconOnTap: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Container(
-                  height: MediaQuery.of(context).size.height * 0.20,
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                      color: ThemeSetting.of(context).secondaryBackground,
-                      borderRadius: const BorderRadius.horizontal(
-                          right: Radius.circular(15),
-                          left: Radius.circular(15))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          context.pop();
-                          context.pushReplacementNamed(selectPhotoScreen);
-                        },
-                        child: Text(
-                          LocaleKeys.update_my_diary.tr(),
-                          style: ThemeSetting.of(context).bodyMedium,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          context.pop();
-                          showDialog(
-                            context: context,
-                            builder: (context) => CustomDialogWidget(
-                              context: context,
-                              title: LocaleKeys.delete_my_diary.tr(),
-                              content: LocaleKeys
-                                  .would_you_like_to_delete_the_diary
-                                  .tr(),
-                              confirmText: LocaleKeys.delete.tr(),
-                              onConfirm: () {
-                                context.pop();
-                                CustomSnackBarWidget.showSnackBar(
-                                    context: context,
-                                    message:
-                                        LocaleKeys.it_has_been_deleted.tr());
-                              },
-                            ),
-                          );
-                        },
-                        child: Text(
-                          LocaleKeys.delete_my_diary.tr(),
-                          style: ThemeSetting.of(context).bodyMedium,
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            );
+            UpdateDeleteDiaryBottomSheet.updateDeleteDiaryBottomSheet(
+                context: context);
           },
         ),
         const SizedBox(
@@ -178,7 +126,14 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
   autoBiographyScroll() {
     return Column(
       children: [
-        HeaderWidget.headerWithAction(context: context, title: 'July 8'),
+        HeaderWidget.headerWithAction(
+          context: context,
+          title: 'July 8',
+          showMoreIconOnTap: () {
+            UpdateDeleteDiaryBottomSheet.updateDeleteDiaryBottomSheet(
+                context: context);
+          },
+        ),
         const SizedBox(
           height: 40,
         ),
@@ -201,7 +156,9 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
 
   showDescriptionList({required bool showKeyword}) {
     return Container(
-      color: ThemeSetting.of(context).common0.withOpacity(0.3),
+      color: ThemeSetting.isLightTheme(context)
+          ? ThemeSetting.of(context).common0.withOpacity(0.3)
+          : ThemeSetting.of(context).tertiary,
       child: ScrollablePositionedList.builder(
         shrinkWrap: true,
         itemScrollController: _itemScrollController,
@@ -227,7 +184,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                   // padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: ThemeSetting.of(context).black1,
+                      color: ThemeSetting.of(context).primaryText,
                     ),
                     color: ThemeSetting.of(context).secondaryBackground,
                     borderRadius: BorderRadius.circular(5),
@@ -267,7 +224,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                       text: text[index], keywords: hashTag, context: context),
                 ),
 
-                if (index == text.length - 1)
+                if (currentIndex == 0 && index == text.length-1 )
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -291,7 +248,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              color: ThemeSetting.of(context).tertiary,
+                              color: ThemeSetting.of(context).alternate,
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: Text(
@@ -308,7 +265,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                       const SizedBox(
                         height: 50,
                       ),
-                      const Divider(),
+                      CustomDividerWidget(),
                       const SizedBox(
                         height: 30,
                       ),
@@ -360,10 +317,12 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                     height: 230,
                     margin: const EdgeInsets.only(right: 18),
                     decoration: BoxDecoration(
-                      color: ThemeSetting.of(context).secondaryBackground,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
-                      border:
-                          Border.all(color: ThemeSetting.of(context).black1),
+                      border: Border.all(
+                          color: ThemeSetting.isLightTheme(context)
+                              ? ThemeSetting.of(context).black1
+                              : ThemeSetting.of(context).tertiary1),
                     ),
                     child: Container(
                       margin: const EdgeInsets.all(3),
@@ -386,11 +345,12 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                         border: Border.all(
                           color: ThemeSetting.of(context).black1,
                         ),
-                        color: ThemeSetting.of(context).secondaryBackground,
+                        color: ThemeSetting.of(context).white,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text('${index + 1}',
-                          style: ThemeSetting.of(context).bodySmall),
+                          style: ThemeSetting.of(context).bodySmall.copyWith(
+                              color: ThemeSetting.of(context).black2)),
                     ),
                   ),
                 ],

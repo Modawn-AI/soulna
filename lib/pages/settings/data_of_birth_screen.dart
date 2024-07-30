@@ -1,11 +1,13 @@
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:Soulna/widgets/custom_checkbox_widget.dart';
 import 'package:Soulna/widgets/custom_ios_date_picker.dart';
+import 'package:Soulna/widgets/custom_time_range_widget.dart';
+import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../widgets/button/button_widget.dart';
-import '../../widgets/custom_checkbox_widget.dart';
-import '../../widgets/custom_time_range_widget.dart';
-import '../../widgets/header/header_widget.dart';
 
+// This file defines the DateOfBirthScreen widget, which provides a screen for users to enter or update their date of birth.
+//Drawer -> edit icon -> set date of birth
 
 class DateOfBirthScreen extends StatefulWidget {
   const DateOfBirthScreen({super.key});
@@ -19,16 +21,16 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerBack(
-        context: context,
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: HeaderWidget.headerBack(
+          context: context,
+        ),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               LocaleKeys.please_set_your_date_of_birth.tr(),
@@ -36,41 +38,20 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     color: ThemeSetting.of(context).primaryText,
                   ),
             ),
-            // SizedBox(
-            //   height: 100,
-            //   child: CupertinoTheme(
-            //     data: CupertinoThemeData(
-            //       textTheme: CupertinoTextThemeData(
-            //         dateTimePickerTextStyle: ThemeSetting.of(context).headlineLarge.copyWith(
-            //           color: ThemeSetting.of(context).primary,
-            //         ),
-            //       ),
-            //     ),
-            //     child: CupertinoDatePicker(
-            //
-            //       initialDateTime: selectedDate,
-            //       mode: CupertinoDatePickerMode.date,
-            //       maximumYear: DateTime.now().year,
-            //
-            //       maximumDate: DateTime.now(),
-            //       onDateTimeChanged: (DateTime newDateTime) {
-            //         setState(() {
-            //           selectedDate = newDateTime;
-            //         });
-            //       },
-            //     ),
-            //   ),
-            // ),
-            SizedBox(height: 20.h),
-            CustomDatePicker(),
-            SizedBox(height: 40.h),
+            const SizedBox(
+              height: 20,
+            ),
+            const CustomDatePicker(),
+            const SizedBox(
+              height: 40,
+            ),
             Text(
               LocaleKeys.time.tr(),
               style: ThemeSetting.of(context).captionMedium.copyWith(
                     color: ThemeSetting.of(context).primary,
                   ),
             ),
-            SizedBox(height: 10.h),
+            const SizedBox(height: 10),
             CustomRangeTimePicker(
               initialStartTime: const TimeOfDay(hour: 9, minute: 0),
               initialEndTime: const TimeOfDay(hour: 17, minute: 0),
@@ -81,13 +62,10 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 print("End Time: ${endTime.format(context)}");
               },
             ),
-            SizedBox(height: 15.h),
+            const SizedBox(height: 15),
             Row(
               children: [
-                CustomCheckbox(
-                  initialValue: false,
-                  onChanged: () {},
-                ),
+                const CustomCheckbox(),
                 Text(
                   LocaleKeys.i_dont_know_my_time_of_birth.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(
@@ -96,17 +74,24 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 ),
               ],
             ),
-            const Spacer(),
-            Container(
+            const SizedBox(
+              height: 180,
+            ),
+            SizedBox(
               width: double.infinity,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.h),
                 child: ButtonWidget.roundedButtonOrange(
                   context: context,
-                  color: ThemeSetting.of(context).primaryText,
+                  color: ThemeSetting.of(context).black2,
                   text: LocaleKeys.save.tr(),
                   onTap: () {
-                    context.pushNamed(animationScreen);
+                    context.pop();
+                    // SharedPreferences.getInstance();
+                    // SharedPreferencesManager.setString(
+                    //     key: SharedprefString.animationScreen,
+                    //     value: bookDetailScreen);
+                    //context.pushReplacementNamed(animationScreen);
                   },
                 ),
               ),

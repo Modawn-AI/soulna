@@ -32,19 +32,19 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
     _isChecked = widget.initialValue;
   }
 
-  // void _toggleCheckbox() {
-  //   setState(() {
-  //     _isChecked = !_isChecked;
-  //   });
-  //   if (widget.onChanged != null) {
-  //     widget.onChanged!(_isChecked);
-  //   }
-  // }
+  void _toggleCheckbox() {
+    setState(() {
+      _isChecked = !_isChecked;
+    });
+    if (widget.onChanged != null) {
+      widget.onChanged!();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onChanged,
+      onTap: widget.onChanged ?? _toggleCheckbox,
       child: Row(
         children: [
           Container(

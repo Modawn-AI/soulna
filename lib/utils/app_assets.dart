@@ -5,6 +5,7 @@ class AppAssets {
   //images
   static const String hello = 'assets/images/hello.png';
   static const String character = 'assets/images/character.png';
+  static const String characterDark = 'assets/images/character_dark.png';
   static const String soulnaText = 'assets/images/soulna_text.png';
   static const String image1 = 'assets/images/image1.png';
   static const String image2 = 'assets/images/image2.png';
@@ -16,6 +17,7 @@ class AppAssets {
   static const String dotLine = 'assets/images/dot_line.png';
   static const String details = 'assets/images/details.png';
   static const String details1 = 'assets/images/details1.png';
+  static const String detailsDark = 'assets/images/details_dark.png';
   static const String result = 'assets/images/result.png';
   static const String one = 'assets/images/1.png';
   static const String two = 'assets/images/2.png';

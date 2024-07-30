@@ -36,7 +36,7 @@
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       key: scaffoldKey,
-//       backgroundColor: ThemeSetting.of(context).secondaryBackground,
+//       
 //       appBar: AppBar(
 //         automaticallyImplyLeading: false,
 //         scrolledUnderElevation: 0,
@@ -146,7 +146,7 @@
 //                 onPressed: () async {
 //                   showModalBottomSheet(
 //                     context: context,
-//                     backgroundColor: ThemeSetting.of(context).secondaryBackground,
+//                     
 //                     shape: const RoundedRectangleBorder(
 //                       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
 //                     ),

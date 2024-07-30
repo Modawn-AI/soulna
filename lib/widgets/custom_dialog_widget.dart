@@ -24,7 +24,7 @@ class CustomDialogWidget extends StatelessWidget {
       elevation: 0,
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
       content: SizedBox(
-        width: 300.w,
+        width: 300,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
