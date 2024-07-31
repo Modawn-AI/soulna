@@ -10,6 +10,7 @@ import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 
 // This file defines the MainScreen widget, which is the main screen of the application.
 
@@ -34,6 +35,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -106,10 +108,29 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           route: createJournal),
     ];
 
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: ThemeSetting.of(context).secondaryBackground));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         key: scaffoldKey,
+        appBar: HeaderWidget.headerWithLogoAndInstagram(
+            context: context,
+            title: AnimatedBuilder(
+              animation: _logoAniCon,
+              builder: (context, child) {
+                return Transform.rotate(
+                  angle: _logoAnimation.value * 2 * 3.141592653589793,
+                  child: child,
+                );
+              },
+              child: Image.asset(
+                AppAssets.logo,
+                height: 37,
+                width: 37,
+              ),
+            ),
+            onTap: () => scaffoldKey.currentState?.openDrawer()),
         drawer: DrawerScreen.drawerWidget(
           context: context,
           switchTile: CustomSwitchTile(
@@ -123,23 +144,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         ),
         body: ListView(
           children: [
-            HeaderWidget.headerWithLogoAndInstagram(
-                context: context,
-                title: AnimatedBuilder(
-                  animation: _logoAniCon,
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: _logoAnimation.value * 2 * 3.141592653589793,
-                      child: child,
-                    );
-                  },
-                  child: Image.asset(
-                    AppAssets.logo,
-                    height: 37,
-                    width: 37,
-                  ),
-                ),
-                onTap: () => scaffoldKey.currentState?.openDrawer()),
             const SizedBox(
               height: 32,
             ),
@@ -186,9 +190,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             const SizedBox(
               height: 30,
             ),
-            SizedBox(
+            Container(
               height: 350,
-              width: 202,
+              width: MediaQuery.of(context).size.width,
               child: AnimatedBuilder(
                 animation: _slideAnimation,
                 builder: (context, child) {
@@ -204,16 +208,15 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       onTap: () => context.pushNamed("${image.route}"),
                       child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20),
-                          height: 300,
+                          padding: const EdgeInsets.symmetric(horizontal: 00),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [image.linear1, image.linear2],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter),
                             border: Border.all(
-                                color: ThemeSetting.of(context)
-                                    .secondaryBackground),
-                            borderRadius: BorderRadius.circular(20),
+                                color: ThemeSetting.of(context).black2),
+                            borderRadius: BorderRadius.circular(22),
                           ),
                           child: Stack(
                             alignment: Alignment.center,
@@ -335,25 +338,25 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             const SizedBox(
               height: 20,
             ),
-            AnimatedBuilder(
-              animation: _slideAnimation,
-              builder: (context, child) {
-                return SlideTransition(
-                  position: _slideAnimation,
-                  child: child,
-                );
-              },
-              child: SizedBox(
-                width: 202,
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: AnimatedBuilder(
+                animation: _slideAnimation,
+                builder: (context, child) {
+                  return SlideTransition(
+                    position: _slideAnimation,
+                    child: child,
+                  );
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: images.asMap().entries.map((entry) {
                     return GestureDetector(
                       //onTap: () => _controller.animateToPage(entry.key),
                       child: Container(
-                          width: 85,
+                          width: 90,
                           height: 4,
-                          // margin: const EdgeInsets.symmetric(
+                          // margin: const EdgeInsets .symmetric(
                           //     vertical: 8.0, horizontal: 4.0),
                           decoration: BoxDecoration(
                               borderRadius: const BorderRadius.horizontal(
@@ -405,34 +408,40 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                LocaleKeys.natural_born_fortune_from_the_heavens
-                                    .tr(),
-                                style: ThemeSetting.of(context)
-                                    .bodyMedium
-                                    .copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black),
+                              Flexible(
+                                flex: 2,
+                                child: Text(
+                                  LocaleKeys
+                                      .natural_born_fortune_from_the_heavens
+                                      .tr(),
+                                  style: ThemeSetting.of(context)
+                                      .bodyMedium
+                                      .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          color: ThemeSetting.of(context).black1),
+                                ),
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    LocaleKeys.check.tr(),
-                                    style: ThemeSetting.of(context)
-                                        .captionLarge
-                                        .copyWith(color: Colors.black),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Image.asset(AppAssets.next,
-                                      height: 14,
-                                      width: 14,
-                                      color: Colors.black),
-                                ],
+                              Flexible(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      LocaleKeys.check.tr(),
+                                      style: ThemeSetting.of(context)
+                                          .captionLarge
+                                          .copyWith(color: Colors.black),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Image.asset(AppAssets.next,
+                                        height: 14,
+                                        width: 14,
+                                        color: Colors.black),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -460,7 +469,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               ),
             ),
             const SizedBox(
-              height: 35,
+              height: 10,
             ),
           ],
         ),

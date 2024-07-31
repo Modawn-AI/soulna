@@ -7,6 +7,7 @@ import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/custom_hashtag_function.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -41,6 +42,10 @@ class _JournalScreenState extends State<JournalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor:    ThemeSetting.of(context).secondaryBackground
+
+    ));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,

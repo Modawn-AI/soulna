@@ -2,10 +2,16 @@ import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 
 
 class Subscription {
   static subscriptionWidget({required BuildContext context}) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ThemeSetting.of(context).secondaryBackground,
+
+    ));
+
     return showModalBottomSheet(
       elevation: 0,
       shape: const RoundedRectangleBorder(
