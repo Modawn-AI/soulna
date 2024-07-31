@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:Soulna/bottomsheet/select_photos_bottomSheet.dart';
+import 'package:Soulna/pages/main/select_photo_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 // This file defines the SelectAlbumsScreen widget, which is used for selecting albums.
 
@@ -34,31 +40,27 @@ class _SelectAlbumsScreenState extends State<SelectAlbumsScreen> {
     // Add more items here
   ];
 
-  List<Map<String, dynamic>> selectedImages = [];
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // //use this function to select 1,2,3,4,5 any order
-  // int _getSelectedIndex(int itemIndex, int imageIndex) {
-  //   int selectedIndex = 0;
-  //   for (int i = 0; i < itemIndex; i++) {
-  //     selectedIndex += (items[i]['images'] as List<Map<String, dynamic>>)
-  //         .where((img) => img['selected'] as bool)
-  //         .length;
-  //   }
-  //   selectedIndex += (items[itemIndex]['images'] as List<Map<String, dynamic>>)
-  //       .sublist(0, imageIndex)
-  //       .where((img) => img['selected'] as bool)
-  //       .length;
-  //   return selectedIndex + 1;
-  // }
+  final PhotoService _photoService = PhotoService();
+  final List<Map<String, dynamic>> _selectedPhotos = [];
 
-  void _updateSelectedIndexes(BuildContext context) {
-    if (selectedImages.length > 1) {
-      SelectPhotosBottomSheet.selectPhotoBottomSheet(context: context,selectedImages: selectedImages);
-    }
-    for (int i = 0; i < selectedImages.length; i++) {
-      selectedImages[i]['index'] = i + 1;
-    }
+  @override
+  void initState() {
+    super.initState();
+
+    _loadPhotos();
+  }
+
+  Future<void> _loadPhotos() async {
+    final List<XFile> newPhotos = await _photoService.fetchPhotos();
+    setState(() {
+      _selectedPhotos.clear();
+      for (var newPhoto in newPhotos) {
+        _selectedPhotos
+            .add({'path': newPhoto.path, 'index': _selectedPhotos.length + 1});
+      }
+    });
   }
 
   num getTotalImages() {
@@ -69,119 +71,127 @@ class _SelectAlbumsScreenState extends State<SelectAlbumsScreen> {
     return totalImages;
   }
 
-
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ThemeSetting.of(context).secondaryBackground,
+      // statusBarBrightness: ThemeSetting.isLightTheme(context)
+      //     ? Brightness.light
+      //     : Brightness.dark,
+      statusBarIconBrightness: ThemeSetting.isLightTheme(context)
+          ? Brightness.dark
+          : Brightness.light,
+    ));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         key: scaffoldKey,
         appBar: HeaderWidget.headerWithTitle(
             context: context, title: LocaleKeys.select_photo.tr()),
-        body: ListView.builder(
-          shrinkWrap: true,
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            final item = items[index];
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Column(
+        // floatingActionButton: FloatingActionButton(
+        //   elevation: 10,
+        //   backgroundColor: ThemeSetting.of(context).blueAccent,
+        //   child: Icon(
+        //     Icons.add,
+        //     color: ThemeSetting.of(context).black2,
+        //   ),
+        //   onPressed: () => _loadPhotos(),
+        // ),
+        body: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+              color: ThemeSetting.of(context).common2,
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      DateFormat('MM.dd.yy').format(item['date']),
-                      style: ThemeSetting.of(context)
-                          .headlineLarge
-                          .copyWith(
-                              color: ThemeSetting.of(context).primaryText),
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Image.asset(
+                      AppAssets.logo,
+                      height: 17,
+                      width: 17,
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  Wrap(
-                    spacing: 8.0,
-                    runSpacing: 8.0,
-                    children:
-                        List<Widget>.generate(item['images'].length, (i) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (item['images'][i]['selected']) {
-                              selectedImages.remove(item['images'][i]);
-                            } else {
-                              selectedImages.add(item['images'][i]);
-                            }
-                            item['images'][i]['selected'] =
-                                !item['images'][i]['selected'];
-                            _updateSelectedIndexes(context);
-                          });
-                        },
-                        child: Container(
-                            height: 115,
-                            width: 115,
-                            alignment: Alignment.topRight,
-                            decoration: BoxDecoration(
-                                color: ThemeSetting.of(context).common4,
-                                borderRadius: BorderRadius.circular(5),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    item['images'][i]['path'],
-                                  ),
-                                  fit: BoxFit.cover,
-                                )),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  if (item['images'][i]['selected']) {
-                                    selectedImages
-                                        .remove(item['images'][i]);
-                                  } else {
-                                    selectedImages.add(item['images'][i]);
-                                  }
-                                  item['images'][i]['selected'] =
-                                      !item['images'][i]['selected'];
-                                  _updateSelectedIndexes(context);
-                                });
-                              },
-                              child: Container(
-                                height: 24,
-                                width: 24,
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: item['images'][i]['selected'] ==
-                                          false
-                                      ? ThemeSetting.of(context)
-                                          .primaryText
-                                          .withOpacity(0.5)
-                                      : ThemeSetting.of(context).primary,
-                                ),
-                                child: Text(
-                                  item['images'][i]['selected'] == false
-                                      ? ''
-                                      : '${item['images'][i]['index']}',
-                                  style: ThemeSetting.of(context)
-                                      .bodyMedium
-                                      .copyWith(
-                                          color: ThemeSetting.of(context)
-                                              .common0),
-                                ),
-                              ),
-                            )),
-                      );
-                    }),
-                  ),
                   const SizedBox(
-                    height: 40,
+                    width: 10,
                   ),
+                  Flexible(
+                    child: Text(
+                      LocaleKeys
+                          .it_automatically_creates_a_diary_through_the_Ai_algorithm
+                          .tr(),
+                      style: ThemeSetting.of(context).captionMedium,
+                    ),
+                  )
                 ],
               ),
-            );
-          },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: GridView.builder(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                ),
+                itemCount: _selectedPhotos.length,
+                itemBuilder: (context, index) {
+                  final photo = _selectedPhotos[index];
+                  final isSelected = _selectedPhotos.contains(photo);
+                  return Container(
+                    height: 115,
+                    width: 115,
+                    alignment: Alignment.topRight,
+                    decoration: BoxDecoration(
+                      color: ThemeSetting.of(context).common4,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: ThemeSetting.of(context).primaryText,
+                          width: 1),
+                      image: DecorationImage(
+                        image: FileImage(File(photo['path'])),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ButtonWidget.roundedButtonOrange(
+                          context: context,
+                          width: MediaQuery.of(context).size.width,
+                          text: LocaleKeys.set_timeline.tr(),
+                          onTap: () {
+                            SelectPhotosBottomSheet.selectPhotoBottomSheet(
+                              context: context,
+                              selectedImages: _selectedPhotos,
+                            );
+                          }),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: ButtonWidget.roundedButtonOrange(
+                        context: context,
+                        width: MediaQuery.of(context).size.width,
+                        text: LocaleKeys.select_photo.tr(),
+                        onTap: () => _loadPhotos(),
+                      ),
+                    )
+                  ],
+                ))
+          ],
         ),
       ),
     );
