@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> {
       });
     jwtTokenStream.listen((_) {});
 
-    ThemeSetting.changeTheme();
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
       // statusBarBrightness: ThemeSetting.isLightTheme(context)

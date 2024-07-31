@@ -137,16 +137,16 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             initialValue: ThemeSetting.isLightTheme(context) ? false : true,
             onChanged: (bool value) {
               setState(() {
-                ThemeSetting.changeTheme();
-                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                  statusBarColor: ThemeSetting.of(context).secondaryBackground,
-                  // statusBarBrightness: ThemeSetting.isLightTheme(context)
-                  //     ? Brightness.light
-                  //     : Brightness.dark,
-                  statusBarIconBrightness: ThemeSetting.isLightTheme(context)
-                      ? Brightness.light
-                      : Brightness.dark,
-                ));
+                ThemeSetting.changeTheme(context);
+                // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                //   statusBarColor: ThemeSetting.of(context).secondaryBackground,
+                //   // statusBarBrightness: ThemeSetting.isLightTheme(context)
+                //   //     ? Brightness.light
+                //   //     : Brightness.dark,
+                //   statusBarIconBrightness: ThemeSetting.isLightTheme(context)
+                //       ? Brightness.light
+                //       : Brightness.dark,
+                // ));
 
               });
             },
