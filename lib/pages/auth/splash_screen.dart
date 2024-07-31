@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:Soulna/manager/notification_manager.dart';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -148,13 +147,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       statusBarColor: ThemeSetting.of(context).tertiary,
     ));
     return Scaffold(
-          backgroundColor: ThemeSetting.of(context).tertiary,
-          body: Center(
-      child: Image.asset(
-    AppAssets.logo,
-    height: 90,
-    width: 90,
-          )),
-        );
+      backgroundColor: ThemeSetting.of(context).tertiary,
+      body: Center(
+          child: Image.asset(
+        AppAssets.logo,
+        height: 90,
+        width: 90,
+      )),
+    );
   }
 }

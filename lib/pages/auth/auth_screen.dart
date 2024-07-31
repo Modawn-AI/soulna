@@ -53,17 +53,13 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
             children: [
               Spacer(flex: isContainerVisible ? 1 : 2),
               SlideTransition(
-                position:
-                    Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-                        .animate(logoAnimationController),
+                position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(logoAnimationController),
                 child: Image.asset(AppAssets.logo, height: 90),
               ),
               if (isContainerVisible) ...[
                 const Spacer(),
                 SlideTransition(
-                  position:
-                      Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-                          .animate(containerAnimationController),
+                  position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(containerAnimationController),
                   child: _buildSecondaryWidget(),
                 ),
               ],
@@ -124,9 +120,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 ),
                 Text(
                   LocaleKeys.join_now_and_check_your_fortune.tr(),
-                  style: ThemeSetting.of(context)
-                      .bodySmall
-                      .copyWith(color: ThemeSetting.of(context).black2),
+                  style: ThemeSetting.of(context).bodySmall.copyWith(color: ThemeSetting.of(context).black2),
                 )
               ],
             ),
@@ -150,9 +144,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       AppAssets.apple,
                       height: 16,
                       width: 16,
-                      color: isSelected.first == true
-                          ? ThemeSetting.of(context).white
-                          : ThemeSetting.of(context).black2,
+                      color: isSelected.first == true ? ThemeSetting.of(context).white : ThemeSetting.of(context).black2,
                     ),
                     onPressed: () async {
                       setState(() {
@@ -172,14 +164,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       }
                     },
                     options: CustomButtonOptions(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide(color: ThemeSetting.of(context).common0),
-                        height: 56,
-                        color: isSelected.first == true
-                            ? ThemeSetting.of(context).black2
-                            : ThemeSetting.of(context).white,
-                        textStyle: ThemeSetting.of(context).headlineLarge))),
+                        borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ThemeSetting.of(context).common0), height: 56, color: isSelected.first == true ? ThemeSetting.of(context).black2 : ThemeSetting.of(context).white, textStyle: ThemeSetting.of(context).headlineLarge))),
             const SizedBox(width: 8),
             Expanded(
                 child: CustomButtonWidget(
@@ -208,14 +193,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                     },
                     options: CustomButtonOptions(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide(color: ThemeSetting.of(context).common0),
+                        borderSide: BorderSide(color: ThemeSetting.of(context).common0),
                         height: 56,
-                        color: isSelected.last == true
-                            ? ThemeSetting.of(context).black2
-                            : ThemeSetting.of(context).white,
-                        textStyle: ThemeSetting.of(context)
-                            .headlineLarge))), // Spacing between buttons
+                        color: isSelected.last == true ? ThemeSetting.of(context).black2 : ThemeSetting.of(context).white,
+                        textStyle: ThemeSetting.of(context).headlineLarge))), // Spacing between buttons
           ],
         ),
         const SizedBox(
@@ -225,14 +206,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           text: LocaleKeys.continue_with_Email.tr(),
           onPressed: () => context.pushNamed(loginScreen),
           options: CustomButtonOptions(
-              textStyle: ThemeSetting.of(context)
-                  .titleSmall
-                  .copyWith(color: ThemeSetting.of(context).black2),
-              height: 50,
-              width: double.infinity,
-              borderRadius: BorderRadius.circular(12),
-              color: ThemeSetting.of(context).white,
-              borderSide: BorderSide(color: ThemeSetting.of(context).common0)),
+              textStyle: ThemeSetting.of(context).titleSmall.copyWith(color: ThemeSetting.of(context).black2), height: 50, width: double.infinity, borderRadius: BorderRadius.circular(12), color: ThemeSetting.of(context).white, borderSide: BorderSide(color: ThemeSetting.of(context).common0)),
         ),
         const SizedBox(
           height: 15,
