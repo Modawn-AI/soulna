@@ -5,6 +5,7 @@ import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 
 // This file defines the BookDetailsScreen widget, which is used for displaying book details.
 // MainScreen -> card 1->  set date of birth -> daily vibe check
@@ -66,6 +67,11 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
       ),
     ];
 
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ThemeSetting.isLightTheme(context)
+          ? ThemeSetting.of(context).tertiary1
+          : ThemeSetting.of(context).common2,
+    ));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.isLightTheme(context)
@@ -77,6 +83,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             children: [
               HeaderWidget.headerBack(
                   context: context,
+                  onTap: () {
+                    context.pop();
+                    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                      statusBarColor:
+                          ThemeSetting.of(context).secondaryBackground,
+                    ));
+                  },
                   backgroundColor: ThemeSetting.of(context).tertiary1),
               Image.asset(
                 AppAssets.logo,

@@ -4,6 +4,7 @@ import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/sharedPref_string.dart';
 import 'package:Soulna/utils/shared_preference.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 // This file defines the AnimationScreen widget, which is used for displaying animations.
@@ -26,6 +27,7 @@ class _AnimationScreenState extends State<AnimationScreen>
   @override
   void initState() {
     super.initState();
+
     Timer.periodic(
       const Duration(milliseconds: 500),
       (timer) async {
@@ -36,7 +38,11 @@ class _AnimationScreenState extends State<AnimationScreen>
               key: SharedprefString.animationScreen);
           Timer(
             const Duration(milliseconds: 800),
-            () => context.pushReplacementNamed("${ani.toString()}"),
+            () {
+              context.pushReplacementNamed("${ani.toString()}");
+
+
+            },
           );
           setState(() {});
           timer.cancel();
@@ -44,21 +50,28 @@ class _AnimationScreenState extends State<AnimationScreen>
         //});
       },
     );
+
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
     )..repeat();
     _animation = Tween<double>(begin: 0, end: -1).animate(_controller);
+
+
   }
 
   @override
   void dispose() {
     _controller.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ThemeSetting.of(context).black1,
+    ));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).black1,

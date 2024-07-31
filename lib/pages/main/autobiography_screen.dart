@@ -7,6 +7,7 @@ import 'package:Soulna/widgets/custom_hashtag_function.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 // This file defines the AutobiographyScreen widget, which is used for displaying autobiographies.
@@ -46,8 +47,14 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
     "Gongneung Coffee"
   ];
 
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor:   ThemeSetting.isLightTheme(context)
+          ? ThemeSetting.of(context).secondaryBackground
+          : ThemeSetting.of(context).common2,
+    ));
     return SafeArea(
       child: Scaffold(
           backgroundColor: ThemeSetting.isLightTheme(context)

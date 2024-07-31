@@ -297,7 +297,7 @@ class _CustomerServiceState extends State<CustomerService>
                           color: filterList[i]['response'] ==
                                   LocaleKeys.awaiting_response.tr()
                               ? ThemeSetting.of(context).secondaryBackground
-                              : ThemeSetting.of(context).primaryText,
+                              : ThemeSetting.of(context).white,
                         ),
                     onTap: () => filterList[i]['response'] ==
                             LocaleKeys.awaiting_response.tr()

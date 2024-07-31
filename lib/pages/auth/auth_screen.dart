@@ -2,7 +2,9 @@ import 'package:Soulna/manager/social_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import '../../utils/package_exporter.dart';
+import 'package:flutter/services.dart';
 
+//This file defines the AuthScreen widget, which serves as the main authentication screen for the application.
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -38,6 +40,9 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ThemeSetting.of(context).tertiary,
+    ));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).tertiary,

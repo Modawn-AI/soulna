@@ -32,10 +32,6 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.black,
-  ));
-
   clearSecureStorageOnReinstall();
   setupLocator();
 
@@ -139,6 +135,18 @@ class _MyAppState extends State<MyApp> {
         _appStateNotifier.update(user);
       });
     jwtTokenStream.listen((_) {});
+
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ThemeSetting.of(context).secondaryBackground,
+      // statusBarBrightness: ThemeSetting.isLightTheme(context)
+      //     ? Brightness.light
+      //     : Brightness.dark,
+      statusBarIconBrightness: ThemeSetting.isLightTheme(context)
+          ? Brightness.light
+          : Brightness.dark,
+    ));
+
     Future.delayed(
       const Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
@@ -191,7 +199,7 @@ class _MyAppState extends State<MyApp> {
                   ThemeSetting.of(context).secondaryBackground,
               appBarTheme: AppBarTheme(
                   elevation: 00,
-
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
                   actionsIconTheme: IconThemeData(
                       color: ThemeSetting.of(context).primaryText),
                   iconTheme: IconThemeData(
@@ -204,7 +212,7 @@ class _MyAppState extends State<MyApp> {
                   ThemeSetting.of(context).secondaryBackground,
               appBarTheme: AppBarTheme(
                   elevation: 00,
-
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
                   actionsIconTheme: IconThemeData(
                       color: ThemeSetting.of(context).primaryText),
                   iconTheme: IconThemeData(
