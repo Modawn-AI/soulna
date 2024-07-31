@@ -160,6 +160,7 @@ String profileSettingsScreen = 'ProfileSettingsScreen';
 
 //String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
 //String myInfoScreen = 'myInfoScreen';
+
 GoRouter createRouter(
         AppStateNotifier appStateNotifier, SocialManager socialManager) =>
     GoRouter(
