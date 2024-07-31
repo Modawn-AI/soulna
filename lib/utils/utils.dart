@@ -127,4 +127,41 @@ class Utils {
     int minutes = offset.inMinutes.abs() % 60;
     return '$sign${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
   }
+
+  static String _calculateYearGanji(int year) {
+    List<String> gan = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+    List<String> ji = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+
+    int s = (year + 7) % 10;
+    int t = (year + 9) % 12;
+
+    return '${gan[s - 1]}${ji[t - 1]}';
+  }
+
+  static String _calculateMonthGanji(int year, int month) {
+    List<String> gan = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+    List<String> ji = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+
+    int v = (2 * year + month + 3) % 10;
+    int u = (month + 1) % 12;
+
+    return '${gan[v - 1]}${ji[u - 1]}';
+  }
+
+  static String _calculateDayGanji(int year, int month, int day) {
+    List<String> gan = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+    List<String> ji = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+
+    // 1924년 1월 1일은 기묘일입니다. 이를 기준으로 계산합니다.
+    DateTime baseDate = DateTime(1924, 1, 1);
+    DateTime targetDate = DateTime(year, month, day);
+
+    int daysPassed = targetDate.difference(baseDate).inDays;
+
+    // 1924년 1월 1일이 "기묘일"이므로 간지 인덱스를 조정합니다.
+    int ganIndex = (daysPassed + 5) % 10; // 기(5)에서 시작
+    int jiIndex = (daysPassed + 3) % 12; // 묘(3)에서 시작
+
+    return '${gan[ganIndex]}${ji[jiIndex]}';
+  }
 }
