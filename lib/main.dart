@@ -130,9 +130,15 @@ class _MyAppState extends State<MyApp> {
       });
     jwtTokenStream.listen((_) {});
 
+    ThemeSetting.changeTheme();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
-
+      // statusBarBrightness: ThemeSetting.isLightTheme(context)
+      //     ? Brightness.light
+      //     : Brightness.dark,
+      statusBarIconBrightness: ThemeSetting.isLightTheme(context)
+          ? Brightness.light
+          : Brightness.dark,
     ));
 
     Future.delayed(
@@ -192,6 +198,7 @@ class _MyAppState extends State<MyApp> {
                   ThemeSetting.of(context).secondaryBackground,
               appBarTheme: AppBarTheme(
                   elevation: 00,
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
                   actionsIconTheme: IconThemeData(
                       color: ThemeSetting.of(context).primaryText),
                   iconTheme: IconThemeData(
@@ -204,6 +211,7 @@ class _MyAppState extends State<MyApp> {
                   ThemeSetting.of(context).secondaryBackground,
               appBarTheme: AppBarTheme(
                   elevation: 00,
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
                   actionsIconTheme: IconThemeData(
                       color: ThemeSetting.of(context).primaryText),
                   iconTheme: IconThemeData(

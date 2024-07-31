@@ -115,7 +115,7 @@ dependencies:
   flutter_neat_and_clean_calendar: ^0.3.19+41
   scrollable_positioned_list: ^0.3.8
   image_picker: ^1.1.2
-  colorful_safe_area: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

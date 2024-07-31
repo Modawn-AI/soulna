@@ -138,6 +138,16 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             onChanged: (bool value) {
               setState(() {
                 ThemeSetting.changeTheme();
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                  statusBarColor: ThemeSetting.of(context).secondaryBackground,
+                  // statusBarBrightness: ThemeSetting.isLightTheme(context)
+                  //     ? Brightness.light
+                  //     : Brightness.dark,
+                  statusBarIconBrightness: ThemeSetting.isLightTheme(context)
+                      ? Brightness.light
+                      : Brightness.dark,
+                ));
+
               });
             },
           ),
