@@ -15,8 +15,7 @@ SharedPreferences? _prefs;
 abstract class ThemeSetting {
   late AlertStyle alertStyle;
 
-  static Future initialize() async =>
-      _prefs = await SharedPreferences.getInstance();
+  static Future initialize() async => _prefs = await SharedPreferences.getInstance();
   static ThemeMode get themeMode {
     final darkMode = _prefs?.getBool(kThemeModeKey);
     return darkMode == null
@@ -26,14 +25,10 @@ abstract class ThemeSetting {
             : ThemeMode.light;
   }
 
-  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
-      ? _prefs?.remove(kThemeModeKey)
-      : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
+  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system ? _prefs?.remove(kThemeModeKey) : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
 
   static ThemeSetting of(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark
-        ? DarkModeTheme()
-        : LightModeTheme();
+    return Theme.of(context).brightness == Brightness.dark ? DarkModeTheme() : LightModeTheme();
   }
 
   static bool isLightTheme(BuildContext context) {
@@ -70,8 +65,9 @@ abstract class ThemeSetting {
   late Color secondary;
   late Color tertiary;
   late Color tertiary1;
-  late Color tertiary3;
   late Color tertiary2;
+  late Color tertiary3;
+
   late Color alternate;
   late Color primaryText;
   late Color secondaryText;

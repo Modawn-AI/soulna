@@ -217,9 +217,9 @@ class SocialManager extends ChangeNotifier {
             AppleIDAuthorizationScopes.fullName,
           ],
           webAuthenticationOptions: WebAuthenticationOptions(
-            clientId: 'projectw.we-ar.com',
+            clientId: 'soulna.modawn.com',
             redirectUri: Uri.parse(
-              'https://project-w-dev.api.we-ar.kr/oauth/apple',
+              'https://app.soulna.kr/oauth/apple',
             ),
           ),
           state: clientState,

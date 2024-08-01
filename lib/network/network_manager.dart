@@ -32,8 +32,8 @@ class NetworkManager {
   final TokenService _tokenService = TokenService();
   final SocialManager _authService = SocialManager.getInstance();
 
-  final String _versionUrlApi = "https://app.getdear.me/api"; // 테스트 서버 URL
-  String _baseUrlApi = "https://app.getdear.me/api"; // 테스트 서버 URL
+  final String _versionUrlApi = "https://app.soulna.kr/api"; // 테스트 서버 URL
+  String _baseUrlApi = "https://app.soulna.kr/api"; // 테스트 서버 URL
   get baseUrlApi => _baseUrlApi;
 
   // 인증 토큰

@@ -1,6 +1,7 @@
-import 'package:Soulna/utils/app_assets.dart';
-import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/manager/social_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:Soulna/utils/app_assets.dart';
+import '../../utils/package_exporter.dart';
 import 'package:flutter/services.dart';
 
 //This file defines the AuthScreen widget, which serves as the main authentication screen for the application.
@@ -12,18 +13,15 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
-  late AnimationController logoAnimationController,
-      containerAnimationController;
+  late AnimationController logoAnimationController, containerAnimationController;
   bool isContainerVisible = false;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    logoAnimationController = AnimationController(
-        duration: const Duration(milliseconds: 400), vsync: this)
-      ..forward().whenComplete(() => _showContainer());
-    containerAnimationController = AnimationController(
-        duration: const Duration(milliseconds: 700), vsync: this);
+    logoAnimationController = AnimationController(duration: const Duration(milliseconds: 400), vsync: this)..forward().whenComplete(() => _showContainer());
+    containerAnimationController = AnimationController(duration: const Duration(milliseconds: 700), vsync: this);
   }
 
   void _showContainer() {
@@ -55,17 +53,13 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
             children: [
               Spacer(flex: isContainerVisible ? 1 : 2),
               SlideTransition(
-                position:
-                    Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-                        .animate(logoAnimationController),
+                position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(logoAnimationController),
                 child: Image.asset(AppAssets.logo, height: 90),
               ),
               if (isContainerVisible) ...[
                 const Spacer(),
                 SlideTransition(
-                  position:
-                      Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-                          .animate(containerAnimationController),
+                  position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(containerAnimationController),
                   child: _buildSecondaryWidget(),
                 ),
               ],
@@ -83,8 +77,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         color: ThemeSetting.of(context).white,
         border: Border.all(color: ThemeSetting.of(context).white),
         boxShadow: [const BoxShadow(blurRadius: 5, offset: Offset(0, 3))],
-        borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        borderRadius: const BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Image.asset(
@@ -127,9 +120,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 ),
                 Text(
                   LocaleKeys.join_now_and_check_your_fortune.tr(),
-                  style: ThemeSetting.of(context)
-                      .bodySmall
-                      .copyWith(color: ThemeSetting.of(context).black2),
+                  style: ThemeSetting.of(context).bodySmall.copyWith(color: ThemeSetting.of(context).black2),
                 )
               ],
             ),
@@ -153,24 +144,27 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       AppAssets.apple,
                       height: 16,
                       width: 16,
-                      color: isSelected.first == true
-                          ? ThemeSetting.of(context).white
-                          : ThemeSetting.of(context).black2,
+                      color: isSelected.first == true ? ThemeSetting.of(context).white : ThemeSetting.of(context).black2,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
                         isSelected = [true, false];
+                        isLoading = true; // 로딩 시작
                       });
+                      try {
+                        await SocialManager.getInstance().loginWithApple(callback: (value) {
+                          if (value.isNotEmpty) {
+                            context.goNamed(mainScreen);
+                          }
+                        });
+                      } finally {
+                        setState(() {
+                          isLoading = false; // 로딩 종료
+                        });
+                      }
                     },
                     options: CustomButtonOptions(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide(color: ThemeSetting.of(context).common0),
-                        height: 56,
-                        color: isSelected.first == true
-                            ? ThemeSetting.of(context).black2
-                            : ThemeSetting.of(context).white,
-                        textStyle: ThemeSetting.of(context).headlineLarge))),
+                        borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: ThemeSetting.of(context).common0), height: 56, color: isSelected.first == true ? ThemeSetting.of(context).black2 : ThemeSetting.of(context).white, textStyle: ThemeSetting.of(context).headlineLarge))),
             const SizedBox(width: 8),
             Expanded(
                 child: CustomButtonWidget(
@@ -180,21 +174,29 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       height: 16,
                       width: 16,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
                         isSelected = [false, true];
+                        isLoading = true; // 로딩 시작
                       });
+                      try {
+                        await SocialManager.getInstance().loginWithGoogle(callback: (value) {
+                          if (value.isNotEmpty) {
+                            context.goNamed(mainScreen);
+                          }
+                        });
+                      } finally {
+                        setState(() {
+                          isLoading = false; // 로딩 종료
+                        });
+                      }
                     },
                     options: CustomButtonOptions(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            BorderSide(color: ThemeSetting.of(context).common0),
+                        borderSide: BorderSide(color: ThemeSetting.of(context).common0),
                         height: 56,
-                        color: isSelected.last == true
-                            ? ThemeSetting.of(context).black2
-                            : ThemeSetting.of(context).white,
-                        textStyle: ThemeSetting.of(context)
-                            .headlineLarge))), // Spacing between buttons
+                        color: isSelected.last == true ? ThemeSetting.of(context).black2 : ThemeSetting.of(context).white,
+                        textStyle: ThemeSetting.of(context).headlineLarge))), // Spacing between buttons
           ],
         ),
         const SizedBox(
@@ -204,14 +206,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           text: LocaleKeys.continue_with_Email.tr(),
           onPressed: () => context.pushNamed(loginScreen),
           options: CustomButtonOptions(
-              textStyle: ThemeSetting.of(context)
-                  .titleSmall
-                  .copyWith(color: ThemeSetting.of(context).black2),
-              height: 50,
-              width: double.infinity,
-              borderRadius: BorderRadius.circular(12),
-              color: ThemeSetting.of(context).white,
-              borderSide: BorderSide(color: ThemeSetting.of(context).common0)),
+              textStyle: ThemeSetting.of(context).titleSmall.copyWith(color: ThemeSetting.of(context).black2), height: 50, width: double.infinity, borderRadius: BorderRadius.circular(12), color: ThemeSetting.of(context).white, borderSide: BorderSide(color: ThemeSetting.of(context).common0)),
         ),
         const SizedBox(
           height: 15,

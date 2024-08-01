@@ -19,6 +19,15 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   var authCon = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    super.initState();
+    // 이메일과 패스워드 필드에 임시 기본값 설정
+    authCon.emailCon.value.text = 'example@email.com';
+    authCon.passwordCon.value.text = 'password123';
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

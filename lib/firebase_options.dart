@@ -51,22 +51,21 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBkwQSrD_3YothtWP4ornqw1bO_c7MYPF8',
-    appId: '1:1001165366805:android:76a4904a72f71cb9e4101c',
-    messagingSenderId: '1001165366805',
-    projectId: 'dearme-b88e7',
-    storageBucket: 'dearme-b88e7.appspot.com',
+    apiKey: 'AIzaSyBaBZLgZvC05TiD2xZR5dqiXJie6vpbx58',
+    appId: '1:360411427664:android:f6fcc2be38071bd3613255',
+    messagingSenderId: '360411427664',
+    projectId: 'soulna-1170e',
+    storageBucket: 'soulna-1170e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD7iPSwjuJx1OlJgwhKTDiEAPSQJ_szaXg',
-    appId: '1:1001165366805:ios:b958c70ba4bd4866e4101c',
-    messagingSenderId: '1001165366805',
-    projectId: 'dearme-b88e7',
-    storageBucket: 'dearme-b88e7.appspot.com',
-    androidClientId: '1001165366805-37fepqumcvvhg1n3a8pmgafon47g9mv3.apps.googleusercontent.com',
-    iosClientId: '1001165366805-ctf74b7j47mvb7j0sicb7f4fna9433fk.apps.googleusercontent.com',
-    iosBundleId: 'com.example.dearMeApp',
+    apiKey: 'AIzaSyDWfG70fZaLpai4bwaYXBdZp4sdHKAWBZ4',
+    appId: '1:360411427664:ios:eb599285819c56d5613255',
+    messagingSenderId: '360411427664',
+    projectId: 'soulna-1170e',
+    storageBucket: 'soulna-1170e.appspot.com',
+    iosClientId: '360411427664-f6rgvvm0smkgint4des6kpg43sb4em0t.apps.googleusercontent.com',
+    iosBundleId: 'com.modawn.soulna',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
