@@ -137,15 +137,7 @@ class _MyAppState extends State<MyApp> {
     jwtTokenStream.listen((_) {});
 
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: ThemeSetting.of(context).secondaryBackground,
-      // statusBarBrightness: ThemeSetting.isLightTheme(context)
-      //     ? Brightness.light
-      //     : Brightness.dark,
-      statusBarIconBrightness: ThemeSetting.isLightTheme(context)
-          ? Brightness.light
-          : Brightness.dark,
-    ));
+
 
     Future.delayed(
       const Duration(milliseconds: 1000),
@@ -186,6 +178,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,

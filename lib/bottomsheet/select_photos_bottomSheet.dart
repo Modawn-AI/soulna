@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -23,8 +25,9 @@ class SelectPhotosBottomSheet {
                 padding: const EdgeInsets.only(left: 18),
                 child: Text(
                   LocaleKeys.please_check_the_selected_photo.tr(),
-                  style: ThemeSetting.of(context).titleLarge.copyWith(
-                      color: ThemeSetting.of(context).white),
+                  style: ThemeSetting.of(context)
+                      .titleLarge
+                      .copyWith(color: ThemeSetting.of(context).white),
                 ),
               ),
               const SizedBox(
@@ -60,14 +63,11 @@ class SelectPhotosBottomSheet {
                         alignment: Alignment.topLeft,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: ThemeSetting.of(context)
-                                    .white),
+                                color: ThemeSetting.of(context).white),
                             color: ThemeSetting.of(context).common4,
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: AssetImage(
-                                image['path'],
-                              ),
+                              image: FileImage(File(image['path'])),
                               fit: BoxFit.cover,
                             )),
                       );

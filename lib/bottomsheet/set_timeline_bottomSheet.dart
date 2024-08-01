@@ -1,10 +1,10 @@
+import 'dart:io';
+
 import 'package:Soulna/bottomsheet/create_dairy_bottomSheet.dart';
 import 'package:Soulna/generated/locale_keys.g.dart';
 import 'package:Soulna/utils/package_exporter.dart';
-import 'package:Soulna/utils/theme_setting.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 
 class SetTimelineBottomSheet {
   static setTimeLineBottomSheet(
@@ -89,16 +89,15 @@ class SetTimelineBottomSheet {
                               margin: const EdgeInsets.only(right: 5, left: 2),
                               alignment: Alignment.topLeft,
                               decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: ThemeSetting.of(context).white),
-                                  color: ThemeSetting.of(context).common4,
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      image['path'],
-                                    ),
-                                    fit: BoxFit.cover,
-                                  )),
+                                border: Border.all(
+                                    color: ThemeSetting.of(context).white),
+                                color: ThemeSetting.of(context).common4,
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: FileImage(File(image['path'])),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                               child: Container(
                                 height: 22,
                                 width: 22,
@@ -132,7 +131,8 @@ class SetTimelineBottomSheet {
                       color1: ThemeSetting.of(context).black1,
                       color2: ThemeSetting.of(context).black2,
                       onTap: () {
-                        CreateDairyBottomSheet.createDairyBottomSheet(context: context);
+                        CreateDairyBottomSheet.createDairyBottomSheet(
+                            context: context);
                       },
                     ),
                   ),
