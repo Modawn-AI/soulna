@@ -162,6 +162,7 @@ String profileSettingsScreen = 'ProfileSettingsScreen';
 //String myInfoScreen = 'myInfoScreen';
 
 GoRouter createRouter(
+
         AppStateNotifier appStateNotifier, SocialManager socialManager) =>
     GoRouter(
       initialLocation: '/',
