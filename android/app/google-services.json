@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "360411427664-si7pk11v099jbfgonds94v81o8t97hjg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.modawn.soulna",
+            "certificate_hash": "076ba853e3cc6f0ef9bac29e327a0c55c2d4967c"
+          }
+        },
+        {
           "client_id": "360411427664-jc9b2gceguqs2nsucpvs5knmmr8mlkdf.apps.googleusercontent.com",
           "client_type": 3
         }

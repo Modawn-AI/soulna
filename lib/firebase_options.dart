@@ -64,6 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '360411427664',
     projectId: 'soulna-1170e',
     storageBucket: 'soulna-1170e.appspot.com',
+    androidClientId: '360411427664-si7pk11v099jbfgonds94v81o8t97hjg.apps.googleusercontent.com',
     iosClientId: '360411427664-f6rgvvm0smkgint4des6kpg43sb4em0t.apps.googleusercontent.com',
     iosBundleId: 'com.modawn.soulna',
   );
