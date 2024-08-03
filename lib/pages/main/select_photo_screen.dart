@@ -116,14 +116,6 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
         key: scaffoldKey,
         appBar: HeaderWidget.headerWithTitle(
             context: context, title: LocaleKeys.select_photo.tr()),
-        // floatingActionButton: FloatingActionButton(
-        //   elevation: 10,
-        //   backgroundColor: ThemeSetting.of(context).blueAccent,
-        //   child: Icon(
-        //     Icons.add,
-        //     color: ThemeSetting.of(context).black2,
-        //   ),
-        //   onPressed: () => _loadPhotos(),
         // ),
         body: Column(
           children: [
