@@ -64,8 +64,8 @@ class ApiCalls {
 
   Future<dynamic> sajuDailyCall({required String info}) async {
     try {
-      String encodeData = JsonBase64Service.encodeJsonToBase64(jsonDecode(info));
-      final data = await NetworkManager().postRequest('content/daily', {"data": encodeData});
+      // String encodeData = JsonBase64Service.encodeJsonToBase64(jsonDecode(info));
+      final data = await NetworkManager().postRequest('content/daily', {"data": ""});
       if (data['data'] == null) return null;
 
       dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
@@ -102,7 +102,7 @@ class ApiCalls {
 
   Future<dynamic> getUserData() async {
     try {
-      final data = await NetworkManager().getRequest('dearme/user-data');
+      final data = await NetworkManager().getRequest('user/profile');
       if (data['data'] == null) return null;
       dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
       return decodeData;

@@ -115,7 +115,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
           appBar: HeaderWidget.headerBack(context: context, onTap:
             () async {
                if(_currentPage == 0) {
-                 context.goNamed('OnboardingPage');
+                 context.goNamed(mainScreen);
                } else {
                  _pageController.previousPage(
                    duration: const Duration(milliseconds: 300),

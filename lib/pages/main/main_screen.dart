@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:Soulna/models/image_model.dart';
+import 'package:Soulna/models/saju_daily_model.dart';
+import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/pages/drawer/drawer_screen.dart';
 import 'package:Soulna/bottomsheet/subscription_bottomsheet.dart';
 import 'package:Soulna/utils/app_assets.dart';
@@ -130,7 +132,25 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 width: 37,
               ),
             ),
-            onTap: () => scaffoldKey.currentState?.openDrawer()),
+            actionOnTap: () async {
+              dynamic response = await ApiCalls().getUserData();
+              if(response == null) {
+
+              }
+              if(response['status'] == 'success') {
+                if(response['message'] == 'none') {
+                  // user info not found
+                }
+
+                UserModel model = UserModel.fromJson(response['data']);
+                print(model);
+              }
+              // if(response['status'] == 'success') {
+              //   SajuDailyInfo model = SajuDailyInfo.fromJson(response['daily']);
+              //   print(model);
+              // }
+            },
+            leadingOnTap: () => scaffoldKey.currentState?.openDrawer(),),
         drawer: DrawerScreen.drawerWidget(
           context: context,
           switchTile: CustomSwitchTile(

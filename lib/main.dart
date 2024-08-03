@@ -1,6 +1,5 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:Soulna/auth/firebase_user_provider.dart';
-import 'package:Soulna/firebase_options.dart';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/utils/custom_timeago_messages.dart';
@@ -81,9 +80,6 @@ Future clearSecureStorageOnReinstall() async {
 void setupLocator() {
   if (!GetIt.I.isRegistered<AppInfoData>()) {
     GetIt.I.registerSingleton<AppInfoData>(AppInfoData());
-  }
-  if (!GetIt.I.isRegistered<UserInfoData>()) {
-    GetIt.I.registerSingleton<UserInfoData>(UserInfoData());
   }
 }
 

@@ -115,11 +115,12 @@ class HeaderWidget {
   static AppBar headerWithLogoAndInstagram(
           {required BuildContext context,
           required Widget title,
-          void Function()? onTap}) =>
+          void Function()? leadingOnTap,
+            void Function()? actionOnTap,}) =>
       AppBar(
         leadingWidth: 48,
         leading: GestureDetector(
-          onTap: onTap ?? () => Navigator.pop(context),
+          onTap: leadingOnTap ?? () => Navigator.pop(context),
           child: Padding(
             padding: const EdgeInsets.only(left: 18, top: 11),
             child: Image.asset(
@@ -133,13 +134,17 @@ class HeaderWidget {
         centerTitle: true,
         title: title,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15, top: 11),
-            child: Image.asset(
-              AppAssets.instagram,
-              height: 30,
-              width: 30,
-              color: ThemeSetting.of(context).primaryText,
+
+          GestureDetector(
+            onTap: actionOnTap,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 15, top: 11),
+              child: Image.asset(
+                AppAssets.instagram,
+                height: 30,
+                width: 30,
+                color: ThemeSetting.of(context).primaryText,
+              ),
             ),
           )
         ],

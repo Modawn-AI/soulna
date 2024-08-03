@@ -22,6 +22,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
   final List<Map<String, dynamic>> items = [
     {
       'date': DateTime.now(),
+
       'images': [
         {'path': AppAssets.rectangle1, 'selected': false},
         {'path': AppAssets.rectangle1, 'selected': false},
@@ -54,10 +55,22 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
   Future<void> _loadPhotos() async {
     final List<XFile> newPhotos = await _photoService.fetchPhotos();
     setState(() {
-      _selectedPhotos.clear();
       for (var newPhoto in newPhotos) {
-        _selectedPhotos
-            .add({'path': newPhoto.path, 'index': _selectedPhotos.length + 1});
+        if (!_selectedPhotos.any((photo) => photo['path'] == newPhoto.path)) {
+          _selectedPhotos.add({
+            'path': newPhoto.path,
+            'index': _selectedPhotos.length + 1
+          });
+        }
+      }
+    });
+  }
+
+  void _removePhoto(int index) {
+    setState(() {
+      _selectedPhotos.removeAt(index);
+      for (int i = 0; i < _selectedPhotos.length; i++) {
+        _selectedPhotos[i]['index'] = i + 1;
       }
     });
   }
@@ -152,8 +165,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
             ),
             Expanded(
               child: GridView.builder(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 5,
@@ -162,22 +174,57 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
                 itemCount: _selectedPhotos.length,
                 itemBuilder: (context, index) {
                   final photo = _selectedPhotos[index];
-                  final isSelected = _selectedPhotos.contains(photo);
-                  return Container(
-                    height: 115,
-                    width: 115,
-                    alignment: Alignment.topRight,
-                    decoration: BoxDecoration(
-                      color: ThemeSetting.of(context).common4,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          color: ThemeSetting.of(context).primaryText,
-                          width: 1),
-                      image: DecorationImage(
-                        image: FileImage(File(photo['path'])),
-                        fit: BoxFit.cover,
+                  return Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: ThemeSetting.of(context).common4,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                              color: ThemeSetting.of(context).primaryText,
+                              width: 1),
+                          image: DecorationImage(
+                            image: FileImage(File(photo['path'])),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        top: 5,
+                        left: 5,
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.6),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            '${photo['index']}',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 5,
+                        right: 5,
+                        child: GestureDetector(
+                          onTap: () => _removePhoto(index),
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.close,
+                              size: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),

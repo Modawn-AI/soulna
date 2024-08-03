@@ -7,7 +7,7 @@ class ShowDatePickerBottomSheet{
     return showModalBottomSheet(
       context: context,
       builder: (context) {
-        return CustomDatePicker();
+        return CustomDatePicker(onDateSelected: (date) {},);
       },
     );
   }
