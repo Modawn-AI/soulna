@@ -1,7 +1,7 @@
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import '../../utils/app_assets.dart';
+import 'package:Soulna/utils/app_assets.dart';
 
 class HeaderWidget {
   static AppBar headerBack(

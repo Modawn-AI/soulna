@@ -43,14 +43,60 @@ class ApiCalls {
     }
   }
 
-  Future<dynamic> todayDataCall() async {
+  Future<dynamic> tenTwelveCall({required String info}) async {
     try {
-      var data = await NetworkManager().getRequest('audio/today');
+      String encodeData = JsonBase64Service.encodeJsonToBase64(jsonDecode(info));
+      final data = await NetworkManager().postRequest('content/tentwelve', {"data": encodeData});
       if (data['data'] == null) return null;
+
       dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
       return decodeData;
     } catch (e) {
-      debugPrint('todayDataCall: $e');
+      if (e is CustomException) {
+        debugPrint('CustomException in snsLogin: ${e.message}');
+        rethrow;
+      } else {
+        debugPrint('Unexpected error in contentPurchase: $e');
+        throw CustomException('Unexpected error occurred', 'UNEXPECTED_ERROR');
+      }
+    }
+  }
+
+  Future<dynamic> sajuDailyCall({required String info}) async {
+    try {
+      String encodeData = JsonBase64Service.encodeJsonToBase64(jsonDecode(info));
+      final data = await NetworkManager().postRequest('content/daily', {"data": encodeData});
+      if (data['data'] == null) return null;
+
+      dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
+      return decodeData;
+    } catch (e) {
+      if (e is CustomException) {
+        debugPrint('CustomException in snsLogin: ${e.message}');
+        rethrow;
+      } else {
+        debugPrint('Unexpected error in contentPurchase: $e');
+        throw CustomException('Unexpected error occurred', 'UNEXPECTED_ERROR');
+      }
+    }
+  }
+
+  Future<dynamic> journalDailyCall({required String info}) async {
+    try {
+      String encodeData = JsonBase64Service.encodeJsonToBase64(jsonDecode(info));
+      final data = await NetworkManager().postRequest('content/journal', {"data": encodeData});
+      if (data['data'] == null) return null;
+
+      dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
+      return decodeData;
+    } catch (e) {
+      if (e is CustomException) {
+        debugPrint('CustomException in snsLogin: ${e.message}');
+        rethrow;
+      } else {
+        debugPrint('Unexpected error in contentPurchase: $e');
+        throw CustomException('Unexpected error occurred', 'UNEXPECTED_ERROR');
+      }
     }
   }
 

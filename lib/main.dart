@@ -48,7 +48,7 @@ void main() async {
         ChangeNotifierProvider<SocialManager>(create: (_) => socialManager),
       ],
       child: EasyLocalization(
-        supportedLocales: const [Locale('ko'), Locale('en')],
+        supportedLocales: const [Locale('en')],
         path: 'assets/translations',
         assetLoader: const CodegenLoader(),
         fallbackLocale: const Locale('en'),
@@ -111,14 +111,11 @@ class _MyAppState extends State<MyApp> {
 
   late Stream<BaseAuthUser> userStream;
 
-  ThemeMode _themeMode = _prefs?.getBool(kThemeModeKey) ?? false
-      ? ThemeMode.dark
-      : ThemeMode.light;
+  ThemeMode _themeMode = _prefs?.getBool(kThemeModeKey) ?? false ? ThemeMode.dark : ThemeMode.light;
 
   void _toggleTheme() {
     setState(() {
-      _themeMode =
-          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
       _prefs?.setBool(kThemeModeKey, _themeMode == ThemeMode.dark);
     });
   }
@@ -135,9 +132,6 @@ class _MyAppState extends State<MyApp> {
         _appStateNotifier.update(user);
       });
     jwtTokenStream.listen((_) {});
-
-
-
 
     Future.delayed(
       const Duration(milliseconds: 1000),
@@ -178,7 +172,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
@@ -188,32 +181,15 @@ class _MyAppState extends State<MyApp> {
           title: 'Soulna',
           theme: ThemeData(
               brightness: Brightness.light,
-              scaffoldBackgroundColor:
-                  ThemeSetting.of(context).secondaryBackground,
+              scaffoldBackgroundColor: ThemeSetting.of(context).secondaryBackground,
               appBarTheme: AppBarTheme(
-                  elevation: 00,
-                  systemOverlayStyle: SystemUiOverlayStyle.dark,
-                  actionsIconTheme: IconThemeData(
-                      color: ThemeSetting.of(context).primaryText),
-                  iconTheme: IconThemeData(
-                      color: ThemeSetting.of(context).primaryText),
-                  backgroundColor: Colors.transparent,
-                  scrolledUnderElevation: 00)),
+                  elevation: 00, systemOverlayStyle: SystemUiOverlayStyle.dark, actionsIconTheme: IconThemeData(color: ThemeSetting.of(context).primaryText), iconTheme: IconThemeData(color: ThemeSetting.of(context).primaryText), backgroundColor: Colors.transparent, scrolledUnderElevation: 00)),
           darkTheme: ThemeData(
               brightness: Brightness.dark,
-              scaffoldBackgroundColor:
-                  ThemeSetting.of(context).secondaryBackground,
+              scaffoldBackgroundColor: ThemeSetting.of(context).secondaryBackground,
               appBarTheme: AppBarTheme(
-                  elevation: 00,
-                  systemOverlayStyle: SystemUiOverlayStyle.dark,
-                  actionsIconTheme: IconThemeData(
-                      color: ThemeSetting.of(context).primaryText),
-                  iconTheme: IconThemeData(
-                      color: ThemeSetting.of(context).primaryText),
-                  backgroundColor: Colors.transparent,
-                  scrolledUnderElevation: 00)),
+                  elevation: 00, systemOverlayStyle: SystemUiOverlayStyle.dark, actionsIconTheme: IconThemeData(color: ThemeSetting.of(context).primaryText), iconTheme: IconThemeData(color: ThemeSetting.of(context).primaryText), backgroundColor: Colors.transparent, scrolledUnderElevation: 00)),
           themeMode: _themeMode,
-
           routeInformationProvider: _router.routeInformationProvider,
           routeInformationParser: _router.routeInformationParser,
           routerDelegate: _router.routerDelegate,

@@ -28,10 +28,10 @@
 	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Some message to describe why you need this permission</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Some message to describe why you need this permission2</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>‘Playsona'가 사진 또는 동영상을 사용하여 프로필 이미지를 생성 및 AI 이미지를 생성하는 기능 사용을 위해 사진 라이브러리에 접근하도록 허용합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>‘Playsona'가 사진 또는 동영상을 사용하여 프로필 이미지를 생성 및 AI 이미지를 생성하는 기능 사용을 위해 사진 라이브러리에 접근하도록 허용합니다.</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>사용자 맞춤 콘텐츠 추천에 사용됩니다.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

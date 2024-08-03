@@ -26,7 +26,7 @@ import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/pages/main/autobiography_screen.dart';
 import 'package:Soulna/pages/main/book_details_screen.dart';
 import 'package:Soulna/pages/main/book_details_screen3.dart';
-import 'package:Soulna/pages/main/booke_details_screen2.dart';
+import 'package:Soulna/pages/main/ten_twelve_screen.dart';
 import 'package:Soulna/pages/main/create_journal.dart';
 import 'package:Soulna/pages/main/date_of_birth_main.dart';
 import 'package:Soulna/pages/main/journal_screen.dart';
@@ -153,7 +153,7 @@ String noPastFortuneScreen = 'NoPastFortuneScreen';
 String noPastDiaryScreen = 'NoPastDiaryScreen';
 String selectAlbumsScreen = 'SelectAlbumsScreen';
 String createJournal = 'CreateJournal';
-String bookDetailsScreen2 = 'BookDetailsScreen2';
+String tenTwelveScreen = 'TenTwelveScreen';
 String bookDetailsScreen3 = 'BookDetailsScreen3';
 String profileSettingsScreen = 'ProfileSettingsScreen';
 
@@ -243,8 +243,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           builder: (context, params) => const BookDetailsScreen(),
         ),
         FFRoute(
-          name: bookDetailsScreen2,
-          builder: (context, params) => const BookDetailsScreen2(),
+          name: tenTwelveScreen,
+          builder: (context, params) => const TenTwelveScreen(),
         ),
         FFRoute(
           name: pastFortuneScreen,
@@ -277,8 +277,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         ),
         FFRoute(
           name: animationScreen,
-          builder: (context, params) => const AnimationScreen(
-            route: '',
+          builder: (context, params) => AnimationScreen(
+            apiFuture: Future.value(true),
           ),
         ),
 

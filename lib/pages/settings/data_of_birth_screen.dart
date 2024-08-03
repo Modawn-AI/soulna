@@ -41,7 +41,9 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
             const SizedBox(
               height: 20,
             ),
-            const CustomDatePicker(),
+            CustomDatePicker(
+              onDateSelected: (data) {},
+            ),
             const SizedBox(
               height: 40,
             ),

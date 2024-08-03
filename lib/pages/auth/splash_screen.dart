@@ -8,7 +8,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 
-import '../../utils/package_exporter.dart';
 import 'package:flutter/services.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -92,12 +91,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       if (mounted) {
         String? accessToken = await userInfo.getIdToken();
         NetworkManager().saveTokens(accessToken!, accessToken);
-        dynamic response = await ApiCalls().getUserData();
-        Map<String, dynamic> userData = response as Map<String, dynamic>;
-        if (userData.containsKey("user_data")) {
-        } else {
-          context.goNamed('OnboardingPage');
-        }
+        // dynamic response = await ApiCalls().getUserData();
+        // Map<String, dynamic> userData = response as Map<String, dynamic>;
+        // if (userData.containsKey("user_data")) {
+        // } else {
+        //   context.goNamed('OnboardingPage');
+        // }
+        context.goNamed(mainScreen);
       }
     }
   }
