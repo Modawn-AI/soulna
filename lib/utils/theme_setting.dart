@@ -127,6 +127,12 @@ abstract class ThemeSetting {
   late Color sajuWhite;
   late Color sajuBlack;
 
+  late Color sajuBgBlue;
+  late Color sajuBgRed;
+  late Color sajuBgYellow;
+  late Color sajuBgWhite;
+  late Color sajuBgBlack;
+
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
   @Deprecated('Use displaySmall instead')
@@ -274,6 +280,12 @@ class LightModeTheme extends ThemeSetting {
   late Color sajuYellow = const Color(0xFFFFD159);
   late Color sajuWhite = const Color(0xFFFFFFFF);
   late Color sajuBlack = const Color(0xFF000000);
+
+  late Color sajuBgBlue = const Color(0xFFA7CFFF);
+  late Color sajuBgRed = const Color(0xFFFFB0A6);
+  late Color sajuBgYellow = const Color(0xFFFFD1A6);
+  late Color sajuBgWhite = const Color(0xFFDFDFDF);
+  late Color sajuBgBlack = const Color(0xFF545454);
 
   late AlertStyle alertStyle = AlertStyle(
     animationType: AnimationType.fromTop,
@@ -571,11 +583,17 @@ class DarkModeTheme extends ThemeSetting {
   late Color redAccent = const Color(0xFFFFB0A6);
   late Color redBorder = const Color(0xFFFF0000);
 
-  late Color sajuBlue = const Color(0xFF0C83F0);
-  late Color sajuRed = const Color(0xFFFFB0A6);
-  late Color sajuYellow = const Color(0xFFFFD159);
-  late Color sajuWhite = const Color(0xFFFFFFFF);
-  late Color sajuBlack = const Color(0xFF000000);
+  late Color sajuBlue = const Color(0xFF68ddff);
+  late Color sajuRed = const Color(0xFFff5a44);
+  late Color sajuYellow = const Color(0xFFffc659);
+  late Color sajuWhite = const Color(0xFFffddde);
+  late Color sajuBlack = const Color(0xFF455467);
+
+  late Color sajuBgBlue = const Color(0xFF142649);
+  late Color sajuBgRed = const Color(0xFF602D2B);
+  late Color sajuBgYellow = const Color(0xFF64550C);
+  late Color sajuBgWhite = const Color(0xFFB48A8A);
+  late Color sajuBgBlack = const Color(0xFF000000);
 }
 
 extension TextStyleHelper on TextStyle {

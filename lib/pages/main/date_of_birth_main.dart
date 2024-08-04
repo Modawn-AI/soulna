@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
@@ -12,7 +11,7 @@ import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:Soulna/widgets/custom_gender_button.dart';
 import 'package:Soulna/widgets/custom_textfield_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:Soulna/models/tel_twelve_model.dart';
+import 'package:Soulna/models/ten_twelve_model.dart';
 
 // This file defines the DateOfBirthMain widget, which is used for entering the date of birth.
 //Main screen -> set date of birth
@@ -86,10 +85,10 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
   Future<bool> _mockApiCall() async {
     String userJson = generateUserJson();
     dynamic response = await ApiCalls().tenTwelveCall(info: userJson);
-    if(response == null) {
+    if (response == null) {
       return false;
     }
-    if(response['status'] == 'success') {
+    if (response['status'] == 'success') {
       TenTwelveModel model = TenTwelveModel.fromJson(response['tentwelve']['ten_twelve']);
       print(model);
       return true;
@@ -112,18 +111,18 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
         },
         child: Scaffold(
           backgroundColor: ThemeSetting.of(context).secondaryBackground,
-          appBar: HeaderWidget.headerBack(context: context, onTap:
-            () async {
-               if(_currentPage == 0) {
-                 context.goNamed(mainScreen);
-               } else {
-                 _pageController.previousPage(
-                   duration: const Duration(milliseconds: 300),
-                   curve: Curves.easeInOut,
-                 );
-               }
-            }
-          ),
+          appBar: HeaderWidget.headerBack(
+              context: context,
+              onTap: () async {
+                if (_currentPage == 0) {
+                  context.goNamed(mainScreen);
+                } else {
+                  _pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              }),
           body: PageView(
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),

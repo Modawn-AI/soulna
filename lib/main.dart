@@ -1,3 +1,4 @@
+import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:Soulna/auth/firebase_user_provider.dart';
@@ -87,6 +88,9 @@ void setupLocator() {
   }
   if (!GetIt.I.isRegistered<SajuDailyService>()) {
     GetIt.I.registerSingleton<SajuDailyService>(SajuDailyService());
+  }
+  if (!GetIt.I.isRegistered<JournalService>()) {
+    GetIt.I.registerSingleton<JournalService>(JournalService());
   }
 }
 

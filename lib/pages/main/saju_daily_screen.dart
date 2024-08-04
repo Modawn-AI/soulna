@@ -21,6 +21,8 @@ class SajuDailyScreen extends StatefulWidget {
 
 class _SajuDailyScreenState extends State<SajuDailyScreen> {
   List<BookDetailModel> thingsList = [];
+  UserInfoData? user;
+  SajuDailyService? sajuDailyService;
 
   @override
   void initState() {
@@ -28,31 +30,48 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    UserInfoData user = GetIt.I.get<UserInfoData>();
-    SajuDailyService sajuDailyService = GetIt.I.get<SajuDailyService>();
-    List hashTag = sajuDailyService.sajuDailyInfo.hashtag;
+  void dispose() {
+    super.dispose();
+  }
 
-    List<String> parts = user.userModel.tenTwelve.picture.split("_");
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    user = GetIt.I.get<UserInfoData>();
+    sajuDailyService = GetIt.I.get<SajuDailyService>();
+
+    for (int i = 0; i < sajuDailyService!.sajuDailyInfo.keyword.length; i++) {
+      thingsList.add(BookDetailModel(
+        title: sajuDailyService!.sajuDailyInfo.keyword[i].text,
+        backgroundColor: ThemeSetting.of(context).extraGray,
+        image: sajuDailyService!.sajuDailyInfo.keyword[i].emoji,
+      ));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List hashTag = sajuDailyService!.sajuDailyInfo.hashtag;
+
+    List<String> myParts = user!.userModel.tenTwelve.picture.split("_");
+    String myElementName = myParts[2];
+
+    List<String> parts = sajuDailyService!.sajuDailyInfo.dailyGanji.split("_");
     String animalName = parts[1];
     String elementName = parts[2];
 
-    for (int i = 0; i < sajuDailyService.sajuDailyInfo.keyword.length; i++) {
-      thingsList.add(BookDetailModel(
-        title: sajuDailyService.sajuDailyInfo.keyword[i].text,
-        backgroundColor: ThemeSetting.of(context).extraGray,
-        image: sajuDailyService.sajuDailyInfo.keyword[i].emoji,
-      ));
-    }
-
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).blueAccent : ThemeSetting.of(context).common2,
+        backgroundColor: Utils.getElementBgToColor(context, myElementName),
         appBar: HeaderWidget.headerBack(
           context: context,
-          backgroundColor: ThemeSetting.of(context).tertiary1,
+          backgroundColor: Utils.getElementBgToColor(context, myElementName),
+          onTap: () {
+            context.goNamed(mainScreen);
+          },
         ),
-        body: SizedBox(
+        body: Container(
+          color: Utils.getElementBgToColor(context, myElementName),
           width: MediaQuery.of(context).size.width,
           child: ListView(
             children: [
@@ -78,7 +97,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    LocaleKeys.a_day_of_learning_and_mastering_new_things.tr(),
+                    sajuDailyService!.sajuDailyInfo.sajuDescription.title,
                     style: ThemeSetting.of(context).labelLarge,
                     textAlign: TextAlign.center,
                   ),
@@ -90,19 +109,20 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
               Column(
                 children: [
                   Container(
-                    height: 260,
-                    width: 212,
+                    height: 270,
+                    width: 222,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: ThemeSetting.of(context).primary,
+                        width: 2,
+                        color: Utils.getElementToColor(context, myElementName),
                       ),
                     ),
                     padding: const EdgeInsets.all(4),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.asset(
-                        "assets/tarot/${user.userModel.tenTwelve.picture}",
+                        "assets/tarot/${user!.userModel.tenTwelve.picture}",
                       ),
                     ),
                   ),
@@ -183,12 +203,24 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                     const SizedBox(
                       height: 11,
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        "assets/tarot/${sajuDailyService.sajuDailyInfo.dailyGanji}",
-                        height: 250,
-                        width: 202,
+                    Container(
+                      height: 270,
+                      width: 222,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          width: 2,
+                          color: Utils.getElementToColor(context, elementName),
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(4),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          "assets/tarot/${sajuDailyService!.sajuDailyInfo.dailyGanji}",
+                          height: 250,
+                          width: 202,
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -213,12 +245,12 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                     ),
                     Wrap(
                       children: List.generate(
-                        sajuDailyService.sajuDailyInfo.sajuDescription.sajuTextList.length,
+                        sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList.length,
                         (index) {
                           return sajuDescriptionText(
                             context,
-                            sajuDailyService.sajuDailyInfo.sajuDescription.sajuTextList[index].title,
-                            sajuDailyService.sajuDailyInfo.sajuDescription.sajuTextList[index].paragraph,
+                            sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList[index].title,
+                            sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList[index].paragraph,
                           );
                         },
                       ),

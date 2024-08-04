@@ -1,4 +1,4 @@
-import 'package:Soulna/models/tel_twelve_model.dart';
+import 'package:Soulna/models/ten_twelve_model.dart';
 
 class UserModel {
   final String name;

@@ -29,7 +29,10 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   int currentIndex = 0;
   int previousIndex = 0;
+
   List<ImageModel> images = [];
+  List recommendedFortune = [];
+
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
 
@@ -38,6 +41,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   late UserInfoData userInfoData;
   bool isUserInfo = false;
+
+  UserInfoData? user;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
@@ -81,13 +86,19 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     });
   }
 
+  @override
   void dispose() {
     _animationController.dispose();
     _logoAniCon.dispose();
     super.dispose();
   }
 
-  List recommendedFortune = [];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    user = GetIt.I.get<UserInfoData>();
+  }
+
   @override
   Widget build(BuildContext context) {
     recommendedFortune = [
@@ -100,10 +111,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         'color': ThemeSetting.of(context).lightGreen,
       },
     ];
+    List<String> myParts = user!.userModel.tenTwelve.picture.split("_");
+    String myElementName = myParts[2];
+
     images = [
       ImageModel(
-        linear1: ThemeSetting.of(context).linearContainer1,
-        linear2: ThemeSetting.of(context).linearContainer2,
+        linear1: Utils.getElementToColor(context, myElementName),
+        linear2: ThemeSetting.of(context).black1,
         image: isUserInfo ? "assets/tarot/${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
         text: LocaleKeys.check_your_fortune_for_today.tr(),
         route: dateOfBirthMain,
