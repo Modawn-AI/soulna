@@ -75,7 +75,7 @@ class ApiCalls {
     }
   }
 
-  Future<dynamic> sajuDailyCall({required String info}) async {
+  Future<dynamic> sajuDailyCall() async {
     try {
       // String encodeData = JsonBase64Service.encodeJsonToBase64(jsonDecode(info));
       final data = await NetworkManager().postRequest('content/daily', {"data": ""});
@@ -96,9 +96,7 @@ class ApiCalls {
 
   Future<dynamic> journalDailyCall({required List<String> info}) async {
     try {
-      dynamic payload = {
-        "image": info
-      };
+      dynamic payload = {"image": info};
       String jsonString = jsonEncode(payload);
       String encodeData = JsonBase64Service.encodeJsonToBase64(jsonDecode(jsonString));
       final data = await NetworkManager().postRequest('content/journal', {"data": encodeData});
@@ -116,5 +114,4 @@ class ApiCalls {
       }
     }
   }
-
 }

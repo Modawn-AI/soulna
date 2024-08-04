@@ -101,9 +101,27 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       },
     ];
     images = [
-      ImageModel(linear1: ThemeSetting.of(context).linearContainer1, linear2: ThemeSetting.of(context).linearContainer2, image: isUserInfo ? "assets/tarot/${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1, text: LocaleKeys.check_your_fortune_for_today.tr(), route: dateOfBirthMain),
-      ImageModel(linear1: ThemeSetting.of(context).linearContainer3, linear2: ThemeSetting.of(context).linearContainer4, image: AppAssets.image2, text: LocaleKeys.create_today_diary.tr(), route: selectPhotoScreen),
-      ImageModel(linear1: ThemeSetting.of(context).linearContainer5, linear2: ThemeSetting.of(context).linearContainer6, image: AppAssets.image3, text: LocaleKeys.create_your_journal.tr(), route: createJournal),
+      ImageModel(
+        linear1: ThemeSetting.of(context).linearContainer1,
+        linear2: ThemeSetting.of(context).linearContainer2,
+        image: isUserInfo ? "assets/tarot/${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
+        text: LocaleKeys.check_your_fortune_for_today.tr(),
+        route: dateOfBirthMain,
+      ),
+      ImageModel(
+        linear1: ThemeSetting.of(context).linearContainer3,
+        linear2: ThemeSetting.of(context).linearContainer4,
+        image: AppAssets.image2,
+        text: LocaleKeys.create_today_diary.tr(),
+        route: selectPhotoScreen,
+      ),
+      ImageModel(
+        linear1: ThemeSetting.of(context).linearContainer5,
+        linear2: ThemeSetting.of(context).linearContainer6,
+        image: AppAssets.image3,
+        text: LocaleKeys.create_your_journal.tr(),
+        route: createJournal,
+      ),
     ];
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ThemeSetting.of(context).secondaryBackground));
@@ -179,9 +197,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               ),
               child: Container(
                 alignment: Alignment.center,
-                decoration: BoxDecoration(border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1), borderRadius: BorderRadius.circular(50), color: ThemeSetting.of(context).tertiary1),
+                decoration: BoxDecoration(
+                  border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                  borderRadius: BorderRadius.circular(50),
+                  color: ThemeSetting.of(context).tertiary1,
+                ),
                 child: Text(
-                  getTodayFormatted(),
+                  Utils.getTodayMDFormatted(),
                   style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
@@ -189,7 +211,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             const SizedBox(
               height: 30,
             ),
-            Container(
+            SizedBox(
               height: 350,
               width: MediaQuery.of(context).size.width,
               child: AnimatedBuilder(
@@ -215,7 +237,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           padding: const EdgeInsets.symmetric(horizontal: 00),
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [image.linear1, image.linear2], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                            gradient: LinearGradient(
+                              colors: [image.linear1, image.linear2],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
                             border: Border.all(color: ThemeSetting.of(context).black2),
                             borderRadius: BorderRadius.circular(22),
                           ),
@@ -231,11 +257,17 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                     padding: const EdgeInsets.only(top: 22),
                                     margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 20),
                                     decoration: BoxDecoration(
-                                        border: Border(right: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), left: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), top: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5)),
-                                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                                      border: Border(right: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), left: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), top: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5)),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
                                     child: Text(
                                       image.text,
-                                      style: ThemeSetting.of(context).titleLarge.copyWith(color: ThemeSetting.of(context).white),
+                                      style: ThemeSetting.of(context).titleLarge.copyWith(
+                                            color: ThemeSetting.of(context).white,
+                                          ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -369,7 +401,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               width: double.infinity,
               child: ListView.builder(
                 shrinkWrap: true,
-                padding: EdgeInsets.only(left: 18),
+                padding: const EdgeInsets.only(left: 18),
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemCount: recommendedFortune.length,
@@ -378,7 +410,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                     width: 300,
                     padding: const EdgeInsets.all(15),
                     margin: const EdgeInsets.only(right: 17),
-                    decoration: BoxDecoration(color: recommendedFortune[index]['color'], borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(
+                      color: recommendedFortune[index]['color'],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -390,7 +425,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                 flex: 2,
                                 child: Text(
                                   LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
-                                  style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w700, color: ThemeSetting.of(context).black1),
+                                  style: ThemeSetting.of(context).bodyMedium.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: ThemeSetting.of(context).black1,
+                                      ),
                                 ),
                               ),
                               const SizedBox(
@@ -444,12 +482,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     );
   }
 
-  String getTodayFormatted() {
-    final now = DateTime.now();
-    final formatter = DateFormat('MMMM d', context.locale.toString());
-    return formatter.format(now);
-  }
-
   String generateUserJson() {
     Map<String, dynamic> userMap = {
       "name": userInfoData.userModel.name,
@@ -472,18 +504,23 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       ),
     );
 
-    context.pushReplacementNamed(tenTwelveScreen);
+    context.pushReplacementNamed(sajuDailyScreen);
   }
 
   Future<bool> _mockApiCall() async {
     String userJson = generateUserJson();
-    dynamic response = await ApiCalls().tenTwelveCall(info: userJson);
-    if (response == null) {
+    try {
+      dynamic response = await ApiCalls().sajuDailyCall();
+      if (response == null) {
+        throw Exception('API call failed');
+      }
+      if (response['status'] == 'success') {
+        SajuDailyInfo model = SajuDailyInfo.fromJson(response['daily']);
+        GetIt.I.get<SajuDailyService>().setSajuDailyInfo(model);
+      }
+      return true;
+    } catch (e) {
       return false;
     }
-    if (response['status'] == 'success') {
-      SajuDailyInfo model = SajuDailyInfo.fromJson(response['daily']);
-    }
-    return true;
   }
 }

@@ -164,4 +164,16 @@ class Utils {
 
     return '${gan[ganIndex]}${ji[jiIndex]}';
   }
+
+  static String getTodayMDFormatted() {
+    final now = DateTime.now();
+    final formatter = DateFormat('MMMM d', NetworkManager().locale.toString());
+    return formatter.format(now);
+  }
+
+  static String getTodayMDYFormatted() {
+    final now = DateTime.now();
+    final formatter = DateFormat('MMMM d, yyyy', NetworkManager().locale.toString());
+    return formatter.format(now);
+  }
 }

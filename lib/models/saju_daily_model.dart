@@ -1,12 +1,12 @@
 class SajuDailyInfo {
   final String dailyGanji;
-  final Description description;
+  final SajuDescription sajuDescription;
   final List<String> hashtag;
-  final List<String> keyword;
+  final List<Keyword> keyword;
 
   SajuDailyInfo({
     required this.dailyGanji,
-    required this.description,
+    required this.sajuDescription,
     required this.hashtag,
     required this.keyword,
   });
@@ -14,56 +14,60 @@ class SajuDailyInfo {
   factory SajuDailyInfo.fromJson(Map<String, dynamic> json) {
     return SajuDailyInfo(
       dailyGanji: json['daily_ganji'],
-      description: Description.fromJson(json['description']),
+      sajuDescription: SajuDescription.fromJson(json['description']),
       hashtag: List<String>.from(json['hashtag']),
-      keyword: List<String>.from(json['keyword']),
+      keyword: List<Keyword>.from(json['keyword'].map((k) => Keyword.fromJson(k))),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'daily_ganji': dailyGanji,
-      'description': description.toJson(),
+      'description': sajuDescription.toJson(),
       'hashtag': hashtag,
-      'keyword': keyword,
+      'keyword': keyword.map((k) => k.toJson()).toList(),
     };
   }
 }
 
-class Description {
-  final List<TextDetail> text;
+class SajuDescription {
+  final String title;
+  final List<SajuTextDetail> sajuTextList;
 
-  Description({
-    required this.text,
+  SajuDescription({
+    required this.title,
+    required this.sajuTextList,
   });
 
-  factory Description.fromJson(Map<String, dynamic> json) {
+  factory SajuDescription.fromJson(Map<String, dynamic> json) {
     var textList = json['text'] as List;
-    List<TextDetail> textItems = textList.map((i) => TextDetail.fromJson(i)).toList();
+    List<SajuTextDetail> textItems = textList.map((i) => SajuTextDetail.fromJson(i)).toList();
 
-    return Description(
-      text: textItems,
+    return SajuDescription(
+      title: json['title'],
+      sajuTextList: textItems,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'text': text.map((e) => e.toJson()).toList(),
+      'title': title,
+      'text': sajuTextList.map((e) => e.toJson()).toList(),
     };
   }
 }
 
-class TextDetail {
+class SajuTextDetail {
   final String title;
   final String paragraph;
 
-  TextDetail({
+  SajuTextDetail({
     required this.title,
     required this.paragraph,
   });
 
-  factory TextDetail.fromJson(Map<String, dynamic> json) {
-    return TextDetail(
+  factory SajuTextDetail.fromJson(Map<String, dynamic> json) {
+    return SajuTextDetail(
       title: json['title'],
       paragraph: json['paragraph'],
     );
@@ -74,5 +78,39 @@ class TextDetail {
       'title': title,
       'paragraph': paragraph,
     };
+  }
+}
+
+class Keyword {
+  final String text;
+  final String emoji;
+
+  Keyword({
+    required this.text,
+    required this.emoji,
+  });
+
+  factory Keyword.fromJson(Map<String, dynamic> json) {
+    return Keyword(
+      text: json['text'],
+      emoji: json['emoji'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'text': text,
+      'emoji': emoji,
+    };
+  }
+}
+
+class SajuDailyService {
+  SajuDailyInfo? _sajuDailyInfo;
+
+  get sajuDailyInfo => _sajuDailyInfo;
+
+  void setSajuDailyInfo(SajuDailyInfo info) {
+    _sajuDailyInfo = info;
   }
 }

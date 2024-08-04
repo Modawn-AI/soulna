@@ -25,7 +25,7 @@ import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/pages/main/autobiography_screen.dart';
 import 'package:Soulna/pages/main/book_details_screen.dart';
-import 'package:Soulna/pages/main/book_details_screen3.dart';
+import 'package:Soulna/pages/main/saju_daily_screen.dart';
 import 'package:Soulna/pages/main/ten_twelve_screen.dart';
 import 'package:Soulna/pages/main/create_journal.dart';
 import 'package:Soulna/pages/main/date_of_birth_main.dart';
@@ -154,7 +154,7 @@ String noPastDiaryScreen = 'NoPastDiaryScreen';
 String selectAlbumsScreen = 'SelectAlbumsScreen';
 String createJournal = 'CreateJournal';
 String tenTwelveScreen = 'TenTwelveScreen';
-String bookDetailsScreen3 = 'BookDetailsScreen3';
+String sajuDailyScreen = 'sajuDailyScreen';
 String profileSettingsScreen = 'ProfileSettingsScreen';
 
 GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialManager) => GoRouter(
@@ -255,7 +255,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: noticeScreen,
           builder: (context, params) => NoticeScreen(),
         ),
-
         FFRoute(
           name: customerService,
           builder: (context, params) => const CustomerService(),
@@ -278,7 +277,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
             apiFuture: Future.value(true),
           ),
         ),
-
         FFRoute(
           name: privacyPolicyUpdateNoticeScreen,
           builder: (context, params) => const PrivacyPolicyUpdateNoticeScreen(),
@@ -287,7 +285,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: awaitingResponseScreen,
           builder: (context, params) => const AwaitingResponseScreen(),
         ),
-
         FFRoute(
           name: responseCompletedScreen,
           builder: (context, params) => const ResponseCompletedScreen(),
@@ -321,10 +318,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           builder: (context, params) => const ProfileSettingsScreen(),
         ),
         FFRoute(
-          name: bookDetailsScreen3,
-          builder: (context, params) => const BookDetailsScreen3(),
+          name: sajuDailyScreen,
+          builder: (context, params) => const SajuDailyScreen(),
         ),
-
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 

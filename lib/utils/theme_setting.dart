@@ -48,9 +48,7 @@ abstract class ThemeSetting {
       // statusBarBrightness: ThemeSetting.isLightTheme(context)
       //     ? Brightness.light
       //     : Brightness.dark,
-      statusBarIconBrightness: ThemeSetting.isLightTheme(context)
-          ? Brightness.light
-          : Brightness.dark,
+      statusBarIconBrightness: ThemeSetting.isLightTheme(context) ? Brightness.light : Brightness.dark,
     ));
   }
 
@@ -122,6 +120,12 @@ abstract class ThemeSetting {
   late Color blueAccent;
   late Color redAccent;
   late Color redBorder;
+
+  late Color sajuBlue;
+  late Color sajuRed;
+  late Color sajuYellow;
+  late Color sajuWhite;
+  late Color sajuBlack;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -264,6 +268,12 @@ class LightModeTheme extends ThemeSetting {
   late Color redAccent = const Color(0xFFFFB0A6);
   late Color redBorder = const Color(0xFFFF0000);
   //late Color greenAccent =const Color(0xFFA0EBCC);
+
+  late Color sajuBlue = const Color(0xFF0C83F0);
+  late Color sajuRed = const Color(0xFFFFB0A6);
+  late Color sajuYellow = const Color(0xFFFFD159);
+  late Color sajuWhite = const Color(0xFFFFFFFF);
+  late Color sajuBlack = const Color(0xFF000000);
 
   late AlertStyle alertStyle = AlertStyle(
     animationType: AnimationType.fromTop,
@@ -560,6 +570,12 @@ class DarkModeTheme extends ThemeSetting {
   late Color blueAccent = const Color(0xFFA7CFFF);
   late Color redAccent = const Color(0xFFFFB0A6);
   late Color redBorder = const Color(0xFFFF0000);
+
+  late Color sajuBlue = const Color(0xFF0C83F0);
+  late Color sajuRed = const Color(0xFFFFB0A6);
+  late Color sajuYellow = const Color(0xFFFFD159);
+  late Color sajuWhite = const Color(0xFFFFFFFF);
+  late Color sajuBlack = const Color(0xFF000000);
 }
 
 extension TextStyleHelper on TextStyle {

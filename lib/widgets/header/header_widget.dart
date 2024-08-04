@@ -4,11 +4,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:Soulna/utils/app_assets.dart';
 
 class HeaderWidget {
-  static AppBar headerBack(
-          {required BuildContext context,
-          void Function()? onTap,
-          Color? backgroundColor}) =>
-      AppBar(
+  static AppBar headerBack({required BuildContext context, void Function()? onTap, Color? backgroundColor}) => AppBar(
         // backgroundColor:
         //     backgroundColor ?? ThemeSetting.of(context).secondaryBackground,
         elevation: 0,
@@ -27,11 +23,7 @@ class HeaderWidget {
         ),
       );
 
-  static AppBar headerWithTitle(
-          {required BuildContext context,
-          required String title,
-          void Function()? onTap}) =>
-      AppBar(
+  static AppBar headerWithTitle({required BuildContext context, required String title, void Function()? onTap}) => AppBar(
         elevation: 0,
         leadingWidth: 43,
         leading: GestureDetector(
@@ -112,11 +104,12 @@ class HeaderWidget {
         ],
       );
 
-  static AppBar headerWithLogoAndInstagram(
-          {required BuildContext context,
-          required Widget title,
-          void Function()? leadingOnTap,
-            void Function()? actionOnTap,}) =>
+  static AppBar headerWithLogoAndInstagram({
+    required BuildContext context,
+    required Widget title,
+    void Function()? leadingOnTap,
+    void Function()? actionOnTap,
+  }) =>
       AppBar(
         leadingWidth: 48,
         leading: GestureDetector(
@@ -134,7 +127,6 @@ class HeaderWidget {
         centerTitle: true,
         title: title,
         actions: [
-
           GestureDetector(
             onTap: actionOnTap,
             child: Padding(
@@ -165,13 +157,7 @@ class HeaderWidget {
         ],
       );
 
-  static AppBar headerWithCustomAction(
-          {required BuildContext context,
-          void Function()? onTap,
-          List<Widget>? actions,
-          String? pageIndex,
-          double percent = 0.0}) =>
-      AppBar(
+  static AppBar headerWithCustomAction({required BuildContext context, void Function()? onTap, List<Widget>? actions, String? pageIndex, double percent = 0.0}) => AppBar(
           elevation: 00,
           leadingWidth: 48,
           leading: GestureDetector(
@@ -201,31 +187,11 @@ class HeaderWidget {
                 )),
             Padding(
               padding: const EdgeInsets.only(right: 15, top: 11),
-              child: RichText(
-                  text: TextSpan(
-                      text: pageIndex,
-                      children: [
-                        TextSpan(
-                            text: ' /4',
-                            style: ThemeSetting.of(context)
-                                .captionLarge
-                                .copyWith(
-                                    color:
-                                        ThemeSetting.of(context).primaryText))
-                      ],
-                      style: ThemeSetting.of(context)
-                          .captionLarge
-                          .copyWith(color: ThemeSetting.of(context).primary))),
+              child: RichText(text: TextSpan(text: pageIndex, children: [TextSpan(text: ' /4', style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primaryText))], style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary))),
             )
           ]);
 
-  static AppBar headerSettings(
-          {required BuildContext context,
-          required GestureTapCallback onTap,
-          String? actionIcon,
-          GestureTapCallback? onTapOnMenu,
-          Widget? switchTile}) =>
-      AppBar(
+  static AppBar headerSettings({required BuildContext context, required GestureTapCallback onTap, String? actionIcon, GestureTapCallback? onTapOnMenu, Widget? switchTile}) => AppBar(
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -253,19 +219,11 @@ class HeaderWidget {
               ),
             ),
           ),
-          Padding(
-              padding: EdgeInsets.only(right: 18.w, top: 5.h),
-              child: switchTile ?? SizedBox.shrink())
+          Padding(padding: EdgeInsets.only(right: 18.w, top: 5.h), child: switchTile ?? SizedBox.shrink())
         ],
       );
 
-  static headerCalendar(
-          {required BuildContext context,
-          required String title,
-          void Function()? onTap,
-          void Function()? onTapOnDownArrow,
-          String? image}) =>
-      AppBar(
+  static headerCalendar({required BuildContext context, required String title, void Function()? onTap, void Function()? onTapOnDownArrow, String? image}) => AppBar(
         elevation: 00,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -294,7 +252,6 @@ class HeaderWidget {
                   onPressed: onTapOnDownArrow,
                   icon: Icon(
                     Icons.keyboard_arrow_down_sharp,
-
                     color: ThemeSetting.of(context).primaryText,
                     size: 20,
                   ))
