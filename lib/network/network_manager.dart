@@ -187,12 +187,10 @@ class NetworkManager {
     });
   }
 
-  Future<dynamic> uploadFile(String endpoint, Map<String, dynamic> data) async {
+  Future<dynamic> uploadFile(String endpoint, FormData formData) async {
     return _enqueueRequest(() async {
-      // await _ensureTokenIsValid();
-      String encodeData = JsonBase64Service.encodeJsonToBase64(data);
       var url = '$_baseUrlApi/$endpoint';
-      return await _dio.post(url, data: {"data": encodeData});
+      return await _dio.post(url, data: formData);
     });
   }
 

@@ -81,6 +81,9 @@ void setupLocator() {
   if (!GetIt.I.isRegistered<AppInfoData>()) {
     GetIt.I.registerSingleton<AppInfoData>(AppInfoData());
   }
+  if (!GetIt.I.isRegistered<UserInfoData>()) {
+    GetIt.I.registerSingleton<UserInfoData>(UserInfoData());
+  }
 }
 
 String? _currentJwtToken;

@@ -157,8 +157,6 @@ String tenTwelveScreen = 'TenTwelveScreen';
 String bookDetailsScreen3 = 'BookDetailsScreen3';
 String profileSettingsScreen = 'ProfileSettingsScreen';
 
-//String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
-//String myInfoScreen = 'myInfoScreen';
 GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialManager) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
@@ -175,7 +173,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         FFRoute(
           name: 'initialize',
           path: '/',
-          //builder: (context, params) => const SignUpScreen(),
           builder: (context, params) => const SplashScreen(),
         ),
         FFRoute(
@@ -273,7 +270,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         ),
         FFRoute(
           name: autobiographyScreen,
-          builder: (context, params) => AutobiographyScreen(),
+          builder: (context, params) => const AutobiographyScreen(),
         ),
         FFRoute(
           name: animationScreen,
@@ -284,11 +281,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
 
         FFRoute(
           name: privacyPolicyUpdateNoticeScreen,
-          builder: (context, params) => PrivacyPolicyUpdateNoticeScreen(),
+          builder: (context, params) => const PrivacyPolicyUpdateNoticeScreen(),
         ),
         FFRoute(
           name: awaitingResponseScreen,
-          builder: (context, params) => AwaitingResponseScreen(),
+          builder: (context, params) => const AwaitingResponseScreen(),
         ),
 
         FFRoute(
@@ -327,21 +324,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: bookDetailsScreen3,
           builder: (context, params) => const BookDetailsScreen3(),
         ),
-        // FFRoute(
-        //   name: pastFortuneCalenderViewScreen,
-        //   builder: (context, params) => PastFortuneCalenderViewScreen(),
-        // ),
-        // FFRoute(
-        //   name: myInfoScreen,
-        //   builder: (context, params) => const MyInfoScreen(),
-        // ),
-      ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      //urlPathStrategy: UrlPathStrategy.path,
-    );
 
-// class SignUpScreen {
-//   const SignUpScreen();
-// }
+      ].map((r) => r.toRoute(appStateNotifier)).toList(),
+    );
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(

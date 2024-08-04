@@ -75,35 +75,6 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
     });
   }
 
-  // setState(() {
-  //   for (var newPhoto in newPhotos) {
-  //     if (!_selectedPhotos.any((selectedPhoto) => selectedPhoto['path'] == newPhoto.path)) {
-  //       _selectedPhotos.add({'path': newPhoto.path, 'index': _selectedPhotos.length + 1});
-  //     }
-  //   }
-  // });
-  //}
-
-  // void _toggleSelection(Map<String, dynamic> photo) {
-  //   setState(() {
-  //     if (_selectedPhotos.contains(photo)) {
-  //       _selectedPhotos.remove(photo);
-  //     } else {
-  //       _selectedPhotos.add({'path': photo['path'], 'index': _selectedPhotos.length + 1});
-  //     }
-  //   });
-  // }
-
-  // Future<void> _openGallery() async {
-  //   final List<XFile>? photos = await _photoService.pickPhotos(_selectedPhotos);
-  //   if (photos != null) {
-  //     setState(() {
-  //       _selectedPhotos.clear();
-  //       _selectedPhotos.addAll(photos);
-  //     });
-  //   }
-  // }
-
   num getTotalImages() {
     num totalImages = 0;
     for (var item in items) {
