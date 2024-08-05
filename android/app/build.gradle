@@ -52,20 +52,20 @@ android {
         versionName flutterVersionName
     }
 
-    signingConfigs {
-        debug {
-            storeFile file("./debug.keystore")
-            storePassword "android"
-            keyAlias "debugkey"
-            keyPassword "android"
-        }
-        release {
-            storeFile file("./release.keystore")
-            storePassword "android"
-            keyAlias "releasekey"
-            keyPassword "android"
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            storeFile file("./debug.keystore")
+//            storePassword "android"
+//            keyAlias "debugkey"
+//            keyPassword "android"
+//        }
+//        release {
+//            storeFile file("./release.keystore")
+//            storePassword "android"
+//            keyAlias "releasekey"
+//            keyPassword "android"
+//        }
+//    }
 
     buildTypes {
         release {

@@ -115,6 +115,8 @@ dependencies:
   flutter_neat_and_clean_calendar: ^0.3.19+41
   scrollable_positioned_list: ^0.3.8
   image_picker: ^1.1.2
+  insta_login: ^0.0.3
+
 
 dev_dependencies:
   flutter_test:

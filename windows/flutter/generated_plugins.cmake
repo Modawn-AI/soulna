@@ -10,6 +10,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
   flutter_secure_storage_windows
   flutter_timezone
+  insta_login
   permission_handler_windows
   record_windows
   share_plus

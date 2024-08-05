@@ -26,6 +26,7 @@ import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/pages/main/autobiography_screen.dart';
 import 'package:Soulna/pages/main/book_details_screen.dart';
 import 'package:Soulna/pages/main/book_details_screen3.dart';
+import 'package:Soulna/pages/main/instagram_photo_screen.dart';
 import 'package:Soulna/pages/main/ten_twelve_screen.dart';
 import 'package:Soulna/pages/main/create_journal.dart';
 import 'package:Soulna/pages/main/date_of_birth_main.dart';
@@ -156,6 +157,7 @@ String createJournal = 'CreateJournal';
 String tenTwelveScreen = 'TenTwelveScreen';
 String bookDetailsScreen3 = 'BookDetailsScreen3';
 String profileSettingsScreen = 'ProfileSettingsScreen';
+String instagramPhotos = 'InstagramPhotos';
 
 //String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
 //String myInfoScreen = 'myInfoScreen';
@@ -176,9 +178,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: 'initialize',
           path: '/',
           //builder: (context, params) => const SignUpScreen(),
-          builder: (context, params) => const SplashScreen(),
+          builder: (context, params) =>  InstagramPhotos(''),
         ),
         FFRoute(
+          name: instagramPhotos,
+          builder: (context, params) =>  InstagramPhotos(''),
+        ),FFRoute(
           name: authScreen,
           builder: (context, params) => const AuthScreen(),
         ),
