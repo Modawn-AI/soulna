@@ -164,4 +164,50 @@ class Utils {
 
     return '${gan[ganIndex]}${ji[jiIndex]}';
   }
+
+  static String getTodayMDFormatted() {
+    final now = DateTime.now();
+    final formatter = DateFormat('MMMM d', NetworkManager().locale.toString());
+    return formatter.format(now);
+  }
+
+  static String getTodayMDYFormatted() {
+    final now = DateTime.now();
+    final formatter = DateFormat('MMMM d, yyyy', NetworkManager().locale.toString());
+    return formatter.format(now);
+  }
+
+  static Color getElementToColor(BuildContext context, String element) {
+    switch (element) {
+      case 'Fire':
+        return ThemeSetting.of(context).sajuRed;
+      case 'Water':
+        return ThemeSetting.of(context).sajuBlack;
+      case 'Earth':
+        return ThemeSetting.of(context).sajuYellow;
+      case 'Metal':
+        return ThemeSetting.of(context).sajuWhite;
+      case 'Wood':
+        return ThemeSetting.of(context).sajuBlue;
+      default:
+        return ThemeSetting.of(context).sajuBlack;
+    }
+  }
+
+  static Color getElementBgToColor(BuildContext context, String element) {
+    switch (element) {
+      case 'Fire':
+        return ThemeSetting.of(context).sajuBgRed;
+      case 'Water':
+        return ThemeSetting.of(context).sajuBgBlack;
+      case 'Earth':
+        return ThemeSetting.of(context).sajuBgYellow;
+      case 'Metal':
+        return ThemeSetting.of(context).sajuBgWhite;
+      case 'Wood':
+        return ThemeSetting.of(context).sajuBgBlue;
+      default:
+        return ThemeSetting.of(context).sajuBgBlack;
+    }
+  }
 }

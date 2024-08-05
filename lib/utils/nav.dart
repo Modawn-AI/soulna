@@ -23,14 +23,13 @@ import 'package:Soulna/pages/drawer/privacy_policy_update_notice_screen.dart';
 import 'package:Soulna/pages/drawer/response_completed_screen.dart';
 import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
-import 'package:Soulna/pages/main/autobiography_screen.dart';
+import 'package:Soulna/pages/main/journal_screen.dart';
 import 'package:Soulna/pages/main/book_details_screen.dart';
-import 'package:Soulna/pages/main/book_details_screen3.dart';
-import 'package:Soulna/pages/main/instagram_photo_screen.dart';
+import 'package:Soulna/pages/main/saju_daily_screen.dart';
 import 'package:Soulna/pages/main/ten_twelve_screen.dart';
 import 'package:Soulna/pages/main/create_journal.dart';
 import 'package:Soulna/pages/main/date_of_birth_main.dart';
-import 'package:Soulna/pages/main/journal_screen.dart';
+import 'package:Soulna/pages/main/auto_biography_screen.dart';
 import 'package:Soulna/pages/main/main_screen.dart';
 import 'package:Soulna/pages/main/select_albums_screen.dart';
 import 'package:Soulna/pages/main/select_photo_screen.dart';
@@ -155,12 +154,9 @@ String noPastDiaryScreen = 'NoPastDiaryScreen';
 String selectAlbumsScreen = 'SelectAlbumsScreen';
 String createJournal = 'CreateJournal';
 String tenTwelveScreen = 'TenTwelveScreen';
-String bookDetailsScreen3 = 'BookDetailsScreen3';
+String sajuDailyScreen = 'sajuDailyScreen';
 String profileSettingsScreen = 'ProfileSettingsScreen';
-String instagramPhotos = 'InstagramPhotos';
 
-//String pastFortuneCalenderViewScreen = 'PastFortuneCalenderViewScreen';
-//String myInfoScreen = 'myInfoScreen';
 GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialManager) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
@@ -177,13 +173,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         FFRoute(
           name: 'initialize',
           path: '/',
-          //builder: (context, params) => const SignUpScreen(),
-          builder: (context, params) =>  InstagramPhotos(''),
+          builder: (context, params) => const SplashScreen(),
         ),
         FFRoute(
-          name: instagramPhotos,
-          builder: (context, params) =>  InstagramPhotos(''),
-        ),FFRoute(
           name: authScreen,
           builder: (context, params) => const AuthScreen(),
         ),
@@ -263,7 +255,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: noticeScreen,
           builder: (context, params) => NoticeScreen(),
         ),
-
         FFRoute(
           name: customerService,
           builder: (context, params) => const CustomerService(),
@@ -278,7 +269,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         ),
         FFRoute(
           name: autobiographyScreen,
-          builder: (context, params) => AutobiographyScreen(),
+          builder: (context, params) => const AutobiographyScreen(),
         ),
         FFRoute(
           name: animationScreen,
@@ -286,16 +277,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
             apiFuture: Future.value(true),
           ),
         ),
-
         FFRoute(
           name: privacyPolicyUpdateNoticeScreen,
-          builder: (context, params) => PrivacyPolicyUpdateNoticeScreen(),
+          builder: (context, params) => const PrivacyPolicyUpdateNoticeScreen(),
         ),
         FFRoute(
           name: awaitingResponseScreen,
-          builder: (context, params) => AwaitingResponseScreen(),
+          builder: (context, params) => const AwaitingResponseScreen(),
         ),
-
         FFRoute(
           name: responseCompletedScreen,
           builder: (context, params) => const ResponseCompletedScreen(),
@@ -329,24 +318,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           builder: (context, params) => const ProfileSettingsScreen(),
         ),
         FFRoute(
-          name: bookDetailsScreen3,
-          builder: (context, params) => const BookDetailsScreen3(),
+          name: sajuDailyScreen,
+          builder: (context, params) => const SajuDailyScreen(),
         ),
-        // FFRoute(
-        //   name: pastFortuneCalenderViewScreen,
-        //   builder: (context, params) => PastFortuneCalenderViewScreen(),
-        // ),
-        // FFRoute(
-        //   name: myInfoScreen,
-        //   builder: (context, params) => const MyInfoScreen(),
-        // ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      //urlPathStrategy: UrlPathStrategy.path,
     );
-
-// class SignUpScreen {
-//   const SignUpScreen();
-// }
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(

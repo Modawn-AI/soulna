@@ -1,0 +1,43 @@
+{
+  "name": "Alice Johnson",
+  "birthdate": "1985/03/17",
+  "time_of_birth": "Don't know",
+  "gender": "female",
+  "language": "English",
+  "tentwelve": {
+    "picture": "Asia_Ox_Wood_Female.png",
+    "title": "을축,Eul Chuk,Wood Ox",
+    "color": "blue",
+    "description": {
+      "text": [
+        {
+          "title": "Resilience 💪",
+          "paragraph": "Born in the year of the Wood Ox, you possess an unwavering resilience that allows you to persevere through life's challenges. Your determination and strength are like an 🥃 oak tree, deeply rooted and unyielding."
+        },
+        {
+          "title": "Stability 🏡",
+          "paragraph": "The Wood element brings a sense of stability and grounding to your personality. You value tradition and have a deep respect for family and cultural values. 🌳 Your solid foundation provides a sense of security and comfort."
+        },
+        {
+          "title": "Practicality 🔨",
+          "paragraph": "With a practical and down-to-earth approach, you excel at tackling tasks methodically and efficiently. Your logical 🧠 mind and work ethic make you a reliable and dependable individual, capable of handling responsibilities with ease."
+        },
+        {
+          "title": "Loyalty 🤝",
+          "paragraph": "Loyalty is one of your defining traits. Once you form a bond with someone, you remain steadfastly committed and dedicated, offering your unwavering 🛡️ support and protection to those you care about."
+        },
+        {
+          "title": "Patience 🕰️",
+          "paragraph": "While you may sometimes come across as stubborn, your patience and ability to see the bigger picture are admirable qualities. 🐢 You understand that good things take time and are willing to wait for the right opportunities."
+        }
+      ]
+    },
+    "hashtag": [
+      "#resilient",
+      "#grounded",
+      "#practical",
+      "#loyal",
+      "#patient"
+    ]
+  }
+}

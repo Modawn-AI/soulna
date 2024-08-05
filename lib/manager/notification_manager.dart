@@ -78,7 +78,7 @@ class NotificationManager {
 
     // get the device fcm token
     _token = await _firebaseMessaging.getToken(); //토큰 얻기
-    //GetIt.I.get<UserInfoData>().updatePushToken(_token!);
+    // GetIt.I.get<UserInfoData>().updatePushToken(_token!);
     debugPrint("FirebaseMessaging token: $_token");
 
     //flutter_local_notifications 패키지 관련 초기화

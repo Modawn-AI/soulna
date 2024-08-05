@@ -48,12 +48,12 @@ class SocialManager extends ChangeNotifier {
   final ValueNotifier<bool> _loading = ValueNotifier(false);
   final ValueNotifier<bool> _loggedIn = ValueNotifier(false);
   final ValueNotifier<bool> _isFirst = ValueNotifier(true);
-  final ValueNotifier<bool> _isTempLogin = ValueNotifier(true);
+  final ValueNotifier<bool> _isUserInfo = ValueNotifier(false);
 
   ValueNotifier<bool> get loading => _loading;
   ValueNotifier<bool> get loggedIn => _loggedIn;
   ValueNotifier<bool> get isFirst => _isFirst;
-  ValueNotifier<bool> get isTempLogin => _isTempLogin;
+  ValueNotifier<bool> get isUserInfo => _isUserInfo;
 
   Future<User?> signInWithGoogle() async {
     try {
@@ -188,7 +188,6 @@ class SocialManager extends ChangeNotifier {
           }
         }
       });
-      isTempLogin.value = false;
     } catch (error) {
       logger.d(error);
     }
@@ -245,7 +244,6 @@ class SocialManager extends ChangeNotifier {
           });
         }
 
-        isTempLogin.value = false;
       } catch (e) {
         logger.d('error = $e');
       }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:Soulna/manager/social_manager.dart';
+import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -74,8 +75,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     User? userInfo = await sm.tryAutoLogin();
     if (userInfo == null) {
       try {
-        // await setFirebaseToken();
-
         if (mounted) {
           context.goNamed(authScreen);
         }
@@ -84,19 +83,29 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           SocialManager().deleteSharedData("SplashPage == checkLogin");
           sm.loggedIn.value = true;
           sm.loading.value = false;
-          sm.isTempLogin.value = true;
         }
       }
     } else {
       if (mounted) {
         String? accessToken = await userInfo.getIdToken();
         NetworkManager().saveTokens(accessToken!, accessToken);
-        // dynamic response = await ApiCalls().getUserData();
-        // Map<String, dynamic> userData = response as Map<String, dynamic>;
-        // if (userData.containsKey("user_data")) {
-        // } else {
-        //   context.goNamed('OnboardingPage');
-        // }
+        dynamic response = await ApiCalls().getUserData();
+        if(response == null) {
+
+        }
+        if(response['status'] == 'success') {
+          if(response['message'] == 'none') {
+            // user info not found
+            sm.isUserInfo.value = false;
+          }
+          else {
+            sm.isUserInfo.value = true;
+            UserModel model = UserModel.fromJson(response['data']);
+            GetIt.I.get<UserInfoData>().updateUserInfo(model);
+          }
+
+        }
+
         context.goNamed(mainScreen);
       }
     }

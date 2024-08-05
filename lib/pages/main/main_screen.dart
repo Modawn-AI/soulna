@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/image_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
 import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/pages/drawer/drawer_screen.dart';
 import 'package:Soulna/bottomsheet/subscription_bottomsheet.dart';
+import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
@@ -26,17 +29,30 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   int currentIndex = 0;
   int previousIndex = 0;
+
   List<ImageModel> images = [];
+  List recommendedFortune = [];
+
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
 
   late AnimationController _logoAniCon;
   late Animation<double> _logoAnimation;
 
+  late UserInfoData userInfoData;
+  bool isUserInfo = false;
+
+  UserInfoData? user;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
+
+    if (SocialManager().isUserInfo.value) {
+      isUserInfo = true;
+      userInfoData = GetIt.I.get<UserInfoData>();
+    }
 
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
@@ -70,13 +86,19 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     });
   }
 
+  @override
   void dispose() {
     _animationController.dispose();
     _logoAniCon.dispose();
     super.dispose();
   }
 
-  List recommendedFortune = [];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    user = GetIt.I.get<UserInfoData>();
+  }
+
   @override
   Widget build(BuildContext context) {
     recommendedFortune = [
@@ -89,68 +111,64 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         'color': ThemeSetting.of(context).lightGreen,
       },
     ];
+    List<String> myParts = user!.userModel.tenTwelve.picture.split("_");
+    String myElementName = myParts[2];
+
     images = [
       ImageModel(
-          linear1: ThemeSetting.of(context).linearContainer1,
-          linear2: ThemeSetting.of(context).linearContainer2,
-          image: AppAssets.image1,
-          text: LocaleKeys.check_your_fortune_for_today.tr(),
-          route: dateOfBirthMain),
+        linear1: Utils.getElementToColor(context, myElementName),
+        linear2: ThemeSetting.of(context).black1,
+        image: isUserInfo ? "assets/tarot/${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
+        text: LocaleKeys.check_your_fortune_for_today.tr(),
+        route: dateOfBirthMain,
+      ),
       ImageModel(
-          linear1: ThemeSetting.of(context).linearContainer3,
-          linear2: ThemeSetting.of(context).linearContainer4,
-          image: AppAssets.image2,
-          text: LocaleKeys.create_today_diary.tr(),
-          route: selectPhotoScreen),
+        linear1: ThemeSetting.of(context).linearContainer3,
+        linear2: ThemeSetting.of(context).linearContainer4,
+        image: AppAssets.image2,
+        text: LocaleKeys.create_today_diary.tr(),
+        route: selectPhotoScreen,
+      ),
       ImageModel(
-          linear1: ThemeSetting.of(context).linearContainer5,
-          linear2: ThemeSetting.of(context).linearContainer6,
-          image: AppAssets.image3,
-          text: LocaleKeys.create_your_journal.tr(),
-          route: createJournal),
+        linear1: ThemeSetting.of(context).linearContainer5,
+        linear2: ThemeSetting.of(context).linearContainer6,
+        image: AppAssets.image3,
+        text: LocaleKeys.create_your_journal.tr(),
+        route: createJournal,
+      ),
     ];
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: ThemeSetting.of(context).secondaryBackground));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ThemeSetting.of(context).secondaryBackground));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         key: scaffoldKey,
         appBar: HeaderWidget.headerWithLogoAndInstagram(
-            context: context,
-            title: AnimatedBuilder(
-              animation: _logoAniCon,
-              builder: (context, child) {
-                return Transform.rotate(
-                  angle: _logoAnimation.value * 2 * 3.141592653589793,
-                  child: child,
-                );
-              },
-              child: Image.asset(
-                AppAssets.logo,
-                height: 37,
-                width: 37,
-              ),
-            ),
-            actionOnTap: () async {
-              dynamic response = await ApiCalls().getUserData();
-              if(response == null) {
-
-              }
-              if(response['status'] == 'success') {
-                if(response['message'] == 'none') {
-                  // user info not found
-                }
-
-                UserModel model = UserModel.fromJson(response['data']);
-                print(model);
-              }
-              // if(response['status'] == 'success') {
-              //   SajuDailyInfo model = SajuDailyInfo.fromJson(response['daily']);
-              //   print(model);
-              // }
+          context: context,
+          title: AnimatedBuilder(
+            animation: _logoAniCon,
+            builder: (context, child) {
+              return Transform.rotate(
+                angle: _logoAnimation.value * 2 * 3.141592653589793,
+                child: child,
+              );
             },
-            leadingOnTap: () => scaffoldKey.currentState?.openDrawer(),),
+            child: Image.asset(
+              AppAssets.logo,
+              height: 37,
+              width: 37,
+            ),
+          ),
+          actionOnTap: () async {
+            // dynamic response = await ApiCalls().getUserData();
+
+            // if(response['status'] == 'success') {
+            //   SajuDailyInfo model = SajuDailyInfo.fromJson(response['daily']);
+            //   print(model);
+            // }
+          },
+          leadingOnTap: () => scaffoldKey.currentState?.openDrawer(),
+        ),
         drawer: DrawerScreen.drawerWidget(
           context: context,
           switchTile: CustomSwitchTile(
@@ -158,16 +176,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             onChanged: (bool value) {
               setState(() {
                 ThemeSetting.changeTheme(context);
-                // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                //   statusBarColor: ThemeSetting.of(context).secondaryBackground,
-                //   // statusBarBrightness: ThemeSetting.isLightTheme(context)
-                //   //     ? Brightness.light
-                //   //     : Brightness.dark,
-                //   statusBarIconBrightness: ThemeSetting.isLightTheme(context)
-                //       ? Brightness.light
-                //       : Brightness.dark,
-                // ));
-
               });
             },
           ),
@@ -181,7 +189,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '${LocaleKeys.hey.tr()} Stella,',
+                  isUserInfo ? '${LocaleKeys.hey.tr()} ${userInfoData.userModel!.name}' : '${LocaleKeys.hey.tr()} jane doe',
                   style: ThemeSetting.of(context).labelLarge,
                 ),
                 Text(
@@ -198,29 +206,26 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               margin: const EdgeInsets.only(right: 148, left: 149),
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                border: Border.all(
-                    color: ThemeSetting.of(context).tertiary1, width: 1),
+                border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
                 borderRadius: BorderRadius.circular(50),
               ),
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    border: Border.all(
-                        color: ThemeSetting.of(context).tertiary1, width: 1),
-                    borderRadius: BorderRadius.circular(50),
-                    color: ThemeSetting.of(context).tertiary1),
+                  border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                  borderRadius: BorderRadius.circular(50),
+                  color: ThemeSetting.of(context).tertiary1,
+                ),
                 child: Text(
-                  'July 8',
-                  style: ThemeSetting.of(context)
-                      .bodyMedium
-                      .copyWith(fontWeight: FontWeight.w600),
+                  Utils.getTodayMDFormatted(),
+                  style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
             ),
             const SizedBox(
               height: 30,
             ),
-            Container(
+            SizedBox(
               height: 350,
               width: MediaQuery.of(context).size.width,
               child: AnimatedBuilder(
@@ -235,17 +240,23 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   items: images.asMap().entries.map((e) {
                     ImageModel image = e.value;
                     return GestureDetector(
-                      onTap: () => context.pushNamed("${image.route}"),
+                      onTap: () {
+                        if (isUserInfo && e.key == 0) {
+                          _callApiAndNavigate();
+                        } else {
+                          context.pushNamed("${image.route}");
+                        }
+                      },
                       child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           padding: const EdgeInsets.symmetric(horizontal: 00),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                                colors: [image.linear1, image.linear2],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter),
-                            border: Border.all(
-                                color: ThemeSetting.of(context).black2),
+                              colors: [image.linear1, image.linear2],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            border: Border.all(color: ThemeSetting.of(context).black2),
                             borderRadius: BorderRadius.circular(22),
                           ),
                           child: Stack(
@@ -258,64 +269,57 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                     height: double.infinity,
                                     width: double.infinity,
                                     padding: const EdgeInsets.only(top: 22),
-                                    margin: const EdgeInsets.only(
-                                        top: 8, left: 8, right: 8, bottom: 20),
+                                    margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 20),
                                     decoration: BoxDecoration(
-                                        border: Border(
-                                            right: BorderSide(
-                                                color: ThemeSetting.of(context)
-                                                    .common0,
-                                                width: 1.5),
-                                            left: BorderSide(
-                                                color: ThemeSetting.of(context)
-                                                    .common0,
-                                                width: 1.5),
-                                            top: BorderSide(
-                                                color: ThemeSetting.of(context)
-                                                    .common0,
-                                                width: 1.5)),
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            topRight: Radius.circular(20))),
+                                      border: Border(right: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), left: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), top: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5)),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
                                     child: Text(
                                       image.text,
-                                      style: ThemeSetting.of(context)
-                                          .titleLarge
-                                          .copyWith(
-                                              color: ThemeSetting.of(context)
-                                                  .white),
+                                      style: ThemeSetting.of(context).titleLarge.copyWith(
+                                            color: ThemeSetting.of(context).white,
+                                          ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 40),
-                                    child: Image.asset(
-                                      image.image,
-                                      width: 165,
-                                      height: 195,
-                                      fit: BoxFit.contain,
+                                  if (isUserInfo && e.key == 0)
+                                    Positioned.fill(
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 22),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(20),
+                                          child: Image.asset(
+                                            image.image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 40),
+                                      child: Image.asset(
+                                        image.image,
+                                        width: 165,
+                                        height: 195,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
-                                  ),
                                   Container(
                                     height: 50,
                                     decoration: BoxDecoration(
                                       color: ThemeSetting.of(context).black2,
-                                      borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(20),
-                                          bottomRight: Radius.circular(20)),
+                                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           LocaleKeys.create.tr(),
-                                          style: ThemeSetting.of(context)
-                                              .headlineLarge
-                                              .copyWith(
-                                                  color:
-                                                      ThemeSetting.of(context)
-                                                          .common0),
+                                          style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).common0),
                                         ),
                                         const SizedBox(
                                           width: 5,
@@ -346,15 +350,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       onPageChanged: (index, reason) {
                         setState(() {
                           if (index > previousIndex) {
-                            _logoAnimation = Tween<double>(
-                                    begin: _logoAnimation.value,
-                                    end: _logoAnimation.value + 0.25)
-                                .animate(_logoAniCon);
+                            _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value + 0.25).animate(_logoAniCon);
                           } else {
-                            _logoAnimation = Tween<double>(
-                                    begin: _logoAnimation.value,
-                                    end: _logoAnimation.value - 0.25)
-                                .animate(_logoAniCon);
+                            _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value - 0.25).animate(_logoAniCon);
                           }
                           _logoAniCon.forward(from: 0);
                           previousIndex = index;
@@ -392,9 +390,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               borderRadius: const BorderRadius.horizontal(
                                 left: Radius.circular(3),
                               ),
-                              color: currentIndex == entry.key
-                                  ? ThemeSetting.of(context).primary
-                                  : ThemeSetting.of(context).common1)),
+                              color: currentIndex == entry.key ? ThemeSetting.of(context).primary : ThemeSetting.of(context).common1)),
                     );
                   }).toList(),
                 ),
@@ -419,7 +415,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               width: double.infinity,
               child: ListView.builder(
                 shrinkWrap: true,
-                padding: EdgeInsets.only(left: 18),
+                padding: const EdgeInsets.only(left: 18),
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemCount: recommendedFortune.length,
@@ -429,8 +425,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                     padding: const EdgeInsets.all(15),
                     margin: const EdgeInsets.only(right: 17),
                     decoration: BoxDecoration(
-                        color: recommendedFortune[index]['color'],
-                        borderRadius: BorderRadius.circular(10)),
+                      color: recommendedFortune[index]['color'],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -441,14 +438,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               Flexible(
                                 flex: 2,
                                 child: Text(
-                                  LocaleKeys
-                                      .natural_born_fortune_from_the_heavens
-                                      .tr(),
-                                  style: ThemeSetting.of(context)
-                                      .bodyMedium
-                                      .copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          color: ThemeSetting.of(context).black1),
+                                  LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
+                                  style: ThemeSetting.of(context).bodyMedium.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: ThemeSetting.of(context).black1,
+                                      ),
                                 ),
                               ),
                               const SizedBox(
@@ -459,17 +453,12 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                   children: [
                                     Text(
                                       LocaleKeys.check.tr(),
-                                      style: ThemeSetting.of(context)
-                                          .captionLarge
-                                          .copyWith(color: Colors.black),
+                                      style: ThemeSetting.of(context).captionLarge.copyWith(color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    Image.asset(AppAssets.next,
-                                        height: 14,
-                                        width: 14,
-                                        color: Colors.black),
+                                    Image.asset(AppAssets.next, height: 14, width: 14, color: Colors.black),
                                   ],
                                 ),
                               ),
@@ -505,5 +494,47 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  String generateUserJson() {
+    Map<String, dynamic> userMap = {
+      "name": userInfoData.userModel.name,
+      "birthdate": userInfoData.userModel.birthdate,
+      "time_of_birth": userInfoData.userModel.timeOfBirth,
+      "gender": userInfoData.userModel.gender,
+      "language": userInfoData.userModel.language,
+    };
+
+    return jsonEncode(userMap);
+  }
+
+  Future<void> _callApiAndNavigate() async {
+    final apiCallFuture = _mockApiCall();
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AnimationScreen(apiFuture: apiCallFuture),
+      ),
+    );
+
+    context.pushReplacementNamed(sajuDailyScreen);
+  }
+
+  Future<bool> _mockApiCall() async {
+    String userJson = generateUserJson();
+    try {
+      dynamic response = await ApiCalls().sajuDailyCall();
+      if (response == null) {
+        throw Exception('API call failed');
+      }
+      if (response['status'] == 'success') {
+        SajuDailyInfo model = SajuDailyInfo.fromJson(response['daily']);
+        GetIt.I.get<SajuDailyService>().setSajuDailyInfo(model);
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

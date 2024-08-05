@@ -39,7 +39,8 @@ class NetworkManager {
   // 인증 토큰
   String _bearerToken = '';
   String _refreshToken = '';
-  Locale? locale;
+  Locale? _locale;
+  get locale => _locale;
   final Dio _dio = Dio();
 
   // 버전 정보
@@ -95,9 +96,9 @@ class NetworkManager {
     _refreshToken = token;
   }
 
-  void setLocale(Locale locale) {
-    locale = locale;
-    _dio.options.headers['Accept-Language'] = locale.languageCode;
+  void setLocale(Locale setLocale) {
+    _locale = setLocale;
+    _dio.options.headers['Accept-Language'] = _locale!.languageCode;
   }
 
   void setVersion(String version) {
@@ -187,12 +188,10 @@ class NetworkManager {
     });
   }
 
-  Future<dynamic> uploadFile(String endpoint, Map<String, dynamic> data) async {
+  Future<dynamic> uploadFile(String endpoint, FormData formData) async {
     return _enqueueRequest(() async {
-      // await _ensureTokenIsValid();
-      String encodeData = JsonBase64Service.encodeJsonToBase64(data);
       var url = '$_baseUrlApi/$endpoint';
-      return await _dio.post(url, data: {"data": encodeData});
+      return await _dio.post(url, data: formData);
     });
   }
 

@@ -132,7 +132,7 @@ class SetTimelineBottomSheet {
                       color2: ThemeSetting.of(context).black2,
                       onTap: () {
                         CreateDairyBottomSheet.createDairyBottomSheet(
-                            context: context);
+                            context: context, selectedImages: selectedImages,);
                       },
                     ),
                   ),
