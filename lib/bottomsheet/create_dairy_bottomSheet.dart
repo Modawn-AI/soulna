@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -19,9 +20,19 @@ class CreateDairyBottomSheet {
       context: context,
       isScrollControlled: true,
       builder: (context) {
+        log('Selected Image ${selectedImages.length}');
+        List<Map<String, dynamic>> displayImages = List.from(selectedImages);
+        while (displayImages.length < 10) {
+          displayImages.add(
+              {'path': AppAssets.rectangle, 'index': displayImages.length + 1});
+        }
+
         return Container(
           height: MediaQuery.of(context).size.height * 0.88,
-          decoration: BoxDecoration(color: ThemeSetting.of(context).info, borderRadius: const BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+          decoration: BoxDecoration(
+              color: ThemeSetting.of(context).info,
+              borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(15), topLeft: Radius.circular(15))),
           child: ListView(
             children: [
               const SizedBox(
@@ -46,14 +57,20 @@ class CreateDairyBottomSheet {
                 height: 10,
               ),
               Text(
-                LocaleKeys.would_you_like_to_make_a_diary_with_that_picture.tr(),
+                LocaleKeys.would_you_like_to_make_a_diary_with_that_picture
+                    .tr(),
                 textAlign: TextAlign.center,
-                style: ThemeSetting.of(context).labelLarge.copyWith(color: ThemeSetting.of(context).white),
+                style: ThemeSetting.of(context)
+                    .labelLarge
+                    .copyWith(color: ThemeSetting.of(context).white),
               ),
               const SizedBox(
                 height: 16,
               ),
-              Text('${LocaleKeys.a_total_of.tr()} ${LocaleKeys.make_a_diary_for.tr()}July 8', textAlign: TextAlign.center, style: ThemeSetting.of(context).headlineLarge),
+              Text(
+                  '${LocaleKeys.a_total_of.tr()} ${LocaleKeys.make_a_diary_for.tr()}July 8',
+                  textAlign: TextAlign.center,
+                  style: ThemeSetting.of(context).headlineLarge),
               const SizedBox(
                 height: 50,
               ),
@@ -61,15 +78,20 @@ class CreateDairyBottomSheet {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    squareWidget(image: AppAssets.rectangle, context: context),
+                    squareWidget(
+                        image: selectedImages[0]['path'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
-                    squareWidget(image: AppAssets.rectangle, width: 150, context: context),
+                    squareWidget(
+                        image: displayImages[1]['path'],
+                        width: 150,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
-                    squareWidget(image: AppAssets.rectangle, context: context),
+                    squareWidget(
+                        image: displayImages[2]['path'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
@@ -89,15 +111,27 @@ class CreateDairyBottomSheet {
                     SizedBox(
                       width: 100,
                     ),
-                    squareWidget(image: AppAssets.rectangle, context: context),
+                    squareWidget(
+                        image: displayImages[3]['path'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
-                    squareWidget(image: AppAssets.rectangle, width: 150, context: context),
+                    squareWidget(
+                        image: displayImages[4]['path'],
+                        width: 150,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
-                    squareWidget(image: AppAssets.rectangle, context: context),
+                    squareWidget(
+                        image: displayImages[5]['path'], context: context),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    squareWidget(
+                        image: displayImages[6]['path'],
+                        width: 150,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
@@ -111,15 +145,20 @@ class CreateDairyBottomSheet {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    squareWidget(image: AppAssets.rectangle, context: context),
+                    squareWidget(
+                        image: displayImages[7]['path'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
-                    squareWidget(image: AppAssets.rectangle, width: 150, context: context),
+                    squareWidget(
+                        image: displayImages[8]['path'],
+                        width: 150,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
-                    squareWidget(image: AppAssets.rectangle, context: context),
+                    squareWidget(
+                        image: displayImages[9]['path'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
@@ -143,7 +182,8 @@ class CreateDairyBottomSheet {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AnimationScreen(apiFuture: apiCallFuture),
+                          builder: (context) =>
+                              AnimationScreen(apiFuture: apiCallFuture),
                         ),
                       );
 
@@ -160,7 +200,8 @@ class CreateDairyBottomSheet {
     );
   }
 
-  static Future<bool> _mockApiCall(List<Map<String, dynamic>> selectedImages) async {
+  static Future<bool> _mockApiCall(
+      List<Map<String, dynamic>> selectedImages) async {
     List<String> base64Images = [];
     for (var imageMap in selectedImages) {
       try {
@@ -175,7 +216,8 @@ class CreateDairyBottomSheet {
           } else if (bytes is String) {
             // 이미 Base64로 인코딩된 경우
             base64Images.add(bytes);
-            print("Added pre-encoded base64 image with length: ${bytes.length}");
+            print(
+                "Added pre-encoded base64 image with length: ${bytes.length}");
           } else {
             print("Unexpected type for bytes: ${bytes.runtimeType}");
           }
@@ -185,7 +227,8 @@ class CreateDairyBottomSheet {
           Uint8List bytes = await imageFile.readAsBytes();
           String base64Image = base64Encode(bytes);
           base64Images.add(base64Image);
-          print("Added base64 image from file with length: ${base64Image.length}");
+          print(
+              "Added base64 image from file with length: ${base64Image.length}");
         } else {
           print("Image map doesn't contain 'bytes' or 'path': $imageMap");
         }
@@ -219,15 +262,26 @@ class CreateDairyBottomSheet {
     }
   }
 
-  static Widget squareWidget({required String image, double? width, required BuildContext context}) {
+  static Widget squareWidget(
+      {required String image, double? width, required BuildContext context}) {
     return Container(
       width: width ?? 80,
       height: 80,
-      decoration: BoxDecoration(border: Border.all(color: ThemeSetting.of(context).black1), borderRadius: BorderRadius.circular(10), image: DecorationImage(fit: BoxFit.cover, image: AssetImage(image))),
+      decoration: BoxDecoration(
+        border: Border.all(color: ThemeSetting.of(context).black1),
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          image: image == AppAssets.rectangle
+              ? AssetImage(image)
+              : FileImage(File(image)),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Container(
         margin: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          border: Border.all(color: ThemeSetting.of(context).secondaryBackground),
+          border:
+              Border.all(color: ThemeSetting.of(context).secondaryBackground),
           borderRadius: BorderRadius.circular(10),
         ),
       ),

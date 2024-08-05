@@ -24,6 +24,14 @@ class _EditProfileState extends State<EditProfile> {
             backgroundColor: ThemeSetting.of(context).secondaryBackground,
             appBar: HeaderWidget.headerWithTitle(
         context: context, title: LocaleKeys.edit_profile.tr()),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+            floatingActionButton:    Padding(padding: EdgeInsets.symmetric(vertical: 10,horizontal: 18),child: ButtonWidget.roundedButtonOrange(
+                context: context,
+                width: MediaQuery.of(context).size.width,
+                color: ThemeSetting.of(context).black2,
+                text: LocaleKeys.save.tr(),
+                onTap: () {}),),
             body: ListView(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       children: [
@@ -110,14 +118,8 @@ class _EditProfileState extends State<EditProfile> {
         const SizedBox(
           height: 70,
         ),
-        ButtonWidget.roundedButtonOrange(
-            context: context,
-            color: ThemeSetting.of(context).black2,
-            text: LocaleKeys.save.tr(),
-            onTap: () {}),
-        const SizedBox(
-          height: 10,
-        ),
+
+
       ],
             ),
           ),

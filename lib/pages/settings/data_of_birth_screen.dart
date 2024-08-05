@@ -18,7 +18,7 @@ class DateOfBirthScreen extends StatefulWidget {
 
 class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   DateTime selectedDate = DateTime(1990, 1, 1);
-
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,7 +67,15 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
             const SizedBox(height: 15),
             Row(
               children: [
-                const CustomCheckbox(),
+                CustomCheckbox(
+                  initialValue: isChecked,
+                  showIcon: isChecked,
+                  onChanged: () {
+                    setState(() {
+                      isChecked = !isChecked;
+                    });
+                  },
+                ),
                 Text(
                   LocaleKeys.i_dont_know_my_time_of_birth.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(

@@ -111,14 +111,18 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         'color': ThemeSetting.of(context).lightGreen,
       },
     ];
-    List<String> myParts = user!.userModel.tenTwelve.picture.split("_");
-    String myElementName = myParts[2];
+
+    List<String> myParts =
+        user?.userModel?.tenTwelve?.picture?.split("_") ?? [];
+    String myElementName = myParts.isNotEmpty ? myParts[2] : '';
 
     images = [
       ImageModel(
         linear1: Utils.getElementToColor(context, myElementName),
         linear2: ThemeSetting.of(context).black1,
-        image: isUserInfo ? "assets/tarot/${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
+        image: isUserInfo
+            ? "assets/tarot/${userInfoData.userModel.tenTwelve.picture}"
+            : AppAssets.image1,
         text: LocaleKeys.check_your_fortune_for_today.tr(),
         route: dateOfBirthMain,
       ),
@@ -138,7 +142,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       ),
     ];
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ThemeSetting.of(context).secondaryBackground));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: ThemeSetting.of(context).secondaryBackground));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
@@ -189,7 +194,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  isUserInfo ? '${LocaleKeys.hey.tr()} ${userInfoData.userModel!.name}' : '${LocaleKeys.hey.tr()} jane doe',
+                  isUserInfo
+                      ? '${LocaleKeys.hey.tr()} ${userInfoData.userModel!.name}'
+                      : '${LocaleKeys.hey.tr()} jane doe',
                   style: ThemeSetting.of(context).labelLarge,
                 ),
                 Text(
@@ -206,19 +213,23 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               margin: const EdgeInsets.only(right: 148, left: 149),
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                border: Border.all(
+                    color: ThemeSetting.of(context).tertiary1, width: 1),
                 borderRadius: BorderRadius.circular(50),
               ),
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                  border: Border.all(
+                      color: ThemeSetting.of(context).tertiary1, width: 1),
                   borderRadius: BorderRadius.circular(50),
                   color: ThemeSetting.of(context).tertiary1,
                 ),
                 child: Text(
                   Utils.getTodayMDFormatted(),
-                  style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
+                  style: ThemeSetting.of(context)
+                      .bodyMedium
+                      .copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -256,7 +267,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                             ),
-                            border: Border.all(color: ThemeSetting.of(context).black2),
+                            border: Border.all(
+                                color: ThemeSetting.of(context).black2),
                             borderRadius: BorderRadius.circular(22),
                           ),
                           child: Stack(
@@ -269,9 +281,22 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                     height: double.infinity,
                                     width: double.infinity,
                                     padding: const EdgeInsets.only(top: 22),
-                                    margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 20),
+                                    margin: const EdgeInsets.only(
+                                        top: 8, left: 8, right: 8, bottom: 20),
                                     decoration: BoxDecoration(
-                                      border: Border(right: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), left: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), top: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5)),
+                                      border: Border(
+                                          right: BorderSide(
+                                              color: ThemeSetting.of(context)
+                                                  .common0,
+                                              width: 1.5),
+                                          left: BorderSide(
+                                              color: ThemeSetting.of(context)
+                                                  .common0,
+                                              width: 1.5),
+                                          top: BorderSide(
+                                              color: ThemeSetting.of(context)
+                                                  .common0,
+                                              width: 1.5)),
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(20),
                                         topRight: Radius.circular(20),
@@ -279,8 +304,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                     ),
                                     child: Text(
                                       image.text,
-                                      style: ThemeSetting.of(context).titleLarge.copyWith(
-                                            color: ThemeSetting.of(context).white,
+                                      style: ThemeSetting.of(context)
+                                          .titleLarge
+                                          .copyWith(
+                                            color:
+                                                ThemeSetting.of(context).white,
                                           ),
                                       textAlign: TextAlign.center,
                                     ),
@@ -288,9 +316,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                   if (isUserInfo && e.key == 0)
                                     Positioned.fill(
                                       child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 22),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 10, 10, 22),
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           child: Image.asset(
                                             image.image,
                                             fit: BoxFit.cover,
@@ -300,7 +330,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                     )
                                   else
                                     Padding(
-                                      padding: const EdgeInsets.only(bottom: 40),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 40),
                                       child: Image.asset(
                                         image.image,
                                         width: 165,
@@ -312,14 +343,22 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                     height: 50,
                                     decoration: BoxDecoration(
                                       color: ThemeSetting.of(context).black2,
-                                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                                      borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20)),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           LocaleKeys.create.tr(),
-                                          style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).common0),
+                                          style: ThemeSetting.of(context)
+                                              .headlineLarge
+                                              .copyWith(
+                                                  color:
+                                                      ThemeSetting.of(context)
+                                                          .common0),
                                         ),
                                         const SizedBox(
                                           width: 5,
@@ -350,9 +389,15 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       onPageChanged: (index, reason) {
                         setState(() {
                           if (index > previousIndex) {
-                            _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value + 0.25).animate(_logoAniCon);
+                            _logoAnimation = Tween<double>(
+                                    begin: _logoAnimation.value,
+                                    end: _logoAnimation.value + 0.25)
+                                .animate(_logoAniCon);
                           } else {
-                            _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value - 0.25).animate(_logoAniCon);
+                            _logoAnimation = Tween<double>(
+                                    begin: _logoAnimation.value,
+                                    end: _logoAnimation.value - 0.25)
+                                .animate(_logoAniCon);
                           }
                           _logoAniCon.forward(from: 0);
                           previousIndex = index;
@@ -390,7 +435,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               borderRadius: const BorderRadius.horizontal(
                                 left: Radius.circular(3),
                               ),
-                              color: currentIndex == entry.key ? ThemeSetting.of(context).primary : ThemeSetting.of(context).common1)),
+                              color: currentIndex == entry.key
+                                  ? ThemeSetting.of(context).primary
+                                  : ThemeSetting.of(context).common1)),
                     );
                   }).toList(),
                 ),
@@ -438,8 +485,12 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               Flexible(
                                 flex: 2,
                                 child: Text(
-                                  LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
-                                  style: ThemeSetting.of(context).bodyMedium.copyWith(
+                                  LocaleKeys
+                                      .natural_born_fortune_from_the_heavens
+                                      .tr(),
+                                  style: ThemeSetting.of(context)
+                                      .bodyMedium
+                                      .copyWith(
                                         fontWeight: FontWeight.w700,
                                         color: ThemeSetting.of(context).black1,
                                       ),
@@ -453,12 +504,17 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                   children: [
                                     Text(
                                       LocaleKeys.check.tr(),
-                                      style: ThemeSetting.of(context).captionLarge.copyWith(color: Colors.black),
+                                      style: ThemeSetting.of(context)
+                                          .captionLarge
+                                          .copyWith(color: Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    Image.asset(AppAssets.next, height: 14, width: 14, color: Colors.black),
+                                    Image.asset(AppAssets.next,
+                                        height: 14,
+                                        width: 14,
+                                        color: Colors.black),
                                   ],
                                 ),
                               ),

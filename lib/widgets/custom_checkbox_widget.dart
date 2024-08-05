@@ -7,6 +7,7 @@ class CustomCheckbox extends StatefulWidget {
   final String? text2;
   final Color? color1;
   final Color? color2;
+  final bool showIcon;
   final void Function()? onChanged;
 
   const CustomCheckbox(
@@ -16,7 +17,8 @@ class CustomCheckbox extends StatefulWidget {
       this.text1,
       this.text2,
       this.color1,
-      this.color2})
+      this.color2,
+      this.showIcon = true})
       : super(key: key);
 
   @override
@@ -50,7 +52,6 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
           Container(
             height: 20,
             width: 20,
-
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: widget.initialValue
@@ -63,16 +64,18 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
                   width: 2),
               borderRadius: BorderRadius.circular(4),
             ),
-            child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Image.asset(
-                  AppAssets.check,
-                  width: 12,
-                  height: 12,
-                  color: widget.initialValue
-                      ? ThemeSetting.of(context).secondaryBackground
-                      : ThemeSetting.of(context).grayLight,
-                )),
+            child: widget.showIcon == true
+                ? Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Image.asset(
+                      AppAssets.check,
+                      width: 12,
+                      height: 12,
+                      color: widget.initialValue
+                          ? ThemeSetting.of(context).secondaryBackground
+                          : ThemeSetting.of(context).grayLight,
+                    ))
+                : SizedBox(),
           ),
           const SizedBox(
             width: 10,

@@ -1,5 +1,3 @@
-
-
 import 'package:Soulna/utils/package_exporter.dart';
 
 class CustomRangeTimePicker extends StatefulWidget {
@@ -43,13 +41,13 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
             timePickerTheme: TimePickerThemeData(
               dialBackgroundColor: ThemeSetting.of(context).secondaryBackground,
               dayPeriodTextColor: ThemeSetting.of(context).primaryText,
-              dayPeriodColor: ThemeSetting.of(context).secondaryBackground,
+              dayPeriodColor: ThemeSetting.of(context).primary,
               dialHandColor: ThemeSetting.of(context).primary,
 
-              entryModeIconColor: ThemeSetting.of(context).primary,
-              hourMinuteTextColor: ThemeSetting.of(context).secondaryBackground,
-              hourMinuteColor: ThemeSetting.of(context).primary,
-              // backgroundColor: ThemeSetting.of(context).secondaryBackground
+              // entryModeIconColor: ThemeSetting.of(context).primary,
+              hourMinuteTextColor: ThemeSetting.of(context).primaryText,
+              hourMinuteColor: ThemeSetting.of(context).secondaryBackground,
+              // backgroundColor: ThemeSetting.of(context).secondaryBackground,
               cancelButtonStyle: ButtonStyle(
                 foregroundColor: WidgetStateProperty.all<Color>(
                     ThemeSetting.of(context).primary),
@@ -60,7 +58,7 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
               ),
               inputDecorationTheme: InputDecorationTheme(
                 labelStyle: ThemeSetting.of(context).headlineLarge.copyWith(
-                      color: ThemeSetting.of(context).primary,
+                      color: ThemeSetting.of(context).white,
                     ),
               ),
             ),
@@ -76,19 +74,18 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
       initialTime: startTime,
     );
     if (pickedStartTime != null) {
-      final TimeOfDay? pickedEndTime = await showTimeDialog(
-        context: context,
-        initialTime: endTime,
-      );
-      if (pickedEndTime != null && pickedEndTime != pickedStartTime) {
-        setState(() {
-          startTime = pickedStartTime;
-          endTime = pickedEndTime;
-          widget.onStartTimeChanged(startTime);
-          widget.onEndTimeChanged(endTime);
-        });
-      }
+      startTime = pickedStartTime;
+      //   final TimeOfDay? pickedEndTime = await showTimeDialog(
+      //     context: context,
+      //     initialTime: endTime,
     }
+    // if (pickedEndTime != null && pickedEndTime != pickedStartTime) {
+    //   setState(() {
+    //     startTime = pickedStartTime;
+    //     endTime = pickedEndTime;
+    //     widget.onStartTimeChanged(startTime);
+    //     widget.onEndTimeChanged(endTime);
+    //   });
   }
 
   @override
@@ -110,7 +107,8 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
         child: Row(
           children: [
             Text(
-              "   ${startTime.format(context)} ~ ${endTime.format(context)}",
+              "   ${startTime.format(context)}",
+              //"   ${startTime.format(context)} ~ ${endTime.format(context)}",
               style: ThemeSetting.of(context).headlineLarge.copyWith(
                     color: ThemeSetting.of(context).primaryText,
                   ),

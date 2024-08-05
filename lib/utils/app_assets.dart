@@ -29,6 +29,7 @@ class AppAssets {
   static const String backgroundImage = 'assets/images/background_image.png';
   static const String unlock = 'assets/images/unlock.png';
   static const String lock = 'assets/images/lock.png';
+  static const String hand = 'assets/images/hand.png';
 
   static const String tarot01BlackM = 'assets/tarot/01_black_m.png';
   static const String tarot01BlackF = 'assets/tarot/01_black_f.png';

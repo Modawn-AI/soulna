@@ -19,6 +19,8 @@ class SelectPhotoScreen extends StatefulWidget {
 }
 
 class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
+
+  bool showHand = true;
   final List<Map<String, dynamic>> items = [
     {
       'date': DateTime.now(),
@@ -213,6 +215,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
                             SetTimelineBottomSheet.setTimeLineBottomSheet(
                                 context: context,
                                 selectedImages: _selectedPhotos,
+                                showHand: true,
                                 getTotalImages: getTotalImages);
                           }),
                     ),

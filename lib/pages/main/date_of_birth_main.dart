@@ -194,6 +194,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
           children: [
             CustomCheckbox(
               initialValue: isChecked,
+              showIcon:  isChecked,
               onChanged: () {
                 setState(() {
                   isChecked = !isChecked;
