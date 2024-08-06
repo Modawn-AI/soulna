@@ -96,144 +96,142 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
           ? Brightness.dark
           : Brightness.light,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        key: scaffoldKey,
-        appBar: HeaderWidget.headerWithTitle(
-            context: context, title: LocaleKeys.select_photo.tr()),
-        // ),
-        body: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-              color: ThemeSetting.of(context).common2,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2),
-                    child: Image.asset(
-                      AppAssets.logo,
-                      height: 17,
-                      width: 17,
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      key: scaffoldKey,
+      appBar: HeaderWidget.headerWithTitle(
+          context: context, title: LocaleKeys.select_photo.tr()),
+      // ),
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+            color: ThemeSetting.of(context).common2,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Image.asset(
+                    AppAssets.logo,
+                    height: 17,
+                    width: 17,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Flexible(
+                  child: Text(
+                    LocaleKeys
+                        .it_automatically_creates_a_diary_through_the_Ai_algorithm
+                        .tr(),
+                    style: ThemeSetting.of(context).captionMedium,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+              ),
+              itemCount: _selectedPhotos.length,
+              itemBuilder: (context, index) {
+                final photo = _selectedPhotos[index];
+                return Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: ThemeSetting.of(context).common4,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            color: ThemeSetting.of(context).primaryText,
+                            width: 1),
+                        image: DecorationImage(
+                          image: FileImage(File(photo['path'])),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
+                    Positioned(
+                      top: 5,
+                      left: 5,
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.6),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          '${photo['index']}',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 5,
+                      right: 5,
+                      child: GestureDetector(
+                        onTap: () => _removePhoto(index),
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withOpacity(0.8),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ButtonWidget.roundedButtonOrange(
+                        context: context,
+                        width: MediaQuery.of(context).size.width,
+                        text: LocaleKeys.set_timeline.tr(),
+                        onTap: () {
+                          SetTimelineBottomSheet.setTimeLineBottomSheet(
+                              context: context,
+                              selectedImages: _selectedPhotos,
+                              showHand: true,
+                              getTotalImages: getTotalImages);
+                        }),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  Flexible(
-                    child: Text(
-                      LocaleKeys
-                          .it_automatically_creates_a_diary_through_the_Ai_algorithm
-                          .tr(),
-                      style: ThemeSetting.of(context).captionMedium,
+                  Expanded(
+                    child: ButtonWidget.roundedButtonOrange(
+                      context: context,
+                      width: MediaQuery.of(context).size.width,
+                      text: LocaleKeys.select_photo.tr(),
+                      onTap: () => _loadPhotos(),
                     ),
                   )
                 ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5,
-                ),
-                itemCount: _selectedPhotos.length,
-                itemBuilder: (context, index) {
-                  final photo = _selectedPhotos[index];
-                  return Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: ThemeSetting.of(context).common4,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                              color: ThemeSetting.of(context).primaryText,
-                              width: 1),
-                          image: DecorationImage(
-                            image: FileImage(File(photo['path'])),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 5,
-                        left: 5,
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.6),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            '${photo['index']}',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 5,
-                        right: 5,
-                        child: GestureDetector(
-                          onTap: () => _removePhoto(index),
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.8),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.close,
-                              size: 18,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ButtonWidget.roundedButtonOrange(
-                          context: context,
-                          width: MediaQuery.of(context).size.width,
-                          text: LocaleKeys.set_timeline.tr(),
-                          onTap: () {
-                            SetTimelineBottomSheet.setTimeLineBottomSheet(
-                                context: context,
-                                selectedImages: _selectedPhotos,
-                                showHand: true,
-                                getTotalImages: getTotalImages);
-                          }),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: ButtonWidget.roundedButtonOrange(
-                        context: context,
-                        width: MediaQuery.of(context).size.width,
-                        text: LocaleKeys.select_photo.tr(),
-                        onTap: () => _loadPhotos(),
-                      ),
-                    )
-                  ],
-                ))
-          ],
-        ),
+              ))
+        ],
       ),
     );
   }

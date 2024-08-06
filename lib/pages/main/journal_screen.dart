@@ -56,11 +56,9 @@ class _JournalScreenState extends State<JournalScreen> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
-        body: showHeader == false ? journalList() : journalScroll(),
-      ),
+    return Scaffold(
+      backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
+      body: showHeader == false ? journalList() : journalScroll(),
     );
   }
 
