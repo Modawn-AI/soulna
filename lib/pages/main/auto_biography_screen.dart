@@ -35,14 +35,16 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ThemeSetting.of(context).secondaryBackground));
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      body: showHeader == false ? journalList() : journalScroll(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        body: showHeader == false ? journalList() : journalScroll(),
+      ),
     );
   }
 
   journalList() {
+
     return ListView(
       children: [
         HeaderWidget.headerSettings(context: context, actionIcon: AppAssets.share, onTapOnMenu: () => context.pop(), onTap: () {}),

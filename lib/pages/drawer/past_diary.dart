@@ -1,6 +1,7 @@
 import 'package:Soulna/bottomsheet/show_datePicker_bottomSheet.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_calendar_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
@@ -18,7 +19,7 @@ class PastDiary extends StatefulWidget {
 
 class _PastDiaryState extends State<PastDiary> {
   int index = 0;
-
+  bool showData = true;
   final List<NeatCleanCalendarEvent> _eventList = [
     NeatCleanCalendarEvent('MultiDay Event A',
         startTime: DateTime(DateTime.now().year, DateTime.now().month,
@@ -72,45 +73,48 @@ class _PastDiaryState extends State<PastDiary> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerCalendar(
-        context: context,
-        title: DateFormat.yMMMM().format(DateTime.now()),
-        onTapOnDownArrow: () {
-          ShowDatePickerBottomSheet.showDatePicker(context: context);
-
-        },
-        onTap: () async {
-          setState(() {
-            if (index == 0) {
-              index = 1;
-            } else {
-              index = 0;
-            }
-          });
-        },
-        image: index == 0 ? AppAssets.calendar : AppAssets.menu,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerCalendar(
+          context: context,
+          title: DateFormat.yMMMM().format(DateTime.now()),
+          onTapOnDownArrow: () {
+            ShowDatePickerBottomSheet.showDatePicker(context: context);
+          },
+          onTap: () async {
+            setState(() {
+              if (index == 0) {
+                index = 1;
+              } else {
+                index = 0;
+              }
+            });
+          },
+          image: index == 0 ? AppAssets.calendar : AppAssets.menu,
+        ),
+        body: index == 0 ? pastFortune() : pastFortuneCalenderView(),
       ),
-      body: index == 0 ? pastFortune() : pastFortuneCalenderView(),
     );
   }
 
   pastFortune() {
-    return ListView.separated(
-      shrinkWrap: true,
-      itemCount: 3,
-      itemBuilder: (context, index) => listTile(
-          date: 'July 2024',
-          description:
-              'It\s a day where you can expect results proportional to your efforts.'),
-      separatorBuilder: (BuildContext context, int index) {
-        return CustomDividerWidget(
-          color: ThemeSetting.of(context).common0,
-          thickness: 1,
-        );
-      },
-    );
+    return showData == true
+        ? ListView.separated(
+            shrinkWrap: true,
+            itemCount: 3,
+            itemBuilder: (context, index) => listTile(
+                date: 'July 2024',
+                description:
+                    'It\s a day where you can expect results proportional to your efforts.'),
+            separatorBuilder: (BuildContext context, int index) {
+              return CustomDividerWidget(
+                color: ThemeSetting.of(context).common0,
+                thickness: 1,
+              );
+            },
+          )
+        : noDataFound();
   }
 
   pastFortuneCalenderView() => CustomCalendarWidget(
@@ -179,4 +183,97 @@ class _PastDiaryState extends State<PastDiary> {
           ],
         ),
       );
+
+  noDataFound() {
+    return Column(
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+          height: 150.h,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                ThemeSetting.of(context).linearContainer3,
+                ThemeSetting.of(context).linearContainer4,
+              ],
+            ),
+            borderRadius: BorderRadius.circular(14.r),
+            border: Border.all(
+              color: ThemeSetting.of(context).black2,
+              width: 1,
+            ),
+          ),
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: ThemeSetting.of(context).secondaryBackground,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(14.r),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        LocaleKeys.create_today_diary.tr(),
+                        style: ThemeSetting.of(context).labelLarge.copyWith(
+                              fontSize: 20.sp,
+                              color:
+                                  ThemeSetting.of(context).secondaryBackground,
+                            ),
+                      ),
+                      SizedBox(height: 5.h),
+                      ButtonWidget.roundedButtonOrange(
+                          context: context,
+                          width: 100.w,
+                          height: 40.h,
+                          color: ThemeSetting.of(context).primaryText,
+                          textStyle:
+                              ThemeSetting.of(context).captionMedium.copyWith(
+                                    color: ThemeSetting.of(context)
+                                        .secondaryBackground,
+                                    fontSize: 12.sp,
+                                  ),
+                          text: "${LocaleKeys.create.tr()} 💫",
+                          onTap: () {}),
+                    ],
+                  ),
+                ),
+                Image.asset(
+                  AppAssets.image1,
+                  height: 90.h,
+                  width: 80.w,
+                  fit: BoxFit.fill,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: Text(
+              LocaleKeys.i_have_not_written_a_diary_yet.tr(),
+              style: ThemeSetting.of(context).bodyMedium.copyWith(
+                    color: ThemeSetting.of(context).disabledText,
+                  ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

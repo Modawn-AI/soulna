@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/state_manager.dart';
 
 import '../utils/package_exporter.dart';
@@ -13,6 +11,7 @@ class AuthController extends GetxController {
   final nameCon = TextEditingController().obs;
   final emailVerificationCodeCon = TextEditingController().obs;
   final genderSelection = ''.obs;
+  final isPremium = false.obs;
 
   final showVerificationCode = false.obs;
 

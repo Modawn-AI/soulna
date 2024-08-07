@@ -33,6 +33,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+
   clearSecureStorageOnReinstall();
   setupLocator();
 
@@ -110,6 +111,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+
   String authStatus = 'Unknown';
   // ThemeMode _themeMode = ThemeSetting.themeMode;
 
@@ -179,6 +182,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
+      statusBarIconBrightness: ThemeSetting.isLightTheme(context) ? Brightness.dark : Brightness.light,
+    ));
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,

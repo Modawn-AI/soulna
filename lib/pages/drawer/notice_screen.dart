@@ -86,83 +86,85 @@ class _NoticeScreenState extends State<NoticeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerWithTitle(
-        context: context,
-        title: LocaleKeys.notice.tr(),
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 10),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: SizedBox(
-              height: 40.h,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: noticeList.length,
-                itemBuilder: (context, index) {
-                  bool isSelected = selectedIndex == index;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                      filterListByTitle(noticeList[index]);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 4, vertical: 0.0),
-                      margin: EdgeInsets.all(4),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? ThemeSetting.of(context).primaryText
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerWithTitle(
+          context: context,
+          title: LocaleKeys.notice.tr(),
+        ),
+        body: Column(
+          children: [
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: SizedBox(
+                height: 40.h,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: noticeList.length,
+                  itemBuilder: (context, index) {
+                    bool isSelected = selectedIndex == index;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                        filterListByTitle(noticeList[index]);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 4, vertical: 0.0),
+                        margin: EdgeInsets.all(4),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
                           color: isSelected
                               ? ThemeSetting.of(context).primaryText
-                              : ThemeSetting.of(context).common0,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 0.0),
-                        child: Text(
-                          noticeList[index],
-                          style: TextStyle(
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(
                             color: isSelected
-                                ? ThemeSetting.of(context).secondaryBackground
-                                : ThemeSetting.of(context).primaryText,
+                                ? ThemeSetting.of(context).primaryText
+                                : ThemeSetting.of(context).common0,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 0.0),
+                          child: Text(
+                            noticeList[index],
+                            style: TextStyle(
+                              color: isSelected
+                                  ? ThemeSetting.of(context).secondaryBackground
+                                  : ThemeSetting.of(context).primaryText,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 25),
+            Expanded(
+              child: ListView.builder(
+                itemCount: filterList.length,
+                itemBuilder: (context, index) {
+                  return listTile(
+                    title: filterList[index]['title'],
+                    description: filterList[index]['description'],
+                    context: context,
+                    date: filterList[index]['date'],
+                    onTap: () {
+                      context.pushNamed(privacyPolicyUpdateNoticeScreen);
+                    },
                   );
                 },
               ),
             ),
-          ),
-          SizedBox(height: 25),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filterList.length,
-              itemBuilder: (context, index) {
-                return listTile(
-                  title: filterList[index]['title'],
-                  description: filterList[index]['description'],
-                  context: context,
-                  date: filterList[index]['date'],
-                  onTap: () {
-                    context.pushNamed(privacyPolicyUpdateNoticeScreen);
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -18,23 +18,23 @@ class SettingsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 13.h),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 13),
       child: GestureDetector(
         onTap: onTap,
         child: Row(
           children: [
             Image.asset(
               image,
-              width: 26.h,
-              height: 26.h,
+              width: 26,
+              height: 26,
               color: ThemeSetting.of(context).primaryText,
             ),
-            SizedBox(width: 10.w),
+            SizedBox(width: 10),
             Text(
               title,
               style: ThemeSetting.of(context).bodyMedium.copyWith(
                     color: ThemeSetting.of(context).primaryText,
-                    fontSize: 16.sp,
+                    fontSize: 16,
                   ),
             ),
             const Spacer(),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:Soulna/bottomsheet/create_dairy_bottomSheet.dart';
@@ -12,9 +13,9 @@ class SetTimelineBottomSheet {
   // static bool showHand = true;
   static setTimeLineBottomSheet(
       {required BuildContext context,
-      required List<Map<String, dynamic>> selectedImages,
-      required num Function() getTotalImages,
-      bool? showHand}) {
+      required List selectedImages,
+      bool? showHand,
+      required List<int> originalIndices}) {
     return showModalBottomSheet(
       elevation: 0,
       context: context,
@@ -22,11 +23,13 @@ class SetTimelineBottomSheet {
         return StatefulBuilder(
           key: GlobalKey(),
           builder: (context, setState) {
-            Timer(Duration(milliseconds: 2000), () {
-              setState(() {
-                showHand = false;
-              },);
-            });
+            // Timer(Duration(milliseconds: 2000), () {
+            //   setState(
+            //     () {
+            //       showHand = false;
+            //     },
+            //   );
+            // });
             return GestureDetector(
                 onTap: () {
                   setState(() {
@@ -34,7 +37,7 @@ class SetTimelineBottomSheet {
                   });
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   height: MediaQuery.of(context).size.height * 0.4,
                   decoration: BoxDecoration(
                       color: ThemeSetting.of(context).info,
@@ -103,57 +106,38 @@ class SetTimelineBottomSheet {
                                     final item =
                                         selectedImages.removeAt(oldIndex);
                                     selectedImages.insert(newIndex, item);
-                                    //_updateSelectedIndexes(context);
+
+                                    final originalIndex =
+                                        originalIndices.removeAt(oldIndex);
+                                    originalIndices.insert(
+                                        newIndex, originalIndex);
                                   });
-                                  setState(() {});
                                 },
                                 children: List.generate(
                                   selectedImages.length,
                                   (index) {
+                                    log('selected Image ${selectedImages}');
                                     final image = selectedImages[index];
+                                    log('selected Image ${image}');
                                     return Container(
-                                        height: 60,
-                                        width: 60,
-                                        key: ValueKey(image),
-                                        margin: const EdgeInsets.only(
-                                            right: 5, left: 2),
-                                        alignment: Alignment.topLeft,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: ThemeSetting.of(context)
-                                                  .white),
-                                          color:
-                                              ThemeSetting.of(context).common4,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image:
-                                                FileImage(File(image['path'])),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        child: Container(
-                                          height: 22,
-                                          width: 22,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                    bottomRight:
-                                                        Radius.circular(10)),
+                                      height: 60,
+                                      width: 60,
+                                      key: ValueKey(image),
+                                      margin: const EdgeInsets.only(
+                                          right: 5, left: 2),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
                                             color:
-                                                ThemeSetting.of(context).white,
-                                          ),
-                                          child: Text(image['index'].toString(),
-                                              style: ThemeSetting.of(context)
-                                                  .bodySmall
-                                                  .copyWith(
-                                                      color: ThemeSetting.of(
-                                                              context)
-                                                          .black2)),
-                                        ));
+                                                ThemeSetting.of(context).white),
+                                        color: ThemeSetting.of(context).common4,
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image:
+                                              NetworkImage(image['media_url']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
                                   },
                                 ),
                               ),
@@ -181,7 +165,7 @@ class SetTimelineBottomSheet {
                         ],
                       ),
                       Positioned(
-                          top: 190,
+                          bottom: 15,
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             child: Padding(
@@ -204,13 +188,10 @@ class SetTimelineBottomSheet {
                           )),
                       if (showHand == true)
                         Positioned(
-                            top: 85,
-                            left: 10,
-                            child: Image.asset(
-                              AppAssets.hand,
-                              height: 110,
-                              width: 300,
-                            )),
+                          top: 85,
+                          left: 10,
+                          child: AnimatedHandImage(),
+                        ),
                     ],
                   ),
                 ));
@@ -218,5 +199,71 @@ class SetTimelineBottomSheet {
         );
       },
     );
+  }
+}
+
+class AnimatedHandImage extends StatefulWidget {
+  @override
+  _AnimatedHandImageState createState() => _AnimatedHandImageState();
+}
+
+class _AnimatedHandImageState extends State<AnimatedHandImage> {
+  bool _isAnimating = true;
+  bool _isVisible = true;
+  bool _moveRight = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAnimation();
+  }
+
+  void _startAnimation() {
+    if (_isAnimating) {
+      Future.delayed(Duration(milliseconds: 1000), () {
+        if (mounted && _isAnimating) {
+          setState(() {
+            _moveRight = !_moveRight;
+          });
+          _startAnimation(); // Loop the animation
+        }
+      });
+    }
+  }
+
+  void _stopAnimation() {
+    setState(() {
+      _isAnimating = false;
+      _isVisible = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _isVisible
+        ? SizedBox(
+            height: 110,
+            width: MediaQuery.of(context).size.width,
+            child: GestureDetector(
+              onTap: _stopAnimation,
+              child: Stack(
+                children: [
+                  AnimatedPositioned(
+                    duration: Duration(seconds: 1),
+                    left: _moveRight
+                        ? MediaQuery.of(context).size.width - 350
+                        : 10,
+                    top: 0,
+                    child: Image.asset(
+                      AppAssets.hand,
+                      height: 110,
+                      width: 300,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Container();
   }
 }

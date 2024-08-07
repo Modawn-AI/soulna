@@ -155,14 +155,16 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).tertiary,
     ));
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).tertiary,
-      body: Center(
-          child: Image.asset(
-        AppAssets.logo,
-        height: 90,
-        width: 90,
-      )),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).tertiary,
+        body: Center(
+            child: Image.asset(
+          AppAssets.logo,
+          height: 90,
+          width: 90,
+        )),
+      ),
     );
   }
 }

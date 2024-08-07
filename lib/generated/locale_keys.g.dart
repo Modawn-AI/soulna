@@ -188,5 +188,8 @@ abstract class  LocaleKeys {
   static const howdy = 'howdy';
   static const blue_ox = 'blue_ox';
   static const avoid_today = 'avoid_today';
+  static const dark_mode = 'dark_mode';
+  static const copyright = 'copyright';
+  static const soulna_all_rights_reserved = 'soulna_all_rights_reserved';
 
 }

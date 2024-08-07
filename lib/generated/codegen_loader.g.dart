@@ -202,7 +202,10 @@ class CodegenLoader extends AssetLoader{
   "its_been_a_month_since_the_update": "It's been a month since the update.",
   "howdy": "Howdy!",
   "blue_ox": "Blue Ox",
-  "avoid_today": "Avoid Today"
+  "avoid_today": "Avoid Today",
+  "dark_mode": "Dark Mode",
+  "copyright": "Copyright (C) ",
+  "soulna_all_rights_reserved": " Soulna All rights reserved."
 };
 static const Map<String,dynamic> ko = {
   "get_Started": "",
@@ -390,9 +393,12 @@ static const Map<String,dynamic> ko = {
   "edit": "",
   "to_unlock_please_subscribe": "",
   "its_been_a_month_since_the_update": "",
-  "howdy": "Howdy!",
-  "blue_ox": "Blue Ox",
-  "avoid_today": "Avoid Today"
+  "howdy": "",
+  "blue_ox": "",
+  "avoid_today": "",
+  "dark_mode": "",
+  "copyright": "",
+  "soulna_all_rights_reserved": ""
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ko": ko};
 }

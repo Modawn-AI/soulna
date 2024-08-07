@@ -36,7 +36,10 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
     return showTimePicker(
       context: context,
       initialTime: initialTime,
+      initialEntryMode: TimePickerEntryMode.input,
+
       builder: (context, child) => Theme(
+
         data: Theme.of(context).copyWith(
             timePickerTheme: TimePickerThemeData(
               dialBackgroundColor: ThemeSetting.of(context).secondaryBackground,
@@ -74,7 +77,15 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
       initialTime: startTime,
     );
     if (pickedStartTime != null) {
-      startTime = pickedStartTime;
+      setState(() {
+        startTime = pickedStartTime;
+        endTime = TimeOfDay(
+          hour: (startTime.hour + 2) % 24,
+          minute: startTime.minute,
+        );
+      });
+      widget.onStartTimeChanged(startTime);
+      widget.onEndTimeChanged(endTime);
       //   final TimeOfDay? pickedEndTime = await showTimeDialog(
       //     context: context,
       //     initialTime: endTime,
@@ -90,25 +101,25 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50.h,
-      decoration: BoxDecoration(
-        color: ThemeSetting.isLightTheme(context)
-            ? ThemeSetting.of(context).secondaryBackground
-            : ThemeSetting.of(context).common2,
-        border: Border.all(
-            color: ThemeSetting.isLightTheme(context)
-                ? ThemeSetting.of(context).common0
-                : ThemeSetting.of(context).common2),
-        borderRadius: BorderRadius.circular(8.r),
-      ),
-      child: GestureDetector(
-        onTap: () => _selectTimeRange(context),
+    return GestureDetector(
+      onTap: () => _selectTimeRange(context),
+      child: Container(
+        height: 50.h,
+        decoration: BoxDecoration(
+          color: ThemeSetting.isLightTheme(context)
+              ? ThemeSetting.of(context).secondaryBackground
+              : ThemeSetting.of(context).common2,
+          border: Border.all(
+              color: ThemeSetting.isLightTheme(context)
+                  ? ThemeSetting.of(context).common0
+                  : ThemeSetting.of(context).common2),
+          borderRadius: BorderRadius.circular(8.r),
+        ),
         child: Row(
           children: [
             Text(
-              "   ${startTime.format(context)}",
-              //"   ${startTime.format(context)} ~ ${endTime.format(context)}",
+              //"   ${startTime.format(context)}",
+              "   ${startTime.format(context)} ~ ${endTime.format(context)}",
               style: ThemeSetting.of(context).headlineLarge.copyWith(
                     color: ThemeSetting.of(context).primaryText,
                   ),

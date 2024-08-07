@@ -36,32 +36,34 @@ class _TermsAndConditionState extends State<TermsAndCondition> with SingleTicker
   }
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerWithTitle(
-        context: context,
-        title:
-        LocaleKeys.terms_and_conditions.tr(),
-      ),
-    body: CustomTabBar(
-      tabs:  [
-    Tab(text: LocaleKeys.terms_and_conditions.tr()),
-    Tab(text: LocaleKeys.privacy_policy.tr()),
-      ],
-      tabViews: [
-    termsAndConditions(),
-    Center(
-      child: Text(
-        LocaleKeys.privacy_policy.tr(),
-        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-          fontSize: 16.sp,
-          fontWeight: FontWeight.bold,
+    return  SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerWithTitle(
+          context: context,
+          title:
+          LocaleKeys.terms_and_conditions.tr(),
+        ),
+      body: CustomTabBar(
+        tabs:  [
+      Tab(text: LocaleKeys.terms_and_conditions.tr()),
+      Tab(text: LocaleKeys.privacy_policy.tr()),
+        ],
+        tabViews: [
+      termsAndConditions(),
+      Center(
+        child: Text(
+          LocaleKeys.privacy_policy.tr(),
+          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
-    ),
-      ],
-      tabController: _tabController,
-    ),
+        ],
+        tabController: _tabController,
+      ),
+      ),
     );
   }
   termsAndConditions() {

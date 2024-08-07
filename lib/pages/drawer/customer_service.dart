@@ -108,21 +108,23 @@ class _CustomerServiceState extends State<CustomerService>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerWithTitle(
-          context: context, title: LocaleKeys.customer_service.tr()),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: CustomTabBar(
-        tabs: [
-          Tab(text: LocaleKeys.FAQ.tr()),
-          Tab(text: LocaleKeys.one_one_inquiry.tr()),
-        ],
-        tabViews: [
-          faqWidget(context: context),
-          inquiryWidget(context: context),
-        ],
-        tabController: _tabController,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerWithTitle(
+            context: context, title: LocaleKeys.customer_service.tr()),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: CustomTabBar(
+          tabs: [
+            Tab(text: LocaleKeys.FAQ.tr()),
+            Tab(text: LocaleKeys.one_one_inquiry.tr()),
+          ],
+          tabViews: [
+            faqWidget(context: context),
+            inquiryWidget(context: context),
+          ],
+          tabController: _tabController,
+        ),
       ),
     );
   }
@@ -294,7 +296,7 @@ class _CustomerServiceState extends State<CustomerService>
                     textStyle: ThemeSetting.of(context).captionMedium.copyWith(
                           color: filterList[i]['response'] ==
                                   LocaleKeys.awaiting_response.tr()
-                              ? ThemeSetting.of(context).secondaryBackground
+                              ? ThemeSetting.of(context).black2
                               : ThemeSetting.of(context).white,
                         ),
                     onTap: () => filterList[i]['response'] ==
