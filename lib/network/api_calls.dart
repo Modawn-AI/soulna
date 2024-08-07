@@ -114,4 +114,66 @@ class ApiCalls {
       }
     }
   }
+
+  Future<dynamic> getSajuData() async {
+    try {
+      final data = await NetworkManager().getRequest('user/journal-list');
+      if (data['data'] == null) return null;
+      dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
+      return decodeData;
+    } catch (e) {
+      debugPrint('getUserData: $e');
+      return null;
+    }
+  }
+
+  Future<dynamic> getDateToJournal(String date) async {
+    try {
+      final data = await NetworkManager().getRequest('user/journal/$date');
+      if (data['data'] == null) return null;
+      dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
+      return decodeData;
+    } catch (e) {
+      debugPrint('getDateToLetter: $e');
+      return null;
+    }
+  }
+
+  Future<dynamic> getJournalData() async {
+    try {
+      final data = await NetworkManager().getRequest('user/daily-list');
+      if (data['data'] == null) return null;
+      dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
+      return decodeData;
+    } catch (e) {
+      debugPrint('getUserData: $e');
+      return null;
+    }
+  }
+
+  Future<dynamic> getDateToSaju(String date) async {
+    try {
+      final data = await NetworkManager().getRequest('user/daily/$date');
+      if (data['data'] == null) return null;
+      dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
+      return decodeData;
+    } catch (e) {
+      debugPrint('getDateToLetter: $e');
+      return null;
+    }
+  }
+
+  Future<dynamic> getAutoBiographyData() async {
+    try {
+      final data = await NetworkManager().getRequest('user/autobiography');
+      if (data['data'] == null) return null;
+      dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
+      return decodeData;
+    } catch (e) {
+      debugPrint('getUserData: $e');
+      return null;
+    }
+  }
+
+
 }
