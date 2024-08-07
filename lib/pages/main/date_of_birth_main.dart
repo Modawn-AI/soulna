@@ -104,33 +104,31 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Scaffold(
-          backgroundColor: ThemeSetting.of(context).secondaryBackground,
-          appBar: HeaderWidget.headerBack(
-              context: context,
-              onTap: () async {
-                if (_currentPage == 0) {
-                  context.goNamed(mainScreen);
-                } else {
-                  _pageController.previousPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                }
-              }),
-          body: PageView(
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              _buildDateOfBirthPage(),
-              _buildEditProfilePage(),
-            ],
-          ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerBack(
+            context: context,
+            onTap: () async {
+              if (_currentPage == 0) {
+                context.goNamed(mainScreen);
+              } else {
+                _pageController.previousPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              }
+            }),
+        body: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            _buildDateOfBirthPage(),
+            _buildEditProfilePage(),
+          ],
         ),
       ),
     );

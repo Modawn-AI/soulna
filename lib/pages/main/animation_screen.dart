@@ -78,52 +78,50 @@ class _AnimationScreenState extends State<AnimationScreen>
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).black1,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).black1,
-        body: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedBuilder(
-                animation: _animation,
-                builder: (context, child) {
-                  return Transform.rotate(
-                    angle: _animation.value * 2 * 3.141592653589793,
-                    child: child,
-                  );
-                },
-                child: Image.asset(
-                  AppAssets.logo,
-                  height: 58,
-                  width: 58,
-                ),
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).black1,
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return Transform.rotate(
+                  angle: _animation.value * 2 * 3.141592653589793,
+                  child: child,
+                );
+              },
+              child: Image.asset(
+                AppAssets.logo,
+                height: 58,
+                width: 58,
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                LocaleKeys.wait_a_moment.tr(),
-                style: ThemeSetting.of(context).headlineLarge,
-              ),
-              const SizedBox(
-                height: 53,
-              ),
-              Container(
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              LocaleKeys.wait_a_moment.tr(),
+              style: ThemeSetting.of(context).headlineLarge,
+            ),
+            const SizedBox(
+              height: 53,
+            ),
+            Container(
+              width: 200,
+              alignment: Alignment.center,
+              child: LinearPercentIndicator(
+                padding: EdgeInsets.zero,
                 width: 200,
-                alignment: Alignment.center,
-                child: LinearPercentIndicator(
-                  padding: EdgeInsets.zero,
-                  width: 200,
-                  lineHeight: 6,
-                  animation: true,
-                  percent: percent,
-                  barRadius: const Radius.circular(100),
-                ),
-              )
-            ],
-          ),
+                lineHeight: 6,
+                animation: true,
+                percent: percent,
+                barRadius: const Radius.circular(100),
+              ),
+            )
+          ],
         ),
       ),
     );

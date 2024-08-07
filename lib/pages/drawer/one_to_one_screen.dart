@@ -52,228 +52,226 @@ final _inquiryFormKey = GlobalKey<FormState>();
   String? _selectedItem;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerBack(context: context),
-        body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: Form(
-        key: _inquiryFormKey,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              Text(
-             LocaleKeys.please_feel_free_to_inquire_about_any_questions_you_have.tr(),
-                style: ThemeSetting.of(context).labelSmall.copyWith(
-                  color: ThemeSetting.of(context).primaryText,
-                ),
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerBack(context: context),
+      body: Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 18),
+    child: Form(
+      key: _inquiryFormKey,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            Text(
+           LocaleKeys.please_feel_free_to_inquire_about_any_questions_you_have.tr(),
+              style: ThemeSetting.of(context).labelSmall.copyWith(
+                color: ThemeSetting.of(context).primaryText,
               ),
-              const SizedBox(height: 30),
-              Text(
-                LocaleKeys.inquiry_category.tr(),
-                style: ThemeSetting.of(context).captionMedium.copyWith(
-                  color: ThemeSetting.of(context).primary,
-                  fontSize: 14.sp,
-                ),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              LocaleKeys.inquiry_category.tr(),
+              style: ThemeSetting.of(context).captionMedium.copyWith(
+                color: ThemeSetting.of(context).primary,
+                fontSize: 14.sp,
               ),
-              const SizedBox(height: 10),
-              CustomDropdownButton(
-                items: inquiryTList,
-                selectedItem: _selectedItem,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedItem = newValue;
-                  });
-                },
+            ),
+            const SizedBox(height: 10),
+            CustomDropdownButton(
+              items: inquiryTList,
+              selectedItem: _selectedItem,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedItem = newValue;
+                });
+              },
+            ),
+            const SizedBox(height: 40 ),
+            Text(
+              LocaleKeys.inquiries.tr(),
+              style: ThemeSetting.of(context).captionMedium.copyWith(
+                color: ThemeSetting.of(context).primary,
+                fontSize: 14.sp,
               ),
-              const SizedBox(height: 40 ),
-              Text(
-                LocaleKeys.inquiries.tr(),
-                style: ThemeSetting.of(context).captionMedium.copyWith(
-                  color: ThemeSetting.of(context).primary,
-                  fontSize: 14.sp,
-                ),
-              ),
-              const SizedBox(height: 10),
-              CustomTextField(
-                controller: inquiryController,
-                hintText: LocaleKeys.enter_inquiry_name.tr(),
-                validator: CustomValidatorWidget.validateName(
-                    value:  LocaleKeys.enter_inquiry_name.tr(),
-              ),
-              ),
-              const SizedBox(height: 6),
-              CustomTextField(
-                maxLength: 80,
-                controller: inquiryDescriptionController,
-                hintText: LocaleKeys.enter_inquiry_des.tr(),
-                maxLines: 8,
-                inputAction: TextInputAction.done,
-                validator: CustomValidatorWidget.validateName(
-                    value:  LocaleKeys.enter_inquiry_des.tr(),
-              ),
-              ),
-              const SizedBox(height: 10),
+            ),
+            const SizedBox(height: 10),
+            CustomTextField(
+              controller: inquiryController,
+              hintText: LocaleKeys.enter_inquiry_name.tr(),
+              validator: CustomValidatorWidget.validateName(
+                  value:  LocaleKeys.enter_inquiry_name.tr(),
+            ),
+            ),
+            const SizedBox(height: 6),
+            CustomTextField(
+              maxLength: 80,
+              controller: inquiryDescriptionController,
+              hintText: LocaleKeys.enter_inquiry_des.tr(),
+              maxLines: 8,
+              inputAction: TextInputAction.done,
+              validator: CustomValidatorWidget.validateName(
+                  value:  LocaleKeys.enter_inquiry_des.tr(),
+            ),
+            ),
+            const SizedBox(height: 10),
 
-              SingleChildScrollView(
-                scrollDirection:
-                Axis.horizontal,
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        if(selectedImages.length < 5){
-                          showModalBottomSheet(
+            SingleChildScrollView(
+              scrollDirection:
+              Axis.horizontal,
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: (){
+                      if(selectedImages.length < 5){
+                        showModalBottomSheet(
 
-                        context: context, builder: (context) {
-                      return Container(
-                        alignment: Alignment.center,
-                        height: 150.h,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            listTileCameraGalleryPicker(
-                              context: context,
-                              onTap: () {
-                                getImage(ImageSource.camera);
-                                Navigator.pop(context);
-                              },
-                              title: LocaleKeys.camera.tr(),
-                               icon:   Icons.camera_alt,
-                            ),
-                            listTileCameraGalleryPicker(
-                              context: context,
-                              onTap: () {
-                                getImage(ImageSource.gallery);
-                                Navigator.pop(context);
-                              },
-                              title: LocaleKeys.gallery.tr(),
-                              icon: Icons.photo,
-                            ),
-
-                          ],
-                        ),
-                      );
-                    });
-                        } else {
-                          CustomSnackBarWidget.showSnackBar(
+                      context: context, builder: (context) {
+                    return Container(
+                      alignment: Alignment.center,
+                      height: 150.h,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          listTileCameraGalleryPicker(
                             context: context,
-                            message: LocaleKeys.you_can_upload_up_to_5_images.tr(),
-                            color: ThemeSetting.of(context).primaryText,
-                          );
-                        }
-                      },
-                      child: Container(
-                        height: 60,
-                        width:  60,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
+                            onTap: () {
+                              getImage(ImageSource.camera);
+                              Navigator.pop(context);
+                            },
+                            title: LocaleKeys.camera.tr(),
+                             icon:   Icons.camera_alt,
+                          ),
+                          listTileCameraGalleryPicker(
+                            context: context,
+                            onTap: () {
+                              getImage(ImageSource.gallery);
+                              Navigator.pop(context);
+                            },
+                            title: LocaleKeys.gallery.tr(),
+                            icon: Icons.photo,
+                          ),
 
-                          border: Border.all( color: ThemeSetting.of(context).common0),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                           Image.asset(
-                             AppAssets.camera,
-                              width: 24,
-                              height: 24,
-                             color: ThemeSetting.of(context).primary,
-                            ),
-                            Text(
-                             "${selectedImages.length}/5",
-                              style: ThemeSetting.of(context).captionMedium.copyWith(
-                                color: ThemeSetting.of(context).disabledText,
-                              ),
-                            ),
+                        ],
+                      ),
+                    );
+                  });
+                      } else {
+                        CustomSnackBarWidget.showSnackBar(
+                          context: context,
+                          message: LocaleKeys.you_can_upload_up_to_5_images.tr(),
+                          color: ThemeSetting.of(context).primaryText,
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 60,
+                      width:  60,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
 
-                          ],
-                        ),
+                        border: Border.all( color: ThemeSetting.of(context).common0),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                         Image.asset(
+                           AppAssets.camera,
+                            width: 24,
+                            height: 24,
+                           color: ThemeSetting.of(context).primary,
+                          ),
+                          Text(
+                           "${selectedImages.length}/5",
+                            style: ThemeSetting.of(context).captionMedium.copyWith(
+                              color: ThemeSetting.of(context).disabledText,
+                            ),
+                          ),
+
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 6),
-                    selectedImages.isNotEmpty
-                        ?  SizedBox(
-                          height: 60,
-                          child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: selectedImages.length,
-                          itemBuilder: (context, i) {
-                            return Stack(
-                              alignment: Alignment.topRight,
-                              children: [
-                                Container(
-                                  height: 60,
-                                  width: 60,
-                                  margin: const EdgeInsets.only(right: 6),
+                  ),
+                  const SizedBox(width: 6),
+                  selectedImages.isNotEmpty
+                      ?  SizedBox(
+                        height: 60,
+                        child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: selectedImages.length,
+                        itemBuilder: (context, i) {
+                          return Stack(
+                            alignment: Alignment.topRight,
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                margin: const EdgeInsets.only(right: 6),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image:
+                                    FileImage(File(selectedImages[i].path)),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    selectedImages.removeAt(i);
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  height: 14,
+                                  width: 14,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                      image:
-                                      FileImage(File(selectedImages[i].path)),
-                                      fit: BoxFit.fill,
-                                    ),
+                                    color: ThemeSetting.of(context).black2,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.close,
+                                    color: ThemeSetting.of(context).white,
+                                    size: 8,
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedImages.removeAt(i);
-                                    });
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    height: 14,
-                                    width: 14,
-                                    decoration: BoxDecoration(
-                                      color: ThemeSetting.of(context).black2,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.close,
-                                      color: ThemeSetting.of(context).white,
-                                      size: 8,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
-                        ):Container(),
+                              ),
+                            ],
+                          );
+                        }),
+                      ):Container(),
 
-                  ],
-                ),
+                ],
               ),
-              const SizedBox(height: 40),
-              ButtonWidget.roundedButtonOrange(
-                context: context,
-                width: double.infinity,
-                color: ThemeSetting.of(context).black2,
-                text: LocaleKeys.one_one_inquiry.tr(),
-                onTap: () {
-                if (_inquiryFormKey.currentState!.validate() && _selectedItem != null) {
-                  context.pop();
-                  }else{
-                  CustomSnackBarWidget.showSnackBar(
-                    context: context,
-                    message: LocaleKeys.please_enter_inquiry_or_select_category.tr(),
-                    color: ThemeSetting.of(context).primaryText,
-                  );
-                }
-                },
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 40),
+            ButtonWidget.roundedButtonOrange(
+              context: context,
+              width: double.infinity,
+              color: ThemeSetting.of(context).black2,
+              text: LocaleKeys.one_one_inquiry.tr(),
+              onTap: () {
+              if (_inquiryFormKey.currentState!.validate() && _selectedItem != null) {
+                context.pop();
+                }else{
+                CustomSnackBarWidget.showSnackBar(
+                  context: context,
+                  message: LocaleKeys.please_enter_inquiry_or_select_category.tr(),
+                  color: ThemeSetting.of(context).primaryText,
+                );
+              }
+              },
+            ),
+          ],
         ),
       ),
-        ),
+    ),
       ),
     );
   }
