@@ -115,7 +115,31 @@ class ApiCalls {
     }
   }
 
-  Future<dynamic> getSajuData() async {
+  Future<dynamic> autobiographyCreateCall({required List<String> info, required String type}) async {
+    try {
+      dynamic payload = {
+        "image": info,
+        "type": type,
+      };
+      String jsonString = jsonEncode(payload);
+      String encodeData = JsonBase64Service.encodeJsonToBase64(jsonDecode(jsonString));
+      final data = await NetworkManager().postRequest('content/autobiography', {"data": encodeData});
+      if (data['data'] == null) return null;
+
+      dynamic decodeData = JsonBase64Service.decodeBase64ToJson(data['data']);
+      return decodeData;
+    } catch (e) {
+      if (e is CustomException) {
+        debugPrint('CustomException in contentPurchase: ${e.message}');
+        rethrow;
+      } else {
+        debugPrint('Unexpected error in contentPurchase: $e');
+        throw CustomException('Unexpected error occurred', 'UNEXPECTED_ERROR');
+      }
+    }
+  }
+
+  Future<dynamic> getJournalData() async {
     try {
       final data = await NetworkManager().getRequest('user/journal-list');
       if (data['data'] == null) return null;
@@ -139,7 +163,7 @@ class ApiCalls {
     }
   }
 
-  Future<dynamic> getJournalData() async {
+  Future<dynamic> getSajuData() async {
     try {
       final data = await NetworkManager().getRequest('user/daily-list');
       if (data['data'] == null) return null;
@@ -174,6 +198,4 @@ class ApiCalls {
       return null;
     }
   }
-
-
 }
