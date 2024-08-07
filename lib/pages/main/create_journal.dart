@@ -18,8 +18,8 @@ class CreateJournal extends StatefulWidget {
 }
 
 class _CreateJournalState extends State<CreateJournal> {
-  bool? isMyAlbumSelected = true;
-  bool? isInstagramSelected = false;
+  String selectedValue = '';
+  // bool? isInstagramSelected = false;
 
   List list = [];
   getSelectedImage() async {
@@ -56,7 +56,7 @@ class _CreateJournalState extends State<CreateJournal> {
                   fontSize: 16.sp,
                 ),
             onTap: () async {
-              if (isMyAlbumSelected == true || isInstagramSelected == true) {
+              if (selectedValue == 'Instagram' || selectedValue == 'Album') {
                 // SharedPreferencesManager.setString(
                 //     key: SharedprefString.animationScreen,
                 //     value: journalScreen);
@@ -115,15 +115,14 @@ class _CreateJournalState extends State<CreateJournal> {
                           .choose_a_photo_to_create_your_own_journal
                           .tr(),
                       isAlbum: true,
-                      showBorder: isMyAlbumSelected,
+                      showBorder: selectedValue == 'Album',
                       onTap: () {
                         setState(() {
-                          isMyAlbumSelected = !isMyAlbumSelected!;
-                          SharedPreferencesManager.setBool(
-                              key: SharedprefString.isMyAlbumSelected,
-                              value: isMyAlbumSelected ?? false);
+                          selectedValue = 'Album';
+                          // SharedPreferencesManager.setBool(
+                          //     key: SharedprefString.isMyAlbumSelected,
+                          //     value: isMyAlbumSelected ?? false);
                           context.pushNamed(selectAlbumsScreen);
-                          isInstagramSelected = false;
                         });
                       }),
                   const SizedBox(
@@ -136,11 +135,10 @@ class _CreateJournalState extends State<CreateJournal> {
                           .link_instagram_to_import_and_create_data
                           .tr(),
                       isAlbum: false,
-                      showBorder: isInstagramSelected,
+                      showBorder: selectedValue == 'Instagram' ? true : false,
                       onTap: () {
                         setState(() {
-                          isInstagramSelected = !isInstagramSelected!;
-                          isMyAlbumSelected = false;
+                          selectedValue = 'Instagram';
                         });
                       }),
                 ],
@@ -338,7 +336,7 @@ class _CreateJournalState extends State<CreateJournal> {
               //   ],
               // ),
               SizedBox(height: 30),
-              isMyAlbumSelected == true
+              selectedValue == 'Album'
                   ? Column(
                       children: [
                         Row(

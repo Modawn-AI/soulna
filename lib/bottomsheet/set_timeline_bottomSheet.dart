@@ -125,6 +125,7 @@ class SetTimelineBottomSheet {
                                       key: ValueKey(image),
                                       margin: const EdgeInsets.only(
                                           right: 5, left: 2),
+                                      alignment: Alignment.topLeft,
                                       decoration: BoxDecoration(
                                         border: Border.all(
                                             color:
@@ -136,6 +137,28 @@ class SetTimelineBottomSheet {
                                               NetworkImage(image['media_url']),
                                           fit: BoxFit.cover,
                                         ),
+                                      ),
+                                      child: Container(
+                                        height: 22,
+                                        width: 22,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          const BorderRadius.only(
+                                              topLeft:
+                                              Radius.circular(10),
+                                              bottomRight:
+                                              Radius.circular(10)),
+                                          color:
+                                          ThemeSetting.of(context).white,
+                                        ),
+                                        child: Text("${originalIndices[index] + 1}",
+                                            style: ThemeSetting.of(context)
+                                                .bodySmall
+                                                .copyWith(
+                                                color: ThemeSetting.of(
+                                                    context)
+                                                    .black2)),
                                       ),
                                     );
                                   },

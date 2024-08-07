@@ -39,6 +39,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
     mediaList =
         await SharedPreferencesManager.getMediaListFromSharedPreferences(
             key: SharedprefString.mediaList);
+    log('Media List ${mediaList.length}');
     setState(() {});
   }
 
@@ -96,7 +97,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
             const SizedBox(
               height: 20,
             ),
-            if (mediaList != [])
+            if (mediaList.isNotEmpty)
               Expanded(
                 child: GridView.builder(
                   padding:
@@ -255,7 +256,7 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
                       ),
                     );
                   }),
-            if (mediaList != [])
+            if (mediaList.isNotEmpty)
               Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),

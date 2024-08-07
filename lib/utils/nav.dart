@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/pages/auth/auth_screen.dart';
 import 'package:Soulna/pages/auth/find_password.dart';
@@ -13,8 +12,6 @@ import 'package:Soulna/pages/auth/signUp_password.dart';
 import 'package:Soulna/pages/auth/splash_screen.dart';
 import 'package:Soulna/pages/drawer/awaiting_response_screen.dart';
 import 'package:Soulna/pages/drawer/customer_service.dart';
-import 'package:Soulna/pages/drawer/no_past_diary_screen.dart';
-import 'package:Soulna/pages/drawer/no_past_fortune_screen.dart';
 import 'package:Soulna/pages/drawer/notice_screen.dart';
 import 'package:Soulna/pages/drawer/one_to_one_screen.dart';
 import 'package:Soulna/pages/drawer/past_diary.dart';
@@ -151,10 +148,8 @@ String selectPhotoScreen = 'SelectPhotoScreen';
 String autobiographyScreen = 'AutobiographyScreen';
 String animationScreen = 'AnimationScreen';
 String journalScreen = 'JournalScreen';
-String noPastFortuneScreen = 'NoPastFortuneScreen';
-String noPastDiaryScreen = 'NoPastDiaryScreen';
 String selectAlbumsScreen = 'SelectAlbumsScreen';
-String createJournal  = 'CreateJournal';
+String createJournal = 'CreateJournal';
 String tenTwelveScreen = 'TenTwelveScreen';
 String sajuDailyScreen = 'sajuDailyScreen';
 String profileSettingsScreen = 'ProfileSettingsScreen';
@@ -280,7 +275,7 @@ GoRouter createRouter(
           name: animationScreen,
           builder: (context, params) => AnimationScreen(
             apiFuture: Future.value(true),
-            screenName:'',
+            screenName: '',
           ),
         ),
         FFRoute(
@@ -302,14 +297,6 @@ GoRouter createRouter(
         FFRoute(
           name: journalScreen,
           builder: (context, params) => const JournalScreen(),
-        ),
-        FFRoute(
-          name: noPastFortuneScreen,
-          builder: (context, params) => const NoPastFortuneScreen(),
-        ),
-        FFRoute(
-          name: noPastDiaryScreen,
-          builder: (context, params) => const NoPastDiaryScreen(),
         ),
         FFRoute(
           name: selectAlbumsScreen,
