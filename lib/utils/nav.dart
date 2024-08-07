@@ -23,6 +23,7 @@ import 'package:Soulna/pages/drawer/privacy_policy_update_notice_screen.dart';
 import 'package:Soulna/pages/drawer/response_completed_screen.dart';
 import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
+import 'package:Soulna/pages/main/instagram_view.dart';
 import 'package:Soulna/pages/main/journal_screen.dart';
 import 'package:Soulna/pages/main/book_details_screen.dart';
 import 'package:Soulna/pages/main/saju_daily_screen.dart';
@@ -156,6 +157,7 @@ String createJournal = 'CreateJournal';
 String tenTwelveScreen = 'TenTwelveScreen';
 String sajuDailyScreen = 'sajuDailyScreen';
 String profileSettingsScreen = 'ProfileSettingsScreen';
+String instagramView = 'InstagramView';
 
 GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialManager) => GoRouter(
       initialLocation: '/',
@@ -173,7 +175,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         FFRoute(
           name: 'initialize',
           path: '/',
-          builder: (context, params) => const SplashScreen(),
+          builder: (context, params) => const SelectPhotoScreen(),
         ),
         FFRoute(
           name: authScreen,
@@ -320,6 +322,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         FFRoute(
           name: sajuDailyScreen,
           builder: (context, params) => const SajuDailyScreen(),
+        ),
+        FFRoute(
+          name: instagramView,
+          builder: (context, params) => const InstagramView(),
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
