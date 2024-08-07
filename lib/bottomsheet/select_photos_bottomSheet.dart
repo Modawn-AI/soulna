@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/utils/sharedPref_string.dart';
+import 'package:Soulna/utils/shared_preference.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SelectPhotosBottomSheet {
   static selectPhotoBottomSheet(
-      {required BuildContext context,
-      required List<Map<String, dynamic>> selectedImages}) {
+      {required BuildContext context, required List selectedImages}) {
     return showModalBottomSheet(
       elevation: 0,
       context: context,
@@ -19,7 +20,8 @@ class SelectPhotosBottomSheet {
               color: ThemeSetting.of(context).info,
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(15), topLeft: Radius.circular(15))),
-          child: ListView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 18),
@@ -58,16 +60,16 @@ class SelectPhotosBottomSheet {
                       return Container(
                         height: 60,
                         width: 60,
-                        key: ValueKey(image),
-                        margin: const EdgeInsets.only(right: 5, left: 2),
                         alignment: Alignment.topLeft,
+                        key: ValueKey(image),
+                        margin: const EdgeInsets.only(right: 5, left: 5),
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: ThemeSetting.of(context).white),
                             color: ThemeSetting.of(context).common4,
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: FileImage(File(image['path'])),
+                              image: NetworkImage(image['media_url']),
                               fit: BoxFit.cover,
                             )),
                       );
@@ -75,9 +77,7 @@ class SelectPhotosBottomSheet {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 50,
-              ),
+              Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: ButtonWidget.gradientButton(
@@ -89,9 +89,13 @@ class SelectPhotosBottomSheet {
                   onTap: () {
                     context.pop();
                     context.pop();
+                    SharedPreferencesManager.saveMediaListToSharedPreferences(
+                        key: SharedprefString.selectedMediaList,
+                        mediaList: selectedImages);
                   },
                 ),
               ),
+              //SizedBox(height: 10,)
             ],
           ),
         );

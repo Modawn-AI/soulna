@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/pages/auth/auth_screen.dart';
 import 'package:Soulna/pages/auth/find_password.dart';
@@ -13,8 +12,6 @@ import 'package:Soulna/pages/auth/signUp_password.dart';
 import 'package:Soulna/pages/auth/splash_screen.dart';
 import 'package:Soulna/pages/drawer/awaiting_response_screen.dart';
 import 'package:Soulna/pages/drawer/customer_service.dart';
-import 'package:Soulna/pages/drawer/no_past_diary_screen.dart';
-import 'package:Soulna/pages/drawer/no_past_fortune_screen.dart';
 import 'package:Soulna/pages/drawer/notice_screen.dart';
 import 'package:Soulna/pages/drawer/one_to_one_screen.dart';
 import 'package:Soulna/pages/drawer/past_diary.dart';
@@ -23,6 +20,7 @@ import 'package:Soulna/pages/drawer/privacy_policy_update_notice_screen.dart';
 import 'package:Soulna/pages/drawer/response_completed_screen.dart';
 import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
+import 'package:Soulna/pages/main/instagram_view.dart';
 import 'package:Soulna/pages/main/journal_screen.dart';
 import 'package:Soulna/pages/main/book_details_screen.dart';
 import 'package:Soulna/pages/main/saju_daily_screen.dart';
@@ -84,7 +82,8 @@ class AppStateNotifier extends ChangeNotifier {
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
   void update(BaseAuthUser newUser) async {
-    final shouldUpdate = user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
+    final shouldUpdate =
+        user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
     user = newUser;
 
@@ -149,15 +148,16 @@ String selectPhotoScreen = 'SelectPhotoScreen';
 String autobiographyScreen = 'AutobiographyScreen';
 String animationScreen = 'AnimationScreen';
 String journalScreen = 'JournalScreen';
-String noPastFortuneScreen = 'NoPastFortuneScreen';
-String noPastDiaryScreen = 'NoPastDiaryScreen';
 String selectAlbumsScreen = 'SelectAlbumsScreen';
 String createJournal = 'CreateJournal';
 String tenTwelveScreen = 'TenTwelveScreen';
 String sajuDailyScreen = 'sajuDailyScreen';
 String profileSettingsScreen = 'ProfileSettingsScreen';
+String instagramView = 'InstagramView';
 
-GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialManager) => GoRouter(
+GoRouter createRouter(
+        AppStateNotifier appStateNotifier, SocialManager socialManager) =>
+    GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
@@ -275,6 +275,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: animationScreen,
           builder: (context, params) => AnimationScreen(
             apiFuture: Future.value(true),
+            screenName: '',
           ),
         ),
         FFRoute(
@@ -298,14 +299,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           builder: (context, params) => const JournalScreen(),
         ),
         FFRoute(
-          name: noPastFortuneScreen,
-          builder: (context, params) => const NoPastFortuneScreen(),
-        ),
-        FFRoute(
-          name: noPastDiaryScreen,
-          builder: (context, params) => const NoPastDiaryScreen(),
-        ),
-        FFRoute(
           name: selectAlbumsScreen,
           builder: (context, params) => const SelectAlbumsScreen(),
         ),
@@ -321,17 +314,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: sajuDailyScreen,
           builder: (context, params) => const SajuDailyScreen(),
         ),
+        FFRoute(
+          name: instagramView,
+          builder: (context, params) => const InstagramView(),
+        ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
-        entries.where((e) => e.value != null).map((e) => MapEntry(e.key, e.value!)),
+        entries
+            .where((e) => e.value != null)
+            .map((e) => MapEntry(e.key, e.value!)),
       );
 }
 
 extension _GoRouterStateExtensions on GoRouterState {
-  Map<String, dynamic> get extraMap => extra != null ? extra as Map<String, dynamic> : {};
+  Map<String, dynamic> get extraMap =>
+      extra != null ? extra as Map<String, dynamic> : {};
 
   Map<String, dynamic> get allParams => <String, dynamic>{}
     ..addAll(pathParameters)
@@ -354,16 +354,21 @@ class FFParameters {
 
   // Parameters are empty if the params map is empty or if the only parameter
   // present is the special extra parameter reserved for the transition info.
-  bool get isEmpty => state.allParams.isEmpty || (state.extraMap.length == 1 && state.extraMap.containsKey(kTransitionInfoKey));
+  bool get isEmpty =>
+      state.allParams.isEmpty ||
+      (state.extraMap.length == 1 &&
+          state.extraMap.containsKey(kTransitionInfoKey));
 
-  bool isAsyncParam(MapEntry<String, dynamic> param) => asyncParams.containsKey(param.key) && param.value is String;
+  bool isAsyncParam(MapEntry<String, dynamic> param) =>
+      asyncParams.containsKey(param.key) && param.value is String;
 
   bool get hasFutures => state.allParams.entries.any(isAsyncParam);
 
   Future<bool> completeFutures() => Future.wait(
         state.allParams.entries.where(isAsyncParam).map(
           (param) async {
-            final doc = await asyncParams[param.key]!(param.value).onError((_, __) => null);
+            final doc = await asyncParams[param.key]!(param.value)
+                .onError((_, __) => null);
             if (doc != null) {
               futureParamValues[param.key] = doc;
               return true;
@@ -434,12 +439,14 @@ class FFRoute {
             key: state.pageKey,
             child: child,
             transitionDuration: Duration(milliseconds: 200),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(1, 0),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: child),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1, 0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child),
           );
         },
         routes: routes,
@@ -459,5 +466,8 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: true, transitionType: PageTransitionType.rightToLeft, duration: Duration(seconds: 1));
+  static TransitionInfo appDefault() => const TransitionInfo(
+      hasTransition: true,
+      transitionType: PageTransitionType.rightToLeft,
+      duration: Duration(seconds: 1));
 }

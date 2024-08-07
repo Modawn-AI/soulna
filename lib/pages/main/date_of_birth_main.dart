@@ -56,7 +56,9 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
   }
 
   String generateUserJson() {
-    String timeOfBirth = isChecked ? "Don't know" : "${_startTime?.format(context)} - ${_endTime?.format(context)}";
+    String timeOfBirth = isChecked
+        ? "Don't know"
+        : "${_startTime?.format(context)} - ${_endTime?.format(context)}";
 
     Map<String, dynamic> userMap = {
       "name": _nameController.text,
@@ -75,11 +77,14 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AnimationScreen(apiFuture: apiCallFuture),
+        builder: (context) => AnimationScreen(
+          apiFuture: apiCallFuture,
+          screenName: tenTwelveScreen,
+        ),
       ),
     );
 
-    context.pushReplacementNamed(tenTwelveScreen);
+    //context.pushReplacementNamed(tenTwelveScreen);
   }
 
   Future<bool> _mockApiCall() async {
@@ -89,7 +94,8 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
       return false;
     }
     if (response['status'] == 'success') {
-      TenTwelveModel model = TenTwelveModel.fromJson(response['tentwelve']['ten_twelve']);
+      TenTwelveModel model =
+          TenTwelveModel.fromJson(response['tentwelve']['ten_twelve']);
       print(model);
       return true;
     }
@@ -108,180 +114,206 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerBack(
-            context: context,
-            onTap: () async {
-              if (_currentPage == 0) {
-                context.goNamed(mainScreen);
-              } else {
-                _pageController.previousPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              }
-            }),
-        body: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            _buildDateOfBirthPage(),
-            _buildEditProfilePage(),
-          ],
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: ThemeSetting.of(context).secondaryBackground,
+          appBar: HeaderWidget.headerBack(
+              context: context,
+              onTap: () async {
+                if (_currentPage == 0) {
+                  context.goNamed(mainScreen);
+                } else {
+                  _pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              }),
+          body: PageView(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              _buildDateOfBirthPage(),
+              _buildEditProfilePage(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildDateOfBirthPage() {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-      children: [
-        Text(
-          LocaleKeys.please_set_your_date_of_birth.tr(),
-          style: ThemeSetting.of(context).labelSmall.copyWith(
-                color: ThemeSetting.of(context).primaryText,
-              ),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: Image.asset(
-                AppAssets.logo,
-                height: 17,
-                width: 17,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Flexible(
-              child: Text(
-                LocaleKeys.it_automatically_creates_a_diary_through_the_Ai_algorithm.tr(),
-                style: ThemeSetting.of(context).captionMedium,
-              ),
-            )
-          ],
-        ),
-        const SizedBox(height: 20),
-        CustomDatePicker(
-          onDateSelected: _handleDateSelected,
-        ),
-        const SizedBox(height: 40),
-        Text(
-          LocaleKeys.time.tr(),
-          style: ThemeSetting.of(context).captionMedium.copyWith(
-                color: ThemeSetting.of(context).primary,
-              ),
-        ),
-        const SizedBox(height: 10),
-        CustomRangeTimePicker(
-          initialStartTime: const TimeOfDay(hour: 9, minute: 0),
-          initialEndTime: const TimeOfDay(hour: 17, minute: 0),
-          onStartTimeChanged: (startTime) {
-            _startTime = startTime;
-          },
-          onEndTimeChanged: (endTime) {
-            _endTime = endTime;
-          },
-        ),
-        const SizedBox(height: 15),
-        Row(
-          children: [
-            CustomCheckbox(
-              initialValue: isChecked,
-              showIcon:  isChecked,
-              onChanged: () {
-                setState(() {
-                  isChecked = !isChecked;
-                });
-              },
-            ),
-            Text(
-              LocaleKeys.i_dont_know_my_time_of_birth.tr(),
-              style: ThemeSetting.of(context).captionMedium.copyWith(
-                    color: ThemeSetting.of(context).primaryText,
-                  ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 180),
-        SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            child: ButtonWidget.roundedButtonOrange(
-              context: context,
-              color: ThemeSetting.of(context).black2,
-              text: LocaleKeys.next.tr(),
-              onTap: () {
-                _pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              },
-            ),
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      floatingActionButton: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 18),
+          child: ButtonWidget.roundedButtonOrange(
+            context: context,
+            color: ThemeSetting.of(context).black2,
+            text: LocaleKeys.next.tr(),
+            onTap: () {
+              _pageController.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            },
           ),
         ),
-      ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+        children: [
+          Text(
+            LocaleKeys.please_set_your_date_of_birth.tr(),
+            style: ThemeSetting.of(context).labelSmall.copyWith(
+                  color: ThemeSetting.of(context).primaryText,
+                ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Image.asset(
+                  AppAssets.logo,
+                  height: 17,
+                  width: 17,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Flexible(
+                child: Text(
+                  LocaleKeys
+                      .it_automatically_creates_a_diary_through_the_Ai_algorithm
+                      .tr(),
+                  style: ThemeSetting.of(context).captionMedium,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          CustomDatePicker(
+            onDateSelected: _handleDateSelected,
+          ),
+          const SizedBox(height: 40),
+          Text(
+            LocaleKeys.time.tr(),
+            style: ThemeSetting.of(context).captionMedium.copyWith(
+                  color: ThemeSetting.of(context).primary,
+                ),
+          ),
+          const SizedBox(height: 10),
+          CustomRangeTimePicker(
+            initialStartTime: const TimeOfDay(hour: 9, minute: 0),
+            initialEndTime: const TimeOfDay(hour: 17, minute: 0),
+            onStartTimeChanged: (startTime) {
+              _startTime = startTime;
+            },
+            onEndTimeChanged: (endTime) {
+              _endTime = endTime;
+            },
+          ),
+          const SizedBox(height: 15),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isChecked = !isChecked;
+              });
+            },
+            child: Row(
+              children: [
+                CustomCheckbox(
+                  initialValue: isChecked,
+                  showIcon: isChecked,
+                  onChanged: () {
+                    setState(() {
+                      isChecked = !isChecked;
+                    });
+                  },
+                ),
+                Text(
+                  LocaleKeys.i_dont_know_my_time_of_birth.tr(),
+                  style: ThemeSetting.of(context).captionMedium.copyWith(
+                        color: ThemeSetting.of(context).primaryText,
+                      ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
     );
   }
 
   Widget _buildEditProfilePage() {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.asset(
-              width: 100,
-              height: 100,
-              AppAssets.user,
-              fit: BoxFit.cover,
-            ),
-            InkWell(
-              onTap: () {},
-              child: Image.asset(
-                AppAssets.camera,
-                width: 30,
-                height: 30,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 30),
-        Text(
-          LocaleKeys.name.tr(),
-          style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
-        ),
-        const SizedBox(height: 10),
-        CustomTextField(
-          controller: _nameController,
-          hintText: LocaleKeys.enter_your_name.tr(),
-        ),
-        const SizedBox(height: 30),
-        Text(
-          LocaleKeys.gender.tr(),
-          style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
-        ),
-        const SizedBox(height: 10),
-        CustomGenderToggleButton(
-          onGenderSelected: (gender) {
-            selectedGender = gender;
-          },
-        ),
-        const SizedBox(height: 70),
-        ButtonWidget.roundedButtonOrange(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        child: ButtonWidget.roundedButtonOrange(
           context: context,
+          width: MediaQuery.of(context).size.width,
           color: ThemeSetting.of(context).black2,
           text: LocaleKeys.daily_vibe_check.tr(),
           onTap: _callApiAndNavigate,
         ),
-        const SizedBox(height: 10),
-      ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset(
+                width: 100,
+                height: 100,
+                AppAssets.user,
+                fit: BoxFit.cover,
+              ),
+              InkWell(
+                onTap: () {},
+                child: Image.asset(
+                  AppAssets.camera,
+                  width: 30,
+                  height: 30,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 30),
+          Text(
+            LocaleKeys.name.tr(),
+            style: ThemeSetting.of(context)
+                .captionLarge
+                .copyWith(color: ThemeSetting.of(context).primary),
+          ),
+          const SizedBox(height: 10),
+          CustomTextField(
+            controller: _nameController,
+            hintText: LocaleKeys.enter_your_name.tr(),
+          ),
+          const SizedBox(height: 30),
+          Text(
+            LocaleKeys.gender.tr(),
+            style: ThemeSetting.of(context)
+                .captionLarge
+                .copyWith(color: ThemeSetting.of(context).primary),
+          ),
+          const SizedBox(height: 10),
+          CustomGenderToggleButton(
+            onGenderSelected: (gender) {
+              selectedGender = gender;
+            },
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
     );
   }
 }

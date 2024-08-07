@@ -191,7 +191,7 @@ class HeaderWidget {
             )
           ]);
 
-  static AppBar headerSettings({required BuildContext context, required GestureTapCallback onTap, String? actionIcon, GestureTapCallback? onTapOnMenu, Widget? switchTile}) => AppBar(
+  static AppBar headerSettings({required BuildContext context, required GestureTapCallback onTap, String? actionIcon, GestureTapCallback? onTapOnMenu, }) => AppBar(
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -219,7 +219,6 @@ class HeaderWidget {
               ),
             ),
           ),
-          Padding(padding: EdgeInsets.only(right: 18.w, top: 5.h), child: switchTile ?? SizedBox.shrink())
         ],
       );
 

@@ -21,91 +21,100 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      appBar: HeaderWidget.headerBack(
-        context: context,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerBack(
+          context: context,
+        ),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
 
-        //crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            LocaleKeys.please_set_your_date_of_birth.tr(),
-            style: ThemeSetting.of(context).labelSmall.copyWith(
-                  color: ThemeSetting.of(context).primaryText,
-                ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          CustomDatePicker(
-            onDateSelected: (data) {},
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Text(
-            LocaleKeys.time.tr(),
-            style: ThemeSetting.of(context).captionMedium.copyWith(
-                  color: ThemeSetting.of(context).primary,
-                ),
-          ),
-          const SizedBox(height: 10),
-          CustomRangeTimePicker(
-            initialStartTime: const TimeOfDay(hour: 9, minute: 0),
-            initialEndTime: const TimeOfDay(hour: 17, minute: 0),
-            onStartTimeChanged: (startTime) {
-              print("Start Time: ${startTime.format(context)}");
-            },
-            onEndTimeChanged: (endTime) {
-              print("End Time: ${endTime.format(context)}");
-            },
-          ),
-          const SizedBox(height: 15),
-          Row(
-            children: [
-              CustomCheckbox(
-                initialValue: isChecked,
-                showIcon: isChecked,
-                onChanged: () {
-                  setState(() {
-                    isChecked = !isChecked;
-                  });
-                },
-              ),
-              Text(
-                LocaleKeys.i_dont_know_my_time_of_birth.tr(),
-                style: ThemeSetting.of(context).captionMedium.copyWith(
-                      color: ThemeSetting.of(context).primaryText,
-                    ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 180,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h),
-              child: ButtonWidget.roundedButtonOrange(
-                context: context,
-                color: ThemeSetting.of(context).black2,
-                text: LocaleKeys.save.tr(),
-                onTap: () {
-                  context.pop();
-                  // SharedPreferences.getInstance();
-                  // SharedPreferencesManager.setString(
-                  //     key: SharedprefString.animationScreen,
-                  //     value: bookDetailScreen);
-                  //context.pushReplacementNamed(animationScreen);
-                },
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              LocaleKeys.please_set_your_date_of_birth.tr(),
+              style: ThemeSetting.of(context).labelSmall.copyWith(
+                    color: ThemeSetting.of(context).primaryText,
+                  ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            CustomDatePicker(
+              onDateSelected: (data) {},
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              LocaleKeys.time.tr(),
+              style: ThemeSetting.of(context).captionMedium.copyWith(
+                    color: ThemeSetting.of(context).primary,
+                  ),
+            ),
+            const SizedBox(height: 10),
+            CustomRangeTimePicker(
+              initialStartTime: const TimeOfDay(hour: 9, minute: 0),
+              initialEndTime: const TimeOfDay(hour: 17, minute: 0),
+              onStartTimeChanged: (startTime) {
+                print("Start Time: ${startTime.format(context)}");
+              },
+              onEndTimeChanged: (endTime) {
+                print("End Time: ${endTime.format(context)}");
+              },
+            ),
+            const SizedBox(height: 15),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isChecked = !isChecked;
+                });
+              },
+              child: Row(
+                children: [
+                  CustomCheckbox(
+                    initialValue: isChecked,
+                    showIcon: isChecked,
+                    onChanged: () {
+                      setState(() {
+                        isChecked = !isChecked;
+                      });
+                    },
+                  ),
+                  Text(
+                    LocaleKeys.i_dont_know_my_time_of_birth.tr(),
+                    style: ThemeSetting.of(context).captionMedium.copyWith(
+                          color: ThemeSetting.of(context).primaryText,
+                        ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 180,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h),
+                child: ButtonWidget.roundedButtonOrange(
+                  context: context,
+                  color: ThemeSetting.of(context).black2,
+                  text: LocaleKeys.save.tr(),
+                  onTap: () {
+                    context.pop();
+                    // SharedPreferences.getInstance();
+                    // SharedPreferencesManager.setString(
+                    //     key: SharedprefString.animationScreen,
+                    //     value: bookDetailScreen);
+                    //context.pushReplacementNamed(animationScreen);
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

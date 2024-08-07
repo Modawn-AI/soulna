@@ -1,11 +1,15 @@
+import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
+import 'package:get/instance_manager.dart';
 
 
 class Subscription {
+
+  static final authCon = Get.put(AuthController());
   static subscriptionWidget({required BuildContext context}) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
@@ -159,6 +163,7 @@ class Subscription {
                   text: LocaleKeys.start.tr(),
                   onTap: () {
                     context.pop();
+                    authCon.isPremium.value = true;
                     // _animationController = AnimationController(
                     //   duration: const Duration(milliseconds: 500),
                     //   vsync: this,

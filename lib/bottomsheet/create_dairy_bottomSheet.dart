@@ -13,21 +13,26 @@ import 'package:easy_localization/easy_localization.dart';
 class CreateDairyBottomSheet {
   static createDairyBottomSheet({
     required BuildContext context,
-    required List<Map<String, dynamic>> selectedImages,
+    required List<dynamic> selectedImages,
   }) {
     return showModalBottomSheet(
       elevation: 1,
       context: context,
       isScrollControlled: true,
       builder: (context) {
-        log('Selected Image ${selectedImages.length}');
-        List<Map<String, dynamic>> displayImages = List.from(selectedImages);
+        log('Selected Image ${selectedImages.first.toString()}');
+        List displayImages = List.from(selectedImages);
         while (displayImages.length < 10) {
-          displayImages.add(
-              {'path': AppAssets.rectangle, 'index': displayImages.length + 1});
+          displayImages.add({
+            'id': 0,
+            "media_type": "IMAGE",
+            "media_url":
+                "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+          });
         }
 
         return Container(
+          // alignment: Alignment.bottomCenter,
           height: MediaQuery.of(context).size.height * 0.88,
           decoration: BoxDecoration(
               color: ThemeSetting.of(context).info,
@@ -79,19 +84,19 @@ class CreateDairyBottomSheet {
                 child: Row(
                   children: [
                     squareWidget(
-                        image: selectedImages[0]['path'], context: context),
+                        image: displayImages[0]['media_url'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[1]['path'],
+                        image: displayImages[1]['media_url'],
                         width: 150,
                         context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[2]['path'], context: context),
+                        image: displayImages[2]['media_url'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
@@ -112,24 +117,24 @@ class CreateDairyBottomSheet {
                       width: 100,
                     ),
                     squareWidget(
-                        image: displayImages[3]['path'], context: context),
+                        image: displayImages[3]['media_url'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[4]['path'],
+                        image: displayImages[4]['media_url'],
                         width: 150,
                         context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[5]['path'], context: context),
+                        image: displayImages[5]['media_url'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[6]['path'],
+                        image: displayImages[6]['media_url'],
                         width: 150,
                         context: context),
                     const SizedBox(
@@ -146,19 +151,19 @@ class CreateDairyBottomSheet {
                 child: Row(
                   children: [
                     squareWidget(
-                        image: displayImages[7]['path'], context: context),
+                        image: displayImages[7]['media_url'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[8]['path'],
+                        image: displayImages[8]['media_url'],
                         width: 150,
                         context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[9]['path'], context: context),
+                        image: displayImages[9]['media_url'], context: context),
                     const SizedBox(
                       width: 8,
                     ),
@@ -169,29 +174,33 @@ class CreateDairyBottomSheet {
                 ),
               ),
               const SizedBox(
-                height: 100,
+                height: 60,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18),
-                child: ButtonWidget.gradientButtonWithImage(
-                    context: context,
-                    text: LocaleKeys.create_a_diary.tr(),
-                    onTap: () async {
-                      final apiCallFuture = _mockApiCall(selectedImages);
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                  child: ButtonWidget.gradientButtonWithImage(
+                      context: context,
+                      text: LocaleKeys.create_a_diary.tr(),
+                      onTap: () async {
+                        //  final apiCallFuture = _mockApiCall(selectedImages);
 
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              AnimationScreen(apiFuture: apiCallFuture),
-                        ),
-                      );
+                        // await Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) =>
+                        //         AnimationScreen(apiFuture: apiCallFuture,screenName: autobiographyScreen,),
+                        //   ),
+                        // );
 
-                      context.pushReplacementNamed(journalScreen);
-                    }),
+                        context.pushReplacementNamed(journalScreen);
+                      }),
+                ),
               ),
               const SizedBox(
-                height: 30,
+                height: 10,
               ),
             ],
           ),
@@ -271,9 +280,7 @@ class CreateDairyBottomSheet {
         border: Border.all(color: ThemeSetting.of(context).black1),
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: image == AppAssets.rectangle
-              ? AssetImage(image)
-              : FileImage(File(image)),
+          image: NetworkImage(image),
           fit: BoxFit.cover,
         ),
       ),
