@@ -6,6 +6,7 @@ import 'package:Soulna/utils/shared_preference.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // This file defines the CreateJournal widget, which is used for creating a journal.
@@ -39,6 +40,10 @@ class _CreateJournalState extends State<CreateJournal> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: ThemeSetting.of(context).secondaryBackground));
+
     getSelectedImage();
     return SafeArea(
       child: Scaffold(
