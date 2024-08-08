@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:Soulna/utils/package_exporter.dart';
@@ -8,7 +9,9 @@ import 'package:easy_localization/easy_localization.dart';
 
 class SelectPhotosBottomSheet {
   static selectPhotoBottomSheet(
-      {required BuildContext context, required List selectedImages}) {
+      {required BuildContext context,
+      required List selectedImages,
+      required bool isNetwork}) {
     return showModalBottomSheet(
       elevation: 0,
       context: context,
@@ -57,6 +60,7 @@ class SelectPhotosBottomSheet {
                     selectedImages.length,
                     (index) {
                       final image = selectedImages[index];
+                      log('Image ${image.path}');
                       return Container(
                         height: 60,
                         width: 60,
@@ -69,7 +73,9 @@ class SelectPhotosBottomSheet {
                             color: ThemeSetting.of(context).common4,
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: NetworkImage(image['media_url']),
+                              image: isNetwork
+                                  ? NetworkImage(image['media_url'])
+                                  : FileImage(File(image.path)),
                               fit: BoxFit.cover,
                             )),
                       );

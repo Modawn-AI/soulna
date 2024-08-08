@@ -45,7 +45,7 @@ class _CreateJournalState extends State<CreateJournal> {
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: ButtonWidget.roundedButtonOrange(
             context: context,
             height: 50.h,
@@ -122,7 +122,7 @@ class _CreateJournalState extends State<CreateJournal> {
                           // SharedPreferencesManager.setBool(
                           //     key: SharedprefString.isMyAlbumSelected,
                           //     value: isMyAlbumSelected ?? false);
-                          context.pushNamed(selectAlbumsScreen);
+                          context.pushNamed(selectPhotoFromDevice);
                         });
                       }),
                   const SizedBox(
@@ -139,6 +139,7 @@ class _CreateJournalState extends State<CreateJournal> {
                       onTap: () {
                         setState(() {
                           selectedValue = 'Instagram';
+                          context.pushNamed(selectPhotoFromInstagram);
                         });
                       }),
                 ],
@@ -335,7 +336,7 @@ class _CreateJournalState extends State<CreateJournal> {
               //     ),
               //   ],
               // ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               selectedValue == 'Album'
                   ? Column(
                       children: [

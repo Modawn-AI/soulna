@@ -19,18 +19,10 @@ import 'package:Soulna/pages/drawer/past_fortune_screen.dart';
 import 'package:Soulna/pages/drawer/privacy_policy_update_notice_screen.dart';
 import 'package:Soulna/pages/drawer/response_completed_screen.dart';
 import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
-import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/pages/main/instagram_view.dart';
-import 'package:Soulna/pages/main/journal_screen.dart';
-import 'package:Soulna/pages/main/book_details_screen.dart';
+import 'package:Soulna/pages/main/main.dart';
 import 'package:Soulna/pages/main/saju_daily_screen.dart';
 import 'package:Soulna/pages/main/ten_twelve_screen.dart';
-import 'package:Soulna/pages/main/create_journal.dart';
-import 'package:Soulna/pages/main/date_of_birth_main.dart';
-import 'package:Soulna/pages/main/auto_biography_screen.dart';
-import 'package:Soulna/pages/main/main_screen.dart';
-import 'package:Soulna/pages/main/select_albums_screen.dart';
-import 'package:Soulna/pages/main/select_photo_screen.dart';
 import 'package:Soulna/pages/notification/notification_settings.dart';
 import 'package:Soulna/pages/profile/edit_profile.dart';
 import 'package:Soulna/pages/profile/profile_settings_screen.dart';
@@ -144,11 +136,11 @@ String privacyPolicyUpdateNoticeScreen = 'PrivacyPolicyUpdateNoticeScreen';
 String responseCompletedScreen = 'ResponseCompletedScreen';
 String awaitingResponseScreen = 'AwaitingResponseScreen';
 String oneToOneScreen = 'OneToOneScreen';
-String selectPhotoScreen = 'SelectPhotoScreen';
+String selectPhotoFromDevice = 'SelectPhotoFromDevice';
+String selectPhotoFromInstagram = 'SelectPhotoFromInstagram';
 String autobiographyScreen = 'AutobiographyScreen';
 String animationScreen = 'AnimationScreen';
 String journalScreen = 'JournalScreen';
-String selectAlbumsScreen = 'SelectAlbumsScreen';
 String createJournal = 'CreateJournal';
 String tenTwelveScreen = 'TenTwelveScreen';
 String sajuDailyScreen = 'sajuDailyScreen';
@@ -264,8 +256,12 @@ GoRouter createRouter(
           builder: (context, params) => const TermsAndCondition(),
         ),
         FFRoute(
-          name: selectPhotoScreen,
-          builder: (context, params) => const SelectPhotoScreen(),
+          name: selectPhotoFromDevice,
+          builder: (context, params) => const SelectPhotoFromDevice(),
+        ),
+        FFRoute(
+          name: selectPhotoFromInstagram,
+          builder: (context, params) => const SelectPhotoFromInstagram(),
         ),
         FFRoute(
           name: autobiographyScreen,
@@ -298,10 +294,7 @@ GoRouter createRouter(
           name: journalScreen,
           builder: (context, params) => const JournalScreen(),
         ),
-        FFRoute(
-          name: selectAlbumsScreen,
-          builder: (context, params) => const SelectAlbumsScreen(),
-        ),
+
         FFRoute(
           name: createJournal,
           builder: (context, params) => const CreateJournal(),

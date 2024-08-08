@@ -18,14 +18,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // This file defines the SelectPhotoScreen widget, which is used for selecting photos.
 //Main screen ->  select photo screen -> set timeline -> create dairy
-class SelectPhotoScreen extends StatefulWidget {
-  const SelectPhotoScreen({super.key});
+class SelectPhotoFromInstagram extends StatefulWidget {
+  const SelectPhotoFromInstagram({super.key});
 
   @override
-  State<SelectPhotoScreen> createState() => _SelectPhotoScreenState();
+  State<SelectPhotoFromInstagram> createState() =>
+      _SelectPhotoFromInstagramState();
 }
 
-class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
+class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   String token = '', userid = '', username = '', accountType = '';
@@ -276,14 +277,18 @@ class _SelectPhotoScreenState extends State<SelectPhotoScreen> {
                                 //   content: Text('You can select only 10 images'),
                                 // ));
                               } else {
-                                log('selectedIndices ${selectedIndices.length}');
-                                originalIndices.addAll(selectedIndices);
+                                //log('selectedIndices ${selectedIndices.length}');
+                                originalIndices.addAll(List.generate(
+                                    selectedIndices.length, (index) => index));
 
                                 SetTimelineBottomSheet.setTimeLineBottomSheet(
                                     context: context,
                                     selectedImages: list,
                                     showHand: true,
-                                    originalIndices: originalIndices);
+                                    isNetwork: true,
+                                    originalIndices: originalIndices,
+                                  screen: autobiographyScreen
+                                );
                               }
                             }),
                       ),
