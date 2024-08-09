@@ -23,7 +23,7 @@ class UpdateDeleteDiaryBottomSheet {
               GestureDetector(
                 onTap: () {
                   context.pop();
-                  context.pushReplacementNamed(selectPhotoScreen);
+                  context.pushReplacementNamed(selectPhotoFromDevice);
                 },
                 child: Text(
                   LocaleKeys.update_my_diary.tr(),

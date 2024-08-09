@@ -222,7 +222,7 @@ class HeaderWidget {
         ],
       );
 
-  static headerCalendar({required BuildContext context, required String title, void Function()? onTap, void Function()? onTapOnDownArrow, String? image}) => AppBar(
+  static headerCalendar({required BuildContext context, required Widget title, void Function()? onTap, void Function()? onTapOnDownArrow, String? image}) => AppBar(
         elevation: 00,
         leadingWidth: 48,
         leading: GestureDetector(
@@ -241,12 +241,7 @@ class HeaderWidget {
           padding: EdgeInsets.only(top: 11.h),
           child: Row(
             children: [
-              Text(
-                title,
-                style: ThemeSetting.of(context).labelMedium.copyWith(
-                      fontSize: 20.sp,
-                    ),
-              ),
+              title,
               IconButton(
                   onPressed: onTapOnDownArrow,
                   icon: Icon(

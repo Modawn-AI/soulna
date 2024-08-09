@@ -9,19 +9,23 @@ import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateDairyBottomSheet {
   static createDairyBottomSheet({
     required BuildContext context,
     required List<dynamic> selectedImages,
+    required bool isNetwork,
+    required String screen,
   }) {
     return showModalBottomSheet(
       elevation: 1,
       context: context,
       isScrollControlled: true,
       builder: (context) {
-        log('Selected Image ${selectedImages.first.toString()}');
         List displayImages = List.from(selectedImages);
+
+        log('Display Image ${(selectedImages.toString().contains('media_url'))}');
         while (displayImages.length < 10) {
           displayImages.add({
             'id': 0,
@@ -30,7 +34,8 @@ class CreateDairyBottomSheet {
                 "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
           });
         }
-
+        log('displayImages ${displayImages.first.toString().contains('media_type')}');
+        log('displayImages ${displayImages.last.toString().contains('media_type')}');
         return Container(
           // alignment: Alignment.bottomCenter,
           height: MediaQuery.of(context).size.height * 0.88,
@@ -84,23 +89,46 @@ class CreateDairyBottomSheet {
                 child: Row(
                   children: [
                     squareWidget(
-                        image: displayImages[0]['media_url'], context: context),
+                        image: isNetwork == true
+                            ? displayImages[0]['media_url']
+                            : (displayImages[0]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[0]['media_url']
+                                : (displayImages[0] as XFile).path,
+                        context: context,
+                        isNetwork: isNetwork),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[1]['media_url'],
+                        image: isNetwork == true
+                            ? displayImages[1]['media_url']
+                            : (displayImages[1]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[1]['media_url']
+                                : (displayImages[1] as XFile).path,
                         width: 150,
+                        isNetwork: isNetwork,
                         context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[2]['media_url'], context: context),
+                        image: isNetwork == true
+                            ? displayImages[2]['media_url']
+                            : (displayImages[2]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[2]['media_url']
+                                : (displayImages[2] as XFile).path,
+                        isNetwork: isNetwork,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 100,
                     ),
                   ],
@@ -113,28 +141,58 @@ class CreateDairyBottomSheet {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 100,
                     ),
                     squareWidget(
-                        image: displayImages[3]['media_url'], context: context),
+                        image: isNetwork == true
+                            ? displayImages[3]['media_url']
+                            : (displayImages[3]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[3]['media_url']
+                                : (displayImages[3] as XFile).path,
+                        isNetwork: isNetwork,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[4]['media_url'],
+                        image: isNetwork == true
+                            ? displayImages[4]['media_url']
+                            : (displayImages[4]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[4]['media_url']
+                                : (displayImages[4] as XFile).path,
+                        isNetwork: isNetwork,
                         width: 150,
                         context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[5]['media_url'], context: context),
+                        image: isNetwork == true
+                            ? displayImages[5]['media_url']
+                            : (displayImages[5]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[5]['media_url']
+                                : (displayImages[5] as XFile).path,
+                        isNetwork: isNetwork,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[6]['media_url'],
+                        image: isNetwork == true
+                            ? displayImages[6]['media_url']
+                            : (displayImages[6]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[6]['media_url']
+                                : (displayImages[6] as XFile).path,
+                        isNetwork: isNetwork,
                         width: 150,
                         context: context),
                     const SizedBox(
@@ -151,23 +209,46 @@ class CreateDairyBottomSheet {
                 child: Row(
                   children: [
                     squareWidget(
-                        image: displayImages[7]['media_url'], context: context),
+                        image: isNetwork == true
+                            ? displayImages[7]['media_url']
+                            : (displayImages[7]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[7]['media_url']
+                                : (displayImages[7] as XFile).path,
+                        isNetwork: isNetwork,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[8]['media_url'],
+                        image: isNetwork == true
+                            ? displayImages[8]['media_url']
+                            : (displayImages[8]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[8]['media_url']
+                                : (displayImages[8] as XFile).path,
+                        isNetwork: isNetwork,
                         width: 150,
                         context: context),
                     const SizedBox(
                       width: 8,
                     ),
                     squareWidget(
-                        image: displayImages[9]['media_url'], context: context),
+                        image: isNetwork == true
+                            ? displayImages[9]['media_url']
+                            : (displayImages[9]
+                                    .toString()
+                                    .contains('media_url'))
+                                ? displayImages[9]['media_url']
+                                : (displayImages[9] as XFile).path,
+                        isNetwork: isNetwork,
+                        context: context),
                     const SizedBox(
                       width: 8,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 100,
                     )
                   ],
@@ -187,15 +268,17 @@ class CreateDairyBottomSheet {
                       onTap: () async {
                         //  final apiCallFuture = _mockApiCall(selectedImages);
 
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         AnimationScreen(apiFuture: apiCallFuture,screenName: autobiographyScreen,),
-                        //   ),
-                        // );
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AnimationScreen(
+                              apiFuture: Future.value(false),
+                              screenName: screen,
+                            ),
+                          ),
+                        );
 
-                        context.pushReplacementNamed(journalScreen);
+                        // context.pushReplacementNamed(screen);
                       }),
                 ),
               ),
@@ -271,8 +354,16 @@ class CreateDairyBottomSheet {
     }
   }
 
+  static bool isNetworkImage(dynamic image) {
+    return image is String && image.startsWith('http');
+  }
+
   static Widget squareWidget(
-      {required String image, double? width, required BuildContext context}) {
+      {required String image,
+      double? width,
+      required BuildContext context,
+      required bool isNetwork}) {
+    log('IsNetwork ${image.toString()}');
     return Container(
       width: width ?? 80,
       height: 80,
@@ -280,7 +371,11 @@ class CreateDairyBottomSheet {
         border: Border.all(color: ThemeSetting.of(context).black1),
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: NetworkImage(image),
+          image: isNetwork
+              ? NetworkImage(image)
+              : isNetworkImage(image)
+                  ? NetworkImage(image)
+                  : FileImage(File(image)),
           fit: BoxFit.cover,
         ),
       ),

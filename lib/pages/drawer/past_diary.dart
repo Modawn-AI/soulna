@@ -1,4 +1,5 @@
 import 'package:Soulna/bottomsheet/show_datePicker_bottomSheet.dart';
+import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
@@ -6,7 +7,11 @@ import 'package:Soulna/widgets/custom_calendar_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 // This file defines the PastDiary widget, which displays past diary entries.
 
@@ -20,6 +25,7 @@ class PastDiary extends StatefulWidget {
 class _PastDiaryState extends State<PastDiary> {
   int index = 0;
   bool showData = true;
+  //DateTime selectedDate = DateTime.now();
   final List<NeatCleanCalendarEvent> _eventList = [
     NeatCleanCalendarEvent('MultiDay Event A',
         startTime: DateTime(DateTime.now().year, DateTime.now().month,
@@ -71,16 +77,41 @@ class _PastDiaryState extends State<PastDiary> {
         color: Colors.indigo),
   ];
 
+  final authCon = Get.put(AuthController());
+  @override
+  void initState() {
+    authCon.selectedDate.value = DateTime.now();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: ThemeSetting.of(context).secondaryBackground,
+    ));
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         appBar: HeaderWidget.headerCalendar(
           context: context,
-          title: DateFormat.yMMMM().format(DateTime.now()),
+          title: Obx(
+            () => Text(
+              DateFormat.yMMMM().format(authCon.selectedDate.value),
+              style: ThemeSetting.of(context).labelMedium.copyWith(
+                    fontSize: 20.sp,
+                  ),
+            ),
+          ),
           onTapOnDownArrow: () {
-            ShowDatePickerBottomSheet.showDatePicker(context: context);
+            ShowDatePickerBottomSheet.showDatePicker(
+              context: context,
+              onDateSelected: (date) {
+                setState(
+                  () {
+                    authCon.selectedDate.value = date;
+                  },
+                );
+              },
+            );
           },
           onTap: () async {
             setState(() {
@@ -103,10 +134,12 @@ class _PastDiaryState extends State<PastDiary> {
         ? ListView.separated(
             shrinkWrap: true,
             itemCount: 3,
-            itemBuilder: (context, index) => listTile(
-                date: 'July 2024',
-                description:
-                    'It\s a day where you can expect results proportional to your efforts.'),
+            itemBuilder: (context, index) => Obx(
+              () => listTile(
+                  date: DateFormat.yMMMM().format(authCon.selectedDate.value),
+                  description:
+                      'It\s a day where you can expect results proportional to your efforts.'),
+            ),
             separatorBuilder: (BuildContext context, int index) {
               return CustomDividerWidget(
                 color: ThemeSetting.of(context).common0,
@@ -119,6 +152,7 @@ class _PastDiaryState extends State<PastDiary> {
 
   pastFortuneCalenderView() => CustomCalendarWidget(
         eventsList: _eventList,
+        initialDate: authCon.selectedDate.value,
         showEventWidget: ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           itemCount: _eventList.length,

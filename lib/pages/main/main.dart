@@ -5,5 +5,5 @@ export 'create_journal.dart';
 export 'date_of_birth_main.dart';
 export 'auto_biography_screen.dart';
 export 'main_screen.dart';
-export 'select_albums_screen.dart';
-export 'select_photo_screen.dart';
+export 'select_photo_from_device.dart';
+export 'select_photo_from_instagram.dart';

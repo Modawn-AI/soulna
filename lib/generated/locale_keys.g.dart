@@ -18,6 +18,7 @@ abstract class  LocaleKeys {
   static const check_your_fortune_for_today_n = 'check_your_fortune_for_today_n';
   static const check_today_diary = 'check_today_diary';
   static const check_your_Journal = 'check_your_Journal';
+  static const create_your_autoBiography = 'create_your_autoBiography';
   static const yearly = 'yearly';
   static const monthly = 'monthly';
   static const start = 'start';

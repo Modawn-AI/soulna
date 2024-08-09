@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/image_model.dart';
@@ -10,6 +11,8 @@ import 'package:Soulna/bottomsheet/subscription_bottomsheet.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
+import 'package:Soulna/utils/sharedPref_string.dart';
+import 'package:Soulna/utils/shared_preference.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/custom_switchtile_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
@@ -136,13 +139,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         linear2: ThemeSetting.of(context).linearContainer4,
         image: AppAssets.image2,
         text: LocaleKeys.create_today_diary.tr(),
-        route: selectPhotoScreen,
+        route: selectPhotoFromDevice,
       ),
       ImageModel(
         linear1: ThemeSetting.of(context).linearContainer5,
         linear2: ThemeSetting.of(context).linearContainer6,
         image: AppAssets.image3,
-        text: LocaleKeys.create_your_journal.tr(),
+        text: LocaleKeys.create_your_autoBiography.tr(),
         route: createJournal,
       ),
     ];
@@ -252,7 +255,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         if (isUserInfo && e.key == 0) {
                           _callApiAndNavigate();
                         } else {
-                          context.pushNamed("${image.route}");
+                          log('Key ${e.key }');
+                          SharedPreferencesManager.setString(
+                              key: SharedprefString.cardNumber,
+                              value: e.key.toString());
+                          context.pushNamed(image.route);
                         }
                       },
                       child: Container(

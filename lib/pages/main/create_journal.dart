@@ -6,6 +6,7 @@ import 'package:Soulna/utils/shared_preference.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // This file defines the CreateJournal widget, which is used for creating a journal.
@@ -39,13 +40,17 @@ class _CreateJournalState extends State<CreateJournal> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: ThemeSetting.of(context).secondaryBackground));
+
     getSelectedImage();
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: ButtonWidget.roundedButtonOrange(
             context: context,
             height: 50.h,
@@ -122,7 +127,7 @@ class _CreateJournalState extends State<CreateJournal> {
                           // SharedPreferencesManager.setBool(
                           //     key: SharedprefString.isMyAlbumSelected,
                           //     value: isMyAlbumSelected ?? false);
-                          context.pushNamed(selectAlbumsScreen);
+                          context.pushNamed(selectPhotoFromDevice);
                         });
                       }),
                   const SizedBox(
@@ -139,6 +144,7 @@ class _CreateJournalState extends State<CreateJournal> {
                       onTap: () {
                         setState(() {
                           selectedValue = 'Instagram';
+                          context.pushNamed(selectPhotoFromInstagram);
                         });
                       }),
                 ],
@@ -335,7 +341,7 @@ class _CreateJournalState extends State<CreateJournal> {
               //     ),
               //   ],
               // ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               selectedValue == 'Album'
                   ? Column(
                       children: [

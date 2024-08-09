@@ -12,15 +12,9 @@ class AuthController extends GetxController {
   final emailVerificationCodeCon = TextEditingController().obs;
   final genderSelection = ''.obs;
   final isPremium = false.obs;
-
   final showVerificationCode = false.obs;
 
-  RxString token = ''.obs,
-      userid = ''.obs,
-      username = ''.obs,
-      accountType = ''.obs;
-  RxInt mediaCount = 1.obs;
-  RxList mediaList = [].obs;
+  final selectedDate = DateTime.now().obs;
 
   @override
   void dispose() {
