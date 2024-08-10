@@ -28,14 +28,12 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
       BookDetailModel(
           title: LocaleKeys.overall.tr(),
           backgroundColor: ThemeSetting.of(context).tertiary,
-          des:
-              'A day of learning and mastering new things. There\'s no end to studying. It\'s not just about academic learning; everything necessary in daily life can be a subject of study. Overreaching ambitions can lead to failure.',
+          des: 'A day of learning and mastering new things. There\'s no end to studying. It\'s not just about academic learning; everything necessary in daily life can be a subject of study. Overreaching ambitions can lead to failure.',
           textColor: ThemeSetting.of(context).primary),
       BookDetailModel(
           title: LocaleKeys.financial.tr(),
           backgroundColor: ThemeSetting.of(context).lightGreen,
-          des:
-              'A day of learning and mastering new things. There\'s no end to studying. It\'s not just about academic learning; everything necessary in daily life can be a subject of study. Overreaching ambitions can lead to failure.',
+          des: 'A day of learning and mastering new things. There\'s no end to studying. It\'s not just about academic learning; everything necessary in daily life can be a subject of study. Overreaching ambitions can lead to failure.',
           textColor: ThemeSetting.of(context).green),
     ];
 
@@ -68,16 +66,12 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     ];
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: ThemeSetting.isLightTheme(context)
-          ? ThemeSetting.of(context).tertiary1
-          : ThemeSetting.of(context).common2,
+      statusBarColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).tertiary1 : ThemeSetting.of(context).common2,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.isLightTheme(context)
-            ? ThemeSetting.of(context).tertiary1
-            : ThemeSetting.of(context).common2,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).tertiary1 : ThemeSetting.of(context).common2,
+      body: SafeArea(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ListView(
             children: [
@@ -86,8 +80,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   onTap: () {
                     context.pop();
                     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                      statusBarColor:
-                          ThemeSetting.of(context).secondaryBackground,
+                      statusBarColor: ThemeSetting.of(context).secondaryBackground,
                     ));
                   },
                   backgroundColor: ThemeSetting.of(context).tertiary1),
@@ -102,9 +95,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               Center(
                 child: Text(
                   'October 7, 2024',
-                  style: ThemeSetting.of(context)
-                      .headlineMedium
-                      .copyWith(color: ThemeSetting.of(context).primaryText),
+                  style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -126,10 +117,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   Container(
                     height: 260,
                     width: 212,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            color: ThemeSetting.of(context).primary)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: ThemeSetting.of(context).primary)),
                     padding: const EdgeInsets.all(4),
                     child: Image.asset(AppAssets.bookImage),
                   ),
@@ -143,9 +131,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   vertical: 30,
                 ),
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30)),
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
                   color: ThemeSetting.of(context).secondaryBackground,
                 ),
                 child: Column(
@@ -196,9 +182,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                       height: 40,
                     ),
                     Image.asset(
-                      ThemeSetting.isLightTheme(context)
-                          ? AppAssets.details1
-                          : AppAssets.detailsDark,
+                      ThemeSetting.isLightTheme(context) ? AppAssets.details1 : AppAssets.detailsDark,
                       height: 270,
                     ),
                     const SizedBox(
@@ -217,30 +201,15 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             padding: const EdgeInsets.only(right: 10),
                             child: Container(
                                 width: MediaQuery.of(context).size.width * .80,
-                                decoration: BoxDecoration(
-                                    color: ThemeSetting.isLightTheme(context)
-                                        ? detail.backgroundColor ??
-                                            ThemeSetting.of(context).tertiary
-                                        : ThemeSetting.of(context).common2,
-                                    borderRadius: BorderRadius.circular(15)),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 20),
+                                decoration: BoxDecoration(color: ThemeSetting.isLightTheme(context) ? detail.backgroundColor ?? ThemeSetting.of(context).tertiary : ThemeSetting.of(context).common2, borderRadius: BorderRadius.circular(15)),
+                                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Flexible(
                                       child: Text(
                                         detail.title,
-                                        style: ThemeSetting.of(context)
-                                            .titleMedium
-                                            .copyWith(
-                                                color: ThemeSetting
-                                                        .isLightTheme(context)
-                                                    ? detail.textColor ??
-                                                        ThemeSetting.of(context)
-                                                            .primary
-                                                    : ThemeSetting.of(context)
-                                                        .white),
+                                        style: ThemeSetting.of(context).titleMedium.copyWith(color: ThemeSetting.isLightTheme(context) ? detail.textColor ?? ThemeSetting.of(context).primary : ThemeSetting.of(context).white),
                                       ),
                                     ),
                                     const SizedBox(
@@ -250,16 +219,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                       flex: 4,
                                       child: Text(
                                         detail.des.toString(),
-                                        style: ThemeSetting.of(context)
-                                            .bodyMedium
-                                            .copyWith(
-                                                color: ThemeSetting
-                                                        .isLightTheme(context)
-                                                    ? ThemeSetting.of(context)
-                                                        .black2
-                                                    : ThemeSetting.of(context)
-                                                        .common0
-                                                        .withOpacity(0.4)),
+                                        style: ThemeSetting.of(context).bodyMedium.copyWith(color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).black2 : ThemeSetting.of(context).common0.withOpacity(0.4)),
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -270,8 +230,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                     Flexible(
                                       child: Text(
                                         'more',
-                                        style:
-                                            ThemeSetting.of(context).bodyMedium,
+                                        style: ThemeSetting.of(context).bodyMedium,
                                         maxLines: 4,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -295,9 +254,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                       radius: 45,
                       backgroundColor: ThemeSetting.of(context).common2,
                       child: Image.asset(
-                        ThemeSetting.isLightTheme(context)
-                            ? AppAssets.character
-                            : AppAssets.characterDark,
+                        ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
                         height: 60,
                       ),
                     ),
@@ -328,16 +285,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         children: List.generate(
                           hashTag.length,
                           (index) {
-                            return ButtonWidget.roundedButtonOrange(
-                                context: context,
-                                text: hashTag[index],
-                                height: 30,
-                                color: ThemeSetting.of(context).alternate,
-                                textStyle: ThemeSetting.of(context)
-                                    .captionLarge
-                                    .copyWith(
-                                        color:
-                                            ThemeSetting.of(context).primary));
+                            return ButtonWidget.roundedButtonOrange(context: context, text: hashTag[index], height: 30, color: ThemeSetting.of(context).alternate, textStyle: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary));
                           },
                         )),
                     const SizedBox(
@@ -372,16 +320,14 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             (index) {
                               BookDetailModel detail = thingsList[index];
                               return Chip(
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 padding: const EdgeInsets.all(2),
                                 avatar: Image.asset(
                                   detail.image!,
                                   height: 30,
                                   // color: ThemeSetting.of(context).common2,
                                 ),
-                                backgroundColor: ThemeSetting.of(context)
-                                    .secondaryBackground,
+                                backgroundColor: ThemeSetting.of(context).secondaryBackground,
                                 label: Text(
                                   detail.title,
                                   style: ThemeSetting.of(context).captionLarge,
@@ -435,10 +381,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
       height: MediaQuery.of(context).size.height * 0.20,
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-          color: ThemeSetting.of(context).secondaryBackground,
-          borderRadius: const BorderRadius.horizontal(
-              right: Radius.circular(15), left: Radius.circular(15))),
+      decoration: BoxDecoration(color: ThemeSetting.of(context).secondaryBackground, borderRadius: const BorderRadius.horizontal(right: Radius.circular(15), left: Radius.circular(15))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

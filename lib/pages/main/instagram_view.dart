@@ -7,10 +7,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 class InstagramView extends StatefulWidget {
   const InstagramView({
     super.key,
-     this.redirectUrl,
-     this.onComplete,
-     this.instaAppId,
-     this.instaAppSecret,
+    this.redirectUrl,
+    this.onComplete,
+    this.instaAppId,
+    this.instaAppSecret,
     this.javascriptChannel = 'InstaLogin',
   });
   final String? redirectUrl, instaAppId, instaAppSecret, javascriptChannel;
@@ -28,8 +28,7 @@ class _InstagramViewState extends State<InstagramView> {
   void initState() {
     super.initState();
     if (kIsWeb == false) {
-      final WebViewController control =
-          WebViewController.fromPlatformCreationParams(
+      final WebViewController control = WebViewController.fromPlatformCreationParams(
         const PlatformWebViewControllerCreationParams(),
       );
 
@@ -101,9 +100,9 @@ class _InstagramViewState extends State<InstagramView> {
     await services
         .getTokenAndUserID(
       code: code,
-      appid: widget.instaAppId??'',
-      redirectUrl: widget.redirectUrl??'',
-      appSecret: widget.instaAppSecret??'',
+      appid: widget.instaAppId ?? '',
+      redirectUrl: widget.redirectUrl ?? '',
+      appSecret: widget.instaAppSecret ?? '',
     )
         .then(
       (token) async {
@@ -134,11 +133,9 @@ class _InstagramViewState extends State<InstagramView> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: kIsWeb
-            ? const Text('Under Construction')
-            : WebViewWidget(controller: controller),
+    return Scaffold(
+      body: SafeArea(
+        child: kIsWeb ? const Text('Under Construction') : WebViewWidget(controller: controller),
       ),
     );
   }

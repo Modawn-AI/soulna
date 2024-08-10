@@ -43,10 +43,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).tertiary,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).tertiary,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).tertiary,
+      body: SafeArea(
+        child: SizedBox(
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,

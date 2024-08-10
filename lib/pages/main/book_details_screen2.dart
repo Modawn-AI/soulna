@@ -52,23 +52,16 @@ class _BookDetailsScreen2State extends State<BookDetailsScreen2> {
       ),
     ];
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: ThemeSetting.isLightTheme(context)
-            ? ThemeSetting.of(context).redAccent
-            : ThemeSetting.of(context).common2));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).redAccent : ThemeSetting.of(context).common2));
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.isLightTheme(context)
-            ? ThemeSetting.of(context).redAccent
-            : ThemeSetting.of(context).common2,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).redAccent : ThemeSetting.of(context).common2,
+      body: SafeArea(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ListView(
             children: [
-              HeaderWidget.headerBack(
-                  context: context,
-                  backgroundColor: ThemeSetting.of(context).redAccent),
+              HeaderWidget.headerBack(context: context, backgroundColor: ThemeSetting.of(context).redAccent),
               Image.asset(
                 AppAssets.logo,
                 height: 37,
@@ -80,9 +73,7 @@ class _BookDetailsScreen2State extends State<BookDetailsScreen2> {
               Center(
                 child: Text(
                   'October 7, 2024',
-                  style: ThemeSetting.of(context)
-                      .headlineMedium
-                      .copyWith(color: ThemeSetting.of(context).primaryText),
+                  style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -102,10 +93,7 @@ class _BookDetailsScreen2State extends State<BookDetailsScreen2> {
                   Container(
                     height: 260,
                     width: 212,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            color: ThemeSetting.of(context).redBorder)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: ThemeSetting.of(context).redBorder)),
                     padding: const EdgeInsets.all(4),
                     child: Image.asset(AppAssets.bookImage),
                   ),
@@ -179,9 +167,7 @@ class _BookDetailsScreen2State extends State<BookDetailsScreen2> {
                       radius: 45,
                       backgroundColor: ThemeSetting.of(context).common2,
                       child: Image.asset(
-                        ThemeSetting.isLightTheme(context)
-                            ? AppAssets.character
-                            : AppAssets.characterDark,
+                        ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
                         height: 60,
                       ),
                     ),
@@ -212,16 +198,7 @@ class _BookDetailsScreen2State extends State<BookDetailsScreen2> {
                         children: List.generate(
                           hashTag.length,
                           (index) {
-                            return ButtonWidget.roundedButtonOrange(
-                                context: context,
-                                text: hashTag[index],
-                                height: 30,
-                                color: ThemeSetting.of(context).alternate,
-                                textStyle: ThemeSetting.of(context)
-                                    .captionLarge
-                                    .copyWith(
-                                        color:
-                                            ThemeSetting.of(context).primary));
+                            return ButtonWidget.roundedButtonOrange(context: context, text: hashTag[index], height: 30, color: ThemeSetting.of(context).alternate, textStyle: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary));
                           },
                         )),
                     const SizedBox(
@@ -233,10 +210,7 @@ class _BookDetailsScreen2State extends State<BookDetailsScreen2> {
                     const SizedBox(
                       height: 40,
                     ),
-                    Text(
-                        textAlign: TextAlign.center,
-                        LocaleKeys.things_that_bring_me_luck_today.tr(),
-                        style: ThemeSetting.of(context).titleLarge),
+                    Text(textAlign: TextAlign.center, LocaleKeys.things_that_bring_me_luck_today.tr(), style: ThemeSetting.of(context).titleLarge),
                     SizedBox(height: 30.h),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -249,15 +223,13 @@ class _BookDetailsScreen2State extends State<BookDetailsScreen2> {
                             (index) {
                               BookDetailModel detail = thingsList[index];
                               return Chip(
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 padding: const EdgeInsets.all(2),
                                 avatar: Image.asset(
                                   detail.image!,
                                   height: 30,
                                 ),
-                                backgroundColor: ThemeSetting.of(context)
-                                    .secondaryBackground,
+                                backgroundColor: ThemeSetting.of(context).secondaryBackground,
                                 label: Text(
                                   detail.title,
                                   style: ThemeSetting.of(context).captionLarge,
@@ -314,10 +286,7 @@ class _BookDetailsScreen2State extends State<BookDetailsScreen2> {
       height: MediaQuery.of(context).size.height * 0.18,
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-          color: ThemeSetting.of(context).secondaryBackground,
-          borderRadius: const BorderRadius.horizontal(
-              right: Radius.circular(15), left: Radius.circular(15))),
+      decoration: BoxDecoration(color: ThemeSetting.of(context).secondaryBackground, borderRadius: const BorderRadius.horizontal(right: Radius.circular(15), left: Radius.circular(15))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

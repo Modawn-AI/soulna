@@ -12,7 +12,7 @@ class TermsAndCondition extends StatefulWidget {
   State<TermsAndCondition> createState() => _TermsAndConditionState();
 }
 
-class _TermsAndConditionState extends State<TermsAndCondition> with SingleTickerProviderStateMixin{
+class _TermsAndConditionState extends State<TermsAndCondition> with SingleTickerProviderStateMixin {
   List termsAndConditionList = [
     {
       'title': LocaleKeys.article_1.tr(),
@@ -24,85 +24,88 @@ class _TermsAndConditionState extends State<TermsAndCondition> with SingleTicker
     },
   ];
   late TabController _tabController;
-@override
+  @override
   void initState() {
-  _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
+
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerWithTitle(
-          context: context,
-          title:
-          LocaleKeys.terms_and_conditions.tr(),
-        ),
-      body: CustomTabBar(
-        tabs:  [
-      Tab(text: LocaleKeys.terms_and_conditions.tr()),
-      Tab(text: LocaleKeys.privacy_policy.tr()),
-        ],
-        tabViews: [
-      termsAndConditions(),
-      Center(
-        child: Text(
-          LocaleKeys.privacy_policy.tr(),
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerWithTitle(
+        context: context,
+        title: LocaleKeys.terms_and_conditions.tr(),
       ),
-        ],
-        tabController: _tabController,
-      ),
+      body: SafeArea(
+        child: CustomTabBar(
+          tabs: [
+            Tab(text: LocaleKeys.terms_and_conditions.tr()),
+            Tab(text: LocaleKeys.privacy_policy.tr()),
+          ],
+          tabViews: [
+            termsAndConditions(),
+            Center(
+              child: Text(
+                LocaleKeys.privacy_policy.tr(),
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
+          ],
+          tabController: _tabController,
+        ),
       ),
     );
   }
+
   termsAndConditions() {
     return ListView.builder(
-       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
       itemCount: termsAndConditionList.length,
-        itemBuilder: (BuildContext context,i){
-          return termsAndConditionBox(
-                 context: context,
-                 title: termsAndConditionList[i]['title'],
-                 description: termsAndConditionList[i]['description'],
-      );
-    },
+      itemBuilder: (BuildContext context, i) {
+        return termsAndConditionBox(
+          context: context,
+          title: termsAndConditionList[i]['title'],
+          description: termsAndConditionList[i]['description'],
+        );
+      },
     );
   }
+
   termsAndConditionBox({
-   required BuildContext context,
+    required BuildContext context,
     required String title,
     required String description,
-}){
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        title,
-        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-          fontSize: 16.sp,
-          fontWeight: FontWeight.bold,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+              ),
         ),
-      ),
-      SizedBox(height: 10.h),
-      Text(
-        description,
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-          fontSize: 14.sp,
+        SizedBox(height: 10.h),
+        Text(
+          description,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontSize: 14.sp,
+              ),
         ),
-      ),
-      SizedBox(height: 30.h),
-    ],
-  );
+        SizedBox(height: 30.h),
+      ],
+    );
   }
 }

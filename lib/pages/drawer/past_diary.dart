@@ -27,54 +27,13 @@ class _PastDiaryState extends State<PastDiary> {
   bool showData = true;
   //DateTime selectedDate = DateTime.now();
   final List<NeatCleanCalendarEvent> _eventList = [
-    NeatCleanCalendarEvent('MultiDay Event A',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('Allday Event B',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day - 2, 14, 30),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 17, 0),
-        color: Colors.pink,
-        isAllDay: true),
-    NeatCleanCalendarEvent('Normal Event D',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 14, 30),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 17, 0),
-        color: Colors.indigo),
+    NeatCleanCalendarEvent('MultiDay Event A', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('Allday Event B', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2, 14, 30), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 17, 0), color: Colors.pink, isAllDay: true),
+    NeatCleanCalendarEvent('Normal Event D', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 14, 30), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 17, 0), color: Colors.indigo),
   ];
 
   final authCon = Get.put(AuthController());
@@ -83,48 +42,49 @@ class _PastDiaryState extends State<PastDiary> {
     authCon.selectedDate.value = DateTime.now();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerCalendar(
-          context: context,
-          title: Obx(
-            () => Text(
-              DateFormat.yMMMM().format(authCon.selectedDate.value),
-              style: ThemeSetting.of(context).labelMedium.copyWith(
-                    fontSize: 20.sp,
-                  ),
-            ),
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerCalendar(
+        context: context,
+        title: Obx(
+          () => Text(
+            DateFormat.yMMMM().format(authCon.selectedDate.value),
+            style: ThemeSetting.of(context).labelMedium.copyWith(
+                  fontSize: 20.sp,
+                ),
           ),
-          onTapOnDownArrow: () {
-            ShowDatePickerBottomSheet.showDatePicker(
-              context: context,
-              onDateSelected: (date) {
-                setState(
-                  () {
-                    authCon.selectedDate.value = date;
-                  },
-                );
-              },
-            );
-          },
-          onTap: () async {
-            setState(() {
-              if (index == 0) {
-                index = 1;
-              } else {
-                index = 0;
-              }
-            });
-          },
-          image: index == 0 ? AppAssets.calendar : AppAssets.menu,
         ),
-        body: index == 0 ? pastFortune() : pastFortuneCalenderView(),
+        onTapOnDownArrow: () {
+          ShowDatePickerBottomSheet.showDatePicker(
+            context: context,
+            onDateSelected: (date) {
+              setState(
+                () {
+                  authCon.selectedDate.value = date;
+                },
+              );
+            },
+          );
+        },
+        onTap: () async {
+          setState(() {
+            if (index == 0) {
+              index = 1;
+            } else {
+              index = 0;
+            }
+          });
+        },
+        image: index == 0 ? AppAssets.calendar : AppAssets.menu,
+      ),
+      body: SafeArea(
+        child: index == 0 ? pastFortune() : pastFortuneCalenderView(),
       ),
     );
   }
@@ -135,10 +95,7 @@ class _PastDiaryState extends State<PastDiary> {
             shrinkWrap: true,
             itemCount: 3,
             itemBuilder: (context, index) => Obx(
-              () => listTile(
-                  date: DateFormat.yMMMM().format(authCon.selectedDate.value),
-                  description:
-                      'It\s a day where you can expect results proportional to your efforts.'),
+              () => listTile(date: DateFormat.yMMMM().format(authCon.selectedDate.value), description: 'It\s a day where you can expect results proportional to your efforts.'),
             ),
             separatorBuilder: (BuildContext context, int index) {
               return CustomDividerWidget(
@@ -159,9 +116,7 @@ class _PastDiaryState extends State<PastDiary> {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             NeatCleanCalendarEvent event = _eventList[index];
-            return listTile(
-                date: DateFormat.yMMMM().format(event.startTime),
-                description: event.summary);
+            return listTile(date: DateFormat.yMMMM().format(event.startTime), description: event.summary);
           },
           separatorBuilder: (BuildContext context, int index) {
             return CustomDividerWidget(
@@ -204,9 +159,7 @@ class _PastDiaryState extends State<PastDiary> {
                   height: 60,
                   width: 60,
                   margin: EdgeInsets.only(right: 5),
-                  decoration: BoxDecoration(
-                      color: ThemeSetting.of(context).common0,
-                      borderRadius: BorderRadius.circular(10)),
+                  decoration: BoxDecoration(color: ThemeSetting.of(context).common0, borderRadius: BorderRadius.circular(10)),
                   child: Image.asset(AppAssets.rectangle),
                 );
               },
@@ -266,8 +219,7 @@ class _PastDiaryState extends State<PastDiary> {
                         LocaleKeys.create_today_diary.tr(),
                         style: ThemeSetting.of(context).labelLarge.copyWith(
                               fontSize: 20.sp,
-                              color:
-                                  ThemeSetting.of(context).secondaryBackground,
+                              color: ThemeSetting.of(context).secondaryBackground,
                             ),
                       ),
                       SizedBox(height: 5.h),
@@ -276,12 +228,10 @@ class _PastDiaryState extends State<PastDiary> {
                           width: 100.w,
                           height: 40.h,
                           color: ThemeSetting.of(context).primaryText,
-                          textStyle:
-                              ThemeSetting.of(context).captionMedium.copyWith(
-                                    color: ThemeSetting.of(context)
-                                        .secondaryBackground,
-                                    fontSize: 12.sp,
-                                  ),
+                          textStyle: ThemeSetting.of(context).captionMedium.copyWith(
+                                color: ThemeSetting.of(context).secondaryBackground,
+                                fontSize: 12.sp,
+                              ),
                           text: "${LocaleKeys.create.tr()} 💫",
                           onTap: () {}),
                     ],

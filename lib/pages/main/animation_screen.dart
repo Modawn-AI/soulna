@@ -12,15 +12,13 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class AnimationScreen extends StatefulWidget {
   final Future<bool> apiFuture;
   final String screenName;
-  const AnimationScreen(
-      {super.key, required this.apiFuture, required this.screenName});
+  const AnimationScreen({super.key, required this.apiFuture, required this.screenName});
 
   @override
   State<AnimationScreen> createState() => _AnimationScreenState();
 }
 
-class _AnimationScreenState extends State<AnimationScreen>
-    with SingleTickerProviderStateMixin {
+class _AnimationScreenState extends State<AnimationScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   Timer? _timer;
@@ -101,10 +99,10 @@ class _AnimationScreenState extends State<AnimationScreen>
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).black1,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).black1,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).black1,
+      body: SafeArea(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -149,9 +147,7 @@ class _AnimationScreenState extends State<AnimationScreen>
               Spacer(),
               Text(
                 "${LocaleKeys.copyright.tr()}${DateTime.now().year}${LocaleKeys.soulna_all_rights_reserved.tr()}",
-                style: ThemeSetting.of(context).headlineLarge.copyWith(
-                    color: ThemeSetting.of(context).secondaryText,
-                    fontSize: 12),
+                style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).secondaryText, fontSize: 12),
               ),
               const SizedBox(
                 height: 30,

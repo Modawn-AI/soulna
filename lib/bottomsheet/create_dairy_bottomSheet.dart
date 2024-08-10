@@ -27,22 +27,14 @@ class CreateDairyBottomSheet {
 
         log('Display Image ${(selectedImages.toString().contains('media_url'))}');
         while (displayImages.length < 10) {
-          displayImages.add({
-            'id': 0,
-            "media_type": "IMAGE",
-            "media_url":
-                "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-          });
+          displayImages.add({'id': 0, "media_type": "IMAGE", "media_url": "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"});
         }
         log('displayImages ${displayImages.first.toString().contains('media_type')}');
         log('displayImages ${displayImages.last.toString().contains('media_type')}');
         return Container(
           // alignment: Alignment.bottomCenter,
           height: MediaQuery.of(context).size.height * 0.88,
-          decoration: BoxDecoration(
-              color: ThemeSetting.of(context).info,
-              borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+          decoration: BoxDecoration(color: ThemeSetting.of(context).info, borderRadius: const BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15))),
           child: ListView(
             children: [
               const SizedBox(
@@ -67,20 +59,14 @@ class CreateDairyBottomSheet {
                 height: 10,
               ),
               Text(
-                LocaleKeys.would_you_like_to_make_a_diary_with_that_picture
-                    .tr(),
+                LocaleKeys.would_you_like_to_make_a_diary_with_that_picture.tr(),
                 textAlign: TextAlign.center,
-                style: ThemeSetting.of(context)
-                    .labelLarge
-                    .copyWith(color: ThemeSetting.of(context).white),
+                style: ThemeSetting.of(context).labelLarge.copyWith(color: ThemeSetting.of(context).white),
               ),
               const SizedBox(
                 height: 16,
               ),
-              Text(
-                  '${LocaleKeys.a_total_of.tr()} ${LocaleKeys.make_a_diary_for.tr()}July 8',
-                  textAlign: TextAlign.center,
-                  style: ThemeSetting.of(context).headlineLarge),
+              Text('${LocaleKeys.a_total_of.tr()} ${LocaleKeys.make_a_diary_for.tr()}July 8', textAlign: TextAlign.center, style: ThemeSetting.of(context).headlineLarge),
               const SizedBox(
                 height: 50,
               ),
@@ -91,9 +77,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[0]['media_url']
-                            : (displayImages[0]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[0].toString().contains('media_url'))
                                 ? displayImages[0]['media_url']
                                 : (displayImages[0] as XFile).path,
                         context: context,
@@ -104,9 +88,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[1]['media_url']
-                            : (displayImages[1]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[1].toString().contains('media_url'))
                                 ? displayImages[1]['media_url']
                                 : (displayImages[1] as XFile).path,
                         width: 150,
@@ -118,9 +100,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[2]['media_url']
-                            : (displayImages[2]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[2].toString().contains('media_url'))
                                 ? displayImages[2]['media_url']
                                 : (displayImages[2] as XFile).path,
                         isNetwork: isNetwork,
@@ -147,9 +127,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[3]['media_url']
-                            : (displayImages[3]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[3].toString().contains('media_url'))
                                 ? displayImages[3]['media_url']
                                 : (displayImages[3] as XFile).path,
                         isNetwork: isNetwork,
@@ -160,9 +138,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[4]['media_url']
-                            : (displayImages[4]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[4].toString().contains('media_url'))
                                 ? displayImages[4]['media_url']
                                 : (displayImages[4] as XFile).path,
                         isNetwork: isNetwork,
@@ -174,9 +150,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[5]['media_url']
-                            : (displayImages[5]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[5].toString().contains('media_url'))
                                 ? displayImages[5]['media_url']
                                 : (displayImages[5] as XFile).path,
                         isNetwork: isNetwork,
@@ -187,9 +161,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[6]['media_url']
-                            : (displayImages[6]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[6].toString().contains('media_url'))
                                 ? displayImages[6]['media_url']
                                 : (displayImages[6] as XFile).path,
                         isNetwork: isNetwork,
@@ -211,9 +183,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[7]['media_url']
-                            : (displayImages[7]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[7].toString().contains('media_url'))
                                 ? displayImages[7]['media_url']
                                 : (displayImages[7] as XFile).path,
                         isNetwork: isNetwork,
@@ -224,9 +194,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[8]['media_url']
-                            : (displayImages[8]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[8].toString().contains('media_url'))
                                 ? displayImages[8]['media_url']
                                 : (displayImages[8] as XFile).path,
                         isNetwork: isNetwork,
@@ -238,9 +206,7 @@ class CreateDairyBottomSheet {
                     squareWidget(
                         image: isNetwork == true
                             ? displayImages[9]['media_url']
-                            : (displayImages[9]
-                                    .toString()
-                                    .contains('media_url'))
+                            : (displayImages[9].toString().contains('media_url'))
                                 ? displayImages[9]['media_url']
                                 : (displayImages[9] as XFile).path,
                         isNetwork: isNetwork,
@@ -260,13 +226,12 @@ class CreateDairyBottomSheet {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   child: ButtonWidget.gradientButtonWithImage(
                       context: context,
                       text: LocaleKeys.create_a_diary.tr(),
                       onTap: () async {
-                        //  final apiCallFuture = _mockApiCall(selectedImages);
+                        // final apiCallFuture = _mockApiCall(selectedImages);
 
                         await Navigator.push(
                           context,
@@ -292,8 +257,7 @@ class CreateDairyBottomSheet {
     );
   }
 
-  static Future<bool> _mockApiCall(
-      List<Map<String, dynamic>> selectedImages) async {
+  static Future<bool> _mockApiCall(List<Map<String, dynamic>> selectedImages) async {
     List<String> base64Images = [];
     for (var imageMap in selectedImages) {
       try {
@@ -308,8 +272,7 @@ class CreateDairyBottomSheet {
           } else if (bytes is String) {
             // 이미 Base64로 인코딩된 경우
             base64Images.add(bytes);
-            print(
-                "Added pre-encoded base64 image with length: ${bytes.length}");
+            print("Added pre-encoded base64 image with length: ${bytes.length}");
           } else {
             print("Unexpected type for bytes: ${bytes.runtimeType}");
           }
@@ -319,8 +282,7 @@ class CreateDairyBottomSheet {
           Uint8List bytes = await imageFile.readAsBytes();
           String base64Image = base64Encode(bytes);
           base64Images.add(base64Image);
-          print(
-              "Added base64 image from file with length: ${base64Image.length}");
+          print("Added base64 image from file with length: ${base64Image.length}");
         } else {
           print("Image map doesn't contain 'bytes' or 'path': $imageMap");
         }
@@ -358,11 +320,7 @@ class CreateDairyBottomSheet {
     return image is String && image.startsWith('http');
   }
 
-  static Widget squareWidget(
-      {required String image,
-      double? width,
-      required BuildContext context,
-      required bool isNetwork}) {
+  static Widget squareWidget({required String image, double? width, required BuildContext context, required bool isNetwork}) {
     log('IsNetwork ${image.toString()}');
     return Container(
       width: width ?? 80,
@@ -382,8 +340,7 @@ class CreateDairyBottomSheet {
       child: Container(
         margin: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          border:
-              Border.all(color: ThemeSetting.of(context).secondaryBackground),
+          border: Border.all(color: ThemeSetting.of(context).secondaryBackground),
           borderRadius: BorderRadius.circular(10),
         ),
       ),

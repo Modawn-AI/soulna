@@ -16,18 +16,14 @@ class AccountSettingScreen extends StatefulWidget {
 }
 
 class _AccountSettingScreenState extends State<AccountSettingScreen> {
-
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: ThemeSetting.of(context).secondaryBackground,
-      
-          appBar: HeaderWidget.headerWithTitle(
-              context: context, title: LocaleKeys.account_settings.tr()),
-          body: Padding(
+    return Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerWithTitle(context: context, title: LocaleKeys.account_settings.tr()),
+        body: SafeArea(
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +39,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                   controller: TextEditingController(),
                   hintText: LocaleKeys.enter_your_email.tr(),
                 ),
-                const SizedBox(height:40),
+                const SizedBox(height: 40),
                 Text(
                   LocaleKeys.password.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(
@@ -120,9 +116,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                           builder: (_) => CustomDialogWidget(
                                 context: context,
                                 confirmText: LocaleKeys.Sure.tr(),
-                                content: LocaleKeys
-                                    .are_you_sure_you_want_to_withdraw_delete_your_account
-                                    .tr(),
+                                content: LocaleKeys.are_you_sure_you_want_to_withdraw_delete_your_account.tr(),
                                 onConfirm: () {
                                   // context.pushNamedAndRemoveUntil('LoginScreen', (route) => false);
                                 },
@@ -133,7 +127,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                 ),
               ],
             ),
-          )),
-    );
+          ),
+        ));
   }
 }

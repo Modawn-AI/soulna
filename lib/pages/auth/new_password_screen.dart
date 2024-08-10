@@ -21,11 +21,11 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   var authCon = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerWithTitle(context: context, title: ''),
-        body: Form(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerWithTitle(context: context, title: ''),
+      body: SafeArea(
+        child: Form(
           key: _formKey,
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
@@ -48,8 +48,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 controller: authCon.newPasswordCon.value,
                 hintText: LocaleKeys.enter_your_new_password.tr(),
                 isPassword: true,
-                validator: CustomValidatorWidget.validatePassword(
-                    value: authCon.newPasswordCon.value.text),
+                validator: CustomValidatorWidget.validatePassword(value: authCon.newPasswordCon.value.text),
               ),
               SizedBox(height: 10.h),
               CustomTextField(
@@ -57,8 +56,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 hintText: LocaleKeys.reEnter_your_new_password.tr(),
                 isPassword: true,
                 inputAction: TextInputAction.done,
-                validator: CustomValidatorWidget.validateConfirmPassword(
-                    value: authCon.conPasswordCon.value.text),
+                validator: CustomValidatorWidget.validateConfirmPassword(value: authCon.conPasswordCon.value.text),
               ),
               SizedBox(height: 50.h),
               Padding(
@@ -68,12 +66,10 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     text: LocaleKeys.change_password_and_log_in.tr(),
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
-                        if (authCon.newPasswordCon.value.text !=
-                            authCon.conPasswordCon.value.text) {
+                        if (authCon.newPasswordCon.value.text != authCon.conPasswordCon.value.text) {
                           CustomSnackBarWidget.showSnackBar(
                             context: context,
                             message: 'Both password does not match',
-
                           );
                           return;
                         }

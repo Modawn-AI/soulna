@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/instance_manager.dart';
+
 //This file defines the LoginScreen widget, which provides a screen for users to log in to the application.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,13 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
-
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerBack(context: context),
-        body: Form(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerBack(context: context),
+      body: SafeArea(
+        child: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: ListView(
@@ -48,8 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 () => CustomTextField(
                   controller: authCon.emailCon.value,
                   hintText: LocaleKeys.enter_your_email.tr(),
-                  validator: CustomValidatorWidget.validateEmail(
-                      value: authCon.emailCon.value.text),
+                  validator: CustomValidatorWidget.validateEmail(value: authCon.emailCon.value.text),
                 ),
               ),
               const SizedBox(
@@ -60,8 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: LocaleKeys.enter_your_password.tr(),
                 isPassword: true,
                 inputAction: TextInputAction.done,
-                validator: CustomValidatorWidget.validatePassword(
-                    value: authCon.passwordCon.value.text),
+                validator: CustomValidatorWidget.validatePassword(value: authCon.passwordCon.value.text),
               ),
               const SizedBox(
                 height: 20,

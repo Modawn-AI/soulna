@@ -48,130 +48,100 @@ class _SignupAgreeState extends State<SignupAgree> {
   @override
   Widget build(BuildContext context) {
     bottomCheckboxes = [
-      {
-        'text1': LocaleKeys.required.tr(),
-        'text2': "  ${LocaleKeys.marketing_consent.tr()}",
-        'textColor1': ThemeSetting.of(context).primary
-      },
-      {
-        'text1': LocaleKeys.required.tr(),
-        'text2': "  ${LocaleKeys.collect_and_use_personal_information.tr()}",
-        'textColor1': ThemeSetting.of(context).primary
-      },
-      {
-        'text1': LocaleKeys.select.tr(),
-        'text2': "  ${LocaleKeys.marketing_consent.tr()}",
-        'textColor1': ThemeSetting.of(context).grayLight
-      },
+      {'text1': LocaleKeys.required.tr(), 'text2': "  ${LocaleKeys.marketing_consent.tr()}", 'textColor1': ThemeSetting.of(context).primary},
+      {'text1': LocaleKeys.required.tr(), 'text2': "  ${LocaleKeys.collect_and_use_personal_information.tr()}", 'textColor1': ThemeSetting.of(context).primary},
+      {'text1': LocaleKeys.select.tr(), 'text2': "  ${LocaleKeys.marketing_consent.tr()}", 'textColor1': ThemeSetting.of(context).grayLight},
     ];
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor:  ThemeSetting.of(context).secondaryBackground,
-
-            appBar: HeaderWidget.headerWithCustomAction(
-      context: context,
-      percent: 0.25,
-      pageIndex: '1',
-            ),
-            body: ListView(
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-      children: [
-        Text(
-          LocaleKeys.hello.tr(),
-          style: ThemeSetting.of(context).labelSmall,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Text(
-            LocaleKeys.please_agree_to_the_terms.tr(),
-            style: ThemeSetting.of(context).labelSmall,
-          ),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerWithCustomAction(
+        context: context,
+        percent: 0.25,
+        pageIndex: '1',
+      ),
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           children: [
-            Flexible(
-              flex: 10,
-              child: Row(
-                children: [
-                  CustomCheckbox(
-                    initialValue: bottomCheck.every((element) => element),
-                    onChanged: () {
-                      setState(() {
-                        allSelected = !allSelected;
-                        for (int i = 0; i < bottomCheck.length; i++) {
-                          setState(() {
-                            bottomCheck[i] = allSelected;
-                          });
-                        }
-                      });
-
-                      //_toggleAllSelected(v);
-                    },
-                  ),
-                  Flexible(
-                      child: Text(LocaleKeys.agree_to_the_full_terms.tr(),
-                          style: ThemeSetting.of(context)
-                              .headlineLarge
-                              .copyWith(
-                                  color:
-                                      ThemeSetting.of(context).primaryText))),
-                ],
+            Text(
+              LocaleKeys.hello.tr(),
+              style: ThemeSetting.of(context).labelSmall,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Text(
+                LocaleKeys.please_agree_to_the_terms.tr(),
+                style: ThemeSetting.of(context).labelSmall,
               ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  flex: 10,
+                  child: Row(
+                    children: [
+                      CustomCheckbox(
+                        initialValue: bottomCheck.every((element) => element),
+                        onChanged: () {
+                          setState(() {
+                            allSelected = !allSelected;
+                            for (int i = 0; i < bottomCheck.length; i++) {
+                              setState(() {
+                                bottomCheck[i] = allSelected;
+                              });
+                            }
+                          });
+
+                          //_toggleAllSelected(v);
+                        },
+                      ),
+                      Flexible(child: Text(LocaleKeys.agree_to_the_full_terms.tr(), style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).primaryText))),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Divider(
+              color: ThemeSetting.of(context).common1,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ...List.generate(bottomCheckboxes.length, (index) {
+              return checkBoxRow(
+                context: context,
+                onChanged: () {
+                  setState(() {
+                    bottomCheck[index] = !bottomCheck[index];
+                  });
+                },
+                value: bottomCheck[index],
+                text1: bottomCheckboxes[index]['text1'],
+                text2: bottomCheckboxes[index]['text2'],
+                textColor1: bottomCheckboxes[index]['textColor1'],
+              );
+            }),
+            const SizedBox(
+              height: 59,
+            ),
+            if (bottomCheck[0] && bottomCheck[1] == true) ButtonWidget.gradientButton(context: context, text: LocaleKeys.next.tr(), color1: ThemeSetting.of(context).black1, color2: ThemeSetting.of(context).black2, onTap: () => context.pushNamed(signUpEmail)),
+            const SizedBox(
+              height: 10,
             ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
-        Divider(
-          color: ThemeSetting.of(context).common1,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        ...List.generate(bottomCheckboxes.length, (index) {
-          return checkBoxRow(
-            context: context,
-            onChanged: () {
-              setState(() {
-                bottomCheck[index] = !bottomCheck[index];
-              });
-            },
-            value: bottomCheck[index],
-            text1: bottomCheckboxes[index]['text1'],
-            text2: bottomCheckboxes[index]['text2'],
-            textColor1: bottomCheckboxes[index]['textColor1'],
-          );
-        }),
-        const SizedBox(
-          height: 59,
-        ),
-        if(bottomCheck[0] && bottomCheck[1] == true)ButtonWidget.gradientButton(
-            context: context,
-            text: LocaleKeys.next.tr(),
-            color1: ThemeSetting.of(context).black1,
-            color2: ThemeSetting.of(context).black2,
-            onTap: () => context.pushNamed(signUpEmail)),
-        const SizedBox(
-          height: 10,
-        ),
-      ],
-            ),
-          ),
+      ),
     );
   }
 
-  checkBoxRow(
-      {required BuildContext context,
-      required String text1,
-      required String text2,
-      required bool value,
-      Color? textColor1,
-      void Function()? onChanged}) {
+  checkBoxRow({required BuildContext context, required String text1, required String text2, required bool value, Color? textColor1, void Function()? onChanged}) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Row(
@@ -184,16 +154,7 @@ class _SignupAgreeState extends State<SignupAgree> {
                 CustomCheckbox(initialValue: value, onChanged: onChanged),
                 Flexible(
                   child: RichText(
-                    text: TextSpan(
-                        text: text1,
-                        style: ThemeSetting.of(context).captionLarge.copyWith(
-                            color:
-                                textColor1 ?? ThemeSetting.of(context).primary),
-                        children: [
-                          TextSpan(
-                              text: text2,
-                              style: ThemeSetting.of(context).captionLarge)
-                        ]),
+                    text: TextSpan(text: text1, style: ThemeSetting.of(context).captionLarge.copyWith(color: textColor1 ?? ThemeSetting.of(context).primary), children: [TextSpan(text: text2, style: ThemeSetting.of(context).captionLarge)]),
                   ),
                 ),
               ],

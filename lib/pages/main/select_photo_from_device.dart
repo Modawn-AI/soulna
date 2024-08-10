@@ -59,62 +59,52 @@ class _SelectPhotoFromDeviceState extends State<SelectPhotoFromDevice> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
-      statusBarIconBrightness: ThemeSetting.isLightTheme(context)
-          ? Brightness.dark
-          : Brightness.light,
+      statusBarIconBrightness: ThemeSetting.isLightTheme(context) ? Brightness.dark : Brightness.light,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        key: scaffoldKey,
-        appBar: HeaderWidget.headerWithTitle(
-            context: context, title: LocaleKeys.select_photo.tr()),
-        // ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-            child: Row(
-              children: [
-                Expanded(
-                    child: ButtonWidget.roundedButtonOrange(
-                        context: context,
-                        width: MediaQuery.of(context).size.width,
-                        text: LocaleKeys.set_timeline.tr(),
-                        onTap: () async {
-                          // SharedPreferencesManager
-                          //     .saveMediaListToSharedPreferences(
-                          //         key: SharedprefString.selectedMediaList,
-                          //         mediaList: mediaList);
-                          originalIndices.clear();
-                          originalIndices.addAll(List.generate(
-                              mediaList.length, (index) => index));
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      key: scaffoldKey,
+      appBar: HeaderWidget.headerWithTitle(context: context, title: LocaleKeys.select_photo.tr()),
+      // ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          child: Row(
+            children: [
+              Expanded(
+                  child: ButtonWidget.roundedButtonOrange(
+                      context: context,
+                      width: MediaQuery.of(context).size.width,
+                      text: LocaleKeys.set_timeline.tr(),
+                      onTap: () async {
+                        // SharedPreferencesManager
+                        //     .saveMediaListToSharedPreferences(
+                        //         key: SharedprefString.selectedMediaList,
+                        //         mediaList: mediaList);
+                        originalIndices.clear();
+                        originalIndices.addAll(List.generate(mediaList.length, (index) => index));
 
-                          String? card =await  SharedPreferencesManager.getString(key: SharedprefString.cardNumber);
+                        String? card = await SharedPreferencesManager.getString(key: SharedprefString.cardNumber);
 
-                         log('Card ${card.toString()}');
-                          SetTimelineBottomSheet.setTimeLineBottomSheet(
-                              context: context,
-                              selectedImages: mediaList,
-                              originalIndices: originalIndices,
-                              showHand: true,
-                              screen: int.parse(card.toString()) == 1 ? journalScreen : autobiographyScreen,
-                              isNetwork: false);
-                        })),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                    child: ButtonWidget.roundedButtonOrange(
-                        context: context,
-                        width: MediaQuery.of(context).size.width,
-                        text: LocaleKeys.select_photo.tr(),
-                        onTap: () {
-                          _loadPhotos();
-                        })),
-              ],
-            )),
+                        log('Card ${card.toString()}');
+                        SetTimelineBottomSheet.setTimeLineBottomSheet(context: context, selectedImages: mediaList, originalIndices: originalIndices, showHand: true, screen: int.parse(card.toString()) == 1 ? journalScreen : autobiographyScreen, isNetwork: false);
+                      })),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: ButtonWidget.roundedButtonOrange(
+                      context: context,
+                      width: MediaQuery.of(context).size.width,
+                      text: LocaleKeys.select_photo.tr(),
+                      onTap: () {
+                        _loadPhotos();
+                      })),
+            ],
+          )),
 
-        body: Column(
+      body: SafeArea(
+        child: Column(
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
@@ -135,9 +125,7 @@ class _SelectPhotoFromDeviceState extends State<SelectPhotoFromDevice> {
                   ),
                   Flexible(
                     child: Text(
-                      LocaleKeys
-                          .it_automatically_creates_a_diary_through_the_Ai_algorithm
-                          .tr(),
+                      LocaleKeys.it_automatically_creates_a_diary_through_the_Ai_algorithm.tr(),
                       style: ThemeSetting.of(context).captionMedium,
                     ),
                   )
@@ -149,8 +137,7 @@ class _SelectPhotoFromDeviceState extends State<SelectPhotoFromDevice> {
             ),
             Expanded(
               child: GridView.builder(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 5,
@@ -181,9 +168,7 @@ class _SelectPhotoFromDeviceState extends State<SelectPhotoFromDevice> {
                           decoration: BoxDecoration(
                             color: ThemeSetting.of(context).common4,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: ThemeSetting.of(context).primaryText,
-                                width: 1),
+                            border: Border.all(color: ThemeSetting.of(context).primaryText, width: 1),
                             image: DecorationImage(
                               image: FileImage(File(photo.path)),
                               fit: BoxFit.cover,

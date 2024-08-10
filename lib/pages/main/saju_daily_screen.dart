@@ -56,9 +56,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List hashTag = sajuDailyService!.sajuDailyInfo != null
-        ? sajuDailyService!.sajuDailyInfo.hashtag
-        : [];
+    List hashTag = sajuDailyService!.sajuDailyInfo != null ? sajuDailyService!.sajuDailyInfo.hashtag : [];
 
     List<String> myParts = user!.userModel.tenTwelve.picture.split("_");
     String myElementName = myParts[2];
@@ -67,17 +65,17 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
     String animalName = parts[1];
     String elementName = parts[2];
 
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Utils.getElementBgToColor(context, myElementName),
+      appBar: HeaderWidget.headerBack(
+        context: context,
         backgroundColor: Utils.getElementBgToColor(context, myElementName),
-        appBar: HeaderWidget.headerBack(
-          context: context,
-          backgroundColor: Utils.getElementBgToColor(context, myElementName),
-          onTap: () {
-            context.goNamed(mainScreen);
-          },
-        ),
-        body: Container(
+        onTap: () {
+          context.goNamed(mainScreen);
+        },
+      ),
+      body: SafeArea(
+        child: Container(
           color: Utils.getElementBgToColor(context, myElementName),
           width: MediaQuery.of(context).size.width,
           child: ListView(
@@ -93,9 +91,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
               Center(
                 child: Text(
                   Utils.getTodayMDYFormatted(),
-                  style: ThemeSetting.of(context)
-                      .headlineMedium
-                      .copyWith(color: ThemeSetting.of(context).primaryText),
+                  style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -245,9 +241,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                       radius: 45,
                       backgroundColor: ThemeSetting.of(context).common2,
                       child: Image.asset(
-                        ThemeSetting.isLightTheme(context)
-                            ? AppAssets.character
-                            : AppAssets.characterDark,
+                        ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
                         height: 60,
                       ),
                     ),
@@ -256,15 +250,12 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                     ),
                     Wrap(
                       children: List.generate(
-                        sajuDailyService!
-                            .sajuDailyInfo.sajuDescription.sajuTextList.length,
+                        sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList.length,
                         (index) {
                           return sajuDescriptionText(
                             context,
-                            sajuDailyService!.sajuDailyInfo.sajuDescription
-                                .sajuTextList[index].title,
-                            sajuDailyService!.sajuDailyInfo.sajuDescription
-                                .sajuTextList[index].paragraph,
+                            sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList[index].title,
+                            sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList[index].paragraph,
                           );
                         },
                       ),
@@ -280,10 +271,9 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                             text: hashTag[index],
                             height: 30,
                             color: ThemeSetting.of(context).alternate,
-                            textStyle:
-                                ThemeSetting.of(context).captionLarge.copyWith(
-                                      color: ThemeSetting.of(context).primary,
-                                    ),
+                            textStyle: ThemeSetting.of(context).captionLarge.copyWith(
+                                  color: ThemeSetting.of(context).primary,
+                                ),
                           );
                         },
                       ),
@@ -308,12 +298,10 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                           (index) {
                             BookDetailModel detail = thingsList[index];
                             return Chip(
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               padding: const EdgeInsets.all(2),
                               avatar: Text(detail.image!),
-                              backgroundColor:
-                                  ThemeSetting.of(context).secondaryBackground,
+                              backgroundColor: ThemeSetting.of(context).secondaryBackground,
                               label: Text(
                                 detail.title,
                                 style: ThemeSetting.of(context).captionLarge,
@@ -364,8 +352,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
     );
   }
 
-  Container sajuDescriptionText(
-      BuildContext context, String title, String description) {
+  Container sajuDescriptionText(BuildContext context, String title, String description) {
     return Container(
       child: Column(
         children: [
@@ -398,10 +385,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
       height: MediaQuery.of(context).size.height * 0.20,
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-          color: ThemeSetting.of(context).secondaryBackground,
-          borderRadius: const BorderRadius.horizontal(
-              right: Radius.circular(15), left: Radius.circular(15))),
+      decoration: BoxDecoration(color: ThemeSetting.of(context).secondaryBackground, borderRadius: const BorderRadius.horizontal(right: Radius.circular(15), left: Radius.circular(15))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -90,20 +90,16 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         String? accessToken = await userInfo.getIdToken();
         NetworkManager().saveTokens(accessToken!, accessToken);
         dynamic response = await ApiCalls().getUserData();
-        if(response == null) {
-
-        }
-        if(response['status'] == 'success') {
-          if(response['message'] == 'none') {
+        if (response == null) {}
+        if (response['status'] == 'success') {
+          if (response['message'] == 'none') {
             // user info not found
             sm.isUserInfo.value = false;
-          }
-          else {
+          } else {
             sm.isUserInfo.value = true;
             UserModel model = UserModel.fromJson(response['data']);
             GetIt.I.get<UserInfoData>().updateUserInfo(model);
           }
-
         }
 
         context.goNamed(mainScreen);
@@ -155,10 +151,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).tertiary,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).tertiary,
-        body: Center(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).tertiary,
+      body: SafeArea(
+        child: Center(
             child: Image.asset(
           AppAssets.logo,
           height: 90,

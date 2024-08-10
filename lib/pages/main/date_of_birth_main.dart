@@ -56,9 +56,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
   }
 
   String generateUserJson() {
-    String timeOfBirth = isChecked
-        ? "Don't know"
-        : "${_startTime?.format(context)} - ${_endTime?.format(context)}";
+    String timeOfBirth = isChecked ? "Don't know" : "${_startTime?.format(context)} - ${_endTime?.format(context)}";
 
     Map<String, dynamic> userMap = {
       "name": _nameController.text,
@@ -94,8 +92,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
       return false;
     }
     if (response['status'] == 'success') {
-      TenTwelveModel model =
-          TenTwelveModel.fromJson(response['tentwelve']['ten_twelve']);
+      TenTwelveModel model = TenTwelveModel.fromJson(response['tentwelve']['ten_twelve']);
       print(model);
       return true;
     }
@@ -114,22 +111,22 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: ThemeSetting.of(context).secondaryBackground,
-          appBar: HeaderWidget.headerBack(
-              context: context,
-              onTap: () async {
-                if (_currentPage == 0) {
-                  context.goNamed(mainScreen);
-                } else {
-                  _pageController.previousPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                }
-              }),
-          body: PageView(
+      child: Scaffold(
+        backgroundColor: ThemeSetting.of(context).secondaryBackground,
+        appBar: HeaderWidget.headerBack(
+            context: context,
+            onTap: () async {
+              if (_currentPage == 0) {
+                context.goNamed(mainScreen);
+              } else {
+                _pageController.previousPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              }
+            }),
+        body: SafeArea(
+          child: PageView(
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),
             children: [
@@ -187,9 +184,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
               const SizedBox(width: 10),
               Flexible(
                 child: Text(
-                  LocaleKeys
-                      .it_automatically_creates_a_diary_through_the_Ai_algorithm
-                      .tr(),
+                  LocaleKeys.it_automatically_creates_a_diary_through_the_Ai_algorithm.tr(),
                   style: ThemeSetting.of(context).captionMedium,
                 ),
               )
@@ -289,9 +284,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
           const SizedBox(height: 30),
           Text(
             LocaleKeys.name.tr(),
-            style: ThemeSetting.of(context)
-                .captionLarge
-                .copyWith(color: ThemeSetting.of(context).primary),
+            style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
           ),
           const SizedBox(height: 10),
           CustomTextField(
@@ -301,9 +294,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
           const SizedBox(height: 30),
           Text(
             LocaleKeys.gender.tr(),
-            style: ThemeSetting.of(context)
-                .captionLarge
-                .copyWith(color: ThemeSetting.of(context).primary),
+            style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
           ),
           const SizedBox(height: 10),
           CustomGenderToggleButton(

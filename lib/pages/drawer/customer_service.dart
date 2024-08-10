@@ -13,8 +13,7 @@ class CustomerService extends StatefulWidget {
   State<CustomerService> createState() => _CustomerServiceState();
 }
 
-class _CustomerServiceState extends State<CustomerService>
-    with SingleTickerProviderStateMixin {
+class _CustomerServiceState extends State<CustomerService> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool isExpanded = false;
   List filterList = [];
@@ -49,22 +48,19 @@ class _CustomerServiceState extends State<CustomerService>
 
   List faqList = [
     {
-      'question':
-          LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
+      'question': LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
       'date': "January 1st, 1990 2:20 PM",
       'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
       'isExpand': false,
     },
     {
-      'question':
-      LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
+      'question': LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
       'date': "January 1st, 1990 2:20 PM",
       'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
       'isExpand': false,
     },
     {
-      'question':
-      LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
+      'question': LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
       'date': "January 1st, 1990 2:20 PM",
       'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
       'isExpand': false,
@@ -94,8 +90,7 @@ class _CustomerServiceState extends State<CustomerService>
       if (title == LocaleKeys.all.tr()) {
         filterList = inquiryList;
       } else {
-        filterList =
-            inquiryList.where((item) => item['response'] == title).toList();
+        filterList = inquiryList.where((item) => item['response'] == title).toList();
       }
     });
   }
@@ -108,13 +103,12 @@ class _CustomerServiceState extends State<CustomerService>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerWithTitle(
-            context: context, title: LocaleKeys.customer_service.tr()),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: CustomTabBar(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerWithTitle(context: context, title: LocaleKeys.customer_service.tr()),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: SafeArea(
+        child: CustomTabBar(
           tabs: [
             Tab(text: LocaleKeys.FAQ.tr()),
             Tab(text: LocaleKeys.one_one_inquiry.tr()),
@@ -173,14 +167,10 @@ class _CustomerServiceState extends State<CustomerService>
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-              color: ThemeSetting.isLightTheme(context)
-                  ? ThemeSetting.of(context).tertiary
-                  : ThemeSetting.of(context).info,
+              color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).tertiary : ThemeSetting.of(context).info,
               child: Text(
                 faqList[index]['description'],
-                style: ThemeSetting.of(context)
-                    .bodyMedium
-                    .copyWith(color: ThemeSetting.of(context).black2),
+                style: ThemeSetting.of(context).bodyMedium.copyWith(color: ThemeSetting.of(context).black2),
               ),
             ),
           ],
@@ -247,15 +237,7 @@ class _CustomerServiceState extends State<CustomerService>
     );
   }
 
-  inquiryListTile(
-          {required String title,
-          required String description,
-          required BuildContext context,
-          required GestureTapCallback onTap,
-          required String date,
-          required int i,
-          required String responseKey}) =>
-      Column(
+  inquiryListTile({required String title, required String description, required BuildContext context, required GestureTapCallback onTap, required String date, required int i, required String responseKey}) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -289,20 +271,11 @@ class _CustomerServiceState extends State<CustomerService>
                     context: context,
                     height: 30.h,
                     text: responseKey,
-                    buttonBackgroundColor: filterList[i]['response'] ==
-                            LocaleKeys.awaiting_response.tr()
-                        ? ThemeSetting.of(context).common0
-                        : ThemeSetting.of(context).primary,
+                    buttonBackgroundColor: filterList[i]['response'] == LocaleKeys.awaiting_response.tr() ? ThemeSetting.of(context).common0 : ThemeSetting.of(context).primary,
                     textStyle: ThemeSetting.of(context).captionMedium.copyWith(
-                          color: filterList[i]['response'] ==
-                                  LocaleKeys.awaiting_response.tr()
-                              ? ThemeSetting.of(context).black2
-                              : ThemeSetting.of(context).white,
+                          color: filterList[i]['response'] == LocaleKeys.awaiting_response.tr() ? ThemeSetting.of(context).black2 : ThemeSetting.of(context).white,
                         ),
-                    onTap: () => filterList[i]['response'] ==
-                            LocaleKeys.awaiting_response.tr()
-                        ? context.pushNamed(awaitingResponseScreen)
-                        : context.pushNamed(responseCompletedScreen),
+                    onTap: () => filterList[i]['response'] == LocaleKeys.awaiting_response.tr() ? context.pushNamed(awaitingResponseScreen) : context.pushNamed(responseCompletedScreen),
                   ),
                   SizedBox(height: 15),
                 ],

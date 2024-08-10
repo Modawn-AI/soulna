@@ -10,11 +10,11 @@ class ResponseCompletedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerBack(context: context),
-        body: Column(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerBack(context: context),
+      body: SafeArea(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -82,9 +82,7 @@ class ResponseCompletedScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     Text(
-                      LocaleKeys
-                          .hello_member_for_photos_the_only_way_is_to_delete_them_and_recreate_them
-                          .tr(),
+                      LocaleKeys.hello_member_for_photos_the_only_way_is_to_delete_them_and_recreate_them.tr(),
                       style: ThemeSetting.of(context).bodyMedium,
                     ),
                     SizedBox(height: 10.h),

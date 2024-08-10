@@ -22,8 +22,7 @@ class SelectPhotoFromInstagram extends StatefulWidget {
   const SelectPhotoFromInstagram({super.key});
 
   @override
-  State<SelectPhotoFromInstagram> createState() =>
-      _SelectPhotoFromInstagramState();
+  State<SelectPhotoFromInstagram> createState() => _SelectPhotoFromInstagramState();
 }
 
 class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
@@ -37,9 +36,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
   final List<int> originalIndices = [];
 
   getMedia() async {
-    mediaList =
-        await SharedPreferencesManager.getMediaListFromSharedPreferences(
-            key: SharedprefString.mediaList);
+    mediaList = await SharedPreferencesManager.getMediaListFromSharedPreferences(key: SharedprefString.mediaList);
     log('Media List ${mediaList.length}');
     setState(() {});
   }
@@ -54,18 +51,15 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
-      statusBarIconBrightness: ThemeSetting.isLightTheme(context)
-          ? Brightness.dark
-          : Brightness.light,
+      statusBarIconBrightness: ThemeSetting.isLightTheme(context) ? Brightness.dark : Brightness.light,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        key: scaffoldKey,
-        appBar: HeaderWidget.headerWithTitle(
-            context: context, title: LocaleKeys.select_photo.tr()),
-        // ),
-        body: Column(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      key: scaffoldKey,
+      appBar: HeaderWidget.headerWithTitle(context: context, title: LocaleKeys.select_photo.tr()),
+      // ),
+      body: SafeArea(
+        child: Column(
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
@@ -86,9 +80,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                   ),
                   Flexible(
                     child: Text(
-                      LocaleKeys
-                          .it_automatically_creates_a_diary_through_the_Ai_algorithm
-                          .tr(),
+                      LocaleKeys.it_automatically_creates_a_diary_through_the_Ai_algorithm.tr(),
                       style: ThemeSetting.of(context).captionMedium,
                     ),
                   )
@@ -101,8 +93,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
             if (mediaList.isNotEmpty)
               Expanded(
                 child: GridView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 5,
@@ -121,8 +112,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                 log('List ${list.length}');
                                 if (isSelected) {
                                   selectedIndices.remove(index);
-                                  list.removeWhere((item) =>
-                                      item['media_url'] == media['media_url']);
+                                  list.removeWhere((item) => item['media_url'] == media['media_url']);
                                 } else {
                                   selectedIndices.add(index);
                                   list.add(media);
@@ -136,10 +126,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                   decoration: BoxDecoration(
                                     color: ThemeSetting.of(context).common4,
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: ThemeSetting.of(context)
-                                            .primaryText,
-                                        width: 1),
+                                    border: Border.all(color: ThemeSetting.of(context).primaryText, width: 1),
                                     image: DecorationImage(
                                       image: NetworkImage(media['media_url']),
                                     ),
@@ -167,24 +154,11 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                     height: 24,
                                     width: 24,
                                     alignment: Alignment.center,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 5, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: isSelected == false
-                                            ? ThemeSetting.of(context)
-                                                .primaryText
-                                                .withOpacity(0.5)
-                                            : ThemeSetting.of(context).primary),
+                                    margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: isSelected == false ? ThemeSetting.of(context).primaryText.withOpacity(0.5) : ThemeSetting.of(context).primary),
                                     child: Text(
-                                      isSelected == false
-                                          ? ''
-                                          : '${selectedIndices.indexOf(index) + 1}',
-                                      style: ThemeSetting.of(context)
-                                          .bodyMedium
-                                          .copyWith(
-                                              color: ThemeSetting.of(context)
-                                                  .common0),
+                                      isSelected == false ? '' : '${selectedIndices.indexOf(index) + 1}',
+                                      style: ThemeSetting.of(context).bodyMedium.copyWith(color: ThemeSetting.of(context).common0),
                                     ),
                                   ),
                                   // child: GestureDetector(
@@ -221,8 +195,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                           return InstagramView(
                             instaAppId: '864298968952275',
                             instaAppSecret: '4cf5ddaeed3021a49f23c422043a7b7d',
-                            redirectUrl:
-                                'https://socialsizzle.herokuapp.com/auth/',
+                            redirectUrl: 'https://socialsizzle.herokuapp.com/auth/',
                             onComplete: (_token, _userid, _username) {
                               WidgetsBinding.instance.addPostFrameCallback(
                                 (timeStamp) async {
@@ -240,10 +213,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                       .then((value) async {
                                     mediaList = value;
                                     setState(() {});
-                                    await SharedPreferencesManager
-                                        .saveMediaListToSharedPreferences(
-                                            key: SharedprefString.mediaList,
-                                            mediaList: mediaList);
+                                    await SharedPreferencesManager.saveMediaListToSharedPreferences(key: SharedprefString.mediaList, mediaList: mediaList);
                                     log('Media ${mediaList.length}');
                                     log('Media ${mediaList.first.toString()}');
 
@@ -259,8 +229,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                   }),
             if (mediaList.isNotEmpty)
               Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+                  padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
                   child: Row(
                     children: [
                       Expanded(
@@ -270,25 +239,15 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                             text: LocaleKeys.set_timeline.tr(),
                             onTap: () {
                               if (selectedIndices.length > 10) {
-                                CustomSnackBarWidget.showSnackBar(
-                                    context: context,
-                                    message: 'You can select only 10 images');
+                                CustomSnackBarWidget.showSnackBar(context: context, message: 'You can select only 10 images');
                                 // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                 //   content: Text('You can select only 10 images'),
                                 // ));
                               } else {
                                 //log('selectedIndices ${selectedIndices.length}');
-                                originalIndices.addAll(List.generate(
-                                    selectedIndices.length, (index) => index));
+                                originalIndices.addAll(List.generate(selectedIndices.length, (index) => index));
 
-                                SetTimelineBottomSheet.setTimeLineBottomSheet(
-                                    context: context,
-                                    selectedImages: list,
-                                    showHand: true,
-                                    isNetwork: true,
-                                    originalIndices: originalIndices,
-                                  screen: autobiographyScreen
-                                );
+                                SetTimelineBottomSheet.setTimeLineBottomSheet(context: context, selectedImages: list, showHand: true, isNetwork: true, originalIndices: originalIndices, screen: autobiographyScreen);
                               }
                             }),
                       ),

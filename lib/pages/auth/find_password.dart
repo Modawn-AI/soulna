@@ -23,12 +23,11 @@ class _FindPasswordState extends State<FindPassword> {
   var authCon = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor:  ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerWithTitle(
-            context: context, title: LocaleKeys.find_password.tr()),
-        body: Form(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerWithTitle(context: context, title: LocaleKeys.find_password.tr()),
+      body: SafeArea(
+        child: Form(
           key: _formKey,
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
@@ -36,19 +35,17 @@ class _FindPasswordState extends State<FindPassword> {
               CustomTextField(
                   controller: authCon.emailCon.value,
                   hintText: LocaleKeys.enter_your_email_for_signed_up_for.tr(),
-                  validator: CustomValidatorWidget.validateEmail(
-                      value: authCon.emailCon.value.text),
+                  validator: CustomValidatorWidget.validateEmail(value: authCon.emailCon.value.text),
                   suffix: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                     child: ButtonWidget.roundedButtonOrange(
                         context: context,
                         height: 30,
                         text: LocaleKeys.confirm.tr(),
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                      },
-                      color: ThemeSetting.of(context).black2),
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                        },
+                        color: ThemeSetting.of(context).black2),
                   )),
               const SizedBox(
                 height: 10,
@@ -57,17 +54,13 @@ class _FindPasswordState extends State<FindPassword> {
                   ? CustomTextField(
                       controller: authCon.emailVerificationCodeCon.value,
                       hintText: LocaleKeys.enter_verification_code.tr(),
-                      validator: CustomValidatorWidget.validateVerificationCode(
-                          value: authCon.emailVerificationCodeCon.value.text),
+                      validator: CustomValidatorWidget.validateVerificationCode(value: authCon.emailVerificationCodeCon.value.text),
                       inputAction: TextInputAction.done,
                       suffix: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                         child: Text(
                           '04:38',
-                          style: ThemeSetting.of(context)
-                              .captionLarge
-                              .copyWith(color: ThemeSetting.of(context).primary),
+                          style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
                         ),
                       ),
                     )

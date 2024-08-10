@@ -48,28 +48,21 @@ class _JournalScreenState extends State<JournalScreen> {
     super.didChangeDependencies();
     journalService = GetIt.I.get<JournalService>();
     if (journalService.journalModel != null) {
-      journalText
-          .addAll(journalService.journalModel.content.map((item) => item.text));
-      journalImage.addAll(
-          journalService.journalModel.content.map((item) => item.image));
+      journalText.addAll(journalService.journalModel.content.map((item) => item.text));
+      journalImage.addAll(journalService.journalModel.content.map((item) => item.image));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: ThemeSetting.isLightTheme(context)
-          ? ThemeSetting.of(context).secondaryBackground
-          : ThemeSetting.of(context).common2,
+      statusBarColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.isLightTheme(context)
-            ? ThemeSetting.of(context).secondaryBackground
-            : ThemeSetting.of(context).common2,
-        body: showHeader == false ? journalList() : journalScroll(),
-      ),
-    );
+    return Scaffold(
+        backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
+        body: SafeArea(
+          child: showHeader == false ? journalList() : journalScroll(),
+        ));
   }
 
   journalList() {
@@ -78,8 +71,7 @@ class _JournalScreenState extends State<JournalScreen> {
         HeaderWidget.headerWithAction(
           context: context,
           showMoreIconOnTap: () {
-            UpdateDeleteDiaryBottomSheet.updateDeleteDiaryBottomSheet(
-                context: context);
+            UpdateDeleteDiaryBottomSheet.updateDeleteDiaryBottomSheet(context: context);
           },
         ),
         const SizedBox(
@@ -90,23 +82,19 @@ class _JournalScreenState extends State<JournalScreen> {
           margin: const EdgeInsets.only(right: 148, left: 149),
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
-            border:
-                Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+            border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
             borderRadius: BorderRadius.circular(50),
           ),
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              border: Border.all(
-                  color: ThemeSetting.of(context).tertiary1, width: 1),
+              border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
               borderRadius: BorderRadius.circular(50),
               color: ThemeSetting.of(context).tertiary1,
             ),
             child: Text(
               Utils.getTodayMDFormatted(),
-              style: ThemeSetting.of(context)
-                  .bodyMedium
-                  .copyWith(fontWeight: FontWeight.w600),
+              style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ),
@@ -114,9 +102,7 @@ class _JournalScreenState extends State<JournalScreen> {
           height: 5,
         ),
         Text(
-          journalService.journalModel != null
-              ? journalService.journalModel.title
-              : '',
+          journalService.journalModel != null ? journalService.journalModel.title : '',
           textAlign: TextAlign.center,
           style: ThemeSetting.of(context).labelMedium,
         ),
@@ -146,8 +132,7 @@ class _JournalScreenState extends State<JournalScreen> {
           context: context,
           title: 'July 8',
           showMoreIconOnTap: () {
-            UpdateDeleteDiaryBottomSheet.updateDeleteDiaryBottomSheet(
-                context: context);
+            UpdateDeleteDiaryBottomSheet.updateDeleteDiaryBottomSheet(context: context);
           },
         ),
         const SizedBox(
@@ -156,8 +141,7 @@ class _JournalScreenState extends State<JournalScreen> {
         carouselSlider(onPageChanged: (index, reason) {
           setState(() {
             currentIndex = index;
-            _itemScrollController.scrollTo(
-                index: index, duration: const Duration(milliseconds: 400));
+            _itemScrollController.scrollTo(index: index, duration: const Duration(milliseconds: 400));
           });
         }),
         const SizedBox(
@@ -172,9 +156,7 @@ class _JournalScreenState extends State<JournalScreen> {
 
   showDescriptionList({required bool showKeyword}) {
     return Container(
-      color: ThemeSetting.isLightTheme(context)
-          ? ThemeSetting.of(context).common0.withOpacity(0.3)
-          : ThemeSetting.of(context).tertiary,
+      color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).common0.withOpacity(0.3) : ThemeSetting.of(context).tertiary,
       child: ScrollablePositionedList.builder(
         shrinkWrap: true,
         itemScrollController: _itemScrollController,
@@ -205,8 +187,7 @@ class _JournalScreenState extends State<JournalScreen> {
                     color: ThemeSetting.of(context).secondaryBackground,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Text('${index + 1}',
-                      style: ThemeSetting.of(context).bodySmall),
+                  child: Text('${index + 1}', style: ThemeSetting.of(context).bodySmall),
                 ),
                 const SizedBox(
                   height: 10,
@@ -227,8 +208,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       ),
                       Text(
                         LocaleKeys.today_keyword.tr(),
-                        style: ThemeSetting.of(context).headlineLarge.copyWith(
-                            color: ThemeSetting.of(context).primaryText),
+                        style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).primaryText),
                       ),
                       const SizedBox(
                         height: 15,
@@ -239,19 +219,14 @@ class _JournalScreenState extends State<JournalScreen> {
                         children: List.generate(
                           journalService.journalModel.hashtags.length,
                           (index) => Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
                               color: ThemeSetting.of(context).alternate,
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: Text(
                               "#${journalService.journalModel.hashtags[index]}",
-                              style: ThemeSetting.of(context)
-                                  .bodyMedium
-                                  .copyWith(
-                                      color:
-                                          ThemeSetting.of(context).secondary),
+                              style: ThemeSetting.of(context).bodyMedium.copyWith(color: ThemeSetting.of(context).secondary),
                             ),
                           ),
                         ),
@@ -290,15 +265,11 @@ class _JournalScreenState extends State<JournalScreen> {
     );
   }
 
-  carouselSlider(
-      {ScrollPhysics? scrollPhysics,
-      dynamic Function(int, CarouselPageChangedReason)? onPageChanged}) {
+  carouselSlider({ScrollPhysics? scrollPhysics, dynamic Function(int, CarouselPageChangedReason)? onPageChanged}) {
     return SizedBox(
       height: 230,
       child: CarouselSlider.builder(
-        itemCount: journalService.journalModel != null
-            ? journalService.journalModel.content.length!
-            : 0,
+        itemCount: journalService.journalModel != null ? journalService.journalModel.content.length! : 0,
         itemBuilder: (context, index, realIndex) {
           return GestureDetector(
             onTap: () {
@@ -316,10 +287,7 @@ class _JournalScreenState extends State<JournalScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                        color: ThemeSetting.isLightTheme(context)
-                            ? ThemeSetting.of(context).black1
-                            : ThemeSetting.of(context).tertiary1),
+                    border: Border.all(color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).black1 : ThemeSetting.of(context).tertiary1),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -352,10 +320,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       color: ThemeSetting.of(context).white,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: Text('${index + 1}',
-                        style: ThemeSetting.of(context)
-                            .bodySmall
-                            .copyWith(color: ThemeSetting.of(context).black2)),
+                    child: Text('${index + 1}', style: ThemeSetting.of(context).bodySmall.copyWith(color: ThemeSetting.of(context).black2)),
                   ),
                 ),
               ],

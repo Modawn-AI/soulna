@@ -27,54 +27,13 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
   bool showData = true;
   DateTime selectedDate = DateTime.now();
   final List<NeatCleanCalendarEvent> _eventList = [
-    NeatCleanCalendarEvent('MultiDay Event A',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 10, 0),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 12, 0),
-        color: Colors.orange,
-        isMultiDay: true),
-    NeatCleanCalendarEvent('Allday Event B',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day - 2, 14, 30),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day + 2, 17, 0),
-        color: Colors.pink,
-        isAllDay: true),
-    NeatCleanCalendarEvent('Normal Event D',
-        startTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 14, 30),
-        endTime: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 17, 0),
-        color: Colors.indigo),
+    NeatCleanCalendarEvent('MultiDay Event A', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
+    NeatCleanCalendarEvent('Allday Event B', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2, 14, 30), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 17, 0), color: Colors.pink, isAllDay: true),
+    NeatCleanCalendarEvent('Normal Event D', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 14, 30), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 17, 0), color: Colors.indigo),
   ];
 
   final authCon = Get.put(AuthController());
@@ -90,41 +49,41 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
     ));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerCalendar(
-          context: context,
-          title: Obx(
-            () => Text(
-              DateFormat.yMMMM().format(authCon.selectedDate.value),
-              style: ThemeSetting.of(context).labelMedium.copyWith(
-                    fontSize: 20.sp,
-                  ),
-            ),
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerCalendar(
+        context: context,
+        title: Obx(
+          () => Text(
+            DateFormat.yMMMM().format(authCon.selectedDate.value),
+            style: ThemeSetting.of(context).labelMedium.copyWith(
+                  fontSize: 20.sp,
+                ),
           ),
-          onTapOnDownArrow: () {
-            ShowDatePickerBottomSheet.showDatePicker(
-              context: context,
-              onDateSelected: (date) {
-                setState(() {
-                  selectedDate = date;
-                });
-              },
-            );
-          },
-          onTap: () async {
-            setState(() {
-              if (index == 0) {
-                index = 1;
-              } else {
-                index = 0;
-              }
-            });
-          },
-          image: index == 0 ? AppAssets.calendar : AppAssets.menu,
         ),
-        body: index == 0 ? pastFortune() : pastFortuneCalenderView(),
+        onTapOnDownArrow: () {
+          ShowDatePickerBottomSheet.showDatePicker(
+            context: context,
+            onDateSelected: (date) {
+              setState(() {
+                selectedDate = date;
+              });
+            },
+          );
+        },
+        onTap: () async {
+          setState(() {
+            if (index == 0) {
+              index = 1;
+            } else {
+              index = 0;
+            }
+          });
+        },
+        image: index == 0 ? AppAssets.calendar : AppAssets.menu,
+      ),
+      body: SafeArea(
+        child: index == 0 ? pastFortune() : pastFortuneCalenderView(),
       ),
     );
   }
@@ -134,10 +93,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         ? ListView.separated(
             shrinkWrap: true,
             itemCount: 3,
-            itemBuilder: (context, index) => listTile(
-                date: 'July 2024',
-                description:
-                    'It\s a day where you can expect results proportional to your efforts.'),
+            itemBuilder: (context, index) => listTile(date: 'July 2024', description: 'It\s a day where you can expect results proportional to your efforts.'),
             padding: EdgeInsets.zero,
             separatorBuilder: (BuildContext context, int index) {
               return CustomDividerWidget(
@@ -158,9 +114,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             NeatCleanCalendarEvent event = _eventList[index];
-            return listTile(
-                date: DateFormat.yMMMM().format(event.startTime),
-                description: event.summary);
+            return listTile(date: DateFormat.yMMMM().format(event.startTime), description: event.summary);
           },
           separatorBuilder: (BuildContext context, int index) {
             return CustomDividerWidget(
@@ -247,8 +201,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
                         LocaleKeys.check_your_fortune_for_today.tr(),
                         style: ThemeSetting.of(context).labelLarge.copyWith(
                               fontSize: 20.sp,
-                              color:
-                                  ThemeSetting.of(context).secondaryBackground,
+                              color: ThemeSetting.of(context).secondaryBackground,
                             ),
                       ),
                       SizedBox(height: 5.h),
@@ -257,12 +210,10 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
                           width: 150.w,
                           height: 40.h,
                           color: ThemeSetting.of(context).primaryText,
-                          textStyle:
-                              ThemeSetting.of(context).captionMedium.copyWith(
-                                    color: ThemeSetting.of(context)
-                                        .secondaryBackground,
-                                    fontSize: 12.sp,
-                                  ),
+                          textStyle: ThemeSetting.of(context).captionMedium.copyWith(
+                                color: ThemeSetting.of(context).secondaryBackground,
+                                fontSize: 12.sp,
+                              ),
                           text: "${LocaleKeys.daily_vibe_check.tr()} 💫",
                           onTap: () {}),
                     ],

@@ -26,8 +26,7 @@ class _CreateJournalState extends State<CreateJournal> {
   getSelectedImage() async {
     // isMyAlbumSelected = await SharedPreferencesManager.getBool(
     //     key: SharedprefString.isMyAlbumSelected);
-    list = await SharedPreferencesManager.getMediaListFromSharedPreferences(
-        key: SharedprefString.selectedMediaList);
+    list = await SharedPreferencesManager.getMediaListFromSharedPreferences(key: SharedprefString.selectedMediaList);
     setState(() {});
   }
 
@@ -40,50 +39,48 @@ class _CreateJournalState extends State<CreateJournal> {
 
   @override
   Widget build(BuildContext context) {
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: ThemeSetting.of(context).secondaryBackground));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ThemeSetting.of(context).secondaryBackground));
 
     getSelectedImage();
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: ButtonWidget.roundedButtonOrange(
-            context: context,
-            height: 50.h,
-            width: double.infinity,
-            text: "${LocaleKeys.create_my_own_journal.tr()} 💫",
-            textStyle: ThemeSetting.of(context).captionMedium.copyWith(
-                  color: ThemeSetting.of(context).white,
-                  fontSize: 16.sp,
-                ),
-            onTap: () async {
-              if (selectedValue == 'Instagram' || selectedValue == 'Album') {
-                // SharedPreferencesManager.setString(
-                //     key: SharedprefString.animationScreen,
-                //     value: journalScreen);
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: ButtonWidget.roundedButtonOrange(
+          context: context,
+          height: 50.h,
+          width: double.infinity,
+          text: "${LocaleKeys.create_my_own_journal.tr()} 💫",
+          textStyle: ThemeSetting.of(context).captionMedium.copyWith(
+                color: ThemeSetting.of(context).white,
+                fontSize: 16.sp,
+              ),
+          onTap: () async {
+            if (selectedValue == 'Instagram' || selectedValue == 'Album') {
+              // SharedPreferencesManager.setString(
+              //     key: SharedprefString.animationScreen,
+              //     value: journalScreen);
 
-                // final apiCallFuture = _mockApiCall(selectedImages);
+              // final apiCallFuture = _mockApiCall(selectedImages);
 
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AnimationScreen(
-                      apiFuture: Future.value(false),
-                      screenName: autobiographyScreen,
-                    ),
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AnimationScreen(
+                    apiFuture: Future.value(false),
+                    screenName: autobiographyScreen,
                   ),
-                );
-                // context.pushReplacementNamed(animationScreen);
-              }
-            },
-          ),
+                ),
+              );
+              // context.pushReplacementNamed(animationScreen);
+            }
+          },
         ),
-        appBar: HeaderWidget.headerBack(context: context),
-        body: Padding(
+      ),
+      appBar: HeaderWidget.headerBack(context: context),
+      body: SafeArea(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,9 +96,7 @@ class _CreateJournalState extends State<CreateJournal> {
                   Image.asset(AppAssets.logo, width: 20.w, height: 20.h),
                   SizedBox(width: 10.w),
                   Text(
-                    LocaleKeys
-                        .it_automatically_creates_a_journal_through_the_Ai_algorithm
-                        .tr(),
+                    LocaleKeys.it_automatically_creates_a_journal_through_the_Ai_algorithm.tr(),
                     style: ThemeSetting.of(context).captionMedium.copyWith(
                           color: ThemeSetting.of(context).primaryText,
                           fontSize: 12.sp,
@@ -116,9 +111,7 @@ class _CreateJournalState extends State<CreateJournal> {
                   containerWidget(
                       image: AppAssets.album,
                       title: LocaleKeys.my_album.tr(),
-                      description: LocaleKeys
-                          .choose_a_photo_to_create_your_own_journal
-                          .tr(),
+                      description: LocaleKeys.choose_a_photo_to_create_your_own_journal.tr(),
                       isAlbum: true,
                       showBorder: selectedValue == 'Album',
                       onTap: () {
@@ -136,9 +129,7 @@ class _CreateJournalState extends State<CreateJournal> {
                   containerWidget(
                       image: AppAssets.instagram,
                       title: LocaleKeys.instagram.tr(),
-                      description: LocaleKeys
-                          .link_instagram_to_import_and_create_data
-                          .tr(),
+                      description: LocaleKeys.link_instagram_to_import_and_create_data.tr(),
                       isAlbum: false,
                       showBorder: selectedValue == 'Instagram' ? true : false,
                       onTap: () {
@@ -356,13 +347,9 @@ class _CreateJournalState extends State<CreateJournal> {
                               context: context,
                               height: 24.h,
                               text: LocaleKeys.edit.tr(),
-                              buttonBackgroundColor:
-                                  ThemeSetting.of(context).primaryText,
-                              textStyle: ThemeSetting.of(context)
-                                  .captionMedium
-                                  .copyWith(
-                                    color: ThemeSetting.of(context)
-                                        .secondaryBackground,
+                              buttonBackgroundColor: ThemeSetting.of(context).primaryText,
+                              textStyle: ThemeSetting.of(context).captionMedium.copyWith(
+                                    color: ThemeSetting.of(context).secondaryBackground,
                                     fontSize: 12.sp,
                                   ),
                             ),
@@ -384,8 +371,7 @@ class _CreateJournalState extends State<CreateJournal> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.r),
                                   ),
-                                  child: Image.network(list[index]['media_url'],
-                                      width: 60.w, height: 60.h),
+                                  child: Image.network(list[index]['media_url'], width: 60.w, height: 60.h),
                                 );
                               }),
                         ),

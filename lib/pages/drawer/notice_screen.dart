@@ -23,46 +23,14 @@ class _NoticeScreenState extends State<NoticeScreen> {
   ];
 
   List allList = [
-    {
-      "title": "Notice",
-      "description": "Privacy policy update notice",
-      "date": "January 1st, 1990 2:20 PM"
-    },
-    {
-      "title": "Update",
-      "description": "iOS Error Update Notification",
-      "date": "January 1st, 1990 2:20 PM"
-    },
-    {
-      "title": "Other",
-      "description": "Inactive User Deactivation Notice",
-      "date": "January 1st, 1990 2:20 PM"
-    },
-    {
-      "title": "Information",
-      "description": "Instructions for using Soluna",
-      "date": "January 1st, 1990 2:20 PM"
-    },
-    {
-      "title": "Notice",
-      "description": "Privacy policy update notice",
-      "date": "January 1st, 1990 2:20 PM"
-    },
-    {
-      "title": "Update",
-      "description": "iOS Error Update Notification",
-      "date": "January 1st, 1990 2:20 PM"
-    },
-    {
-      "title": "Other",
-      "description": "Inactive User Deactivation Notice",
-      "date": "January 1st, 1990 2:20 PM"
-    },
-    {
-      "title": "Information",
-      "description": "Instructions for using Soluna",
-      "date": "January 1st, 1990 2:20 PM"
-    },
+    {"title": "Notice", "description": "Privacy policy update notice", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Update", "description": "iOS Error Update Notification", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Other", "description": "Inactive User Deactivation Notice", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Information", "description": "Instructions for using Soluna", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Notice", "description": "Privacy policy update notice", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Update", "description": "iOS Error Update Notification", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Other", "description": "Inactive User Deactivation Notice", "date": "January 1st, 1990 2:20 PM"},
+    {"title": "Information", "description": "Instructions for using Soluna", "date": "January 1st, 1990 2:20 PM"},
   ];
 
   List filterList = [];
@@ -86,14 +54,14 @@ class _NoticeScreenState extends State<NoticeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerWithTitle(
-          context: context,
-          title: LocaleKeys.notice.tr(),
-        ),
-        body: Column(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerWithTitle(
+        context: context,
+        title: LocaleKeys.notice.tr(),
+      ),
+      body: SafeArea(
+        child: Column(
           children: [
             SizedBox(height: 10),
             Padding(
@@ -113,30 +81,22 @@ class _NoticeScreenState extends State<NoticeScreen> {
                         filterListByTitle(noticeList[index]);
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 4, vertical: 0.0),
+                        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 0.0),
                         margin: EdgeInsets.all(4),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: isSelected
-                              ? ThemeSetting.of(context).primaryText
-                              : Colors.transparent,
+                          color: isSelected ? ThemeSetting.of(context).primaryText : Colors.transparent,
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(
-                            color: isSelected
-                                ? ThemeSetting.of(context).primaryText
-                                : ThemeSetting.of(context).common0,
+                            color: isSelected ? ThemeSetting.of(context).primaryText : ThemeSetting.of(context).common0,
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 0.0),
+                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 0.0),
                           child: Text(
                             noticeList[index],
                             style: TextStyle(
-                              color: isSelected
-                                  ? ThemeSetting.of(context).secondaryBackground
-                                  : ThemeSetting.of(context).primaryText,
+                              color: isSelected ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).primaryText,
                             ),
                           ),
                         ),

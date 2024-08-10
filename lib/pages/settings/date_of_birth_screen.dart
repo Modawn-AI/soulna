@@ -21,13 +21,13 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerBack(
-          context: context,
-        ),
-        body: ListView(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerBack(
+        context: context,
+      ),
+      body: SafeArea(
+        child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
 
           //crossAxisAlignment: CrossAxisAlignment.start,

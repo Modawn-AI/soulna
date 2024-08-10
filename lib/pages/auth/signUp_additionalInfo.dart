@@ -27,16 +27,15 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor:  ThemeSetting.of(context).secondaryBackground,
-
-        appBar: HeaderWidget.headerWithCustomAction(
-          context: context,
-          pageIndex: '4',
-          percent: 1.0,
-        ),
-        body: Form(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerWithCustomAction(
+        context: context,
+        pageIndex: '4',
+        percent: 1.0,
+      ),
+      body: SafeArea(
+        child: Form(
           key: _formKey,
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
@@ -50,9 +49,7 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
               ),
               Text(
                 LocaleKeys.name.tr(),
-                style: ThemeSetting.of(context)
-                    .captionLarge
-                    .copyWith(color: ThemeSetting.of(context).primary),
+                style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
               ),
               const SizedBox(
                 height: 10,
@@ -61,17 +58,14 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
                 controller: authCon.nameCon.value,
                 hintText: LocaleKeys.enter_your_name.tr(),
                 inputAction: TextInputAction.done,
-                validator: CustomValidatorWidget.validateName(
-                    value: authCon.nameCon.value.text),
+                validator: CustomValidatorWidget.validateName(value: authCon.nameCon.value.text),
               ),
               const SizedBox(
                 height: 30,
               ),
               Text(
                 LocaleKeys.gender.tr(),
-                style: ThemeSetting.of(context)
-                    .captionLarge
-                    .copyWith(color: ThemeSetting.of(context).primary),
+                style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
               ),
               const SizedBox(
                 height: 10,

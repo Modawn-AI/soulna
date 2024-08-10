@@ -30,12 +30,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       },
     ];
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        appBar: HeaderWidget.headerWithTitle(
-            context: context, title: LocaleKeys.setting.tr()),
-        body: Column(children: [
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      appBar: HeaderWidget.headerWithTitle(context: context, title: LocaleKeys.setting.tr()),
+      body: SafeArea(
+        child: Column(children: [
           ...List.generate(
             settingList.length,
             (index) {
@@ -61,24 +60,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Icon(Icons.mode_night_outlined),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Text(LocaleKeys.dark_mode.tr(),
                     style: ThemeSetting.of(context).bodyMedium.copyWith(
-                      color: ThemeSetting.of(context).primaryText,
-                      fontSize: 16,
-                    )),
+                          color: ThemeSetting.of(context).primaryText,
+                          fontSize: 16,
+                        )),
                 Spacer(),
                 CustomSwitchTile(
-                  initialValue:
-                      ThemeSetting.isLightTheme(context) ? false : true,
+                  initialValue: ThemeSetting.isLightTheme(context) ? false : true,
                   onChanged: (bool value) {
                     setState(() {
                       ThemeSetting.changeTheme(context);
                     });
                   },
                 ),
-
-
               ],
             ),
           ),
@@ -96,8 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: LocaleKeys.log_out.tr(),
                   content: LocaleKeys.are_you_sure_you_want_to_log_out.tr(),
                   confirmText: LocaleKeys.log_out.tr(),
-                  onConfirm: () =>
-                      Navigator.of(context).pushReplacementNamed('LoginScreen'),
+                  onConfirm: () => Navigator.of(context).pushReplacementNamed('LoginScreen'),
                 ),
               );
             },

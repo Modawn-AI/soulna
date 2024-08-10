@@ -23,14 +23,7 @@ class AutobiographyScreen extends StatefulWidget {
 class _AutobiographyScreenState extends State<AutobiographyScreen> {
   bool showHeader = false;
   final ItemScrollController _itemScrollController = ItemScrollController();
-  List<String> hashTag = [
-    "dreamy",
-    "Hyundai Outlet",
-    "sea",
-    "cake",
-    "americano",
-    "Gongneung Coffee"
-  ];
+  List<String> hashTag = ["dreamy", "Hyundai Outlet", "sea", "cake", "americano", "Gongneung Coffee"];
 
   List chapter = [
     "Ch. 1",
@@ -42,24 +35,18 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: ThemeSetting.of(context).secondaryBackground));
-    return SafeArea(
-      child: Scaffold(
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ThemeSetting.of(context).secondaryBackground));
+    return Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        body: showHeader == false ? journalList() : journalScroll(),
-      ),
-    );
+        body: SafeArea(
+          child: showHeader == false ? journalList() : journalScroll(),
+        ));
   }
 
   journalList() {
     return ListView(
       children: [
-        HeaderWidget.headerSettings(
-            context: context,
-            actionIcon: AppAssets.share,
-            onTapOnMenu: () => context.pop(),
-            onTap: () {}),
+        HeaderWidget.headerSettings(context: context, actionIcon: AppAssets.share, onTapOnMenu: () => context.pop(), onTap: () {}),
         const SizedBox(
           height: 20,
         ),
@@ -76,9 +63,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         Center(
           child: Text(
             ' July 8, 2024 ~ July 30, 2024 ',
-            style: ThemeSetting.of(context)
-                .headlineMedium
-                .copyWith(color: ThemeSetting.of(context).primary),
+            style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primary),
           ),
         ),
         const SizedBox(
@@ -103,9 +88,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Text(
             LocaleKeys.my_journal_keyword.tr(),
-            style: ThemeSetting.of(context)
-                .headlineLarge
-                .copyWith(color: ThemeSetting.of(context).primaryText),
+            style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).primaryText),
           ),
         ),
         const SizedBox(
@@ -119,17 +102,14 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
             children: List.generate(
               hashTag.length,
               (index) => Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: ThemeSetting.of(context).alternate,
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Text(
                   "#${hashTag[index]}",
-                  style: ThemeSetting.of(context)
-                      .bodyMedium
-                      .copyWith(color: ThemeSetting.of(context).secondary),
+                  style: ThemeSetting.of(context).bodyMedium.copyWith(color: ThemeSetting.of(context).secondary),
                 ),
               ),
             ),
@@ -153,10 +133,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: ButtonWidget.gradientButtonWithImage(
-              context: context,
-              text: LocaleKeys.share.tr(),
-              imageString: AppAssets.heart),
+          child: ButtonWidget.gradientButtonWithImage(context: context, text: LocaleKeys.share.tr(), imageString: AppAssets.heart),
         ),
         // const SizedBox(
         //   height: 10,
@@ -196,10 +173,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
   journalScroll() {
     return Column(
       children: [
-        HeaderWidget.headerWithAction(
-            context: context,
-            title: LocaleKeys.the_life_story_of_hopeful_stella.tr(),
-            showMoreIcon: false),
+        HeaderWidget.headerWithAction(context: context, title: LocaleKeys.the_life_story_of_hopeful_stella.tr(), showMoreIcon: false),
         const SizedBox(
           height: 10,
         ),
@@ -231,25 +205,16 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                   setState(() {
                     chapterIndex = index;
                   });
-                  _itemScrollController.scrollTo(
-                      index: index,
-                      duration: const Duration(milliseconds: 400));
+                  _itemScrollController.scrollTo(index: index, duration: const Duration(milliseconds: 400));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 5),
                   child: Chip(
                       elevation: 0,
                       padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                              color: chapterIndex == index
-                                  ? Colors.transparent
-                                  : ThemeSetting.of(context).common0),
-                          borderRadius: BorderRadius.circular(50)),
+                      shape: RoundedRectangleBorder(side: BorderSide(color: chapterIndex == index ? Colors.transparent : ThemeSetting.of(context).common0), borderRadius: BorderRadius.circular(50)),
                       color: WidgetStatePropertyAll(
-                        chapterIndex == index
-                            ? ThemeSetting.of(context).primary
-                            : ThemeSetting.of(context).secondaryBackground,
+                        chapterIndex == index ? ThemeSetting.of(context).primary : ThemeSetting.of(context).secondaryBackground,
                       ),
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       label: Text(
@@ -257,8 +222,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                         style: ThemeSetting.of(context).headlineMedium.copyWith(
                             color: chapterIndex == index
                                 ? ThemeSetting.isLightTheme(context)
-                                    ? ThemeSetting.of(context)
-                                        .secondaryBackground
+                                    ? ThemeSetting.of(context).secondaryBackground
                                     : ThemeSetting.of(context).primaryText
                                 : ThemeSetting.of(context).primaryText),
                       )),
@@ -288,9 +252,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
               setState(() {
                 chapterIndex = index;
                 showHeader = !showHeader;
-                _itemScrollController.scrollTo(
-                    index: chapterIndex,
-                    duration: const Duration(milliseconds: 400));
+                _itemScrollController.scrollTo(index: chapterIndex, duration: const Duration(milliseconds: 400));
               });
             },
             child: Column(
@@ -299,9 +261,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 6.18),
                     child: Image.asset(
-                      ThemeSetting.isLightTheme(context)
-                          ? AppAssets.character
-                          : AppAssets.characterDark,
+                      ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
                       width: 65,
                       height: 59,
                     ),
@@ -316,31 +276,22 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                     Flexible(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: index != 0
-                            ? CrossAxisAlignment.center
-                            : CrossAxisAlignment.start,
+                        crossAxisAlignment: index != 0 ? CrossAxisAlignment.center : CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: index != 0
-                                ? MainAxisAlignment.center
-                                : MainAxisAlignment.start,
+                            mainAxisAlignment: index != 0 ? MainAxisAlignment.center : MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const SizedBox(
                                 width: 5,
                               ),
-                              Image.asset(AppAssets.star,
-                                  width: 16, height: 16),
+                              Image.asset(AppAssets.star, width: 16, height: 16),
                               const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 'Ch.${index + 1}',
-                                style: ThemeSetting.of(context)
-                                    .headlineMedium
-                                    .copyWith(
-                                        color:
-                                            ThemeSetting.of(context).primary),
+                                style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primary),
                               ),
                             ],
                           ),
@@ -349,10 +300,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                           ),
                           Text(
                             'The Beginning of the hope',
-                            style: ThemeSetting.of(context)
-                                .headlineMedium
-                                .copyWith(
-                                    color: ThemeSetting.of(context).primary),
+                            style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primary),
                           ),
                           if (index != 0)
                             const SizedBox(
@@ -365,9 +313,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 6.18),
                         child: Image.asset(
-                          ThemeSetting.isLightTheme(context)
-                              ? AppAssets.character
-                              : AppAssets.characterDark,
+                          ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
                           width: 65,
                           height: 59,
                         ),
@@ -379,11 +325,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                   height: 15,
                 ),
                 RichText(
-                  text: CustomHashtagFunction.getStyledText(
-                      text:
-                          'Today was a dreamy day. I started the day with dessert in the morning and filled my stomach, and from the afternoon I met with my friends and explored the Hyundai Outlet.',
-                      keywords: hashTag,
-                      context: context),
+                  text: CustomHashtagFunction.getStyledText(text: 'Today was a dreamy day. I started the day with dessert in the morning and filled my stomach, and from the afternoon I met with my friends and explored the Hyundai Outlet.', keywords: hashTag, context: context),
                 ),
                 const SizedBox(
                   height: 55,
@@ -393,11 +335,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                   height: 15,
                 ),
                 RichText(
-                  text: CustomHashtagFunction.getStyledText(
-                      text:
-                          'I went to Gangneung Gongneung Coffee where I filled my stomach hard. I ate brunch, cake, and americano here.',
-                      keywords: hashTag,
-                      context: context),
+                  text: CustomHashtagFunction.getStyledText(text: 'I went to Gangneung Gongneung Coffee where I filled my stomach hard. I ate brunch, cake, and americano here.', keywords: hashTag, context: context),
                 ),
                 const SizedBox(
                   height: 55,
@@ -420,8 +358,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
 
           if (showHeader == true) {
             chapterIndex = index;
-            _itemScrollController.scrollTo(
-                index: index, duration: const Duration(milliseconds: 400));
+            _itemScrollController.scrollTo(index: index, duration: const Duration(milliseconds: 400));
           }
         });
       },
@@ -430,15 +367,11 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         decoration: BoxDecoration(
           color: ThemeSetting.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(10),
-          border:
-              Border.all(color: ThemeSetting.of(context).primaryText, width: 2),
+          border: Border.all(color: ThemeSetting.of(context).primaryText, width: 2),
         ),
         child: Container(
           margin: const EdgeInsets.all(3),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(9),
-              image:
-                  DecorationImage(fit: BoxFit.cover, image: AssetImage(image))),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(9), image: DecorationImage(fit: BoxFit.cover, image: AssetImage(image))),
         ),
       ),
     );

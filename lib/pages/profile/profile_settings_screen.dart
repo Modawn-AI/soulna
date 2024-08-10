@@ -19,14 +19,13 @@ class ProfileSettingsScreen extends StatefulWidget {
 class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
   final _formKey = GlobalKey<FormState>();
   String gender = "";
-  TextEditingController userNameController =
-      TextEditingController(text: "Stella");
+  TextEditingController userNameController = TextEditingController(text: "Stella");
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeSetting.of(context).secondaryBackground,
-        body: SizedBox(
+    return Scaffold(
+      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+      body: SafeArea(
+        child: SizedBox(
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -35,10 +34,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
               child: ListView(
                 children: [
                   const SizedBox(height: 80),
-                  Align(
-                      alignment: Alignment.center,
-                      child: Image.asset(AppAssets.logo,
-                          width: 40.w, height: 40.h)),
+                  Align(alignment: Alignment.center, child: Image.asset(AppAssets.logo, width: 40.w, height: 40.h)),
                   const SizedBox(height: 20),
                   Align(
                     alignment: Alignment.center,
@@ -59,15 +55,12 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                   CustomTextField(
                     controller: userNameController,
                     hintText: LocaleKeys.enter_your_name.tr(),
-                    validator: CustomValidatorWidget.validateName(
-                        value: LocaleKeys.enter_your_name.tr()),
+                    validator: CustomValidatorWidget.validateName(value: LocaleKeys.enter_your_name.tr()),
                   ),
                   const SizedBox(height: 40),
                   Text(
                     LocaleKeys.gender.tr(),
-                    style: ThemeSetting.of(context)
-                        .captionLarge
-                        .copyWith(color: ThemeSetting.of(context).primary),
+                    style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
                   ),
                   const SizedBox(
                     height: 10,
