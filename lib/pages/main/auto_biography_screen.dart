@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:Soulna/models/auto_biography_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
@@ -23,7 +24,7 @@ class AutobiographyScreen extends StatefulWidget {
 class _AutobiographyScreenState extends State<AutobiographyScreen> {
   bool showHeader = false;
   final ItemScrollController _itemScrollController = ItemScrollController();
-  List<String> hashTag = ["dreamy", "Hyundai Outlet", "sea", "cake", "americano", "Gongneung Coffee"];
+  List<String> hashTag = [];
 
   List chapter = [
     "Ch. 1",
@@ -33,17 +34,33 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
 
   int chapterIndex = 0;
 
+  AutoBiographyService? autoBiographyService;
+
+  @override
+  void initState() {
+    super.initState();
+    // _itemScrollController.jumpTo(index: chapterIndex);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    autoBiographyService = GetIt.I.get<AutoBiographyService>();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ThemeSetting.of(context).secondaryBackground));
+    hashTag = autoBiographyService!.autoBiographyModel!.hashtags;
+
     return Scaffold(
         backgroundColor: ThemeSetting.of(context).secondaryBackground,
         body: SafeArea(
-          child: showHeader == false ? journalList() : journalScroll(),
+          child: showHeader == false ? autoBiographyList() : autoBiographyScroll(),
         ));
   }
 
-  journalList() {
+  autoBiographyList() {
     return ListView(
       children: [
         HeaderWidget.headerSettings(context: context, actionIcon: AppAssets.share, onTapOnMenu: () => context.pop(), onTap: () {}),
@@ -170,7 +187,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
     );
   }
 
-  journalScroll() {
+  autoBiographyScroll() {
     return Column(
       children: [
         HeaderWidget.headerWithAction(context: context, title: LocaleKeys.the_life_story_of_hopeful_stella.tr(), showMoreIcon: false),
@@ -238,113 +255,111 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
     );
   }
 
-  showList() {
-    return Container(
-      child: ScrollablePositionedList.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        itemScrollController: _itemScrollController,
-        itemCount: chapter.length,
-        initialScrollIndex: chapterIndex,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                chapterIndex = index;
-                showHeader = !showHeader;
-                _itemScrollController.scrollTo(index: chapterIndex, duration: const Duration(milliseconds: 400));
-              });
-            },
-            child: Column(
-              children: [
-                if (index != 0)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 6.18),
-                    child: Image.asset(
-                      ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
-                      width: 65,
-                      height: 59,
-                    ),
+  Widget showList() {
+    return ScrollablePositionedList.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      itemScrollController: _itemScrollController,
+      itemCount: chapter.length,
+      initialScrollIndex: chapterIndex,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              chapterIndex = index;
+              showHeader = !showHeader;
+              _itemScrollController.scrollTo(index: chapterIndex, duration: const Duration(milliseconds: 400));
+            });
+          },
+          child: Column(
+            children: [
+              if (index != 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 6.18),
+                  child: Image.asset(
+                    ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
+                    width: 65,
+                    height: 59,
                   ),
-                if (index != 0)
-                  const SizedBox(
-                    height: 30,
-                  ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: index != 0 ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: index != 0 ? MainAxisAlignment.center : MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Image.asset(AppAssets.star, width: 16, height: 16),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Ch.${index + 1}',
-                                style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primary),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            'The Beginning of the hope',
-                            style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primary),
-                          ),
-                          if (index != 0)
+                ),
+              if (index != 0)
+                const SizedBox(
+                  height: 30,
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: index != 0 ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: index != 0 ? MainAxisAlignment.center : MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
                             const SizedBox(
-                              height: 20,
+                              width: 5,
                             ),
-                        ],
-                      ),
-                    ),
-                    if (index == 0)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6.18),
-                        child: Image.asset(
-                          ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
-                          width: 65,
-                          height: 59,
+                            Image.asset(AppAssets.star, width: 16, height: 16),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              'Ch.${index + 1}',
+                              style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primary),
+                            ),
+                          ],
                         ),
-                      )
-                  ],
-                ),
-                showImage(image: AppAssets.rectangle, index: index),
-                const SizedBox(
-                  height: 15,
-                ),
-                RichText(
-                  text: CustomHashtagFunction.getStyledText(text: 'Today was a dreamy day. I started the day with dessert in the morning and filled my stomach, and from the afternoon I met with my friends and explored the Hyundai Outlet.', keywords: hashTag, context: context),
-                ),
-                const SizedBox(
-                  height: 55,
-                ),
-                showImage(image: AppAssets.rectangle, index: index),
-                const SizedBox(
-                  height: 15,
-                ),
-                RichText(
-                  text: CustomHashtagFunction.getStyledText(text: 'I went to Gangneung Gongneung Coffee where I filled my stomach hard. I ate brunch, cake, and americano here.', keywords: hashTag, context: context),
-                ),
-                const SizedBox(
-                  height: 55,
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          'The Beginning of the hope',
+                          style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primary),
+                        ),
+                        if (index != 0)
+                          const SizedBox(
+                            height: 20,
+                          ),
+                      ],
+                    ),
+                  ),
+                  if (index == 0)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6.18),
+                      child: Image.asset(
+                        ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
+                        width: 65,
+                        height: 59,
+                      ),
+                    )
+                ],
+              ),
+              showImage(image: AppAssets.rectangle, index: index),
+              const SizedBox(
+                height: 15,
+              ),
+              RichText(
+                text: CustomHashtagFunction.getStyledText(text: 'Today was a dreamy day. I started the day with dessert in the morning and filled my stomach, and from the afternoon I met with my friends and explored the Hyundai Outlet.', keywords: hashTag, context: context),
+              ),
+              const SizedBox(
+                height: 55,
+              ),
+              showImage(image: AppAssets.rectangle, index: index),
+              const SizedBox(
+                height: 15,
+              ),
+              RichText(
+                text: CustomHashtagFunction.getStyledText(text: 'I went to Gangneung Gongneung Coffee where I filled my stomach hard. I ate brunch, cake, and americano here.', keywords: hashTag, context: context),
+              ),
+              const SizedBox(
+                height: 55,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

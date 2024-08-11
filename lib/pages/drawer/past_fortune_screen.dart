@@ -153,9 +153,14 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
             return ListView(
               shrinkWrap: true,
               children: [
-                listTile(
-                  date: DateFormat.yMMMMd().format(selectedDate),
-                  description: selectedFortune,
+                GestureDetector(
+                  onTap: () {
+                    context.pushNamed(sajuDailyScreen);
+                  },
+                  child: listTile(
+                    date: DateFormat.yMMMMd().format(selectedDate),
+                    description: selectedFortune,
+                  ),
                 ),
               ],
             );
@@ -297,6 +302,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         if (response != null && response['daily_entry'] != null) {
           SajuDailyModel model = SajuDailyModel.fromJson(response['daily_entry']);
           _fortuneCache[formattedDate] = model; // 캐시에 저장
+          GetIt.I.get<SajuDailyService>().setSajuDailyInfo(model);
           setState(() {
             selectedFortune = model.sajuDescription.title;
             isLoading = false;

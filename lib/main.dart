@@ -1,3 +1,4 @@
+import 'package:Soulna/models/auto_biography_model.dart';
 import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
 import 'package:Soulna/provider/ten_twelve_provider.dart';
@@ -93,6 +94,9 @@ void setupLocator() {
   }
   if (!GetIt.I.isRegistered<JournalService>()) {
     GetIt.I.registerSingleton<JournalService>(JournalService());
+  }
+  if (!GetIt.I.isRegistered<AutoBiographyService>()) {
+    GetIt.I.registerSingleton<AutoBiographyService>(AutoBiographyService());
   }
 }
 

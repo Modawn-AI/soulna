@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:Soulna/utils/json.dart';
-import 'package:Soulna/models/notification_model.dart';
 import 'package:Soulna/utils/package_exporter.dart';
-import 'package:dio/dio.dart';
 
 class ApiCalls {
   Future<String> versionInfo() async {
@@ -139,7 +137,7 @@ class ApiCalls {
     }
   }
 
-  Future<dynamic> getJournalData() async {
+  Future<dynamic> getJournalList() async {
     try {
       final data = await NetworkManager().getRequest('user/journal-list');
       if (data['data'] == null) return null;

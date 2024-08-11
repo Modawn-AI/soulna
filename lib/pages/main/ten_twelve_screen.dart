@@ -37,7 +37,7 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
         ));
       }
       return Scaffold(
-        backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).redAccent : ThemeSetting.of(context).common2,
+        backgroundColor: Utils.getElementBgToColor(context, myElementName),
         body: SafeArea(
           child: SizedBox(
             width: MediaQuery.of(context).size.width,

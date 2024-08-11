@@ -195,6 +195,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                           return InstagramView(
                             instaAppId: '864298968952275',
                             instaAppSecret: '4cf5ddaeed3021a49f23c422043a7b7d',
+                            redirectUrl: 'https://socialsizzle.herokuapp.com/auth/',
                             onComplete: (_token, _userid, _username) {
                               WidgetsBinding.instance.addPostFrameCallback(
                                 (timeStamp) async {

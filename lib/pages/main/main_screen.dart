@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/manager/social_manager.dart';
+import 'package:Soulna/models/auto_biography_model.dart';
 import 'package:Soulna/models/image_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
 import 'package:Soulna/models/user_model.dart';
@@ -242,7 +243,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                     return GestureDetector(
                       onTap: () {
                         if (isUserInfo && e.key == 0) {
-                          _callApiAndNavigate();
+                          _callApiSajuDaily();
+                        } else if (e.key == 2) {
+                          _callApiAutoBiography();
                         } else {
                           log('Key ${e.key}');
                           SharedPreferencesManager.setString(key: SharedprefString.cardNumber, value: e.key.toString());
@@ -510,8 +513,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     return jsonEncode(userMap);
   }
 
-  Future<void> _callApiAndNavigate() async {
-    final apiCallFuture = _mockApiCall();
+  Future<void> _callApiSajuDaily() async {
+    final apiCallFuture = _getSajuDailyApiCall();
 
     await Navigator.push(
       context,
@@ -529,8 +532,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     );
   }
 
-  Future<bool> _mockApiCall() async {
-    String userJson = generateUserJson();
+  Future<bool> _getSajuDailyApiCall() async {
     try {
       dynamic response = await ApiCalls().sajuDailyCall();
       if (response == null) {
@@ -539,6 +541,47 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       if (response['status'] == 'success') {
         SajuDailyModel model = SajuDailyModel.fromJson(response['daily']);
         GetIt.I.get<SajuDailyService>().setSajuDailyInfo(model);
+      } else {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> _callApiAutoBiography() async {
+    final apiCallFuture = _getAutoBiographyApiCall();
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AnimationScreen(
+          apiFuture: apiCallFuture,
+          onApiComplete: (bool result) {
+            if (result) {
+              context.pushReplacementNamed(autobiographyScreen);
+            } else {
+              context.pushReplacementNamed(createAutoBiography);
+            }
+          },
+          useLottieAnimation: false,
+        ),
+      ),
+    );
+  }
+
+  Future<bool> _getAutoBiographyApiCall() async {
+    try {
+      dynamic response = await ApiCalls().getAutoBiographyData();
+      if (response == null) {
+        throw Exception('API call failed');
+      }
+      if (response['status'] == 'success') {
+        AutoBiographyModelModel model = AutoBiographyModelModel.fromJson(response['autobiography']['2024-08-11']);
+        GetIt.I.get<AutoBiographyService>().updateAutoBiography(model);
+      } else {
+        return false;
       }
       return true;
     } catch (e) {

@@ -8,7 +8,9 @@ import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 
@@ -276,44 +278,70 @@ class CreateDairyBottomSheet {
 
   static Future<bool> _mockApiCall(List<dynamic> selectedImages, String screenType, bool isInstagram) async {
     List<String> base64Images = [];
+    Dio dio = Dio();
 
     try {
-      for (XFile xFile in selectedImages) {
+      for (var image in selectedImages) {
         try {
-          File file = File(xFile.path);
-          if (!await file.exists()) {
-            print("File does not exist: ${xFile.path}");
-            continue;
+          Uint8List bytes;
+          if (screenType == autobiographyScreen) {
+            // autobiographyScreen일 때의 처리
+            if (image is Map<String, dynamic> && image.containsKey('media_url')) {
+              String imageUrl = image['media_url'];
+              if (imageUrl.startsWith('http')) {
+                // 네트워크 이미지 처리
+                Response response = await dio.get(
+                  imageUrl,
+                  options: Options(responseType: ResponseType.bytes),
+                );
+                if (response.statusCode != 200) {
+                  print("이미지 다운로드 실패: $imageUrl");
+                  continue;
+                }
+                bytes = Uint8List.fromList(response.data);
+              } else if (imageUrl.startsWith('assets')) {
+                // 에셋 이미지 처리
+                ByteData data = await rootBundle.load(imageUrl);
+                bytes = data.buffer.asUint8List();
+              } else {
+                print("지원하지 않는 이미지 형식: $imageUrl");
+                continue;
+              }
+            } else {
+              print("잘못된 이미지 데이터 형식: $image");
+              continue;
+            }
+          } else {
+            // XFile 처리 (이전과 동일)
+            XFile xFile = image;
+            File file = File(xFile.path);
+            if (!await file.exists()) {
+              print("파일이 존재하지 않습니다: ${xFile.path}");
+              continue;
+            }
+            bytes = await file.readAsBytes();
           }
 
-          int fileSize = await file.length();
-          String extension = path.extension(xFile.path).toLowerCase();
-          Uint8List bytes = await file.readAsBytes();
           String base64Image = base64Encode(bytes);
           base64Images.add(base64Image);
         } catch (e) {
-          print("Error processing image ${xFile.path}: $e");
+          print("이미지 처리 중 오류 발생 $image: $e");
         }
       }
       if (base64Images.isEmpty) {
-        print("No images were successfully processed.");
+        print("성공적으로 처리된 이미지가 없습니다.");
         return false;
       }
 
       try {
         dynamic response;
         if (screenType == autobiographyScreen) {
-          String albumType;
-          if (isInstagram) {
-            albumType = Utils.getAlbumType(AlbumType.instagram);
-          } else {
-            albumType = Utils.getAlbumType(AlbumType.album);
-          }
+          String albumType = isInstagram ? Utils.getAlbumType(AlbumType.instagram) : Utils.getAlbumType(AlbumType.album);
 
           response = await ApiCalls().autobiographyCreateCall(info: base64Images, type: albumType);
 
           if (response == null) {
-            print("autobiographyCreateCall API call returned null response");
+            print("autobiographyCreateCall API 호출이 null 응답을 반환했습니다");
             return false;
           }
           if (response['status'] == 'success') {
@@ -324,7 +352,7 @@ class CreateDairyBottomSheet {
         } else {
           response = await ApiCalls().journalDailyCall(info: base64Images);
           if (response == null) {
-            print("journalDailyCall API call returned null response");
+            print("journalDailyCall API 호출이 null 응답을 반환했습니다");
             return false;
           }
           if (response['status'] == 'success') {
@@ -335,11 +363,11 @@ class CreateDairyBottomSheet {
 
         return true;
       } catch (e) {
-        print("Error in API call: $e");
+        print("API 호출 중 오류 발생: $e");
         return false;
       }
     } catch (e) {
-      print("Error in overall process: $e");
+      print("전체 프로세스에서 오류 발생: $e");
       return false;
     }
   }

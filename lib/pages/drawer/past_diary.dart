@@ -1,5 +1,6 @@
 import 'package:Soulna/bottomsheet/show_datePicker_bottomSheet.dart';
 import 'package:Soulna/controller/auth_controller.dart';
+import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
@@ -25,22 +26,44 @@ class PastDiary extends StatefulWidget {
 class _PastDiaryState extends State<PastDiary> {
   int index = 0;
   bool showData = true;
-  //DateTime selectedDate = DateTime.now();
-  final List<NeatCleanCalendarEvent> _eventList = [
-    NeatCleanCalendarEvent('MultiDay Event A', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('Allday Event B', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2, 14, 30), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 17, 0), color: Colors.pink, isAllDay: true),
-    NeatCleanCalendarEvent('Normal Event D', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 14, 30), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 17, 0), color: Colors.indigo),
-  ];
+  DateTime selectedDate = DateTime.now();
+  String selectedJournal = '';
+  bool isLoading = false;
+  final List<NeatCleanCalendarEvent> _eventList = [];
+  final Map<String, JournalModel> _journalCache = {};
 
   final authCon = Get.put(AuthController());
   @override
   void initState() {
     authCon.selectedDate.value = DateTime.now();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedDate = authCon.selectedDate.value;
+    _fetchJournalData();
+  }
+
+  Future<void> _fetchJournalData() async {
+    dynamic response = await ApiCalls().getJournalList();
+    if (response != null) {
+      _eventList.clear();
+      for (var item in response['journal_list']) {
+        _eventList.add(
+          NeatCleanCalendarEvent(
+            item,
+            startTime: DateTime.parse(item),
+            endTime: DateTime.parse(item),
+            color: ThemeSetting.of(context).primary,
+          ),
+        );
+      }
+    }
+    setState(() {
+      showData = true;
+    });
   }
 
   @override
@@ -84,19 +107,24 @@ class _PastDiaryState extends State<PastDiary> {
         image: index == 0 ? AppAssets.calendar : AppAssets.menu,
       ),
       body: SafeArea(
-        child: index == 0 ? pastFortune() : pastFortuneCalenderView(),
+        child: index == 0 ? pastJournal() : pastJournalCalenderView(),
       ),
     );
   }
 
-  pastFortune() {
+  Widget pastJournal() {
     return showData == true
         ? ListView.separated(
             shrinkWrap: true,
-            itemCount: 3,
-            itemBuilder: (context, index) => Obx(
-              () => listTile(date: DateFormat.yMMMM().format(authCon.selectedDate.value), description: 'It\s a day where you can expect results proportional to your efforts.'),
+            itemCount: _eventList.length,
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: () {},
+              child: listTile(
+                date: DateFormat.yMMMM().format(_eventList[index].startTime),
+                description: _eventList[index].summary ?? '',
+              ),
             ),
+            padding: EdgeInsets.zero,
             separatorBuilder: (BuildContext context, int index) {
               return CustomDividerWidget(
                 color: ThemeSetting.of(context).common0,
@@ -107,74 +135,70 @@ class _PastDiaryState extends State<PastDiary> {
         : noDataFound();
   }
 
-  pastFortuneCalenderView() => CustomCalendarWidget(
+  Widget pastJournalCalenderView() => CustomCalendarWidget(
         eventsList: _eventList,
-        initialDate: authCon.selectedDate.value,
-        onDateSelected: (value) {
-          authCon.selectedDate.value = value;
+        initialDate: selectedDate,
+        onDateSelected: (date) {
+          _onDateSelected(date);
         },
-        showEventWidget: ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          itemCount: _eventList.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            NeatCleanCalendarEvent event = _eventList[index];
-            return listTile(date: DateFormat.yMMMM().format(event.startTime), description: event.summary);
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return CustomDividerWidget(
-              color: ThemeSetting.of(context).common0,
-              thickness: 1,
+        showEventWidget: Builder(
+          builder: (context) {
+            if (isLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            if (selectedJournal.isEmpty) {
+              return Center(
+                child: Text(
+                  'No journal available for selected date',
+                  style: ThemeSetting.of(context).bodyMedium.copyWith(
+                        color: ThemeSetting.of(context).disabledText,
+                      ),
+                ),
+              );
+            }
+
+            return ListView(
+              shrinkWrap: true,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    context.pushNamed(journalScreen);
+                  },
+                  child: listTile(
+                    date: DateFormat.yMMMMd().format(selectedDate),
+                    description: selectedJournal,
+                  ),
+                ),
+              ],
             );
           },
         ),
       );
 
-  listTile({required date, required String description}) => Padding(
+  Widget listTile({required String date, required String description}) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Text(
               date,
               style: ThemeSetting.of(context).titleMedium.copyWith(
                     color: ThemeSetting.of(context).primary,
                   ),
             ),
-            const SizedBox(
-              height: 5,
-            ),
+            const SizedBox(height: 5),
             Text(
               description,
               style: ThemeSetting.of(context).bodyMedium,
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Wrap(
-                children: List.generate(
-              3,
-              (index) {
-                return Container(
-                  height: 60,
-                  width: 60,
-                  margin: EdgeInsets.only(right: 5),
-                  decoration: BoxDecoration(color: ThemeSetting.of(context).common0, borderRadius: BorderRadius.circular(10)),
-                  child: Image.asset(AppAssets.rectangle),
-                );
-              },
-            )),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
           ],
         ),
       );
 
-  noDataFound() {
+  Widget noDataFound() {
     return Column(
       children: [
         SizedBox(
@@ -191,8 +215,8 @@ class _PastDiaryState extends State<PastDiary> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                ThemeSetting.of(context).linearContainer3,
-                ThemeSetting.of(context).linearContainer4,
+                ThemeSetting.of(context).linearContainer1,
+                ThemeSetting.of(context).linearContainer2,
               ],
             ),
             borderRadius: BorderRadius.circular(14.r),
@@ -219,7 +243,7 @@ class _PastDiaryState extends State<PastDiary> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        LocaleKeys.create_today_diary.tr(),
+                        StringTranslateExtension(LocaleKeys.check_your_fortune_for_today).tr(),
                         style: ThemeSetting.of(context).labelLarge.copyWith(
                               fontSize: 20.sp,
                               color: ThemeSetting.of(context).secondaryBackground,
@@ -228,14 +252,14 @@ class _PastDiaryState extends State<PastDiary> {
                       SizedBox(height: 5.h),
                       ButtonWidget.roundedButtonOrange(
                           context: context,
-                          width: 100.w,
+                          width: 150.w,
                           height: 40.h,
                           color: ThemeSetting.of(context).primaryText,
                           textStyle: ThemeSetting.of(context).captionMedium.copyWith(
                                 color: ThemeSetting.of(context).secondaryBackground,
                                 fontSize: 12.sp,
                               ),
-                          text: "${LocaleKeys.create.tr()} 💫",
+                          text: "${StringTranslateExtension(LocaleKeys.daily_vibe_check).tr()} 💫",
                           onTap: () {}),
                     ],
                   ),
@@ -243,7 +267,7 @@ class _PastDiaryState extends State<PastDiary> {
                 Image.asset(
                   AppAssets.image1,
                   height: 90.h,
-                  width: 80.w,
+                  width: 64.w,
                   fit: BoxFit.fill,
                 ),
               ],
@@ -253,7 +277,7 @@ class _PastDiaryState extends State<PastDiary> {
         Expanded(
           child: Center(
             child: Text(
-              LocaleKeys.i_have_not_written_a_diary_yet.tr(),
+              StringTranslateExtension(LocaleKeys.i_have_not_checked_my_fortune_yet).tr(),
               style: ThemeSetting.of(context).bodyMedium.copyWith(
                     color: ThemeSetting.of(context).disabledText,
                   ),
@@ -262,5 +286,62 @@ class _PastDiaryState extends State<PastDiary> {
         ),
       ],
     );
+  }
+
+  void _onDateSelected(DateTime date) async {
+    setState(() {
+      selectedDate = date;
+      isLoading = true;
+      selectedJournal = '';
+    });
+
+    String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+
+    if (_journalCache.containsKey(formattedDate)) {
+      // 캐시된 데이터가 있으면 사용
+      setState(() {
+        selectedJournal = _journalCache[formattedDate]!.title;
+        isLoading = false;
+      });
+    } else {
+      try {
+        dynamic response = await ApiCalls().getDateToJournal(formattedDate);
+
+        if (response != null && response['journal_entry'] != null) {
+          JournalModel model = JournalModel.fromJson(response['journal_entry']);
+          _journalCache[formattedDate] = model; // 캐시에 저장
+          GetIt.I.get<JournalService>().updateJournal(model);
+          setState(() {
+            selectedJournal = model.title;
+            isLoading = false;
+          });
+
+          // _eventList 업데이트
+          if (!_eventList.any((event) => event.startTime == date)) {
+            setState(() {
+              _eventList.add(
+                NeatCleanCalendarEvent(
+                  formattedDate,
+                  startTime: date,
+                  endTime: date,
+                  color: ThemeSetting.of(context).primary,
+                ),
+              );
+            });
+          }
+        } else {
+          setState(() {
+            selectedJournal = 'No journal available for this date';
+            isLoading = false;
+          });
+        }
+      } catch (e) {
+        print('Error fetching journal: $e');
+        setState(() {
+          selectedJournal = 'Error fetching journal. Please try again.';
+          isLoading = false;
+        });
+      }
+    }
   }
 }
