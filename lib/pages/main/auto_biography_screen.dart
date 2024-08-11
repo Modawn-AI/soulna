@@ -63,20 +63,15 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
   autoBiographyList() {
     return ListView(
       children: [
-        HeaderWidget.headerSettings(context: context, actionIcon: AppAssets.share, onTapOnMenu: () => context.pop(), onTap: () {}),
+        HeaderWidget.headerSettings(
+          context: context,
+          actionIcon: AppAssets.share,
+          onTapOnMenu: () => context.goNamed(mainScreen),
+          onTap: () {},
+        ),
         const SizedBox(
           height: 20,
         ),
-        // Container(
-        //   padding: EdgeInsets.symmetric(horizontal: 18,vertical: 12),
-        //   decoration: BoxDecoration(color: ThemeSetting.of(context).common0),child: Row(children: [
-        //   Image.asset(AppAssets.logo,height: 17,),
-        //   SizedBox(width: 10,),
-        //   Text(LocaleKeys.its_been_a_month_since_the_update.tr(), style: ThemeSetting.of(context).captionMedium,)
-        // ],),),
-        // const SizedBox(
-        //   height: 50,
-        // ),
         Center(
           child: Text(
             ' July 8, 2024 ~ July 30, 2024 ',

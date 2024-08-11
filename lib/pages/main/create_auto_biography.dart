@@ -57,12 +57,6 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
               ),
           onTap: () async {
             if (selectedValue == 'Instagram' || selectedValue == 'Album') {
-              // SharedPreferencesManager.setString(
-              //     key: SharedprefString.animationScreen,
-              //     value: journalScreen);
-
-              // final apiCallFuture = _mockApiCall(selectedImages);
-
               await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -81,7 +75,12 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
           },
         ),
       ),
-      appBar: HeaderWidget.headerBack(context: context),
+      appBar: HeaderWidget.headerBack(
+        context: context,
+        onTap: () {
+          context.goNamed(mainScreen);
+        },
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
@@ -108,7 +107,6 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
                 ],
               ),
               SizedBox(height: 30.h),
-
               Row(
                 children: [
                   containerWidget(
@@ -143,198 +141,6 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
                       }),
                 ],
               ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-              //   height: 153,
-              //   decoration: BoxDecoration(
-              //     border: Border.all(
-              //       color: isMyAlbumSelected
-              //           ? ThemeSetting.of(context).black2
-              //           : ThemeSetting.of(context).tertiary,
-              //       width: 1,
-              //     ),
-              //     borderRadius: BorderRadius.circular(10.r),
-              //     color: ThemeSetting.of(context).tertiary,
-              //   ),
-              //   child: ListView.builder(
-              //     shrinkWrap: true,
-              //     scrollDirection: Axis.horizontal,
-              //     itemCount: albumList.length,
-              //     itemBuilder: (context, index) {
-              //       return GestureDetector(
-              //         onTap: () {
-              //           setState(() {
-              //             isMyAlbumSelected = !isMyAlbumSelected;
-              //             isInstagramSelected = false;
-              //           });
-              //         },
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             Row(
-              //               crossAxisAlignment: CrossAxisAlignment.start,
-              //               children: [
-              //                 Image.asset(AppAssets.album,
-              //                     width: 24.w, height: 24.h, fit: BoxFit.fill),
-              //                 // const Spacer(),
-              //                 if (isMyAlbumSelected)
-              //                   Image.asset(AppAssets.check,
-              //                       width: 14.w, height: 14.h),
-              //               ],
-              //             ),
-              //             // const Spacer(),
-              //             Text(
-              //               LocaleKeys.my_album.tr(),
-              //               style: ThemeSetting.of(context).labelMedium.copyWith(
-              //                     color: ThemeSetting.of(context).primaryText,
-              //                     fontSize: 18.sp,
-              //                   ),
-              //             ),
-              //             SizedBox(height: 10.h),
-              //             Text(
-              //               LocaleKeys.choose_a_photo_to_create_your_own_journal
-              //                   .tr(),
-              //               style:
-              //                   ThemeSetting.of(context).captionMedium.copyWith(
-              //                         color: ThemeSetting.of(context).primaryText,
-              //                         fontSize: 12.sp,
-              //                       ),
-              //             ),
-              //           ],
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: GestureDetector(
-              //         onTap: () {
-              //           setState(() {
-              //             isMyAlbumSelected = !isMyAlbumSelected;
-              //             isInstagramSelected = false;
-              //           });
-              //         },
-              //         child: Container(
-              //           padding: EdgeInsets.symmetric(
-              //               horizontal: 10.w, vertical: 10.h),
-              //           height: 150.h,
-              //           decoration: BoxDecoration(
-              //             border: Border.all(
-              //               color: isMyAlbumSelected
-              //                   ? ThemeSetting.of(context).black2
-              //                   : ThemeSetting.of(context).tertiary,
-              //               width: 1,
-              //             ),
-              //             borderRadius: BorderRadius.circular(10.r),
-              //             color: ThemeSetting.of(context).tertiary,
-              //           ),
-              //           child: Column(
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: [
-              //               Row(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: [
-              //                   Image.asset(AppAssets.album,
-              //                       width: 24.w, height: 24.h, fit: BoxFit.fill),
-              //                   const Spacer(),
-              //                   if (isMyAlbumSelected)
-              //                     Image.asset(AppAssets.check,
-              //                         width: 14.w, height: 14.h),
-              //                 ],
-              //               ),
-              //               const Spacer(),
-              //               Text(
-              //                 LocaleKeys.my_album.tr(),
-              //                 style: ThemeSetting.of(context)
-              //                     .labelMedium
-              //                     .copyWith(
-              //                       color: ThemeSetting.of(context).primaryText,
-              //                       fontSize: 18.sp,
-              //                     ),
-              //               ),
-              //               SizedBox(height: 10.h),
-              //               Text(
-              //                 LocaleKeys.choose_a_photo_to_create_your_own_journal
-              //                     .tr(),
-              //                 style: ThemeSetting.of(context)
-              //                     .captionMedium
-              //                     .copyWith(
-              //                       color: ThemeSetting.of(context).primaryText,
-              //                       fontSize: 12.sp,
-              //                     ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     SizedBox(width: 10.w),
-              //     Expanded(
-              //       child: GestureDetector(
-              //         onTap: () {
-              //           setState(() {
-              //             isInstagramSelected = !isInstagramSelected;
-              //             isMyAlbumSelected = false;
-              //           });
-              //         },
-              //         child: Container(
-              //           padding: EdgeInsets.symmetric(
-              //               horizontal: 10.w, vertical: 10.h),
-              //           height: 150.h,
-              //           decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(10.r),
-              //             border: Border.all(
-              //               color: isInstagramSelected
-              //                   ? ThemeSetting.of(context).black2
-              //                   : ThemeSetting.of(context).tertiary3,
-              //               width: 1,
-              //             ),
-              //             color: ThemeSetting.of(context).tertiary3,
-              //           ),
-              //           child: Column(
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: [
-              //               Row(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: [
-              //                   Image.asset(AppAssets.instagram,
-              //                       width: 24.w, height: 24.h, fit: BoxFit.fill),
-              //                   const Spacer(),
-              //                   if (isInstagramSelected)
-              //                     Image.asset(AppAssets.check,
-              //                         width: 14.w, height: 14.h),
-              //                 ],
-              //               ),
-              //               const Spacer(),
-              //               Text(
-              //                 LocaleKeys.instagram.tr(),
-              //                 style: ThemeSetting.of(context)
-              //                     .labelMedium
-              //                     .copyWith(
-              //                       color: ThemeSetting.of(context).primaryText,
-              //                       fontSize: 18.sp,
-              //                     ),
-              //               ),
-              //               SizedBox(height: 10.h),
-              //               Text(
-              //                 LocaleKeys.link_instagram_to_import_and_create_data
-              //                     .tr(),
-              //                 style: ThemeSetting.of(context)
-              //                     .captionMedium
-              //                     .copyWith(
-              //                       color: ThemeSetting.of(context).primaryText,
-              //                       fontSize: 12.sp,
-              //                     ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               const SizedBox(height: 30),
               selectedValue == 'Album'
                   ? Column(

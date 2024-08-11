@@ -132,21 +132,6 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                     ),
                                   ),
                                 ),
-                                // Positioned(
-                                //   top: 5,
-                                //   left: 5,
-                                //   child: Container(
-                                //     padding: const EdgeInsets.all(5),
-                                //     decoration: BoxDecoration(
-                                //       color: Colors.black.withOpacity(0.6),
-                                //       shape: BoxShape.circle,
-                                //     ),
-                                //     child: Text(
-                                //       '${index + 1}',
-                                //       style: const TextStyle(color: Colors.white),
-                                //     ),
-                                //   ),
-                                // ),
                                 Positioned(
                                   top: 5,
                                   right: 5,
@@ -161,21 +146,6 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                       style: ThemeSetting.of(context).bodyMedium.copyWith(color: ThemeSetting.of(context).common0),
                                     ),
                                   ),
-                                  // child: GestureDetector(
-                                  //   // onTap: () => _removePhoto(index),
-                                  //   child: Container(
-                                  //     padding: const EdgeInsets.all(5),
-                                  //     decoration: BoxDecoration(
-                                  //       color: Colors.red.withOpacity(0.8),
-                                  //       shape: BoxShape.circle,
-                                  //     ),
-                                  //     child: const Icon(
-                                  //       Icons.close,
-                                  //       size: 18,
-                                  //       color: Colors.white,
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 ),
                               ],
                             ),
@@ -214,8 +184,8 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                     mediaList = value;
                                     setState(() {});
                                     await SharedPreferencesManager.saveMediaListToSharedPreferences(key: SharedprefString.mediaList, mediaList: mediaList);
-                                    log('Media ${mediaList.length}');
-                                    log('Media ${mediaList.first.toString()}');
+                                    // log('Media ${mediaList.length}');
+                                    // log('Media ${mediaList.first.toString()}');
 
                                     setState(() {});
                                   });

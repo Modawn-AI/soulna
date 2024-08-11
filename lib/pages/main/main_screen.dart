@@ -577,7 +577,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       if (response == null) {
         throw Exception('API call failed');
       }
-      if (response['status'] == 'success') {
+      if (response['autobiography']['2024-08-11'] != null) {
         AutoBiographyModelModel model = AutoBiographyModelModel.fromJson(response['autobiography']['2024-08-11']);
         GetIt.I.get<AutoBiographyService>().updateAutoBiography(model);
       } else {

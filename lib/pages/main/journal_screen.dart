@@ -1,7 +1,6 @@
 import 'package:Soulna/bottomsheet/update_delete_diary_bottomSheet.dart';
 import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
-import 'package:Soulna/utils/nav.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
@@ -66,61 +65,70 @@ class _JournalScreenState extends State<JournalScreen> {
   }
 
   journalList() {
-    return ListView(
+    return Stack(
       children: [
-        HeaderWidget.headerWithAction(
-          context: context,
-          showMoreIconOnTap: () {
-            UpdateDeleteDiaryBottomSheet.updateDeleteDiaryBottomSheet(context: context);
-          },
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          height: 39,
-          margin: const EdgeInsets.only(right: 148, left: 149),
-          padding: const EdgeInsets.all(2),
-          decoration: BoxDecoration(
-            border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
-              borderRadius: BorderRadius.circular(50),
-              color: ThemeSetting.of(context).tertiary1,
+        ListView(
+          children: [
+            const SizedBox(
+              height: 50,
             ),
-            child: Text(
-              Utils.getTodayMDFormatted(),
-              style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
+            Container(
+              height: 39,
+              margin: const EdgeInsets.only(right: 148, left: 149),
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                  borderRadius: BorderRadius.circular(50),
+                  color: ThemeSetting.of(context).tertiary1,
+                ),
+                child: Text(
+                  Utils.getTodayMDFormatted(),
+                  style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
             ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              journalService.journalModel != null ? journalService.journalModel.title : '',
+              textAlign: TextAlign.center,
+              style: ThemeSetting.of(context).labelMedium,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            carouselSlider(
+              scrollPhysics: const NeverScrollableScrollPhysics(),
+              onPageChanged: (p0, p1) {
+                setState(() {
+                  showHeader = true;
+                });
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            showDescriptionList(showKeyword: true),
+          ],
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          left: 0,
+          child: HeaderWidget.headerWithAction(
+            context: context,
+            showMoreIconOnTap: () {
+              UpdateDeleteDiaryBottomSheet.updateDeleteDiaryBottomSheet(context: context);
+            },
           ),
         ),
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          journalService.journalModel != null ? journalService.journalModel.title : '',
-          textAlign: TextAlign.center,
-          style: ThemeSetting.of(context).labelMedium,
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        carouselSlider(
-          scrollPhysics: const NeverScrollableScrollPhysics(),
-          onPageChanged: (p0, p1) {
-            setState(() {
-              showHeader = true;
-            });
-          },
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        showDescriptionList(showKeyword: true),
       ],
     );
   }
