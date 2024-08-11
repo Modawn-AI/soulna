@@ -191,7 +191,13 @@ class HeaderWidget {
             )
           ]);
 
-  static AppBar headerSettings({required BuildContext context, required GestureTapCallback onTap, String? actionIcon, GestureTapCallback? onTapOnMenu, }) => AppBar(
+  static AppBar headerSettings({
+    required BuildContext context,
+    required GestureTapCallback onTap,
+    String? actionIcon,
+    GestureTapCallback? onTapOnMenu,
+  }) =>
+      AppBar(
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(

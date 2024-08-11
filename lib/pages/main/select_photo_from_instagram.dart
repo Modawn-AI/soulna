@@ -104,8 +104,8 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                     final media = mediaList[index];
                     final isSelected = selectedIndices.contains(index);
 
-                    log('Media ${media.toString()}');
-                    return (media['media_type'] == 'IMAGE')
+                    // log('Media ${media.toString()}');
+                    return (media['media_type'] == 'IMAGE' || media['media_type'] == 'CAROUSEL_ALBUM')
                         ? GestureDetector(
                             onTap: () {
                               setState(() {
@@ -195,7 +195,6 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                           return InstagramView(
                             instaAppId: '864298968952275',
                             instaAppSecret: '4cf5ddaeed3021a49f23c422043a7b7d',
-                            redirectUrl: 'https://socialsizzle.herokuapp.com/auth/',
                             onComplete: (_token, _userid, _username) {
                               WidgetsBinding.instance.addPostFrameCallback(
                                 (timeStamp) async {
@@ -247,7 +246,15 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                 //log('selectedIndices ${selectedIndices.length}');
                                 originalIndices.addAll(List.generate(selectedIndices.length, (index) => index));
 
-                                SetTimelineBottomSheet.setTimeLineBottomSheet(context: context, selectedImages: list, showHand: true, isNetwork: true, originalIndices: originalIndices, screen: autobiographyScreen);
+                                SetTimelineBottomSheet.setTimeLineBottomSheet(
+                                  context: context,
+                                  selectedImages: list,
+                                  showHand: true,
+                                  isNetwork: true,
+                                  originalIndices: originalIndices,
+                                  screen: autobiographyScreen,
+                                  isInstagram: true,
+                                );
                               }
                             }),
                       ),

@@ -7,17 +7,18 @@ import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:showcaseview/showcaseview.dart';
 
 class SetTimelineBottomSheet {
   // static bool showHand = true;
-  static setTimeLineBottomSheet(
-      {required BuildContext context,
-      required List selectedImages,
-      bool? showHand,
-      required List<int> originalIndices,
-      required bool isNetwork, required String screen}) {
-
+  static setTimeLineBottomSheet({
+    required BuildContext context,
+    required List selectedImages,
+    bool? showHand,
+    required List<int> originalIndices,
+    required bool isNetwork,
+    required String screen,
+    required bool isInstagram,
+  }) {
     return showModalBottomSheet(
       elevation: 0,
       context: context,
@@ -34,18 +35,23 @@ class SetTimelineBottomSheet {
             // });
             return GestureDetector(
                 onTap: () {
-                  setState(() {
-                    showHand = false;
-                  });
+                  if (showHand == true) {
+                    setState(() {
+                      showHand = false;
+                    });
+                  }
+                },
+                onTapDown: (details) {
+                  log('details ${details}');
+                  if (showHand == true) {
+                    setState(() {
+                      showHand = false;
+                    });
+                  }
                 },
                 child: Container(
-
                   height: MediaQuery.of(context).size.height * 0.38,
-                  decoration: BoxDecoration(
-                      color: ThemeSetting.of(context).info,
-                      borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(18),
-                          topLeft: Radius.circular(18))),
+                  decoration: BoxDecoration(color: ThemeSetting.of(context).info, borderRadius: const BorderRadius.only(topRight: Radius.circular(18), topLeft: Radius.circular(18))),
                   child: Stack(
                     children: [
                       ListView(
@@ -59,29 +65,17 @@ class SetTimelineBottomSheet {
                                 padding: const EdgeInsets.only(left: 18),
                                 child: Text(
                                   LocaleKeys.set_timeline.tr(),
-                                  style: ThemeSetting.of(context)
-                                      .titleLarge
-                                      .copyWith(
-                                          color:
-                                              ThemeSetting.of(context).white),
+                                  style: ThemeSetting.of(context).titleLarge.copyWith(color: ThemeSetting.of(context).white),
                                 ),
                               ),
                               const SizedBox(
                                 width: 5,
                               ),
                               Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: ThemeSetting.of(context)
-                                        .black1
-                                        .withOpacity(0.2)),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: ThemeSetting.of(context).black1.withOpacity(0.2)),
                                 child: Text(
                                   '  ${selectedImages.length}/10',
-                                  style: ThemeSetting.of(context)
-                                      .captionLarge
-                                      .copyWith(
-                                          color:
-                                              ThemeSetting.of(context).white),
+                                  style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).white),
                                 ),
                               )
                             ],
@@ -100,22 +94,18 @@ class SetTimelineBottomSheet {
                               //width: 60,
                               child: ReorderableListView(
                                 shrinkWrap: true,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 18),
+                                padding: const EdgeInsets.symmetric(horizontal: 18),
                                 scrollDirection: Axis.horizontal,
                                 onReorder: (oldIndex, newIndex) {
                                   setState(() {
                                     if (newIndex > oldIndex) {
                                       newIndex -= 1;
                                     }
-                                    final item =
-                                        selectedImages.removeAt(oldIndex);
+                                    final item = selectedImages.removeAt(oldIndex);
                                     selectedImages.insert(newIndex, item);
 
-                                    final originalIndex =
-                                        originalIndices.removeAt(oldIndex);
-                                    originalIndices.insert(
-                                        newIndex, originalIndex);
+                                    final originalIndex = originalIndices.removeAt(oldIndex);
+                                    originalIndices.insert(newIndex, originalIndex);
                                   });
                                 },
                                 children: List.generate(
@@ -128,19 +118,14 @@ class SetTimelineBottomSheet {
                                       height: 60,
                                       width: 60,
                                       key: ValueKey(image),
-                                      margin: const EdgeInsets.only(
-                                          right: 5, left: 2),
+                                      margin: const EdgeInsets.only(right: 5, left: 2),
                                       alignment: Alignment.topLeft,
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color:
-                                                ThemeSetting.of(context).white),
+                                        border: Border.all(color: ThemeSetting.of(context).white),
                                         color: ThemeSetting.of(context).common4,
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
-                                          image: isNetwork
-                                              ? NetworkImage(image['media_url'])
-                                              : FileImage(File(image.path)),
+                                          image: isNetwork ? NetworkImage(image['media_url']) : FileImage(File(image.path)),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -149,19 +134,10 @@ class SetTimelineBottomSheet {
                                         width: 22,
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)),
+                                          borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
                                           color: ThemeSetting.of(context).white,
                                         ),
-                                        child: Text(
-                                            "${originalIndices[index] + 1}",
-                                            style: ThemeSetting.of(context)
-                                                .bodySmall
-                                                .copyWith(
-                                                    color:
-                                                        ThemeSetting.of(context)
-                                                            .black2)),
+                                        child: Text("${originalIndices[index] + 1}", style: ThemeSetting.of(context).bodySmall.copyWith(color: ThemeSetting.of(context).black2)),
                                       ),
                                     );
                                   },
@@ -195,20 +171,19 @@ class SetTimelineBottomSheet {
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 18),
+                              padding: const EdgeInsets.symmetric(horizontal: 18),
                               child: ButtonWidget.gradientButton(
                                 context: context,
-                                text:
-                                    '${LocaleKeys.select_a_total_of.tr()}${selectedImages.length} ${LocaleKeys.photos.tr()}',
+                                text: '${LocaleKeys.select_a_total_of.tr()}${selectedImages.length} ${LocaleKeys.photos.tr()}',
                                 color1: ThemeSetting.of(context).black1,
                                 color2: ThemeSetting.of(context).black2,
                                 onTap: () {
                                   CreateDairyBottomSheet.createDairyBottomSheet(
                                     context: context,
                                     selectedImages: selectedImages,
-                                    isNetwork:isNetwork,
-                                      screen :screen
+                                    isNetwork: isNetwork,
+                                    screen: screen,
+                                    isInstagram: isInstagram,
                                   );
                                 },
                               ),
@@ -278,9 +253,7 @@ class _AnimatedHandImageState extends State<AnimatedHandImage> {
                 children: [
                   AnimatedPositioned(
                     duration: Duration(seconds: 1),
-                    left: _moveRight
-                        ? MediaQuery.of(context).size.width - 350
-                        : 10,
+                    left: _moveRight ? MediaQuery.of(context).size.width - 350 : 10,
                     top: 0,
                     child: Image.asset(
                       AppAssets.hand,

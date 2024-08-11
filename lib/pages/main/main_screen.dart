@@ -142,7 +142,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         linear2: ThemeSetting.of(context).linearContainer6,
         image: AppAssets.image3,
         text: LocaleKeys.create_your_autoBiography.tr(),
-        route: createJournal,
+        route: createAutoBiography,
       ),
     ];
 
@@ -518,12 +518,15 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       MaterialPageRoute(
         builder: (context) => AnimationScreen(
           apiFuture: apiCallFuture,
-          screenName: '',
+          onApiComplete: (bool result) {
+            if (result) {
+              context.pushReplacementNamed(sajuDailyScreen);
+            }
+          },
+          useLottieAnimation: true,
         ),
       ),
     );
-
-    context.pushReplacementNamed(sajuDailyScreen);
   }
 
   Future<bool> _mockApiCall() async {
@@ -534,7 +537,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         throw Exception('API call failed');
       }
       if (response['status'] == 'success') {
-        SajuDailyInfo model = SajuDailyInfo.fromJson(response['daily']);
+        SajuDailyModel model = SajuDailyModel.fromJson(response['daily']);
         GetIt.I.get<SajuDailyService>().setSajuDailyInfo(model);
       }
       return true;

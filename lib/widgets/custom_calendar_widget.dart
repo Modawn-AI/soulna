@@ -10,11 +10,8 @@ class CustomCalendarWidget extends StatelessWidget {
   final List<NeatCleanCalendarEvent> eventsList;
   final Widget? showEventWidget;
   final DateTime? initialDate;
-  const CustomCalendarWidget(
-      {super.key,
-      required this.eventsList,
-      this.showEventWidget,
-      this.initialDate});
+  final Function onDateSelected;
+  const CustomCalendarWidget({super.key, required this.eventsList, this.showEventWidget, this.initialDate, required this.onDateSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,6 @@ class CustomCalendarWidget extends StatelessWidget {
     return Calendar(
       startOnMonday: false,
       hideTodayIcon: true,
-      hideBottomBar: false,
       hideArrows: true,
       weekDays: const ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       // initialDate: authCon.selectedDate.value,
@@ -38,6 +34,8 @@ class CustomCalendarWidget extends StatelessWidget {
       todayColor: ThemeSetting.of(context).primary,
       eventColor: ThemeSetting.of(context).primary,
       eventsList: eventsList,
+      locale: context.locale.toString(),
+
       // eventTileHeight: 00,
 
       onMonthChanged: (value) {
@@ -47,6 +45,7 @@ class CustomCalendarWidget extends StatelessWidget {
       onDateSelected: (value) {
         log('value $value');
         authCon.selectedDate.value = value;
+        onDateSelected(value);
       },
 
       initialDate: authCon.selectedDate.value,
@@ -69,8 +68,7 @@ class CustomCalendarWidget extends StatelessWidget {
           ),
         );
       },
-      displayMonthTextStyle:
-      ThemeSetting.of(context).bodyMedium.copyWith(color: Colors.transparent),
+      displayMonthTextStyle: ThemeSetting.of(context).bodyMedium.copyWith(color: Colors.transparent),
       //expandableDateFormat: 'EEEE, dd. MMMM yyyy',
       //datePickerType: DatePickerType.date,
       dayOfWeekStyle: ThemeSetting.of(context).captionMedium,

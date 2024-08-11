@@ -110,6 +110,9 @@ class _PastDiaryState extends State<PastDiary> {
   pastFortuneCalenderView() => CustomCalendarWidget(
         eventsList: _eventList,
         initialDate: authCon.selectedDate.value,
+        onDateSelected: (value) {
+          authCon.selectedDate.value = value;
+        },
         showEventWidget: ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           itemCount: _eventList.length,

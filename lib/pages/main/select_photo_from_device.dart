@@ -72,23 +72,33 @@ class _SelectPhotoFromDeviceState extends State<SelectPhotoFromDevice> {
           child: Row(
             children: [
               Expanded(
-                  child: ButtonWidget.roundedButtonOrange(
+                child: ButtonWidget.roundedButtonOrange(
+                  context: context,
+                  width: MediaQuery.of(context).size.width,
+                  text: LocaleKeys.set_timeline.tr(),
+                  onTap: () async {
+                    // SharedPreferencesManager
+                    //     .saveMediaListToSharedPreferences(
+                    //         key: SharedprefString.selectedMediaList,
+                    //         mediaList: mediaList);
+                    originalIndices.clear();
+                    originalIndices.addAll(List.generate(mediaList.length, (index) => index));
+
+                    String? card = await SharedPreferencesManager.getString(key: SharedprefString.cardNumber);
+
+                    log('Card ${card.toString()}');
+                    SetTimelineBottomSheet.setTimeLineBottomSheet(
                       context: context,
-                      width: MediaQuery.of(context).size.width,
-                      text: LocaleKeys.set_timeline.tr(),
-                      onTap: () async {
-                        // SharedPreferencesManager
-                        //     .saveMediaListToSharedPreferences(
-                        //         key: SharedprefString.selectedMediaList,
-                        //         mediaList: mediaList);
-                        originalIndices.clear();
-                        originalIndices.addAll(List.generate(mediaList.length, (index) => index));
-
-                        String? card = await SharedPreferencesManager.getString(key: SharedprefString.cardNumber);
-
-                        log('Card ${card.toString()}');
-                        SetTimelineBottomSheet.setTimeLineBottomSheet(context: context, selectedImages: mediaList, originalIndices: originalIndices, showHand: true, screen: int.parse(card.toString()) == 1 ? journalScreen : autobiographyScreen, isNetwork: false);
-                      })),
+                      selectedImages: mediaList,
+                      originalIndices: originalIndices,
+                      showHand: true,
+                      screen: int.parse(card.toString()) == 1 ? journalScreen : autobiographyScreen,
+                      isNetwork: false,
+                      isInstagram: false,
+                    );
+                  },
+                ),
+              ),
               const SizedBox(
                 width: 10,
               ),

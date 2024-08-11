@@ -163,7 +163,7 @@ class ApiCalls {
     }
   }
 
-  Future<dynamic> getSajuData() async {
+  Future<dynamic> getSajuList() async {
     try {
       final data = await NetworkManager().getRequest('user/daily-list');
       if (data['data'] == null) return null;

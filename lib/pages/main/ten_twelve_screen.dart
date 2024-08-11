@@ -1,11 +1,13 @@
 import 'package:Soulna/models/bookDetail/book_detail_model.dart';
+import 'package:Soulna/models/ten_twelve_model.dart';
+import 'package:Soulna/models/user_model.dart';
+import 'package:Soulna/provider/ten_twelve_provider.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/services.dart';
 
 // Same as book details screen with some changes
 
@@ -17,202 +19,177 @@ class TenTwelveScreen extends StatefulWidget {
 }
 
 class _TenTwelveScreenState extends State<TenTwelveScreen> {
-  List hashTag = ['#dreamy', '#Hyundai Outlet'];
-
-  List<BookDetailModel> overAllList = [];
-  List<BookDetailModel> thingsList = [];
-
   @override
   Widget build(BuildContext context) {
-    thingsList = [
-      BookDetailModel(
-        title: LocaleKeys.green_color.tr(),
-        backgroundColor: ThemeSetting.of(context).tertiary,
-        image: AppAssets.one,
-      ),
-      BookDetailModel(
-        title: LocaleKeys.french_cuisine.tr(),
-        backgroundColor: ThemeSetting.of(context).lightGreen,
-        image: AppAssets.two,
-      ),
-      BookDetailModel(
-        title: LocaleKeys.relatives.tr(),
-        backgroundColor: ThemeSetting.of(context).common1,
-        image: AppAssets.three,
-      ),
-      BookDetailModel(
-        title: '2,4',
-        backgroundColor: ThemeSetting.of(context).extraGray,
-        image: AppAssets.four,
-      ),
-      BookDetailModel(
-        title: LocaleKeys.camera.tr(),
-        backgroundColor: ThemeSetting.of(context).lightPurple,
-        image: AppAssets.five,
-      ),
-    ];
+    Widget errorWidget = Container();
+    try {
+      TenTwelveModel? tenTwelveModel = context.watch<TenTwelveProvider>().tenTwelveModel;
+      tenTwelveModel ??= GetIt.I.get<UserInfoData>().userModel.tenTwelve;
+      String myElementName = Utils.getCardAttribute(tenTwelveModel!.picture, CardAttribute.element);
+      List<String> titleString = tenTwelveModel.title.split(',');
+      List<BookDetailModel> thingsList = [];
 
-    return Scaffold(
-      backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).redAccent : ThemeSetting.of(context).common2,
-      body: SafeArea(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: ListView(
-            children: [
-              HeaderWidget.headerBack(context: context, backgroundColor: ThemeSetting.of(context).redAccent),
-              Image.asset(
-                AppAssets.logo,
-                height: 37,
-                width: 37,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Center(
-                child: Text(
-                  'October 7, 2024',
+      for (int i = 0; i < tenTwelveModel.hashtag.length; i++) {
+        thingsList.add(BookDetailModel(
+          title: tenTwelveModel.hashtag[i],
+          backgroundColor: ThemeSetting.of(context).extraGray,
+          image: "❤️",
+        ));
+      }
+      return Scaffold(
+        backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).redAccent : ThemeSetting.of(context).common2,
+        body: SafeArea(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: ListView(
+              children: [
+                HeaderWidget.headerBack(context: context, backgroundColor: ThemeSetting.of(context).redAccent),
+                Image.asset(
+                  AppAssets.logo,
+                  height: 37,
+                  width: 37,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Center(
+                  child: Text(
+                    'Your Korean Zodiac',
+                    style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Text(
+                    titleString[0],
+                    style: ThemeSetting.of(context).displayMedium.copyWith(
+                          fontFamily: "ChosunGs",
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "${titleString[2]} (${titleString[1]})",
                   style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
                   textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Text(
-                  LocaleKeys.a_day_of_learning_and_mastering_new_things.tr(),
-                  style: ThemeSetting.of(context).labelLarge,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Column(
-                children: [
-                  Container(
-                    height: 260,
-                    width: 212,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: ThemeSetting.of(context).redBorder)),
-                    padding: const EdgeInsets.all(4),
-                    child: Image.asset(AppAssets.bookImage),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Container(
-                decoration: BoxDecoration(
-                  color: ThemeSetting.of(context).secondaryBackground,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                const SizedBox(height: 20),
+                Column(
                   children: [
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: Image.asset(
-                              AppAssets.dotLine,
-                              color: ThemeSetting.of(context).primaryText,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            height: 30,
-                            width: 67,
-                            padding: const EdgeInsets.all(2),
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                              image: AssetImage(
-                                AppAssets.result,
+                    Container(
+                      height: 260,
+                      width: 212,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Utils.getElementToColor(context, myElementName),
+                          )),
+                      padding: const EdgeInsets.all(4),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          "assets/tarot/${tenTwelveModel.picture}",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  decoration: BoxDecoration(
+                    color: ThemeSetting.of(context).secondaryBackground,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Image.asset(
+                                AppAssets.dotLine,
+                                color: ThemeSetting.of(context).primaryText,
                               ),
-                            )),
-                            child: Center(
-                              child: Text(
-                                LocaleKeys.result.tr(),
-                                style: ThemeSetting.of(context).captionMedium,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              height: 30,
+                              width: 67,
+                              padding: const EdgeInsets.all(2),
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                image: AssetImage(
+                                  AppAssets.result,
+                                ),
+                              )),
+                              child: Center(
+                                child: Text(
+                                  LocaleKeys.result.tr(),
+                                  style: ThemeSetting.of(context).captionMedium,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            child: Image.asset(
-                              AppAssets.dotLine,
-                              color: ThemeSetting.of(context).primaryText,
+                            const SizedBox(
+                              width: 10,
                             ),
-                          ),
-                        ],
+                            Flexible(
+                              child: Image.asset(
+                                AppAssets.dotLine,
+                                color: ThemeSetting.of(context).primaryText,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const CustomDividerWidget(
-                      thickness: 1,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    CircleAvatar(
-                      radius: 45,
-                      backgroundColor: ThemeSetting.of(context).common2,
-                      child: Image.asset(
-                        ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
-                        height: 60,
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      LocaleKeys.outfit_that_brings_luck_and_love.tr(),
-                      style: ThemeSetting.of(context).titleLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Text(
-                        LocaleKeys.outfit_that_brings_luck_and_love_des.tr(),
-                        style: ThemeSetting.of(context).captionLarge,
-                        textAlign: TextAlign.center,
+                      const CustomDividerWidget(
+                        thickness: 1,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Wrap(
-                        spacing: 5,
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      CircleAvatar(
+                        radius: 45,
+                        backgroundColor: ThemeSetting.of(context).common2,
+                        child: Image.asset(
+                          ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
+                          height: 60,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Wrap(
                         children: List.generate(
-                          hashTag.length,
+                          tenTwelveModel.description.text.length,
                           (index) {
-                            return ButtonWidget.roundedButtonOrange(context: context, text: hashTag[index], height: 30, color: ThemeSetting.of(context).alternate, textStyle: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary));
+                            return sajuDescriptionText(
+                              context,
+                              tenTwelveModel!.description.text[index].title,
+                              tenTwelveModel.description.text[index].paragraph,
+                            );
                           },
-                        )),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    CustomDividerWidget(
-                      thickness: 2,
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Text(textAlign: TextAlign.center, LocaleKeys.things_that_bring_me_luck_today.tr(), style: ThemeSetting.of(context).titleLarge),
-                    SizedBox(height: 30.h),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Wrap(
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: Wrap(
                           spacing: 5,
                           runSpacing: 5,
                           alignment: WrapAlignment.center,
@@ -223,10 +200,7 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
                               return Chip(
                                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 padding: const EdgeInsets.all(2),
-                                avatar: Image.asset(
-                                  detail.image!,
-                                  height: 30,
-                                ),
+                                avatar: Text(detail.image!),
                                 backgroundColor: ThemeSetting.of(context).secondaryBackground,
                                 label: Text(
                                   detail.title,
@@ -239,42 +213,94 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
                                     borderRadius: BorderRadius.circular(50)),
                               );
                             },
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 80,
-                    ),
-                    Text(
-                      LocaleKeys.share_my_ai_diary_to_your_friend.tr(),
-                      style: ThemeSetting.of(context).captionLarge,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: ButtonWidget.gradientButtonWithImage(
-                          context: context,
-                          text: LocaleKeys.share.tr(),
-                          imageString: AppAssets.heart,
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return showLinksDialog();
-                              },
-                            );
-                          }),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      Text(
+                        LocaleKeys.share_my_ai_diary_to_your_friend.tr(),
+                        style: ThemeSetting.of(context).captionLarge,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: ButtonWidget.gradientButtonWithImage(
+                            context: context,
+                            text: LocaleKeys.share.tr(),
+                            imageString: AppAssets.heart,
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return showLinksDialog();
+                                },
+                              );
+                            }),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } catch (e) {
+      errorWidget = Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.error_outline, size: 50, color: Colors.red),
+              SizedBox(height: 20),
+              Text("오류가 발생했습니다.", style: TextStyle(fontSize: 18)),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => context.pop(),
+                child: Text("돌아가기"),
               ),
             ],
           ),
         ),
+      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.pop();
+      });
+    }
+    return errorWidget;
+  }
+
+  Widget sajuDescriptionText(BuildContext context, String title, String description) {
+    return Container(
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: ThemeSetting.of(context).titleLarge,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Text(
+              description,
+              style: ThemeSetting.of(context).captionLarge,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+        ],
       ),
     );
   }

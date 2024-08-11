@@ -140,7 +140,7 @@ String selectPhotoFromInstagram = 'SelectPhotoFromInstagram';
 String autobiographyScreen = 'AutobiographyScreen';
 String animationScreen = 'AnimationScreen';
 String journalScreen = 'JournalScreen';
-String createJournal = 'CreateJournal';
+String createAutoBiography = 'CreateAutoBiography';
 String tenTwelveScreen = 'TenTwelveScreen';
 String sajuDailyScreen = 'sajuDailyScreen';
 String profileSettingsScreen = 'ProfileSettingsScreen';
@@ -264,13 +264,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           name: autobiographyScreen,
           builder: (context, params) => const AutobiographyScreen(),
         ),
-        FFRoute(
-          name: animationScreen,
-          builder: (context, params) => AnimationScreen(
-            apiFuture: Future.value(true),
-            screenName: '',
-          ),
-        ),
+        // FFRoute(
+        //   name: animationScreen,
+        //   builder: (context, params) => AnimationScreen(
+        //     apiFuture: Future.value(true),
+        //     screenName: '',
+        //   ),
+        // ),
         FFRoute(
           name: privacyPolicyUpdateNoticeScreen,
           builder: (context, params) => const PrivacyPolicyUpdateNoticeScreen(),
@@ -292,8 +292,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           builder: (context, params) => const JournalScreen(),
         ),
         FFRoute(
-          name: createJournal,
-          builder: (context, params) => const CreateJournal(),
+          name: createAutoBiography,
+          builder: (context, params) => const CreateAutoBiography(),
         ),
         FFRoute(
           name: profileSettingsScreen,

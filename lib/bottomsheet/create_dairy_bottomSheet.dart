@@ -10,6 +10,7 @@ import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 
 class CreateDairyBottomSheet {
   static createDairyBottomSheet({
@@ -17,6 +18,7 @@ class CreateDairyBottomSheet {
     required List<dynamic> selectedImages,
     required bool isNetwork,
     required String screen,
+    required bool isInstagram,
   }) {
     return showModalBottomSheet(
       elevation: 1,
@@ -25,16 +27,22 @@ class CreateDairyBottomSheet {
       builder: (context) {
         List displayImages = List.from(selectedImages);
 
-        log('Display Image ${(selectedImages.toString().contains('media_url'))}');
+        // log('Display Image ${(selectedImages.toString().contains('media_url'))}');
         while (displayImages.length < 10) {
-          displayImages.add({'id': 0, "media_type": "IMAGE", "media_url": "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"});
+          displayImages.add({'id': 0, "media_type": "IMAGE", "media_url": "assets/appicon/logo.png"});
         }
-        log('displayImages ${displayImages.first.toString().contains('media_type')}');
-        log('displayImages ${displayImages.last.toString().contains('media_type')}');
+        // log('displayImages ${displayImages.first.toString().contains('media_type')}');
+        // log('displayImages ${displayImages.last.toString().contains('media_type')}');
         return Container(
           // alignment: Alignment.bottomCenter,
           height: MediaQuery.of(context).size.height * 0.88,
-          decoration: BoxDecoration(color: ThemeSetting.of(context).info, borderRadius: const BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+          decoration: BoxDecoration(
+            color: ThemeSetting.of(context).info,
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(15),
+              topLeft: Radius.circular(15),
+            ),
+          ),
           child: ListView(
             children: [
               const SizedBox(
@@ -66,7 +74,11 @@ class CreateDairyBottomSheet {
               const SizedBox(
                 height: 16,
               ),
-              Text('${LocaleKeys.a_total_of.tr()} ${LocaleKeys.make_a_diary_for.tr()}July 8', textAlign: TextAlign.center, style: ThemeSetting.of(context).headlineLarge),
+              Text(
+                'A total of ${selectedImages.length} photos have been selected.\nMake a diary for ${Utils.getTodayMDFormatted()}',
+                textAlign: TextAlign.center,
+                style: ThemeSetting.of(context).headlineLarge,
+              ),
               const SizedBox(
                 height: 50,
               ),
@@ -231,19 +243,24 @@ class CreateDairyBottomSheet {
                       context: context,
                       text: LocaleKeys.create_a_diary.tr(),
                       onTap: () async {
-                        // final apiCallFuture = _mockApiCall(selectedImages);
+                        final apiCallFuture = _mockApiCall(selectedImages, screen, isInstagram);
 
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => AnimationScreen(
-                              apiFuture: Future.value(false),
-                              screenName: screen,
+                              apiFuture: apiCallFuture,
+                              useLottieAnimation: false,
+                              onApiComplete: (bool result) {
+                                if (result) {
+                                  context.pushReplacementNamed(screen);
+                                }
+                              },
                             ),
                           ),
                         );
 
-                        // context.pushReplacementNamed(screen);
+                        context.pushReplacementNamed(screen);
                       }),
                 ),
               ),
@@ -257,67 +274,82 @@ class CreateDairyBottomSheet {
     );
   }
 
-  static Future<bool> _mockApiCall(List<Map<String, dynamic>> selectedImages) async {
+  static Future<bool> _mockApiCall(List<dynamic> selectedImages, String screenType, bool isInstagram) async {
     List<String> base64Images = [];
-    for (var imageMap in selectedImages) {
-      try {
-        print("Processing image: $imageMap"); // 디버깅을 위한 출력
-
-        if (imageMap.containsKey('bytes')) {
-          dynamic bytes = imageMap['bytes'];
-          if (bytes is Uint8List) {
-            String base64Image = base64Encode(bytes);
-            base64Images.add(base64Image);
-            print("Added base64 image with length: ${base64Image.length}");
-          } else if (bytes is String) {
-            // 이미 Base64로 인코딩된 경우
-            base64Images.add(bytes);
-            print("Added pre-encoded base64 image with length: ${bytes.length}");
-          } else {
-            print("Unexpected type for bytes: ${bytes.runtimeType}");
-          }
-        } else if (imageMap.containsKey('path')) {
-          // 파일 경로가 주어진 경우
-          File imageFile = File(imageMap['path']);
-          Uint8List bytes = await imageFile.readAsBytes();
-          String base64Image = base64Encode(bytes);
-          base64Images.add(base64Image);
-          print("Added base64 image from file with length: ${base64Image.length}");
-        } else {
-          print("Image map doesn't contain 'bytes' or 'path': $imageMap");
-        }
-      } catch (e) {
-        print("Error processing image: $e");
-      }
-    }
-
-    print("Total base64 images: ${base64Images.length}");
-
-    if (base64Images.isEmpty) {
-      print("No images were successfully processed.");
-      return false;
-    }
 
     try {
-      dynamic response = await ApiCalls().journalDailyCall(info: base64Images);
+      for (XFile xFile in selectedImages) {
+        try {
+          File file = File(xFile.path);
+          if (!await file.exists()) {
+            print("File does not exist: ${xFile.path}");
+            continue;
+          }
 
-      if (response == null) {
-        print("API call returned null response");
+          int fileSize = await file.length();
+          String extension = path.extension(xFile.path).toLowerCase();
+          Uint8List bytes = await file.readAsBytes();
+          String base64Image = base64Encode(bytes);
+          base64Images.add(base64Image);
+        } catch (e) {
+          print("Error processing image ${xFile.path}: $e");
+        }
+      }
+      if (base64Images.isEmpty) {
+        print("No images were successfully processed.");
         return false;
       }
-      if (response['status'] == 'success') {
-        JournalModel model = JournalModel.fromJson(response['journal']);
-        GetIt.I.get<JournalService>().updateJournal(model);
+
+      try {
+        dynamic response;
+        if (screenType == autobiographyScreen) {
+          String albumType;
+          if (isInstagram) {
+            albumType = Utils.getAlbumType(AlbumType.instagram);
+          } else {
+            albumType = Utils.getAlbumType(AlbumType.album);
+          }
+
+          response = await ApiCalls().autobiographyCreateCall(info: base64Images, type: albumType);
+
+          if (response == null) {
+            print("autobiographyCreateCall API call returned null response");
+            return false;
+          }
+          if (response['status'] == 'success') {
+            JournalModel model = JournalModel.fromJson(response['autobiography']);
+            GetIt.I.get<JournalService>().updateJournal(model);
+          }
+          return true;
+        } else {
+          response = await ApiCalls().journalDailyCall(info: base64Images);
+          if (response == null) {
+            print("journalDailyCall API call returned null response");
+            return false;
+          }
+          if (response['status'] == 'success') {
+            JournalModel model = JournalModel.fromJson(response['journal']);
+            GetIt.I.get<JournalService>().updateJournal(model);
+          }
+        }
+
+        return true;
+      } catch (e) {
+        print("Error in API call: $e");
+        return false;
       }
-      return true;
     } catch (e) {
-      print("Error in API call: $e");
+      print("Error in overall process: $e");
       return false;
     }
   }
 
   static bool isNetworkImage(dynamic image) {
     return image is String && image.startsWith('http');
+  }
+
+  static bool isAssetImage(dynamic image) {
+    return image is String && image.startsWith('assets');
   }
 
   static Widget squareWidget({required String image, double? width, required BuildContext context, required bool isNetwork}) {
@@ -333,7 +365,9 @@ class CreateDairyBottomSheet {
               ? NetworkImage(image)
               : isNetworkImage(image)
                   ? NetworkImage(image)
-                  : FileImage(File(image)),
+                  : isAssetImage(image)
+                      ? AssetImage(image)
+                      : FileImage(File(image)),
           fit: BoxFit.cover,
         ),
       ),

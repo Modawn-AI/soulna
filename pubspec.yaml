@@ -37,7 +37,7 @@ dependencies:
   audio_waveforms: ^1.0.5
   audioplayers: ^6.0.0
   app_settings: ^5.1.1
-  app_tracking_transparency: ^2.0.5
+  app_tracking_transparency: ^2.0.6
   auto_size_text: ^3.0.0
   bot_toast: ^4.1.3
   card_swiper: ^3.0.1
@@ -80,13 +80,14 @@ dependencies:
   jwt_decoder: ^2.0.1
   kakao_flutter_sdk: ^1.9.3
   loading_animation_widget: ^1.2.1
-  logger: ^2.3.0
+  logger: ^2.4.0
   logging: ^1.2.0
   lottie: ^3.1.2
   material_text_fields: ^1.0.5
   package_info_plus: ^8.0.0
   page_transition: ^2.1.0
-  path_provider: ^2.1.3
+  path: ^1.9.0
+  path_provider: ^2.1.4
   permission_handler: ^11.3.1
   platform: ^3.1.5
   provider: ^6.1.2
@@ -112,7 +113,7 @@ dependencies:
   carousel_slider: ^4.2.1
   percent_indicator: ^4.2.3
   get: ^4.6.6
-  flutter_neat_and_clean_calendar: ^0.3.19+41
+  flutter_neat_and_clean_calendar: ^0.4.4
   scrollable_positioned_list: ^0.3.8
   image_picker: ^1.1.2
   insta_login: ^0.0.3
@@ -171,10 +172,50 @@ flutter:
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/Pretendard-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Pretendard-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Pretendard-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Pretendard-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Pretendard-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Pretendard-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Pretendard-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Pretendard-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Pretendard-Black.ttf
+          weight: 900
+    - family: ChosunGs
+      fonts:
+        - asset: assets/fonts/ChosunGs.ttf
+    - family: MorganitePro
+      fonts:
+        - asset: assets/fonts/MorganitePro-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/MorganitePro-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/MorganitePro-Light.ttf
+          weight: 300
+        - asset: assets/fonts/MorganitePro-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/MorganitePro-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/MorganitePro-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/MorganitePro-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/MorganitePro-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/MorganitePro-Black.ttf
+          weight: 900
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

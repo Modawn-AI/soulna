@@ -1,5 +1,6 @@
 import 'package:Soulna/bottomsheet/show_datePicker_bottomSheet.dart';
 import 'package:Soulna/controller/auth_controller.dart';
+import 'package:Soulna/models/saju_daily_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
@@ -9,9 +10,7 @@ import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 
 // This file defines the PastFortuneScreen widget, which displays past fortune entries.
 
@@ -26,15 +25,10 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
   int index = 0;
   bool showData = true;
   DateTime selectedDate = DateTime.now();
-  final List<NeatCleanCalendarEvent> _eventList = [
-    NeatCleanCalendarEvent('MultiDay Event A', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('MultiDay Event b', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 12, 0), color: Colors.orange, isMultiDay: true),
-    NeatCleanCalendarEvent('Allday Event B', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 2, 14, 30), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2, 17, 0), color: Colors.pink, isAllDay: true),
-    NeatCleanCalendarEvent('Normal Event D', startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 14, 30), endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 17, 0), color: Colors.indigo),
-  ];
+  String selectedFortune = '';
+  bool isLoading = false;
+  final List<NeatCleanCalendarEvent> _eventList = [];
+  final Map<String, SajuDailyModel> _fortuneCache = {};
 
   final authCon = Get.put(AuthController());
 
@@ -42,6 +36,33 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
   void initState() {
     authCon.selectedDate.value = DateTime.now();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedDate = authCon.selectedDate.value;
+    _fetchSajuData();
+  }
+
+  Future<void> _fetchSajuData() async {
+    dynamic response = await ApiCalls().getSajuList();
+    if (response != null) {
+      _eventList.clear();
+      for (var item in response['daily_list']) {
+        _eventList.add(
+          NeatCleanCalendarEvent(
+            item,
+            startTime: DateTime.parse(item),
+            endTime: DateTime.parse(item),
+            color: ThemeSetting.of(context).primary,
+          ),
+        );
+      }
+    }
+    setState(() {
+      showData = true;
+    });
   }
 
   @override
@@ -82,18 +103,19 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         },
         image: index == 0 ? AppAssets.calendar : AppAssets.menu,
       ),
-      body: SafeArea(
-        child: index == 0 ? pastFortune() : pastFortuneCalenderView(),
-      ),
+      body: SafeArea(child: index == 0 ? pastFortune() : pastFortuneCalenderView()),
     );
   }
 
-  pastFortune() {
+  Widget pastFortune() {
     return showData == true
         ? ListView.separated(
             shrinkWrap: true,
-            itemCount: 3,
-            itemBuilder: (context, index) => listTile(date: 'July 2024', description: 'It\s a day where you can expect results proportional to your efforts.'),
+            itemCount: _eventList.length,
+            itemBuilder: (context, index) => listTile(
+              date: DateFormat.yMMMM().format(_eventList[index].startTime),
+              description: _eventList[index].summary ?? '',
+            ),
             padding: EdgeInsets.zero,
             separatorBuilder: (BuildContext context, int index) {
               return CustomDividerWidget(
@@ -105,55 +127,65 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         : noDataFound();
   }
 
-  pastFortuneCalenderView() => CustomCalendarWidget(
+  Widget pastFortuneCalenderView() => CustomCalendarWidget(
         eventsList: _eventList,
         initialDate: selectedDate,
-        showEventWidget: ListView.separated(
-          // padding: const EdgeInsets.symmetric(horizontal: 10),
-          itemCount: _eventList.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            NeatCleanCalendarEvent event = _eventList[index];
-            return listTile(date: DateFormat.yMMMM().format(event.startTime), description: event.summary);
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return CustomDividerWidget(
-              color: ThemeSetting.of(context).common0,
-              thickness: 1,
+        onDateSelected: (date) {
+          _onDateSelected(date);
+        },
+        showEventWidget: Builder(
+          builder: (context) {
+            if (isLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            if (selectedFortune.isEmpty) {
+              return Center(
+                child: Text(
+                  'No fortune available for selected date',
+                  style: ThemeSetting.of(context).bodyMedium.copyWith(
+                        color: ThemeSetting.of(context).disabledText,
+                      ),
+                ),
+              );
+            }
+
+            return ListView(
+              shrinkWrap: true,
+              children: [
+                listTile(
+                  date: DateFormat.yMMMMd().format(selectedDate),
+                  description: selectedFortune,
+                ),
+              ],
             );
           },
         ),
       );
 
-  listTile({required date, required String description}) => Padding(
+  Widget listTile({required String date, required String description}) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Text(
               date,
               style: ThemeSetting.of(context).titleMedium.copyWith(
                     color: ThemeSetting.of(context).primary,
                   ),
             ),
-            const SizedBox(
-              height: 5,
-            ),
+            const SizedBox(height: 5),
             Text(
               description,
               style: ThemeSetting.of(context).bodyMedium,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
           ],
         ),
       );
 
-  noDataFound() {
+  Widget noDataFound() {
     return Column(
       children: [
         SizedBox(
@@ -198,7 +230,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        LocaleKeys.check_your_fortune_for_today.tr(),
+                        StringTranslateExtension(LocaleKeys.check_your_fortune_for_today).tr(),
                         style: ThemeSetting.of(context).labelLarge.copyWith(
                               fontSize: 20.sp,
                               color: ThemeSetting.of(context).secondaryBackground,
@@ -214,7 +246,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
                                 color: ThemeSetting.of(context).secondaryBackground,
                                 fontSize: 12.sp,
                               ),
-                          text: "${LocaleKeys.daily_vibe_check.tr()} 💫",
+                          text: "${StringTranslateExtension(LocaleKeys.daily_vibe_check).tr()} 💫",
                           onTap: () {}),
                     ],
                   ),
@@ -232,7 +264,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         Expanded(
           child: Center(
             child: Text(
-              LocaleKeys.i_have_not_checked_my_fortune_yet.tr(),
+              StringTranslateExtension(LocaleKeys.i_have_not_checked_my_fortune_yet).tr(),
               style: ThemeSetting.of(context).bodyMedium.copyWith(
                     color: ThemeSetting.of(context).disabledText,
                   ),
@@ -241,5 +273,61 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         ),
       ],
     );
+  }
+
+  void _onDateSelected(DateTime date) async {
+    setState(() {
+      selectedDate = date;
+      isLoading = true;
+      selectedFortune = '';
+    });
+
+    String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+
+    if (_fortuneCache.containsKey(formattedDate)) {
+      // 캐시된 데이터가 있으면 사용
+      setState(() {
+        selectedFortune = _fortuneCache[formattedDate]!.sajuDescription.title;
+        isLoading = false;
+      });
+    } else {
+      try {
+        dynamic response = await ApiCalls().getDateToSaju(formattedDate);
+
+        if (response != null && response['daily_entry'] != null) {
+          SajuDailyModel model = SajuDailyModel.fromJson(response['daily_entry']);
+          _fortuneCache[formattedDate] = model; // 캐시에 저장
+          setState(() {
+            selectedFortune = model.sajuDescription.title;
+            isLoading = false;
+          });
+
+          // _eventList 업데이트
+          if (!_eventList.any((event) => event.startTime == date)) {
+            setState(() {
+              _eventList.add(
+                NeatCleanCalendarEvent(
+                  formattedDate,
+                  startTime: date,
+                  endTime: date,
+                  color: ThemeSetting.of(context).primary,
+                ),
+              );
+            });
+          }
+        } else {
+          setState(() {
+            selectedFortune = 'No fortune available for this date';
+            isLoading = false;
+          });
+        }
+      } catch (e) {
+        print('Error fetching fortune: $e');
+        setState(() {
+          selectedFortune = 'Error fetching fortune. Please try again.';
+          isLoading = false;
+        });
+      }
+    }
   }
 }

@@ -15,23 +15,9 @@ class CustomDatePicker extends StatefulWidget {
 }
 
 class _CustomDatePickerState extends State<CustomDatePicker> {
-  final List<String> months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
+  final List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   final List<int> dates = List.generate(31, (index) => index + 1);
-  final List<int> years =
-      List.generate(DateTime.now().year - 1920 + 1, (index) => 1920 + index);
+  final List<int> years = List.generate(DateTime.now().year - 1920 + 1, (index) => 1920 + index);
 
   int selectedMonth = DateTime.now().month - 1;
   int selectedDate = DateTime.now().day - 1;
@@ -41,19 +27,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          color: ThemeSetting.of(context).secondaryBackground,
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      decoration: BoxDecoration(color: ThemeSetting.of(context).secondaryBackground, borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       height: 150,
       child: Stack(
         children: [
-          Center(
-              child: Container(
-                  height: 50,
-                  color: ThemeSetting.isLightTheme(context)
-                      ? ThemeSetting.of(context).tertiary
-                      : ThemeSetting.of(context).common2)),
+          Center(child: Container(height: 50, color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).tertiary : ThemeSetting.of(context).common2)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -82,9 +60,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     );
   }
 
-  Widget _buildPicker(BuildContext context, List<dynamic> items,
-      int selectedItem, ValueChanged<int> onSelectedItemChanged,
-      {bool isMonth = false}) {
+  Widget _buildPicker(BuildContext context, List<dynamic> items, int selectedItem, ValueChanged<int> onSelectedItemChanged, {bool isMonth = false}) {
     return Expanded(
       child: ListWheelScrollView.useDelegate(
         controller: FixedExtentScrollController(initialItem: selectedItem),
@@ -114,8 +90,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   }
 
   void _notifyDateSelected() {
-    final selectedDateTime =
-        DateTime(selectedYear, selectedMonth + 1, selectedDate + 1);
+    final selectedDateTime = DateTime(selectedYear, selectedMonth + 1, selectedDate + 1);
     authCon.selectedDate.value = selectedDateTime;
     widget.onDateSelected(selectedDateTime);
   }

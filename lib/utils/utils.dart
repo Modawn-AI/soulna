@@ -7,6 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+enum CardAttribute { region, animal, element, gender }
+
+enum AlbumType { instagram, album }
+
 class Utils {
   // static Future<String> createDeeplink(String deepLinkUrl, String parameterName, Map<String, String> parameter) async {
   //   DynamicLinkParameters dynamicLinkParams = DynamicLinkParameters(
@@ -208,6 +212,34 @@ class Utils {
         return ThemeSetting.of(context).sajuBgBlue;
       default:
         return ThemeSetting.of(context).sajuBgBlack;
+    }
+  }
+
+  static String getCardAttribute(String input, CardAttribute attribute) {
+    List<String> parts = input.split('_');
+
+    switch (attribute) {
+      case CardAttribute.region:
+        return parts[0]; // 지역
+      case CardAttribute.animal:
+        return parts[1]; // 동물
+      case CardAttribute.element:
+        return parts[2]; // 속성
+      case CardAttribute.gender:
+        return parts[3]; // 성별
+      default:
+        return "Invalid attribute";
+    }
+  }
+
+  static String getAlbumType(AlbumType type) {
+    switch (type) {
+      case AlbumType.instagram:
+        return 'instagram';
+      case AlbumType.album:
+        return 'album';
+      default:
+        return 'Invalid type';
     }
   }
 }

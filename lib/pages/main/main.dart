@@ -1,7 +1,7 @@
 export 'animation_screen.dart';
 export 'journal_screen.dart';
 export 'book_details_screen.dart';
-export 'create_journal.dart';
+export 'create_auto_biography.dart';
 export 'date_of_birth_main.dart';
 export 'auto_biography_screen.dart';
 export 'main_screen.dart';

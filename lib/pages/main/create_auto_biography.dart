@@ -7,18 +7,17 @@ import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-// This file defines the CreateJournal widget, which is used for creating a journal.
-//MainScreen -> CreateJournal
-class CreateJournal extends StatefulWidget {
-  const CreateJournal({super.key});
+// This file defines the CreateJournal widget, which is used for creating a AutoBiography.
+//MainScreen -> CreateAutoBiography
+class CreateAutoBiography extends StatefulWidget {
+  const CreateAutoBiography({super.key});
 
   @override
-  State<CreateJournal> createState() => _CreateJournalState();
+  State<CreateAutoBiography> createState() => _CreateAutoBiographyState();
 }
 
-class _CreateJournalState extends State<CreateJournal> {
+class _CreateAutoBiographyState extends State<CreateAutoBiography> {
   String selectedValue = '';
   // bool? isInstagramSelected = false;
 
@@ -69,11 +68,15 @@ class _CreateJournalState extends State<CreateJournal> {
                 MaterialPageRoute(
                   builder: (context) => AnimationScreen(
                     apiFuture: Future.value(false),
-                    screenName: autobiographyScreen,
+                    onApiComplete: (bool result) {
+                      if (result) {
+                        context.pushReplacementNamed(animationScreen);
+                      }
+                    },
+                    useLottieAnimation: false,
                   ),
                 ),
               );
-              // context.pushReplacementNamed(animationScreen);
             }
           },
         ),

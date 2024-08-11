@@ -1,5 +1,6 @@
 import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
+import 'package:Soulna/provider/ten_twelve_provider.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:Soulna/auth/firebase_user_provider.dart';
 import 'package:Soulna/manager/social_manager.dart';
@@ -33,7 +34,6 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-
   clearSecureStorageOnReinstall();
   setupLocator();
 
@@ -48,6 +48,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<SocialManager>(create: (_) => socialManager),
+        ChangeNotifierProvider<TenTwelveProvider>(create: (_) => TenTwelveProvider()),
       ],
       child: EasyLocalization(
         supportedLocales: const [Locale('en')],
@@ -111,8 +112,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
   String authStatus = 'Unknown';
   // ThemeMode _themeMode = ThemeSetting.themeMode;
 

@@ -1,18 +1,18 @@
-class SajuDailyInfo {
+class SajuDailyModel {
   final String dailyGanji;
   final SajuDescription sajuDescription;
   final List<String> hashtag;
   final List<Keyword> keyword;
 
-  SajuDailyInfo({
+  SajuDailyModel({
     required this.dailyGanji,
     required this.sajuDescription,
     required this.hashtag,
     required this.keyword,
   });
 
-  factory SajuDailyInfo.fromJson(Map<String, dynamic> json) {
-    return SajuDailyInfo(
+  factory SajuDailyModel.fromJson(Map<String, dynamic> json) {
+    return SajuDailyModel(
       dailyGanji: json['daily_ganji'],
       sajuDescription: SajuDescription.fromJson(json['description']),
       hashtag: List<String>.from(json['hashtag']),
@@ -106,11 +106,11 @@ class Keyword {
 }
 
 class SajuDailyService {
-  SajuDailyInfo? _sajuDailyInfo;
+  SajuDailyModel? _sajuDailyInfo;
 
   get sajuDailyInfo => _sajuDailyInfo;
 
-  void setSajuDailyInfo(SajuDailyInfo info) {
+  void setSajuDailyInfo(SajuDailyModel info) {
     _sajuDailyInfo = info;
   }
 }

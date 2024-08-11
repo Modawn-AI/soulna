@@ -14,6 +14,11 @@ class DrawerScreen {
   }) {
     List<Map<String, dynamic>> settingList = [
       {
+        'image': AppAssets.logo,
+        'title': "My TenTwelve",
+        'route': tenTwelveScreen,
+      },
+      {
         'image': AppAssets.iconFortune,
         'title': LocaleKeys.past_fortune.tr(),
         'route': pastFortuneScreen,
