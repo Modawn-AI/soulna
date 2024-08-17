@@ -39,6 +39,8 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
       return Scaffold(
         backgroundColor: Utils.getElementBgToColor(context, myElementName),
         body: SafeArea(
+          bottom: false,
+
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: ListView(

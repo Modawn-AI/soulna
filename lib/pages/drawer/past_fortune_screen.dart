@@ -49,6 +49,12 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
     dynamic response = await ApiCalls().getSajuList();
     if (response != null) {
       _eventList.clear();
+      if (response['message'] == 'none') {
+        setState(() {
+          showData = false;
+        });
+        return;
+      }
       for (var item in response['daily_list']) {
         _eventList.add(
           NeatCleanCalendarEvent(
@@ -59,10 +65,10 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
           ),
         );
       }
+      setState(() {
+        showData = true;
+      });
     }
-    setState(() {
-      showData = true;
-    });
   }
 
   @override

@@ -33,6 +33,7 @@ class _PastDiaryState extends State<PastDiary> {
   final Map<String, JournalModel> _journalCache = {};
 
   final authCon = Get.put(AuthController());
+
   @override
   void initState() {
     authCon.selectedDate.value = DateTime.now();
@@ -50,6 +51,13 @@ class _PastDiaryState extends State<PastDiary> {
     dynamic response = await ApiCalls().getJournalList();
     if (response != null) {
       _eventList.clear();
+      if (response['message'] == 'none') {
+        setState(() {
+          showData = false;
+        });
+
+        return;
+      }
       for (var item in response['journal_list']) {
         _eventList.add(
           NeatCleanCalendarEvent(
@@ -215,8 +223,8 @@ class _PastDiaryState extends State<PastDiary> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                ThemeSetting.of(context).linearContainer1,
-                ThemeSetting.of(context).linearContainer2,
+                ThemeSetting.of(context).linearContainer3,
+                ThemeSetting.of(context).linearContainer4,
               ],
             ),
             borderRadius: BorderRadius.circular(14.r),
@@ -243,7 +251,7 @@ class _PastDiaryState extends State<PastDiary> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        StringTranslateExtension(LocaleKeys.check_your_fortune_for_today).tr(),
+                        StringTranslateExtension(LocaleKeys.create_today_diary).tr(),
                         style: ThemeSetting.of(context).labelLarge.copyWith(
                               fontSize: 20.sp,
                               color: ThemeSetting.of(context).secondaryBackground,
@@ -259,13 +267,13 @@ class _PastDiaryState extends State<PastDiary> {
                                 color: ThemeSetting.of(context).secondaryBackground,
                                 fontSize: 12.sp,
                               ),
-                          text: "${StringTranslateExtension(LocaleKeys.daily_vibe_check).tr()} 💫",
+                          text: "${StringTranslateExtension(LocaleKeys.create).tr()} 💫",
                           onTap: () {}),
                     ],
                   ),
                 ),
                 Image.asset(
-                  AppAssets.image1,
+                  AppAssets.image2,
                   height: 90.h,
                   width: 64.w,
                   fit: BoxFit.fill,
