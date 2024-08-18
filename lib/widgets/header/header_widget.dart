@@ -158,7 +158,7 @@ class HeaderWidget {
       );
 
   static AppBar headerWithCustomAction({required BuildContext context, void Function()? onTap, List<Widget>? actions, String? pageIndex, double percent = 0.0}) => AppBar(
-          elevation: 00,
+          elevation: 0,
           leadingWidth: 48,
           leading: GestureDetector(
             onTap: onTap ?? () => Navigator.pop(context),

@@ -120,7 +120,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
             itemCount: _eventList.length,
             itemBuilder: (context, index) => listTile(
               date: DateFormat.yMMMM().format(_eventList[index].startTime),
-              description: _eventList[index].summary ?? '',
+              description: _eventList[index].summary,
             ),
             padding: EdgeInsets.zero,
             separatorBuilder: (BuildContext context, int index) {
@@ -142,7 +142,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         showEventWidget: Builder(
           builder: (context) {
             if (isLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (selectedFortune.isEmpty) {
@@ -199,7 +199,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
   Widget noDataFound() {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Container(
@@ -334,7 +334,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
           });
         }
       } catch (e) {
-        print('Error fetching fortune: $e');
+        debugPrint('Error fetching fortune: $e');
         setState(() {
           selectedFortune = 'Error fetching fortune. Please try again.';
           isLoading = false;
