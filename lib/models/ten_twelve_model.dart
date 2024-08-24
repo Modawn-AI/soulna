@@ -3,7 +3,7 @@ class TenTwelveModel {
   final String title;
   final String color;
   final Description description;
-  final List<String> hashtag;
+  final List<HashtagModel> hashtag;
 
   TenTwelveModel({
     required this.picture,
@@ -19,7 +19,7 @@ class TenTwelveModel {
       title: json['title'],
       color: json['color'],
       description: Description.fromJson(json['description']),
-      hashtag: List<String>.from(json['hashtag']),
+      hashtag: List<HashtagModel>.from(json['hashtag'].map((k) => HashtagModel.fromJson(k))),
     );
   }
 
@@ -77,6 +77,30 @@ class TenTwelveText {
     return {
       'title': title,
       'paragraph': paragraph,
+    };
+  }
+}
+
+class HashtagModel {
+  final String hashtag;
+  final String emoji;
+
+  HashtagModel({
+    required this.hashtag,
+    required this.emoji,
+  });
+
+  factory HashtagModel.fromJson(Map<String, dynamic> json) {
+    return HashtagModel(
+      hashtag: json['hashtag'],
+      emoji: json['emoji'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'hashtag': hashtag,
+      'emoji': emoji,
     };
   }
 }

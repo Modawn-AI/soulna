@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+
+import 'package:Soulna/bottomsheet/subscription_bottomsheet.dart';
 import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/auto_biography_model.dart';
@@ -8,14 +10,12 @@ import 'package:Soulna/models/image_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
 import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/pages/drawer/drawer_screen.dart';
-import 'package:Soulna/bottomsheet/subscription_bottomsheet.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/sharedPref_string.dart';
 import 'package:Soulna/utils/shared_preference.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
-import 'package:Soulna/widgets/custom_switchtile_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -51,6 +51,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   UserInfoData? user;
   final authCon = Get.put(AuthController());
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final CarouselSliderController _controller = CarouselSliderController();
+
   @override
   void initState() {
     super.initState();
@@ -343,7 +346,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           )),
                     );
                   }).toList(),
-                  carouselController: CarouselController(),
+                  carouselController: _controller,
                   options: CarouselOptions(
                       viewportFraction: 0.8,
                       disableCenter: true,

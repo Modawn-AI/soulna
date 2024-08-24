@@ -31,16 +31,15 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
 
       for (int i = 0; i < tenTwelveModel.hashtag.length; i++) {
         thingsList.add(BookDetailModel(
-          title: tenTwelveModel.hashtag[i],
+          title: tenTwelveModel.hashtag[i].hashtag,
           backgroundColor: ThemeSetting.of(context).extraGray,
-          image: "❤️",
+          image: tenTwelveModel.hashtag[i].emoji,
         ));
       }
       return Scaffold(
         backgroundColor: Utils.getElementBgToColor(context, myElementName),
         body: SafeArea(
           bottom: false,
-
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: ListView(
