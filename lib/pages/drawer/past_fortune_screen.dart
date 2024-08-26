@@ -46,28 +46,39 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
   }
 
   Future<void> _fetchSajuData() async {
-    dynamic response = await ApiCalls().getSajuList();
-    if (response != null) {
-      _eventList.clear();
-      if (response['message'] == 'none') {
+    try {
+      dynamic response = await ApiCalls().getSajuList();
+
+      if (response['status'] == 'success') {
+        _eventList.clear();
+        if (response['message'] == 'none') {
+          setState(() {
+            showData = false;
+          });
+          return;
+        }
+        for (var dayEvents in response['data']['daily_list']) {
+          if (dayEvents is List) {
+            for (var event in dayEvents) {
+              if (event is Map<String, dynamic>) {
+                _eventList.add(
+                  NeatCleanCalendarEvent(
+                    event['title'] ?? 'Untitled Event',
+                    startTime: DateTime.tryParse(event['date'] ?? '') ?? DateTime.now(),
+                    endTime: DateTime.tryParse(event['date'] ?? '') ?? DateTime.now().add(Duration(hours: 1)),
+                    color: ThemeSetting.of(context).primary,
+                  ),
+                );
+              }
+            }
+          }
+        }
         setState(() {
-          showData = false;
+          showData = true;
         });
-        return;
       }
-      for (var item in response['daily_list']) {
-        _eventList.add(
-          NeatCleanCalendarEvent(
-            item,
-            startTime: DateTime.parse(item),
-            endTime: DateTime.parse(item),
-            color: ThemeSetting.of(context).primary,
-          ),
-        );
-      }
-      setState(() {
-        showData = true;
-      });
+    } catch (e) {
+      debugPrint('Error fetching saju list: $e');
     }
   }
 
@@ -119,7 +130,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
             shrinkWrap: true,
             itemCount: _eventList.length,
             itemBuilder: (context, index) => listTile(
-              date: DateFormat.yMMMM().format(_eventList[index].startTime),
+              date: DateFormat.yMMMMd().format(_eventList[index].startTime),
               description: _eventList[index].summary,
             ),
             padding: EdgeInsets.zero,
@@ -148,7 +159,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
             if (selectedFortune.isEmpty) {
               return Center(
                 child: Text(
-                  'No fortune available for selected date',
+                  'No fortune available for selected date.', // no_fortune_select_date
                   style: ThemeSetting.of(context).bodyMedium.copyWith(
                         color: ThemeSetting.of(context).disabledText,
                       ),
@@ -275,7 +286,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         Expanded(
           child: Center(
             child: Text(
-              StringTranslateExtension(LocaleKeys.i_have_not_checked_my_fortune_yet).tr(),
+              StringTranslateExtension(LocaleKeys.i_have_not_checked_my_fortune_yet).tr(), // not_checked_my_fortune_yet
               style: ThemeSetting.of(context).bodyMedium.copyWith(
                     color: ThemeSetting.of(context).disabledText,
                   ),
@@ -305,8 +316,8 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
       try {
         dynamic response = await ApiCalls().getDateToSaju(formattedDate);
 
-        if (response != null && response['daily_entry'] != null) {
-          SajuDailyModel model = SajuDailyModel.fromJson(response['daily_entry']);
+        if (response != null && response['status'] == 'success') {
+          SajuDailyModel model = SajuDailyModel.fromJson(response['data']['daily_entry']);
           _fortuneCache[formattedDate] = model; // 캐시에 저장
           GetIt.I.get<SajuDailyService>().setSajuDailyInfo(model);
           setState(() {
@@ -329,14 +340,14 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
           }
         } else {
           setState(() {
-            selectedFortune = 'No fortune available for this date';
+            selectedFortune = 'No fortune available for this date.'; // no_fortune_available_this
             isLoading = false;
           });
         }
       } catch (e) {
         debugPrint('Error fetching fortune: $e');
         setState(() {
-          selectedFortune = 'Error fetching fortune. Please try again.';
+          selectedFortune = 'Error fetching fortune. Please try again.'; // error_fetching_fortune
           isLoading = false;
         });
       }

@@ -69,7 +69,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                         if (authCon.newPasswordCon.value.text != authCon.conPasswordCon.value.text) {
                           CustomSnackBarWidget.showSnackBar(
                             context: context,
-                            message: 'Both password does not match',
+                            message: 'Both password does not match', // both_password_not_match
                           );
                           return;
                         }

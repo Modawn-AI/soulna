@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ButtonWidget.orangeBorderButton(
                     context: context,
-                    text: LocaleKeys.sing_up.tr(),
+                    text: LocaleKeys.sing_up.tr(), // sign_up
                     onTap: () => context.pushNamed(signUpAgree),
                   ),
                 ],

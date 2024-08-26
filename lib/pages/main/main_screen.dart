@@ -205,25 +205,32 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              height: 39,
-              margin: const EdgeInsets.only(right: 148, left: 149),
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
-                  borderRadius: BorderRadius.circular(50),
-                  color: ThemeSetting.of(context).tertiary1,
-                ),
-                child: Text(
-                  Utils.getTodayMDFormatted(),
-                  style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
-                ),
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: 39,
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: ThemeSetting.of(context).tertiary1, width: 1),
+                        borderRadius: BorderRadius.circular(50),
+                        color: ThemeSetting.of(context).tertiary1,
+                      ),
+                      child: Text(
+                        Utils.getTodayMDFormatted(),
+                        style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(

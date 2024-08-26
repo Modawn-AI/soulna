@@ -92,13 +92,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         dynamic response = await ApiCalls().getUserData();
         if (response == null) {}
         if (response['status'] == 'success') {
-          if (response['message'] == 'none') {
+          if (response['message'] == 'none' || response['message'] == 'Incomplete user profile') {
             // user info not found
             sm.isUserInfo.value = false;
           } else {
             sm.isUserInfo.value = true;
-            UserModel model = UserModel.fromJson(response['data']);
-            GetIt.I.get<UserInfoData>().updateUserInfo(model);
+            if (response['data'] != null) {
+              UserModel model = UserModel.fromJson(response['data']);
+              GetIt.I.get<UserInfoData>().updateUserInfo(model);
+            }
           }
         }
 

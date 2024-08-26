@@ -46,7 +46,7 @@ class PrivacyPolicyUpdateNoticeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  LocaleKeys.hello_this_is_soulna.tr(),
+                  LocaleKeys.hello_this_is_soulna.tr(), // privacy_policy_description
                   style: ThemeSetting.of(context).bodyMedium,
                 ),
               ],

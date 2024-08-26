@@ -66,7 +66,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
       "birthdate": _birthdateController.text,
       "time_of_birth": timeOfBirth,
       "gender": selectedGender,
-      "language": "English",
+      "language": "Korean",
     };
 
     return jsonEncode(userMap);

@@ -126,7 +126,7 @@ class DrawerScreen {
               ),
             ),
           ),
-          CustomDividerWidget(),
+          const CustomDividerWidget(),
           const SizedBox(
             height: 10,
           ),

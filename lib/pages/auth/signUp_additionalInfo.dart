@@ -90,8 +90,8 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
                       } else {
                         Get.showSnackbar(
                           const GetSnackBar(
-                            title: 'Gender',
-                            message: 'Please select gender',
+                            title: 'Gender', // gender
+                            message: 'Please select gender', // please_select_gender
                           ),
                         );
                       }

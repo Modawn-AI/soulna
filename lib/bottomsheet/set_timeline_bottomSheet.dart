@@ -64,7 +64,7 @@ class SetTimelineBottomSheet {
                               Padding(
                                 padding: const EdgeInsets.only(left: 18),
                                 child: Text(
-                                  LocaleKeys.set_timeline.tr(),
+                                  LocaleKeys.set_timeline.tr(), // set_timeline
                                   style: ThemeSetting.of(context).titleLarge.copyWith(color: ThemeSetting.of(context).white),
                                 ),
                               ),
@@ -174,7 +174,7 @@ class SetTimelineBottomSheet {
                               padding: const EdgeInsets.symmetric(horizontal: 18),
                               child: ButtonWidget.gradientButton(
                                 context: context,
-                                text: '${LocaleKeys.select_a_total_of.tr()}${selectedImages.length} ${LocaleKeys.photos.tr()}',
+                                text: '${LocaleKeys.select_a_total_of.tr()}${selectedImages.length} ${LocaleKeys.photos.tr()}', // select_total_of_photos
                                 color1: ThemeSetting.of(context).black1,
                                 color2: ThemeSetting.of(context).black2,
                                 onTap: () {

@@ -108,7 +108,7 @@ class CodegenLoader extends AssetLoader{
   "enter_verification_code": "Enter verification code.",
   "enter_verification_code_des": "Please enter your authentication number (6 digits) within 5 minutes.If the authentication number has not been sent, please press the 'Receive' button.",
   "authenticate_and_find_the_password": "Authenticate and find the password",
-  "confirm": "confirm",
+  "confirm": "Confirm",
   "please_enter_your_password": "Please enter your password.",
   "password": "Password",
   "reEnter_your_password": "Re-enter your password.",

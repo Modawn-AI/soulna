@@ -67,7 +67,7 @@ class _OneToOneScreenState extends State<OneToOneScreen> {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    LocaleKeys.please_feel_free_to_inquire_about_any_questions_you_have.tr(),
+                    LocaleKeys.please_feel_free_to_inquire_about_any_questions_you_have.tr(), // inquire_about_any_questions
                     style: ThemeSetting.of(context).labelSmall.copyWith(
                           color: ThemeSetting.of(context).primaryText,
                         ),
@@ -258,7 +258,7 @@ class _OneToOneScreenState extends State<OneToOneScreen> {
                       } else {
                         CustomSnackBarWidget.showSnackBar(
                           context: context,
-                          message: LocaleKeys.please_enter_inquiry_or_select_category.tr(),
+                          message: LocaleKeys.please_enter_inquiry_or_select_category.tr(), // please_enter_inquiry_select_category
                           color: ThemeSetting.of(context).primaryText,
                         );
                       }

@@ -152,13 +152,13 @@ class _PastDiaryState extends State<PastDiary> {
         showEventWidget: Builder(
           builder: (context) {
             if (isLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (selectedJournal.isEmpty) {
               return Center(
                 child: Text(
-                  'No journal available for selected date',
+                  'No journal available for selected date', // no_journal_avaliable_select
                   style: ThemeSetting.of(context).bodyMedium.copyWith(
                         color: ThemeSetting.of(context).disabledText,
                       ),
@@ -285,7 +285,7 @@ class _PastDiaryState extends State<PastDiary> {
         Expanded(
           child: Center(
             child: Text(
-              StringTranslateExtension(LocaleKeys.i_have_not_checked_my_fortune_yet).tr(),
+              StringTranslateExtension(LocaleKeys.i_have_not_checked_my_fortune_yet).tr(), // checked_my_fortune_yet
               style: ThemeSetting.of(context).bodyMedium.copyWith(
                     color: ThemeSetting.of(context).disabledText,
                   ),
@@ -339,14 +339,14 @@ class _PastDiaryState extends State<PastDiary> {
           }
         } else {
           setState(() {
-            selectedJournal = 'No journal available for this date';
+            selectedJournal = 'No journal available for this date'; // no_journal_avaliable_this
             isLoading = false;
           });
         }
       } catch (e) {
         print('Error fetching journal: $e');
         setState(() {
-          selectedJournal = 'Error fetching journal. Please try again.';
+          selectedJournal = 'Error fetching journal. Please try again.'; // error_fetching_journal
           isLoading = false;
         });
       }

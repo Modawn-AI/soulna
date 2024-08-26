@@ -48,7 +48,7 @@ class _CustomerServiceState extends State<CustomerService> with SingleTickerProv
 
   List faqList = [
     {
-      'question': LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
+      'question': LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(), // get_a_fortune_telling_even
       'date': "January 1st, 1990 2:20 PM",
       'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
       'isExpand': false,

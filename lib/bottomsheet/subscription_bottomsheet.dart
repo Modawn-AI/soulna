@@ -6,14 +6,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:get/instance_manager.dart';
 
-
 class Subscription {
-
   static final authCon = Get.put(AuthController());
   static subscriptionWidget({required BuildContext context}) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ThemeSetting.of(context).secondaryBackground,
-
     ));
 
     return showModalBottomSheet(
@@ -33,9 +30,9 @@ class Subscription {
           height: MediaQuery.of(context).size.height * 0.85,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
             boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1))],
             color: ThemeSetting.of(context).tertiary,
           ),
@@ -50,7 +47,7 @@ class Subscription {
               Padding(
                 padding: const EdgeInsets.only(left: 31, right: 30, top: 30),
                 child: Text(
-                  LocaleKeys.enjoy_all_of_soluna_features_freely.tr(),
+                  LocaleKeys.enjoy_all_of_soluna_features_freely.tr(), // enjoy_soulna_features
                   textAlign: TextAlign.center,
                   style: ThemeSetting.of(context).labelLarge,
                 ),
@@ -59,18 +56,16 @@ class Subscription {
                 height: 40,
               ),
               rawWidget(
-                  text: LocaleKeys.check_your_fortune_for_today_n.tr(),
+                  text: LocaleKeys.check_your_fortune_for_today_n.tr(), // check_your_fortune_today
                   context: context),
               const SizedBox(
                 height: 10,
               ),
-              rawWidget(
-                  text: LocaleKeys.check_today_diary.tr(), context: context),
+              rawWidget(text: LocaleKeys.check_today_diary.tr(), context: context), // check_today_diary
               const SizedBox(
                 height: 10,
               ),
-              rawWidget(
-                  text: LocaleKeys.check_your_Journal.tr(), context: context),
+              rawWidget(text: LocaleKeys.check_your_Journal.tr(), context: context), // check_your_journal
               const SizedBox(
                 height: 31,
               ),
@@ -83,33 +78,21 @@ class Subscription {
                       left: 15,
                       right: 15,
                     ),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: ThemeSetting.of(context).primaryText),
-                        color: ThemeSetting.of(context).primary,
-                        borderRadius: BorderRadius.circular(12)),
+                    decoration: BoxDecoration(border: Border.all(color: ThemeSetting.of(context).primaryText), color: ThemeSetting.of(context).primary, borderRadius: BorderRadius.circular(12)),
                     height: 80.h,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(LocaleKeys.yearly.tr(),
+                        Text(LocaleKeys.yearly.tr(), // yearly
                             style: ThemeSetting.of(context).headlineLarge),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('\$39.99',
-                                style: ThemeSetting.of(context).headlineLarge),
+                            Text('\$39.99', style: ThemeSetting.of(context).headlineLarge),
                             Text(
                               '\$3.33/month',
-                              style: ThemeSetting.of(context)
-                                  .captionLarge
-                                  .copyWith(
-                                      color: ThemeSetting.isLightTheme(context)
-                                          ? ThemeSetting.of(context)
-                                              .secondaryBackground
-                                              .withOpacity(0.5)
-                                          : ThemeSetting.of(context).white),
+                              style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground.withOpacity(0.5) : ThemeSetting.of(context).white),
                             ),
                           ],
                         )
@@ -122,13 +105,10 @@ class Subscription {
                     width: 61.w,
                     margin: const EdgeInsets.only(left: 14),
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: ThemeSetting.of(context).primaryText,
-                        borderRadius: BorderRadius.circular(25)),
+                    decoration: BoxDecoration(color: ThemeSetting.of(context).primaryText, borderRadius: BorderRadius.circular(25)),
                     child: Text('Save 72%',
                         style: ThemeSetting.of(context).bodySmall.copyWith(
-                              color:
-                                  ThemeSetting.of(context).secondaryBackground,
+                              color: ThemeSetting.of(context).secondaryBackground,
                             )),
                   ),
                 ],
@@ -136,31 +116,24 @@ class Subscription {
               const SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 15),
-                decoration: BoxDecoration(
-                    color: ThemeSetting.of(context).white,
-                    borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(color: ThemeSetting.of(context).white, borderRadius: BorderRadius.circular(12)),
                 height: 70.h,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      LocaleKeys.monthly.tr(),
-                      style: ThemeSetting.of(context)
-                          .headlineLarge
-                          .copyWith(color: ThemeSetting.of(context).black2),
+                      LocaleKeys.monthly.tr(), // monthly
+                      style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).black2),
                     ),
-                    Text('\$11.99/month',
-                        style: ThemeSetting.of(context)
-                            .headlineLarge
-                            .copyWith(color: ThemeSetting.of(context).black2)),
+                    Text('\$11.99/month', style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).black2)),
                   ],
                 ),
               ),
               const SizedBox(height: 30),
               ButtonWidget.gradientButtonWithImage(
                   context: context,
-                  text: LocaleKeys.start.tr(),
+                  text: LocaleKeys.start.tr(), // start
                   onTap: () {
                     context.pop();
                     authCon.isPremium.value = true;
@@ -181,18 +154,15 @@ class Subscription {
               const SizedBox(height: 30),
               Center(
                 child: Text(
-                  LocaleKeys.restore_purchases.tr(),
+                  LocaleKeys.restore_purchases.tr(), // restore_purchases
                   style: ThemeSetting.of(context).captionMedium,
                 ),
               ),
               const SizedBox(height: 5),
               Center(
                 child: Text(
-                  LocaleKeys.purchases_des.tr(),
-                  style: ThemeSetting.of(context).displaySmall.copyWith(
-                      color: ThemeSetting.of(context)
-                          .primaryText
-                          .withOpacity(0.7)),
+                  LocaleKeys.purchases_des.tr(), // purchases_des
+                  style: ThemeSetting.of(context).displaySmall.copyWith(color: ThemeSetting.of(context).primaryText.withOpacity(0.7)),
                   textAlign: TextAlign.center,
                 ),
               ),

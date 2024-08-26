@@ -131,7 +131,14 @@ class _SignupAgreeState extends State<SignupAgree> {
             const SizedBox(
               height: 59,
             ),
-            if (bottomCheck[0] && bottomCheck[1] == true) ButtonWidget.gradientButton(context: context, text: LocaleKeys.next.tr(), color1: ThemeSetting.of(context).black1, color2: ThemeSetting.of(context).black2, onTap: () => context.pushNamed(signUpEmail)),
+            if (bottomCheck[0] && bottomCheck[1] == true)
+              ButtonWidget.gradientButton(
+                context: context,
+                text: LocaleKeys.next.tr(),
+                color1: ThemeSetting.of(context).black1,
+                color2: ThemeSetting.of(context).black2,
+                onTap: () => context.pushNamed(signUpEmail),
+              ),
             const SizedBox(
               height: 10,
             ),
@@ -154,7 +161,17 @@ class _SignupAgreeState extends State<SignupAgree> {
                 CustomCheckbox(initialValue: value, onChanged: onChanged),
                 Flexible(
                   child: RichText(
-                    text: TextSpan(text: text1, style: ThemeSetting.of(context).captionLarge.copyWith(color: textColor1 ?? ThemeSetting.of(context).primary), children: [TextSpan(text: text2, style: ThemeSetting.of(context).captionLarge)]),
+                    text: TextSpan(
+                        text: text1,
+                        style: ThemeSetting.of(context).captionLarge.copyWith(
+                              color: textColor1 ?? ThemeSetting.of(context).primary,
+                            ),
+                        children: [
+                          TextSpan(
+                            text: text2,
+                            style: ThemeSetting.of(context).captionLarge,
+                          ),
+                        ]),
                   ),
                 ),
               ],
