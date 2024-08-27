@@ -84,7 +84,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Text(
-            LocaleKeys.the_life_story_of_hopeful_stella.tr(),
+            LocaleKeys.the_life_story_of_hopeful_stella.tr(), // the_life_story_of_hopeful_name
             style: ThemeSetting.of(context).labelLarge,
             textAlign: TextAlign.center,
           ),
@@ -130,7 +130,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         const SizedBox(
           height: 50,
         ),
-        CustomDividerWidget(),
+        const CustomDividerWidget(),
         const SizedBox(
           height: 30,
         ),
@@ -185,7 +185,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
   autoBiographyScroll() {
     return Column(
       children: [
-        HeaderWidget.headerWithAction(context: context, title: LocaleKeys.the_life_story_of_hopeful_stella.tr(), showMoreIcon: false),
+        HeaderWidget.headerWithAction(context: context, title: LocaleKeys.the_life_story_of_hopeful_stella.tr(), showMoreIcon: false), // the_life_story_of_hopeful_name
         const SizedBox(
           height: 10,
         ),
@@ -224,7 +224,10 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                   child: Chip(
                       elevation: 0,
                       padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(side: BorderSide(color: chapterIndex == index ? Colors.transparent : ThemeSetting.of(context).common0), borderRadius: BorderRadius.circular(50)),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: chapterIndex == index ? Colors.transparent : ThemeSetting.of(context).common0),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
                       color: WidgetStatePropertyAll(
                         chapterIndex == index ? ThemeSetting.of(context).primary : ThemeSetting.of(context).secondaryBackground,
                       ),
@@ -310,7 +313,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
                           width: 4,
                         ),
                         Text(
-                          'The Beginning of the hope',
+                          'The Beginning of the hope', // beginning_the_hope
                           style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primary),
                         ),
                         if (index != 0)

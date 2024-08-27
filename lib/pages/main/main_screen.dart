@@ -453,7 +453,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               Flexible(
                                 flex: 2,
                                 child: Text(
-                                  LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
+                                  LocaleKeys.natural_born_fortune_from_the_heavens.tr(), // natural_born_fortune
                                   style: ThemeSetting.of(context).bodyMedium.copyWith(
                                         fontWeight: FontWeight.w700,
                                         color: ThemeSetting.of(context).black1,

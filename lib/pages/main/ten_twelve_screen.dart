@@ -55,7 +55,7 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
                 ),
                 Center(
                   child: Text(
-                    'Your Korean Zodiac',
+                    'Your Korean Zodiac', // your_korean_zodiac
                     style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
                     textAlign: TextAlign.center,
                   ),
@@ -259,13 +259,13 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.error_outline, size: 50, color: Colors.red),
-              SizedBox(height: 20),
-              Text("오류가 발생했습니다.", style: TextStyle(fontSize: 18)),
-              SizedBox(height: 20),
+              const Icon(Icons.error_outline, size: 50, color: Colors.red),
+              const SizedBox(height: 20),
+              const Text("오류가 발생했습니다.", style: TextStyle(fontSize: 18)),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () => context.pop(),
-                child: Text("돌아가기"),
+                child: const Text("돌아가기"),
               ),
             ],
           ),
@@ -279,30 +279,28 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
   }
 
   Widget sajuDescriptionText(BuildContext context, String title, String description) {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: ThemeSetting.of(context).titleLarge,
+    return Column(
+      children: [
+        Text(
+          title,
+          style: ThemeSetting.of(context).titleLarge,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Text(
+            description,
+            style: ThemeSetting.of(context).captionLarge,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Text(
-              description,
-              style: ThemeSetting.of(context).captionLarge,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+      ],
     );
   }
 

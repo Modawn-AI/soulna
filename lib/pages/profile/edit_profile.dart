@@ -25,8 +25,14 @@ class _EditProfileState extends State<EditProfile> {
       appBar: HeaderWidget.headerWithTitle(context: context, title: LocaleKeys.edit_profile.tr()),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 18),
-        child: ButtonWidget.roundedButtonOrange(context: context, width: MediaQuery.of(context).size.width, color: ThemeSetting.of(context).black2, text: LocaleKeys.save.tr(), onTap: () {}),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+        child: ButtonWidget.roundedButtonOrange(
+          context: context,
+          width: MediaQuery.of(context).size.width,
+          color: ThemeSetting.of(context).black2,
+          text: LocaleKeys.save.tr(),
+          onTap: () {},
+        ),
       ),
       body: SafeArea(
         child: ListView(

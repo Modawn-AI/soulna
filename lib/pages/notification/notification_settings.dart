@@ -41,10 +41,8 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                       style: ThemeSetting.of(context).bodyMedium,
                     ),
                     Text(
-                      LocaleKeys.information_about_events_and_benefits.tr(),
-                      style: ThemeSetting.of(context)
-                          .captionLarge
-                          .copyWith(color: ThemeSetting.of(context).grayLight),
+                      LocaleKeys.information_about_events_and_benefits.tr(), // information_about_events
+                      style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).grayLight),
                     )
                   ],
                 ),

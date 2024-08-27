@@ -83,7 +83,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                     },
                   ),
                   Text(
-                    LocaleKeys.i_dont_know_my_time_of_birth.tr(),
+                    LocaleKeys.i_dont_know_my_time_of_birth.tr(), // dont_know_my_time
                     style: ThemeSetting.of(context).captionMedium.copyWith(
                           color: ThemeSetting.of(context).primaryText,
                         ),

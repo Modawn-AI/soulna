@@ -53,14 +53,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 26,
             ),
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.mode_night_outlined),
-                SizedBox(
+                const Icon(Icons.mode_night_outlined),
+                const SizedBox(
                   width: 10,
                 ),
                 Text(LocaleKeys.dark_mode.tr(),
@@ -92,7 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (context) => CustomDialogWidget(
                   context: context,
                   title: LocaleKeys.log_out.tr(),
-                  content: LocaleKeys.are_you_sure_you_want_to_log_out.tr(),
+                  content: LocaleKeys.are_you_sure_you_want_to_log_out.tr(), // you_want_to_log_out
                   confirmText: LocaleKeys.log_out.tr(),
                   onConfirm: () => Navigator.of(context).pushReplacementNamed('LoginScreen'),
                 ),

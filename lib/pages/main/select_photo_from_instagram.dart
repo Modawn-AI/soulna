@@ -140,7 +140,10 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                     width: 24,
                                     alignment: Alignment.center,
                                     margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: isSelected == false ? ThemeSetting.of(context).primaryText.withOpacity(0.5) : ThemeSetting.of(context).primary),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: isSelected == false ? ThemeSetting.of(context).primaryText.withOpacity(0.5) : ThemeSetting.of(context).primary,
+                                    ),
                                     child: Text(
                                       isSelected == false ? '' : '${selectedIndices.indexOf(index) + 1}',
                                       style: ThemeSetting.of(context).bodyMedium.copyWith(color: ThemeSetting.of(context).common0),

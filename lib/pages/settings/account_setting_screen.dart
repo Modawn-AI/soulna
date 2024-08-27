@@ -116,7 +116,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                           builder: (_) => CustomDialogWidget(
                                 context: context,
                                 confirmText: LocaleKeys.Sure.tr(),
-                                content: LocaleKeys.are_you_sure_you_want_to_withdraw_delete_your_account.tr(),
+                                content: LocaleKeys.are_you_sure_you_want_to_withdraw_delete_your_account.tr(), // withdraw_delete_your_account
                                 onConfirm: () {
                                   // context.pushNamedAndRemoveUntil('LoginScreen', (route) => false);
                                 },
