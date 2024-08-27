@@ -122,7 +122,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.asset(
-                            "assets/tarot/${user!.userModel.tenTwelve.picture}",
+                            "$kResouceUrl${user!.userModel.tenTwelve.picture}",
                           ),
                         ),
                       ),
@@ -217,7 +217,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Image.asset(
-                              "assets/tarot/${sajuDailyService!.sajuDailyInfo.dailyGanji}",
+                              "$kResouceUrl${sajuDailyService!.sajuDailyInfo.dailyGanji}",
                               height: 250,
                               width: 202,
                             ),

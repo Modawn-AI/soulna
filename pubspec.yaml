@@ -148,7 +148,9 @@ flutter:
     - assets/icon/
     - assets/icon/headerIcon/
     - assets/translations/
-    - assets/tarot/
+    - assets/card_kart/
+    - assets/card_3d/
+    - assets/card_tarot/
     - assets/lottie/
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -30,10 +30,9 @@ const String kHasRunBeforeSPKey = "hasRunBeforeKey";
 const String kOnboardingDataSPKey = "onboardingDataKey";
 const String kOnboardingAudioSPKey = "onboardingAudioKey";
 
-// urls
-
+// folder name
+const String kResouceUrl = "assets/card_3d/";
 
 // deep link
-
 
 // share link

@@ -130,7 +130,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       ImageModel(
         linear1: Utils.getElementToColor(context, myElementName),
         linear2: ThemeSetting.of(context).black1,
-        image: isUserInfo ? "assets/tarot/${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
+        image: isUserInfo ? "$kResouceUrl${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
         text: LocaleKeys.check_your_fortune_for_today.tr(),
         route: dateOfBirthMain,
       ),
