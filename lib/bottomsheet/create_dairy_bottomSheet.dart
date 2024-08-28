@@ -69,7 +69,7 @@ class CreateDairyBottomSheet {
                 height: 10,
               ),
               Text(
-                LocaleKeys.would_you_like_to_make_a_diary_with_that_picture.tr(), // diary_select_picture
+                LocaleKeys.diary_select_picture.tr(),
                 textAlign: TextAlign.center,
                 style: ThemeSetting.of(context).labelLarge.copyWith(color: ThemeSetting.of(context).white),
               ),
@@ -243,7 +243,7 @@ class CreateDairyBottomSheet {
                   padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   child: ButtonWidget.gradientButtonWithImage(
                       context: context,
-                      text: LocaleKeys.create_a_diary.tr(), //diary_create
+                      text: LocaleKeys.diary_create.tr(),
                       onTap: () async {
                         final apiCallFuture = _mockApiCall(selectedImages, screen, isInstagram);
 

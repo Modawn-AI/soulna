@@ -23,7 +23,7 @@ class SelectPhotosBottomSheet {
               Padding(
                 padding: const EdgeInsets.only(left: 18),
                 child: Text(
-                  LocaleKeys.please_check_the_selected_photo.tr(), // please_check_photo
+                  LocaleKeys.please_check_photo.tr(),
                   style: ThemeSetting.of(context).titleLarge.copyWith(color: ThemeSetting.of(context).white),
                 ),
               ),
