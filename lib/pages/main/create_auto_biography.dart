@@ -98,7 +98,7 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
                   Image.asset(AppAssets.logo, width: 20.w, height: 20.h),
                   SizedBox(width: 10.w),
                   Text(
-                    LocaleKeys.it_automatically_creates_a_journal_through_the_Ai_algorithm.tr(), // iautomatically_creates_biogrphy
+                    LocaleKeys.automatically_creates_biogrphy.tr(),
                     style: ThemeSetting.of(context).captionMedium.copyWith(
                           color: ThemeSetting.of(context).primaryText,
                           fontSize: 12.sp,
@@ -112,7 +112,7 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
                   containerWidget(
                       image: AppAssets.album,
                       title: LocaleKeys.my_album.tr(),
-                      description: LocaleKeys.choose_a_photo_to_create_your_own_journal.tr(), // choose_photo_autobiography
+                      description: LocaleKeys.choose_photo_autobiography.tr(),
                       isAlbum: true,
                       showBorder: selectedValue == 'Album',
                       onTap: () {
@@ -130,7 +130,7 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
                   containerWidget(
                       image: AppAssets.instagram,
                       title: LocaleKeys.instagram.tr(),
-                      description: LocaleKeys.link_instagram_to_import_and_create_data.tr(), // link_instagram_create_data
+                      description: LocaleKeys.link_instagram_create_data.tr(),
                       isAlbum: false,
                       showBorder: selectedValue == 'Instagram' ? true : false,
                       onTap: () {

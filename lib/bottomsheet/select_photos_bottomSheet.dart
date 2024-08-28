@@ -77,7 +77,7 @@ class SelectPhotosBottomSheet {
                 padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: ButtonWidget.gradientButton(
                   context: context,
-                  text: '${LocaleKeys.select_a_total_of.tr()}${selectedImages.length} ${LocaleKeys.photos.tr()}', // select_total_of_photos
+                  text: LocaleKeys.select_total_of_photos.tr(namedArgs: {"selectedImages": selectedImages.length.toString()}),
                   color1: ThemeSetting.of(context).black1,
                   color2: ThemeSetting.of(context).black2,
                   onTap: () {

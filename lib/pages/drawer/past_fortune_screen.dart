@@ -159,7 +159,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
             if (selectedFortune.isEmpty) {
               return Center(
                 child: Text(
-                  'No fortune available for selected date.', // no_fortune_select_date
+                  StringTranslateExtension(LocaleKeys.no_fortune_select_date).tr(), //
                   style: ThemeSetting.of(context).bodyMedium.copyWith(
                         color: ThemeSetting.of(context).disabledText,
                       ),
@@ -286,7 +286,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
         Expanded(
           child: Center(
             child: Text(
-              StringTranslateExtension(LocaleKeys.i_have_not_checked_my_fortune_yet).tr(), // not_checked_my_fortune_yet
+              StringTranslateExtension(LocaleKeys.not_checked_my_fortune_yet).tr(),
               style: ThemeSetting.of(context).bodyMedium.copyWith(
                     color: ThemeSetting.of(context).disabledText,
                   ),

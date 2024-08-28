@@ -58,7 +58,7 @@ class AwaitingResponseScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
-                LocaleKeys.i_want_to_edit_the_photos_in_my_diary_des.tr(), // edit_the_photos_in_my_diary_des
+                LocaleKeys.edit_the_photos_in_my_diary_des.tr(),
                 style: ThemeSetting.of(context).bodyMedium,
               ),
             ),

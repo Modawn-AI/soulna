@@ -158,7 +158,7 @@ class _PastDiaryState extends State<PastDiary> {
             if (selectedJournal.isEmpty) {
               return Center(
                 child: Text(
-                  'No journal available for selected date', // no_journal_avaliable_select
+                  LocaleKeys.no_journal_avaliable_select.tr(),
                   style: ThemeSetting.of(context).bodyMedium.copyWith(
                         color: ThemeSetting.of(context).disabledText,
                       ),
@@ -285,7 +285,7 @@ class _PastDiaryState extends State<PastDiary> {
         Expanded(
           child: Center(
             child: Text(
-              StringTranslateExtension(LocaleKeys.i_have_not_checked_my_fortune_yet).tr(), // checked_my_fortune_yet
+              StringTranslateExtension(LocaleKeys.checked_my_fortune_yet).tr(), //
               style: ThemeSetting.of(context).bodyMedium.copyWith(
                     color: ThemeSetting.of(context).disabledText,
                   ),
@@ -339,7 +339,7 @@ class _PastDiaryState extends State<PastDiary> {
           }
         } else {
           setState(() {
-            selectedJournal = 'No journal available for this date'; // no_journal_avaliable_this
+            selectedJournal = LocaleKeys.no_journal_avaliable_this.tr();
             isLoading = false;
           });
         }

@@ -179,7 +179,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
                   const SizedBox(width: 10),
                   Flexible(
                     child: Text(
-                      LocaleKeys.it_automatically_creates_a_diary_through_the_Ai_algorithm.tr(), // automatically_creates_journal
+                      LocaleKeys.automatically_creates_journal.tr(),
                       style: ThemeSetting.of(context).captionMedium,
                     ),
                   )
@@ -226,7 +226,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
                       },
                     ),
                     Text(
-                      LocaleKeys.i_dont_know_my_time_of_birth.tr(), // dont_know_my_time
+                      LocaleKeys.dont_know_my_time.tr(),
                       style: ThemeSetting.of(context).captionMedium.copyWith(
                             color: ThemeSetting.of(context).primaryText,
                           ),

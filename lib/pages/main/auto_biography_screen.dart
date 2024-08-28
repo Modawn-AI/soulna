@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/auto_biography_model.dart';
+import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
@@ -33,6 +35,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
   ];
 
   int chapterIndex = 0;
+  late UserInfoData userInfoData;
 
   AutoBiographyService? autoBiographyService;
 
@@ -40,6 +43,9 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
   void initState() {
     super.initState();
     // _itemScrollController.jumpTo(index: chapterIndex);
+    if (SocialManager().isUserInfo.value) {
+      userInfoData = GetIt.I.get<UserInfoData>();
+    }
   }
 
   @override
@@ -84,7 +90,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Text(
-            LocaleKeys.the_life_story_of_hopeful_stella.tr(), // the_life_story_of_hopeful_name
+            LocaleKeys.the_life_story_of_hopeful_name.tr(),
             style: ThemeSetting.of(context).labelLarge,
             textAlign: TextAlign.center,
           ),
@@ -99,7 +105,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Text(
-            LocaleKeys.my_journal_keyword.tr(),
+            LocaleKeys.my_auto_biography_keyword.tr(),
             style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).primaryText),
           ),
         ),
@@ -185,7 +191,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
   autoBiographyScroll() {
     return Column(
       children: [
-        HeaderWidget.headerWithAction(context: context, title: LocaleKeys.the_life_story_of_hopeful_stella.tr(), showMoreIcon: false), // the_life_story_of_hopeful_name
+        HeaderWidget.headerWithAction(context: context, title: LocaleKeys.the_life_story_of_hopeful_name.tr(namedArgs: {"": userInfoData.userModel!.name}), showMoreIcon: false),
         const SizedBox(
           height: 10,
         ),

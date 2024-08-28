@@ -80,7 +80,7 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                   ),
                   Flexible(
                     child: Text(
-                      LocaleKeys.it_automatically_creates_a_diary_through_the_Ai_algorithm.tr(),
+                      LocaleKeys.automatically_creates_journal.tr(),
                       style: ThemeSetting.of(context).captionMedium,
                     ),
                   )

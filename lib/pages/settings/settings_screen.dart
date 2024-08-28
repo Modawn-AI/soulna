@@ -92,7 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (context) => CustomDialogWidget(
                   context: context,
                   title: LocaleKeys.log_out.tr(),
-                  content: LocaleKeys.are_you_sure_you_want_to_log_out.tr(), // you_want_to_log_out
+                  content: LocaleKeys.you_want_to_log_out.tr(),
                   confirmText: LocaleKeys.log_out.tr(),
                   onConfirm: () => Navigator.of(context).pushReplacementNamed('LoginScreen'),
                 ),

@@ -225,10 +225,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
           builder: (context, params) => const DateOfBirthMain(),
         ),
         FFRoute(
-          name: bookDetailScreen,
-          builder: (context, params) => const BookDetailsScreen(),
-        ),
-        FFRoute(
           name: tenTwelveScreen,
           builder: (context, params) => const TenTwelveScreen(),
         ),

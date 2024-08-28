@@ -64,7 +64,7 @@ class _SignupAgreeState extends State<SignupAgree> {
           padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           children: [
             Text(
-              LocaleKeys.hello.tr(),
+              "Hello", // hello
               style: ThemeSetting.of(context).labelSmall,
             ),
             Padding(

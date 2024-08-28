@@ -47,7 +47,7 @@ class Subscription {
               Padding(
                 padding: const EdgeInsets.only(left: 31, right: 30, top: 30),
                 child: Text(
-                  LocaleKeys.enjoy_all_of_soluna_features_freely.tr(), // enjoy_soulna_features
+                  LocaleKeys.enjoy_soulna_features.tr(),
                   textAlign: TextAlign.center,
                   style: ThemeSetting.of(context).labelLarge,
                 ),
@@ -55,17 +55,15 @@ class Subscription {
               const SizedBox(
                 height: 40,
               ),
-              rawWidget(
-                  text: LocaleKeys.check_your_fortune_for_today_n.tr(), // check_your_fortune_today
-                  context: context),
+              rawWidget(text: LocaleKeys.check_your_fortune_today.tr(), context: context),
               const SizedBox(
                 height: 10,
               ),
-              rawWidget(text: LocaleKeys.check_today_diary.tr(), context: context), // check_today_diary
+              rawWidget(text: LocaleKeys.check_today_diary.tr(), context: context),
               const SizedBox(
                 height: 10,
               ),
-              rawWidget(text: LocaleKeys.check_your_Journal.tr(), context: context), // check_your_journal
+              rawWidget(text: LocaleKeys.check_your_journal.tr(), context: context),
               const SizedBox(
                 height: 31,
               ),

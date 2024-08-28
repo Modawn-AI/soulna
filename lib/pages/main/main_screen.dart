@@ -114,11 +114,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     recommendedFortune = [
       {
-        'title': LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
+        'title': LocaleKeys.fortune_from_the_heavens.tr(),
         'color': ThemeSetting.of(context).tertiary2,
       },
       {
-        'title': LocaleKeys.natural_born_fortune_from_the_heavens.tr(),
+        'title': LocaleKeys.fortune_from_the_heavens.tr(),
         'color': ThemeSetting.of(context).lightGreen,
       },
     ];
@@ -193,7 +193,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  isUserInfo ? '${LocaleKeys.hey.tr()} ${userInfoData.userModel!.name}' : '${LocaleKeys.hey.tr()} jane doe',
+                  isUserInfo ? LocaleKeys.hey_name.tr(namedArgs: {"name": userInfoData.userModel!.name}) : LocaleKeys.hey_name.tr(namedArgs: {"name": 'jane doe'}),
                   style: ThemeSetting.of(context).labelLarge,
                 ),
                 Text(
@@ -453,7 +453,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               Flexible(
                                 flex: 2,
                                 child: Text(
-                                  LocaleKeys.natural_born_fortune_from_the_heavens.tr(), // natural_born_fortune
+                                  LocaleKeys.natural_born_fortune.tr(),
                                   style: ThemeSetting.of(context).bodyMedium.copyWith(
                                         fontWeight: FontWeight.w700,
                                         color: ThemeSetting.of(context).black1,

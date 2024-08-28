@@ -48,33 +48,33 @@ class _CustomerServiceState extends State<CustomerService> with SingleTickerProv
 
   List faqList = [
     {
-      'question': LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(), // get_a_fortune_telling_even
+      'question': LocaleKeys.get_a_fortune_telling_even.tr(), // get_a_fortune_telling_even
       'date': "January 1st, 1990 2:20 PM",
-      'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
+      'description': LocaleKeys.update_my_autobiography_des.tr(),
       'isExpand': false,
     },
     {
-      'question': LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
+      'question': LocaleKeys.get_a_fortune_telling_even.tr(),
       'date': "January 1st, 1990 2:20 PM",
-      'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
+      'description': LocaleKeys.update_my_autobiography_des.tr(),
       'isExpand': false,
     },
     {
-      'question': LocaleKeys.can_i_get_a_fortune_telling_even_if_I_dont_know.tr(),
+      'question': LocaleKeys.get_a_fortune_telling_even.tr(),
       'date': "January 1st, 1990 2:20 PM",
-      'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
+      'description': LocaleKeys.update_my_autobiography_des.tr(),
       'isExpand': false,
     },
     {
       'question': LocaleKeys.how_do_you_create_a_diary.tr(),
       'date': "January 1st, 1990 2:20 PM",
-      'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
+      'description': LocaleKeys.update_my_autobiography_des.tr(),
       'isExpand': false,
     },
     {
-      'question': LocaleKeys.i_want_to_update_my_autobiography.tr(),
+      'question': LocaleKeys.how_do_you_create_a_diary.tr(),
       'date': "January 1st, 1990 2:20 PM",
-      'description': LocaleKeys.i_want_to_update_my_autobiography_des.tr(),
+      'description': LocaleKeys.update_my_autobiography_des.tr(),
       'isExpand': false,
     },
   ];
@@ -110,7 +110,7 @@ class _CustomerServiceState extends State<CustomerService> with SingleTickerProv
       body: SafeArea(
         child: CustomTabBar(
           tabs: [
-            Tab(text: LocaleKeys.FAQ.tr()),
+            Tab(text: "LocaleKeys.FAQ.tr()"), // faq
             Tab(text: LocaleKeys.one_one_inquiry.tr()),
           ],
           tabViews: [

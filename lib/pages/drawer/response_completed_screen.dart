@@ -57,7 +57,7 @@ class ResponseCompletedScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
-                LocaleKeys.i_want_to_edit_the_photos_in_my_diary_des.tr(), // edit_the_photos_in_my_diary_des
+                LocaleKeys.edit_the_photos_in_my_diary_des.tr(),
                 style: ThemeSetting.of(context).bodyMedium,
               ),
             ),
@@ -82,7 +82,7 @@ class ResponseCompletedScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     Text(
-                      LocaleKeys.hello_member_for_photos_the_only_way_is_to_delete_them_and_recreate_them.tr(), // hello_member_for_photos
+                      LocaleKeys.hello_member_for_photos.tr(),
                       style: ThemeSetting.of(context).bodyMedium,
                     ),
                     SizedBox(height: 10.h),
