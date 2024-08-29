@@ -138,7 +138,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         linear1: ThemeSetting.of(context).linearContainer3,
         linear2: ThemeSetting.of(context).linearContainer4,
         image: AppAssets.image2,
-        text: LocaleKeys.create_today_diary.tr(),
+        text: LocaleKeys.create_today_journal.tr(),
         route: selectPhotoFromDevice,
       ),
       ImageModel(

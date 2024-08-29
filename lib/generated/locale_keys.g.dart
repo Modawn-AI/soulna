@@ -47,6 +47,7 @@ abstract class  LocaleKeys {
   static const woman = 'woman';
   static const finish = 'finish';
   static const please_select_gender = 'please_select_gender';
+  static const hello = 'hello';
   static const select = 'select';
   static const required = 'required';
   static const marketing_consent = 'marketing_consent';
@@ -62,6 +63,7 @@ abstract class  LocaleKeys {
   static const i_want_to_edit_the_photos_in_my_diary = 'i_want_to_edit_the_photos_in_my_diary';
   static const edit_the_photos_in_my_diary_des = 'edit_the_photos_in_my_diary_des';
   static const awaiting_response = 'awaiting_response';
+  static const faq = 'faq';
   static const all = 'all';
   static const response_completed = 'response_completed';
   static const how_do_you_create_a_diary = 'how_do_you_create_a_diary';
@@ -78,6 +80,7 @@ abstract class  LocaleKeys {
   static const connect_with_instagram = 'connect_with_instagram';
   static const update = 'update';
   static const information = 'information';
+  static const other_text = 'other_text';
   static const inquire_about_any_questions = 'inquire_about_any_questions';
   static const inquiry_category = 'inquiry_category';
   static const inquiries = 'inquiries';
@@ -89,7 +92,7 @@ abstract class  LocaleKeys {
   static const please_enter_inquiry_select_category = 'please_enter_inquiry_select_category';
   static const select_inquiry_category = 'select_inquiry_category';
   static const no_journal_avaliable_select = 'no_journal_avaliable_select';
-  static const create_today_diary = 'create_today_diary';
+  static const create_today_journal = 'create_today_journal';
   static const create = 'create';
   static const checked_my_fortune_yet = 'checked_my_fortune_yet';
   static const no_journal_avaliable_this = 'no_journal_avaliable_this';
@@ -141,13 +144,16 @@ abstract class  LocaleKeys {
   static const share_instagram = 'share_instagram';
   static const select_photo = 'select_photo';
   static const your_korean_zodiac = 'your_korean_zodiac';
+  static const notification_settings = 'notification_settings';
   static const marketing_notifications = 'marketing_notifications';
   static const information_about_events = 'information_about_events';
+  static const save = 'save';
   static const edit_profile = 'edit_profile';
   static const date_of_birth = 'date_of_birth';
   static const howdy = 'howdy';
   static const account_settings = 'account_settings';
   static const optional_terms_agreement = 'optional_terms_agreement';
+  static const sure = 'sure';
   static const withdrawal_from_membership = 'withdrawal_from_membership';
   static const withdraw_delete_your_account = 'withdraw_delete_your_account';
   static const membership_withdrawal = 'membership_withdrawal';

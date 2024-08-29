@@ -251,7 +251,7 @@ class _PastDiaryState extends State<PastDiary> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        StringTranslateExtension(LocaleKeys.create_today_diary).tr(),
+                        StringTranslateExtension(LocaleKeys.create_today_journal).tr(),
                         style: ThemeSetting.of(context).labelLarge.copyWith(
                               fontSize: 20.sp,
                               color: ThemeSetting.of(context).secondaryBackground,

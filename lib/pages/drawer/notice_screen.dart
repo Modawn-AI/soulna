@@ -19,7 +19,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
     LocaleKeys.notice.tr(),
     LocaleKeys.update.tr(),
     LocaleKeys.information.tr(),
-    LocaleKeys.other.tr(), // other
+    LocaleKeys.other_text.tr(), // other
   ];
 
   List allList = [

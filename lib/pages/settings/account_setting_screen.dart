@@ -17,6 +17,7 @@ class AccountSettingScreen extends StatefulWidget {
 
 class _AccountSettingScreenState extends State<AccountSettingScreen> {
   bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +116,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                           context: context,
                           builder: (_) => CustomDialogWidget(
                                 context: context,
-                                confirmText: LocaleKeys.Sure.tr(),
+                                confirmText: LocaleKeys.sure.tr(),
                                 content: LocaleKeys.withdraw_delete_your_account.tr(),
                                 onConfirm: () {
                                   // context.pushNamedAndRemoveUntil('LoginScreen', (route) => false);
