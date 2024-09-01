@@ -257,7 +257,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       ),
                       ButtonWidget.gradientButtonWithImage(
                         context: context,
-                        text: LocaleKeys.share.tr(),
+                        text: LocaleKeys.share_text.tr(),
                         imageString: AppAssets.heart,
                       ),
                       const SizedBox(

@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ButtonWidget.squareButtonOrange(
                   context: context,
-                  text: LocaleKeys.login.tr(),
+                  text: LocaleKeys.login_text.tr(),
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       context.pushNamed(mainScreen);
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ButtonWidget.orangeBorderButton(
                     context: context,
-                    text: LocaleKeys.sign_up.tr(),
+                    text: LocaleKeys.signup_text.tr(),
                     onTap: () => context.pushNamed(signUpAgree),
                   ),
                 ],

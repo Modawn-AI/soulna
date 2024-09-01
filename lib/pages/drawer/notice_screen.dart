@@ -15,10 +15,10 @@ class NoticeScreen extends StatefulWidget {
 
 class _NoticeScreenState extends State<NoticeScreen> {
   List<String> noticeList = [
-    LocaleKeys.all.tr(),
-    LocaleKeys.notice.tr(),
-    LocaleKeys.update.tr(),
-    LocaleKeys.information.tr(),
+    LocaleKeys.all_text.tr(),
+    LocaleKeys.notice_text.tr(),
+    LocaleKeys.update_text.tr(),
+    LocaleKeys.information_text.tr(),
     LocaleKeys.other_text.tr(), // other
   ];
 
@@ -44,7 +44,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
 
   void filterListByTitle(String title) {
     setState(() {
-      if (title == LocaleKeys.all.tr()) {
+      if (title == LocaleKeys.all_text.tr()) {
         filterList = allList;
       } else {
         filterList = allList.where((item) => item['title'] == title).toList();
@@ -58,7 +58,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
       appBar: HeaderWidget.headerWithTitle(
         context: context,
-        title: LocaleKeys.notice.tr(),
+        title: LocaleKeys.notice_text.tr(),
       ),
       body: SafeArea(
         child: Column(

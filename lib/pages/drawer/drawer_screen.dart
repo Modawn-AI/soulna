@@ -1,10 +1,13 @@
 import 'dart:developer';
+import 'package:Soulna/manager/social_manager.dart';
+import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:Soulna/widgets/settings_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 // This file defines the DrawerScreen widget, which is used for the navigation drawer in the application.
 
@@ -15,7 +18,7 @@ class DrawerScreen {
     List<Map<String, dynamic>> settingList = [
       {
         'image': AppAssets.logo,
-        'title': "My TenTwelve",
+        'title': LocaleKeys.my_tentwelve.tr(),
         'route': tenTwelveScreen,
       },
       {
@@ -30,7 +33,7 @@ class DrawerScreen {
       },
       {
         'image': AppAssets.iconNotice,
-        'title': LocaleKeys.notice.tr(),
+        'title': LocaleKeys.notice_text.tr(),
         'route': noticeScreen,
       },
       {
@@ -43,12 +46,14 @@ class DrawerScreen {
         'title': LocaleKeys.terms_and_conditions.tr(),
         'route': termAndConditions,
       },
-      {
-        'image': AppAssets.iconVersion,
-        'title': LocaleKeys.version_information.tr(),
-        'route': '',
-      },
     ];
+    bool isUserInfo = false;
+    UserInfoData? userInfoData;
+
+    if (SocialManager().isUserInfo.value) {
+      isUserInfo = true;
+      userInfoData = GetIt.I.get<UserInfoData>();
+    }
 
     return Container(
       alignment: Alignment.center,
@@ -82,14 +87,14 @@ class DrawerScreen {
           ),
           SizedBox(height: 10.h),
           Text(
-            "Stella",
+            isUserInfo ? userInfoData!.userModel!.name : "User Name",
             style: ThemeSetting.of(context).labelLarge.copyWith(
                   color: ThemeSetting.of(context).primaryText,
                 ),
           ),
           SizedBox(height: 4.h),
           Text(
-            "October 7, 2002",
+            isUserInfo ? userInfoData!.userModel!.birthdate : "October 7, 2002",
             style: ThemeSetting.of(context).bodyMedium.copyWith(
                   color: ThemeSetting.of(context).secondaryText,
                 ),
@@ -135,7 +140,7 @@ class DrawerScreen {
             (index) {
               return SettingsWidget(
                 onTap: () {
-                  if (index != settingList.length - 1) {
+                  if (index != settingList.length) {
                     log(settingList[index]['route']);
                     context.pushNamed("${settingList[index]['route']}");
                   }
@@ -143,14 +148,7 @@ class DrawerScreen {
                 image: settingList[index]['image'],
                 context: context,
                 title: settingList[index]['title'],
-                child: index == settingList.length - 1
-                    ? Text(
-                        "2.0 Ver",
-                        style: ThemeSetting.of(context).bodyMedium.copyWith(
-                              color: ThemeSetting.of(context).primary,
-                            ),
-                      )
-                    : Container(),
+                child: Container(),
               );
             },
           ),

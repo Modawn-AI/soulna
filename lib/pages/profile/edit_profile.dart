@@ -30,7 +30,7 @@ class _EditProfileState extends State<EditProfile> {
           context: context,
           width: MediaQuery.of(context).size.width,
           color: ThemeSetting.of(context).black2,
-          text: LocaleKeys.save.tr(),
+          text: LocaleKeys.save_text.tr(),
           onTap: () {},
         ),
       ),
@@ -61,7 +61,7 @@ class _EditProfileState extends State<EditProfile> {
               height: 30,
             ),
             Text(
-              LocaleKeys.name.tr(),
+              LocaleKeys.name_text.tr(),
               style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
             ),
             const SizedBox(
@@ -75,7 +75,7 @@ class _EditProfileState extends State<EditProfile> {
               height: 30,
             ),
             Text(
-              LocaleKeys.gender.tr(),
+              LocaleKeys.gender_text.tr(),
               style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
             ),
             const SizedBox(

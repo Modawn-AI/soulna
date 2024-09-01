@@ -48,7 +48,7 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
                 height: 30,
               ),
               Text(
-                LocaleKeys.name.tr(),
+                LocaleKeys.name_text.tr(),
                 style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
               ),
               const SizedBox(
@@ -64,7 +64,7 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
                 height: 30,
               ),
               Text(
-                LocaleKeys.gender.tr(),
+                LocaleKeys.gender_text.tr(),
                 style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
               ),
               const SizedBox(
@@ -80,7 +80,7 @@ class _SignUpAdditionalInfoState extends State<SignUpAdditionalInfo> {
               ),
               ButtonWidget.gradientButtonWithImage(
                   context: context,
-                  text: LocaleKeys.finish.tr(),
+                  text: LocaleKeys.finish_text.tr(),
                   onTap: () {
                     log('Enter');
                     if (_formKey.currentState!.validate()) {

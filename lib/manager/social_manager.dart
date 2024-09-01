@@ -170,6 +170,7 @@ class SocialManager extends ChangeNotifier {
                   logger.d("googleAccessToken =  $googleAccessToken");
                   logger.d("googleIdToken =  $googleIdToken");
                   NetworkManager().saveTokens(googleIdToken.token!, googleIdToken.token!);
+                  debugPrint('googleIdToken: ${googleIdToken.token}');
                   await ApiCalls().googleLogin(googleIdToken.token!).then((value) {
                     debugPrint('googleLogin: $value');
                     SocialType.setSocialType(type: SocialType.googleLogin);
@@ -243,7 +244,6 @@ class SocialManager extends ChangeNotifier {
             callback(value);
           });
         }
-
       } catch (e) {
         logger.d('error = $e');
       }

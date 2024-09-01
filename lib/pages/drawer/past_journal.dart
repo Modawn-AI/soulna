@@ -16,14 +16,14 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 // This file defines the PastDiary widget, which displays past diary entries.
 
-class PastDiary extends StatefulWidget {
-  const PastDiary({super.key});
+class PastJournal extends StatefulWidget {
+  const PastJournal({super.key});
 
   @override
-  State<PastDiary> createState() => _PastDiaryState();
+  State<PastJournal> createState() => _PastJournalState();
 }
 
-class _PastDiaryState extends State<PastDiary> {
+class _PastJournalState extends State<PastJournal> {
   int index = 0;
   bool showData = true;
   DateTime selectedDate = DateTime.now();
@@ -49,7 +49,7 @@ class _PastDiaryState extends State<PastDiary> {
 
   Future<void> _fetchJournalData() async {
     dynamic response = await ApiCalls().getJournalList();
-    if (response != null) {
+    if (response['status'] == 'success') {
       _eventList.clear();
       if (response['message'] == 'none') {
         setState(() {
@@ -58,15 +58,21 @@ class _PastDiaryState extends State<PastDiary> {
 
         return;
       }
-      for (var item in response['journal_list']) {
-        _eventList.add(
-          NeatCleanCalendarEvent(
-            item,
-            startTime: DateTime.parse(item),
-            endTime: DateTime.parse(item),
-            color: ThemeSetting.of(context).primary,
-          ),
-        );
+      for (var item in response['data']['journal_list']) {
+        if (item is List) {
+          for (var event in item) {
+            if (event is Map<String, dynamic>) {
+              _eventList.add(
+                NeatCleanCalendarEvent(
+                  event['title'] ?? '',
+                  startTime: DateTime.tryParse(event['date'] ?? '') ?? DateTime.now(),
+                  endTime: DateTime.tryParse(event['date'] ?? '') ?? DateTime.now().add(Duration(hours: 1)),
+                  color: ThemeSetting.of(context).primary,
+                ),
+              );
+            }
+          }
+        }
       }
     }
     setState(() {
@@ -128,7 +134,7 @@ class _PastDiaryState extends State<PastDiary> {
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {},
               child: listTile(
-                date: DateFormat.yMMMM().format(_eventList[index].startTime),
+                date: DateFormat.yMMMMd().format(_eventList[index].startTime),
                 description: _eventList[index].summary ?? '',
               ),
             ),
@@ -267,7 +273,7 @@ class _PastDiaryState extends State<PastDiary> {
                                 color: ThemeSetting.of(context).secondaryBackground,
                                 fontSize: 12.sp,
                               ),
-                          text: "${StringTranslateExtension(LocaleKeys.create).tr()} 💫",
+                          text: "${StringTranslateExtension(LocaleKeys.create_text).tr()} 💫",
                           onTap: () {}),
                     ],
                   ),
@@ -315,16 +321,15 @@ class _PastDiaryState extends State<PastDiary> {
       try {
         dynamic response = await ApiCalls().getDateToJournal(formattedDate);
 
-        if (response != null && response['journal_entry'] != null) {
-          JournalModel model = JournalModel.fromJson(response['journal_entry']);
-          _journalCache[formattedDate] = model; // 캐시에 저장
+        if (response['status'] == 'success' && response['data']['journal_entry'] != null) {
+          JournalModel model = JournalModel.fromJson(response['data']['journal_entry']);
+          _journalCache[formattedDate] = model;
           GetIt.I.get<JournalService>().updateJournal(model);
           setState(() {
             selectedJournal = model.title;
             isLoading = false;
           });
 
-          // _eventList 업데이트
           if (!_eventList.any((event) => event.startTime == date)) {
             setState(() {
               _eventList.add(

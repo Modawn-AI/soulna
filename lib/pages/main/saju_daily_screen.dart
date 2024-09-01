@@ -169,7 +169,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                                 )),
                                 child: Center(
                                   child: Text(
-                                    LocaleKeys.result.tr(),
+                                    LocaleKeys.result_text.tr(),
                                     style: ThemeSetting.of(context).captionMedium,
                                   ),
                                 ),
@@ -326,7 +326,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: ButtonWidget.gradientButtonWithImage(
                               context: context,
-                              text: LocaleKeys.share.tr(),
+                              text: LocaleKeys.share_text.tr(),
                               imageString: AppAssets.heart,
                               onTap: () {
                                 showModalBottomSheet(

@@ -151,7 +151,7 @@ class _AutobiographyScreenState extends State<AutobiographyScreen> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: ButtonWidget.gradientButtonWithImage(context: context, text: LocaleKeys.share.tr(), imageString: AppAssets.heart),
+          child: ButtonWidget.gradientButtonWithImage(context: context, text: LocaleKeys.share_text.tr(), imageString: AppAssets.heart),
         ),
         // const SizedBox(
         //   height: 10,

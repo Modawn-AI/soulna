@@ -46,7 +46,7 @@ class _OneToOneScreenState extends State<OneToOneScreen> {
 
   final _inquiryFormKey = GlobalKey<FormState>();
   List<String> inquiryTList = [
-    LocaleKeys.all.tr(),
+    LocaleKeys.all_text.tr(),
     LocaleKeys.awaiting_response.tr(),
     LocaleKeys.response_completed.tr(),
   ];
@@ -92,7 +92,7 @@ class _OneToOneScreenState extends State<OneToOneScreen> {
                   ),
                   const SizedBox(height: 40),
                   Text(
-                    LocaleKeys.inquiries.tr(),
+                    LocaleKeys.inquiries_text.tr(),
                     style: ThemeSetting.of(context).captionMedium.copyWith(
                           color: ThemeSetting.of(context).primary,
                           fontSize: 14.sp,
@@ -141,7 +141,7 @@ class _OneToOneScreenState extends State<OneToOneScreen> {
                                               getImage(ImageSource.camera);
                                               Navigator.pop(context);
                                             },
-                                            title: LocaleKeys.camera.tr(),
+                                            title: LocaleKeys.camera_text.tr(),
                                             icon: Icons.camera_alt,
                                           ),
                                           listTileCameraGalleryPicker(
@@ -150,7 +150,7 @@ class _OneToOneScreenState extends State<OneToOneScreen> {
                                               getImage(ImageSource.gallery);
                                               Navigator.pop(context);
                                             },
-                                            title: LocaleKeys.gallery.tr(),
+                                            title: LocaleKeys.gallery_text.tr(),
                                             icon: Icons.photo,
                                           ),
                                         ],

@@ -14,7 +14,7 @@ import 'package:Soulna/pages/drawer/awaiting_response_screen.dart';
 import 'package:Soulna/pages/drawer/customer_service.dart';
 import 'package:Soulna/pages/drawer/notice_screen.dart';
 import 'package:Soulna/pages/drawer/one_to_one_screen.dart';
-import 'package:Soulna/pages/drawer/past_diary.dart';
+import 'package:Soulna/pages/drawer/past_journal.dart';
 import 'package:Soulna/pages/drawer/past_fortune_screen.dart';
 import 'package:Soulna/pages/drawer/privacy_policy_update_notice_screen.dart';
 import 'package:Soulna/pages/drawer/response_completed_screen.dart';
@@ -234,7 +234,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         ),
         FFRoute(
           name: pastDiary,
-          builder: (context, params) => const PastDiary(),
+          builder: (context, params) => const PastJournal(),
         ),
         FFRoute(
           name: noticeScreen,

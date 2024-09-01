@@ -8,18 +8,14 @@ import 'custom_button_widget.dart';
 
 class CustomGenderToggleButton extends StatefulWidget {
   final Function(String) onGenderSelected;
-  const CustomGenderToggleButton({super.key,required this.onGenderSelected});
+  const CustomGenderToggleButton({super.key, required this.onGenderSelected});
 
   @override
-  _CustomGenderToggleButtonState createState() =>
-      _CustomGenderToggleButtonState();
+  _CustomGenderToggleButtonState createState() => _CustomGenderToggleButtonState();
 }
 
 class _CustomGenderToggleButtonState extends State<CustomGenderToggleButton> {
-  List<bool> isSelected = [
-    false,
-    false
-  ]; // Assuming 'Male' is selected by default
+  List<bool> isSelected = [false, false]; // Assuming 'Male' is selected by default
 
   void _selectGender(int index) {
     setState(() {
@@ -48,25 +44,17 @@ class _CustomGenderToggleButtonState extends State<CustomGenderToggleButton> {
                       width: 6,
                     ),
                     Text(
-                      LocaleKeys.man.tr(),
-                      style: ThemeSetting.of(context).bodyMedium.copyWith(
-                          color: isSelected.first == true
-                              ? ThemeSetting.of(context).secondaryBackground
-                              : ThemeSetting.of(context).primaryText),
+                      LocaleKeys.man_text.tr(),
+                      style: ThemeSetting.of(context).bodyMedium.copyWith(color: isSelected.first == true ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).primaryText),
                     ),
                   ],
                 ),
-                onPressed: () =>_selectGender(0),
+                onPressed: () => _selectGender(0),
                 options: CustomButtonOptions(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(
-                        color: isSelected.first == false
-                            ? ThemeSetting.of(context).common0
-                            : ThemeSetting.of(context).primary),
+                    borderSide: BorderSide(color: isSelected.first == false ? ThemeSetting.of(context).common0 : ThemeSetting.of(context).primary),
                     height: 56,
-                    color: isSelected.first == false
-                        ? ThemeSetting.of(context).secondaryBackground
-                        : ThemeSetting.of(context).primary,
+                    color: isSelected.first == false ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).primary,
                     textStyle: ThemeSetting.of(context).headlineLarge))),
         const SizedBox(width: 8), // Spacing between buttons
         Expanded(
@@ -84,25 +72,17 @@ class _CustomGenderToggleButtonState extends State<CustomGenderToggleButton> {
                       width: 6,
                     ),
                     Text(
-                      LocaleKeys.woman.tr(),
-                      style: ThemeSetting.of(context).bodyMedium.copyWith(
-                          color: isSelected.last == true
-                              ? ThemeSetting.of(context).secondaryBackground
-                              : ThemeSetting.of(context).primaryText),
+                      LocaleKeys.woman_text.tr(),
+                      style: ThemeSetting.of(context).bodyMedium.copyWith(color: isSelected.last == true ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).primaryText),
                     ),
                   ],
                 ),
                 onPressed: () => _selectGender(1),
                 options: CustomButtonOptions(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(
-                        color: isSelected.last == false
-                            ? ThemeSetting.of(context).common0
-                            : ThemeSetting.of(context).primary),
+                    borderSide: BorderSide(color: isSelected.last == false ? ThemeSetting.of(context).common0 : ThemeSetting.of(context).primary),
                     height: 56,
-                    color: isSelected.last == false
-                        ? ThemeSetting.of(context).secondaryBackground
-                        : ThemeSetting.of(context).primary,
+                    color: isSelected.last == false ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).primary,
                     textStyle: ThemeSetting.of(context).headlineLarge))),
       ],
     );

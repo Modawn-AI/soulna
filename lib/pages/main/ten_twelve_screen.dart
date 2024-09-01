@@ -55,7 +55,7 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
                 ),
                 Center(
                   child: Text(
-                    'Your Korean Zodiac', // your_korean_zodiac
+                    LocaleKeys.your_korean_zodiac.tr(),
                     style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
                     textAlign: TextAlign.center,
                   ),
@@ -139,7 +139,7 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
                               )),
                               child: Center(
                                 child: Text(
-                                  LocaleKeys.result.tr(),
+                                  LocaleKeys.result_text.tr(),
                                   style: ThemeSetting.of(context).captionMedium,
                                 ),
                               ),
@@ -231,7 +231,7 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 18),
                         child: ButtonWidget.gradientButtonWithImage(
                             context: context,
-                            text: LocaleKeys.share.tr(),
+                            text: LocaleKeys.share_text.tr(),
                             imageString: AppAssets.heart,
                             onTap: () {
                               showModalBottomSheet(

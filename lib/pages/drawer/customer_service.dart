@@ -20,26 +20,26 @@ class _CustomerServiceState extends State<CustomerService> with SingleTickerProv
   int selectedIndex = 0;
 
   List<String> inquiryTList = [
-    LocaleKeys.all.tr(),
+    LocaleKeys.all_text.tr(),
     LocaleKeys.awaiting_response.tr(),
     LocaleKeys.response_completed.tr(),
   ];
 
   List inquiryList = [
     {
-      'title': LocaleKeys.service.tr(),
+      'title': LocaleKeys.service_text.tr(),
       'description': LocaleKeys.how_do_you_create_a_diary.tr(),
       'date': "January 1st, 1990 2:20 PM",
       'response': LocaleKeys.response_completed.tr(),
     },
     {
-      'title': LocaleKeys.service.tr(),
+      'title': LocaleKeys.service_text.tr(),
       'description': LocaleKeys.how_do_you_create_a_diary.tr(),
       'date': "January 1st, 1990 2:20 PM",
       'response': LocaleKeys.awaiting_response.tr(),
     },
     {
-      'title': LocaleKeys.service.tr(),
+      'title': LocaleKeys.service_text.tr(),
       'description': LocaleKeys.how_do_you_create_a_diary.tr(),
       'date': "January 1st, 1990 2:20 PM",
       'response': LocaleKeys.awaiting_response.tr(),
@@ -87,7 +87,7 @@ class _CustomerServiceState extends State<CustomerService> with SingleTickerProv
 
   void filterListByTitle(String title) {
     setState(() {
-      if (title == LocaleKeys.all.tr()) {
+      if (title == LocaleKeys.all_text.tr()) {
         filterList = inquiryList;
       } else {
         filterList = inquiryList.where((item) => item['response'] == title).toList();
@@ -141,7 +141,7 @@ class _CustomerServiceState extends State<CustomerService> with SingleTickerProv
                 height: 25,
               ),
               Text(
-                LocaleKeys.service.tr(),
+                LocaleKeys.service_text.tr(),
                 style: ThemeSetting.of(context).captionMedium.copyWith(
                       color: ThemeSetting.of(context).primary,
                     ),

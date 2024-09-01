@@ -191,7 +191,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
               ),
               const SizedBox(height: 40),
               Text(
-                LocaleKeys.time.tr(),
+                LocaleKeys.time_text.tr(),
                 style: ThemeSetting.of(context).captionMedium.copyWith(
                       color: ThemeSetting.of(context).primary,
                     ),
@@ -245,7 +245,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
             child: ButtonWidget.roundedButtonOrange(
               context: context,
               color: ThemeSetting.of(context).black2,
-              text: LocaleKeys.next.tr(),
+              text: LocaleKeys.next_text.tr(),
               onTap: () {
                 _pageController.nextPage(
                   duration: const Duration(milliseconds: 300),
@@ -287,7 +287,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
               ),
               const SizedBox(height: 30),
               Text(
-                LocaleKeys.name.tr(),
+                LocaleKeys.name_text.tr(),
                 style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
               ),
               const SizedBox(height: 10),
@@ -297,7 +297,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
               ),
               const SizedBox(height: 30),
               Text(
-                LocaleKeys.gender.tr(),
+                LocaleKeys.gender_text.tr(),
                 style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
               ),
               const SizedBox(height: 10),

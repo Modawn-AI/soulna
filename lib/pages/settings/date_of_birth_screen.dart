@@ -48,7 +48,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
               height: 40,
             ),
             Text(
-              LocaleKeys.time.tr(),
+              LocaleKeys.time_text.tr(),
               style: ThemeSetting.of(context).captionMedium.copyWith(
                     color: ThemeSetting.of(context).primary,
                   ),
@@ -101,7 +101,7 @@ class _DateOfBirthScreenState extends State<DateOfBirthScreen> {
                 child: ButtonWidget.roundedButtonOrange(
                   context: context,
                   color: ThemeSetting.of(context).black2,
-                  text: LocaleKeys.save.tr(),
+                  text: LocaleKeys.save_text.tr(),
                   onTap: () {
                     context.pop();
                     // SharedPreferences.getInstance();

@@ -47,7 +47,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                 height: 30,
               ),
               Text(
-                LocaleKeys.password.tr(),
+                LocaleKeys.password_text.tr(),
                 style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
               ),
               const SizedBox(
@@ -72,7 +72,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
               ),
               ButtonWidget.gradientButton(
                   context: context,
-                  text: LocaleKeys.next.tr(),
+                  text: LocaleKeys.next_text.tr(),
                   color1: ThemeSetting.of(context).black1,
                   color2: ThemeSetting.of(context).black2,
                   onTap: () {

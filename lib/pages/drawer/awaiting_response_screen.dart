@@ -25,7 +25,7 @@ class AwaitingResponseScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 5.h),
                   Text(
-                    LocaleKeys.service.tr(),
+                    LocaleKeys.service_text.tr(),
                     style: ThemeSetting.of(context).captionMedium.copyWith(
                           color: ThemeSetting.of(context).primary,
                           fontSize: 14.sp,

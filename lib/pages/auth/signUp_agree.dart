@@ -48,9 +48,9 @@ class _SignupAgreeState extends State<SignupAgree> {
   @override
   Widget build(BuildContext context) {
     bottomCheckboxes = [
-      {'text1': LocaleKeys.required.tr(), 'text2': "  ${LocaleKeys.marketing_consent.tr()}", 'textColor1': ThemeSetting.of(context).primary},
-      {'text1': LocaleKeys.required.tr(), 'text2': "  ${LocaleKeys.collect_and_use_personal_information.tr()}", 'textColor1': ThemeSetting.of(context).primary},
-      {'text1': LocaleKeys.select.tr(), 'text2': "  ${LocaleKeys.marketing_consent.tr()}", 'textColor1': ThemeSetting.of(context).grayLight},
+      {'text1': LocaleKeys.required_text.tr(), 'text2': "  ${LocaleKeys.marketing_consent.tr()}", 'textColor1': ThemeSetting.of(context).primary},
+      {'text1': LocaleKeys.required_text.tr(), 'text2': "  ${LocaleKeys.collect_and_use_personal_information.tr()}", 'textColor1': ThemeSetting.of(context).primary},
+      {'text1': LocaleKeys.select_text.tr(), 'text2': "  ${LocaleKeys.marketing_consent.tr()}", 'textColor1': ThemeSetting.of(context).grayLight},
     ];
     return Scaffold(
       backgroundColor: ThemeSetting.of(context).secondaryBackground,
@@ -134,7 +134,7 @@ class _SignupAgreeState extends State<SignupAgree> {
             if (bottomCheck[0] && bottomCheck[1] == true)
               ButtonWidget.gradientButton(
                 context: context,
-                text: LocaleKeys.next.tr(),
+                text: LocaleKeys.next_text.tr(),
                 color1: ThemeSetting.of(context).black1,
                 color2: ThemeSetting.of(context).black2,
                 onTap: () => context.pushNamed(signUpEmail),

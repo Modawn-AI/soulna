@@ -23,6 +23,8 @@ const String kNotificationTokenSPKey = "notificationTokenKey";
 
 const String kInviteUserIdSPKey = "inviteUserIdKey";
 
+const String kInstagramTokenSP = "instagram_token";
+
 // 앱 최초 실행 여부
 const String kHasRunBeforeSPKey = "hasRunBeforeKey";
 

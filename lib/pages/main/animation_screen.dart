@@ -170,7 +170,7 @@ class _AnimationScreenState extends State<AnimationScreen> with SingleTickerProv
               if (_showWaitMessage) ...[
                 const SizedBox(height: 20),
                 Text(
-                  "LocaleKeys.please_wait_a_little_longer.tr()", // loading_longer_wait
+                  LocaleKeys.loading_longer_wait.tr(),
                   style: ThemeSetting.of(context).bodyMedium.copyWith(color: Colors.white),
                 ),
               ],
@@ -221,7 +221,7 @@ class _AnimationScreenState extends State<AnimationScreen> with SingleTickerProv
           if (_showWaitMessage) ...[
             const SizedBox(height: 20),
             Text(
-              "LocaleKeys.please_wait_a_little_longer.tr()", // loading_longer_wait
+              LocaleKeys.loading_longer_wait.tr(),
               style: ThemeSetting.of(context).bodyMedium,
             ),
           ],

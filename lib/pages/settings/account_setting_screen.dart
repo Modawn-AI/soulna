@@ -30,7 +30,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  LocaleKeys.email.tr(),
+                  LocaleKeys.email_text.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(
                         color: ThemeSetting.of(context).primary,
                       ),
@@ -42,7 +42,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                 ),
                 const SizedBox(height: 40),
                 Text(
-                  LocaleKeys.password.tr(),
+                  LocaleKeys.password_text.tr(),
                   style: ThemeSetting.of(context).captionMedium.copyWith(
                         color: ThemeSetting.of(context).primary,
                       ),
@@ -80,7 +80,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                         },
                       ),
                       Text(
-                        LocaleKeys.select.tr(),
+                        LocaleKeys.select_text.tr(),
                         style: ThemeSetting.of(context).captionMedium.copyWith(
                               color: ThemeSetting.of(context).secondaryText,
                             ),
@@ -116,7 +116,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                           context: context,
                           builder: (_) => CustomDialogWidget(
                                 context: context,
-                                confirmText: LocaleKeys.sure.tr(),
+                                confirmText: LocaleKeys.sure_text.tr(),
                                 content: LocaleKeys.withdraw_delete_your_account.tr(),
                                 onConfirm: () {
                                   // context.pushNamedAndRemoveUntil('LoginScreen', (route) => false);

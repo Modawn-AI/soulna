@@ -7,6 +7,7 @@ import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/auto_biography_model.dart';
 import 'package:Soulna/models/image_model.dart';
+import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
 import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/pages/drawer/drawer_screen.dart';
@@ -22,6 +23,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/instance_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // This file defines the MainScreen widget, which is the main screen of the application.
 
@@ -54,10 +56,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   final CarouselSliderController _controller = CarouselSliderController();
 
+  bool isInstaConnected = false;
+
   @override
   void initState() {
     super.initState();
 
+    getSharedPrefData();
     if (SocialManager().isUserInfo.value) {
       isUserInfo = true;
       userInfoData = GetIt.I.get<UserInfoData>();
@@ -110,6 +115,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     user = GetIt.I.get<UserInfoData>();
   }
 
+  getSharedPrefData() async {
+    final prefs = await SharedPreferences.getInstance();
+    isInstaConnected = prefs.containsKey(kInstagramTokenSP);
+  }
+
   @override
   Widget build(BuildContext context) {
     recommendedFortune = [
@@ -132,6 +142,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         linear2: ThemeSetting.of(context).black1,
         image: isUserInfo ? "$kResouceUrl${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
         text: LocaleKeys.check_your_fortune_for_today.tr(),
+        buttonText: LocaleKeys.daily_vibe_check.tr(),
         route: dateOfBirthMain,
       ),
       ImageModel(
@@ -139,6 +150,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         linear2: ThemeSetting.of(context).linearContainer4,
         image: AppAssets.image2,
         text: LocaleKeys.create_today_journal.tr(),
+        buttonText: LocaleKeys.create_text.tr(),
         route: selectPhotoFromDevice,
       ),
       ImageModel(
@@ -146,6 +158,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         linear2: ThemeSetting.of(context).linearContainer6,
         image: AppAssets.image3,
         text: LocaleKeys.create_your_autoBiography.tr(),
+        buttonText: LocaleKeys.create_text.tr(),
         route: createAutoBiography,
       ),
     ];
@@ -166,10 +179,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           },
           child: Image.asset(
             AppAssets.logo,
-            height: 37,
-            width: 37,
+            height: 38,
+            width: 38,
           ),
         ),
+        instagramLogin: isInstaConnected,
         actionOnTap: () async {
           // dynamic response = await ApiCalls().getUserData();
 
@@ -225,7 +239,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         color: ThemeSetting.of(context).tertiary1,
                       ),
                       child: Text(
-                        Utils.getTodayMDFormatted(),
+                        Utils.getTodayMDYFormatted(),
                         style: ThemeSetting.of(context).bodyMedium.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -248,21 +262,22 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   );
                 },
                 child: CarouselSlider(
-                  items: images.asMap().entries.map((e) {
-                    ImageModel image = e.value;
-                    return GestureDetector(
-                      onTap: () {
-                        if (isUserInfo && e.key == 0) {
-                          _callApiSajuDaily();
-                        } else if (e.key == 2) {
-                          _callApiAutoBiography();
-                        } else {
-                          log('Key ${e.key}');
-                          SharedPreferencesManager.setString(key: SharedprefString.cardNumber, value: e.key.toString());
-                          context.pushNamed(image.route);
-                        }
-                      },
-                      child: Container(
+                  items: images.asMap().entries.map(
+                    (e) {
+                      ImageModel image = e.value;
+                      return GestureDetector(
+                        onTap: () {
+                          if (isUserInfo && e.key == 0) {
+                            _callApiSajuDaily();
+                          } else if (e.key == 2) {
+                            _callApiAutoBiography();
+                          } else {
+                            log('Key ${e.key}');
+                            SharedPreferencesManager.setString(key: SharedprefString.cardNumber, value: e.key.toString());
+                            context.pushNamed(image.route);
+                          }
+                        },
+                        child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           padding: const EdgeInsets.symmetric(horizontal: 00),
                           decoration: BoxDecoration(
@@ -283,7 +298,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                   Container(
                                     height: double.infinity,
                                     width: double.infinity,
-                                    padding: const EdgeInsets.only(top: 22),
                                     margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 20),
                                     decoration: BoxDecoration(
                                       border: Border(right: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), left: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), top: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5)),
@@ -291,13 +305,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                         topLeft: Radius.circular(20),
                                         topRight: Radius.circular(20),
                                       ),
-                                    ),
-                                    child: Text(
-                                      image.text,
-                                      style: ThemeSetting.of(context).titleLarge.copyWith(
-                                            color: ThemeSetting.of(context).white,
-                                          ),
-                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                   if (isUserInfo && e.key == 0)
@@ -323,6 +330,25 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                         fit: BoxFit.contain,
                                       ),
                                     ),
+                                  Positioned(
+                                    top: 16,
+                                    left: 20,
+                                    right: 20,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                                      decoration: BoxDecoration(
+                                        color: ThemeSetting.of(context).black2.withOpacity(0.3),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Text(
+                                        image.text,
+                                        style: ThemeSetting.of(context).titleMedium.copyWith(
+                                              color: ThemeSetting.of(context).white,
+                                            ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
                                   Container(
                                     height: 50,
                                     decoration: BoxDecoration(
@@ -333,7 +359,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          LocaleKeys.create.tr(),
+                                          image.buttonText,
                                           style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).common0),
                                         ),
                                         const SizedBox(
@@ -350,9 +376,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                 ],
                               ),
                             ],
-                          )),
-                    );
-                  }).toList(),
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
                   carouselController: _controller,
                   options: CarouselOptions(
                       viewportFraction: 0.8,
@@ -467,7 +495,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                 child: Row(
                                   children: [
                                     Text(
-                                      LocaleKeys.check.tr(),
+                                      LocaleKeys.check_text.tr(),
                                       style: ThemeSetting.of(context).captionLarge.copyWith(color: Colors.black),
                                     ),
                                     const SizedBox(
@@ -590,6 +618,43 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       if (response['autobiography']['2024-08-11'] != null) {
         AutoBiographyModelModel model = AutoBiographyModelModel.fromJson(response['autobiography']['2024-08-11']);
         GetIt.I.get<AutoBiographyService>().updateAutoBiography(model);
+      } else {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> _callApiJournal() async {
+    final apiCallFuture = _getJournalApiCall();
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AnimationScreen(
+          apiFuture: apiCallFuture,
+          onApiComplete: (bool result) {
+            if (result) {
+              context.pushReplacementNamed(journalScreen);
+            }
+          },
+          useLottieAnimation: true,
+        ),
+      ),
+    );
+  }
+
+  Future<bool> _getJournalApiCall() async {
+    try {
+      dynamic response = await ApiCalls().getJournalList();
+      if (response == null) {
+        throw Exception('API call failed');
+      }
+      if (response['journal']['2024-08-11'] != null) {
+        JournalModel model = JournalModel.fromJson(response['journal']['2024-08-11']);
+        GetIt.I.get<JournalService>().updateJournal(model);
       } else {
         return false;
       }

@@ -82,7 +82,7 @@ class Subscription {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(LocaleKeys.yearly.tr(), // yearly
+                        Text(LocaleKeys.yearly_text.tr(), // yearly
                             style: ThemeSetting.of(context).headlineLarge),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -121,7 +121,7 @@ class Subscription {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      LocaleKeys.monthly.tr(), // monthly
+                      LocaleKeys.monthly_text.tr(),
                       style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).black2),
                     ),
                     Text('\$11.99/month', style: ThemeSetting.of(context).headlineLarge.copyWith(color: ThemeSetting.of(context).black2)),
@@ -131,7 +131,7 @@ class Subscription {
               const SizedBox(height: 30),
               ButtonWidget.gradientButtonWithImage(
                   context: context,
-                  text: LocaleKeys.start.tr(), // start
+                  text: LocaleKeys.start_text.tr(),
                   onTap: () {
                     context.pop();
                     authCon.isPremium.value = true;

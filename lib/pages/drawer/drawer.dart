@@ -3,7 +3,7 @@ export 'customer_service.dart';
 export 'drawer_screen.dart';
 export 'notice_screen.dart';
 export 'one_to_one_screen.dart';
-export 'past_diary.dart';
+export 'past_journal.dart';
 export 'past_fortune_screen.dart';
 export 'privacy_policy_update_notice_screen.dart';
 export 'response_completed_screen.dart';

@@ -41,7 +41,7 @@ class _FindPasswordState extends State<FindPassword> {
                     child: ButtonWidget.roundedButtonOrange(
                         context: context,
                         height: 30,
-                        text: LocaleKeys.confirm.tr(),
+                        text: LocaleKeys.confirm_text.tr(),
                         onTap: () {
                           FocusScope.of(context).unfocus();
                         },

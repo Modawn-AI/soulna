@@ -6,7 +6,14 @@ class ImageModel {
   String image;
   String text;
   String route;
+  String buttonText;
 
-  ImageModel(
-      {required this.linear1, required this.linear2, required this.image,required this.text,required this.route});
+  ImageModel({
+    required this.linear1,
+    required this.linear2,
+    required this.image,
+    required this.text,
+    required this.route,
+    required this.buttonText,
+  });
 }

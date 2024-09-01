@@ -34,170 +34,153 @@ class SetTimelineBottomSheet {
             //   );
             // });
             return GestureDetector(
-                onTap: () {
-                  if (showHand == true) {
-                    setState(() {
-                      showHand = false;
-                    });
-                  }
-                },
-                onTapDown: (details) {
-                  log('details ${details}');
-                  if (showHand == true) {
-                    setState(() {
-                      showHand = false;
-                    });
-                  }
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.38,
-                  decoration: BoxDecoration(color: ThemeSetting.of(context).info, borderRadius: const BorderRadius.only(topRight: Radius.circular(18), topLeft: Radius.circular(18))),
-                  child: Stack(
-                    children: [
-                      ListView(
-                        children: [
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 18),
-                                child: Text(
-                                  LocaleKeys.set_timeline.tr(), // set_timeline
-                                  style: ThemeSetting.of(context).titleLarge.copyWith(color: ThemeSetting.of(context).white),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: ThemeSetting.of(context).black1.withOpacity(0.2)),
-                                child: Text(
-                                  '  ${selectedImages.length}/10',
-                                  style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).white),
-                                ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                showHand = false;
-                              });
-                            },
-                            child: SizedBox(
-                              height: 60,
-                              //width: 60,
-                              child: ReorderableListView(
-                                shrinkWrap: true,
-                                padding: const EdgeInsets.symmetric(horizontal: 18),
-                                scrollDirection: Axis.horizontal,
-                                onReorder: (oldIndex, newIndex) {
-                                  setState(() {
-                                    if (newIndex > oldIndex) {
-                                      newIndex -= 1;
-                                    }
-                                    final item = selectedImages.removeAt(oldIndex);
-                                    selectedImages.insert(newIndex, item);
-
-                                    final originalIndex = originalIndices.removeAt(oldIndex);
-                                    originalIndices.insert(newIndex, originalIndex);
-                                  });
-                                },
-                                children: List.generate(
-                                  selectedImages.length,
-                                  (index) {
-                                    log('selected Image ${selectedImages}');
-                                    final image = selectedImages[index];
-                                    log('selected Image ${image}');
-                                    return Container(
-                                      height: 60,
-                                      width: 60,
-                                      key: ValueKey(image),
-                                      margin: const EdgeInsets.only(right: 5, left: 2),
-                                      alignment: Alignment.topLeft,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: ThemeSetting.of(context).white),
-                                        color: ThemeSetting.of(context).common4,
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: isNetwork ? NetworkImage(image['media_url']) : FileImage(File(image.path)),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      child: Container(
-                                        height: 22,
-                                        width: 22,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-                                          color: ThemeSetting.of(context).white,
-                                        ),
-                                        child: Text("${originalIndices[index] + 1}", style: ThemeSetting.of(context).bodySmall.copyWith(color: ThemeSetting.of(context).black2)),
-                                      ),
-                                    );
-                                  },
-                                ),
+              onTap: () {
+                if (showHand == true) {
+                  setState(() {
+                    showHand = false;
+                  });
+                }
+              },
+              onTapDown: (details) {
+                log('details ${details}');
+                if (showHand == true) {
+                  setState(() {
+                    showHand = false;
+                  });
+                }
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.38,
+                decoration: BoxDecoration(color: ThemeSetting.of(context).info, borderRadius: const BorderRadius.only(topRight: Radius.circular(18), topLeft: Radius.circular(18))),
+                child: Stack(
+                  children: [
+                    ListView(
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 18),
+                              child: Text(
+                                LocaleKeys.set_timeline.tr(), // set_timeline
+                                style: ThemeSetting.of(context).titleLarge.copyWith(color: ThemeSetting.of(context).white),
                               ),
                             ),
-                          ),
-                          // const SizedBox(
-                          //   height: 50,
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(horizontal: 18),
-                          //   child: ButtonWidget.gradientButton(
-                          //     context: context,
-                          //     text:
-                          //         '${LocaleKeys.select_a_total_of.tr()}${selectedImages.length} ${LocaleKeys.photos.tr()}',
-                          //     color1: ThemeSetting.of(context).black1,
-                          //     color2: ThemeSetting.of(context).black2,
-                          //     onTap: () {
-                          //       CreateDairyBottomSheet.createDairyBottomSheet(
-                          //         context: context,
-                          //         selectedImages: selectedImages,
-                          //       );
-                          //     },
-                          //   ),
-                          // )
-                        ],
-                      ),
-                      Positioned(
-                          top: 230,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Padding(
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: ThemeSetting.of(context).black1.withOpacity(0.2)),
+                              child: Text(
+                                '  ${selectedImages.length}/10',
+                                style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).white),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              showHand = false;
+                            });
+                          },
+                          child: SizedBox(
+                            height: 60,
+                            //width: 60,
+                            child: ReorderableListView(
+                              shrinkWrap: true,
                               padding: const EdgeInsets.symmetric(horizontal: 18),
-                              child: ButtonWidget.gradientButton(
-                                context: context,
-                                text: LocaleKeys.select_total_of_photos.tr(namedArgs: {"selectedImages": selectedImages.length.toString()}),
-                                color1: ThemeSetting.of(context).black1,
-                                color2: ThemeSetting.of(context).black2,
-                                onTap: () {
-                                  CreateDairyBottomSheet.createDairyBottomSheet(
-                                    context: context,
-                                    selectedImages: selectedImages,
-                                    isNetwork: isNetwork,
-                                    screen: screen,
-                                    isInstagram: isInstagram,
+                              scrollDirection: Axis.horizontal,
+                              onReorder: (oldIndex, newIndex) {
+                                setState(() {
+                                  if (newIndex > oldIndex) {
+                                    newIndex -= 1;
+                                  }
+                                  final item = selectedImages.removeAt(oldIndex);
+                                  selectedImages.insert(newIndex, item);
+
+                                  final originalIndex = originalIndices.removeAt(oldIndex);
+                                  originalIndices.insert(newIndex, originalIndex);
+                                });
+                              },
+                              children: List.generate(
+                                selectedImages.length,
+                                (index) {
+                                  log('selected Image ${selectedImages}');
+                                  final image = selectedImages[index];
+                                  log('selected Image ${image}');
+                                  return Container(
+                                    height: 60,
+                                    width: 60,
+                                    key: ValueKey(image),
+                                    margin: const EdgeInsets.only(right: 5, left: 2),
+                                    alignment: Alignment.topLeft,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: ThemeSetting.of(context).white),
+                                      color: ThemeSetting.of(context).common4,
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: isNetwork ? NetworkImage(image['media_url']) : FileImage(File(image.path)),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    child: Container(
+                                      height: 22,
+                                      width: 22,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                                        color: ThemeSetting.of(context).white,
+                                      ),
+                                      child: Text("${originalIndices[index] + 1}", style: ThemeSetting.of(context).bodySmall.copyWith(color: ThemeSetting.of(context).black2)),
+                                    ),
                                   );
                                 },
                               ),
                             ),
-                          )),
-                      if (showHand == true)
-                        Positioned(
-                          top: 130,
-                          left: 10,
-                          child: AnimatedHandImage(),
+                          ),
                         ),
-                    ],
-                  ),
-                ));
+                      ],
+                    ),
+                    Positioned(
+                      top: 230,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
+                          child: ButtonWidget.gradientButton(
+                            context: context,
+                            text: LocaleKeys.select_total_of_photos.tr(namedArgs: {"selectedImages": selectedImages.length.toString()}),
+                            color1: ThemeSetting.of(context).black1,
+                            color2: ThemeSetting.of(context).black2,
+                            onTap: () {
+                              CreateDairyBottomSheet.createDairyBottomSheet(
+                                context: context,
+                                selectedImages: selectedImages,
+                                isNetwork: isNetwork,
+                                screen: screen,
+                                isInstagram: isInstagram,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (showHand == true)
+                      Positioned(
+                        top: 130,
+                        left: 10,
+                        child: AnimatedHandImage(),
+                      ),
+                  ],
+                ),
+              ),
+            );
           },
         );
       },

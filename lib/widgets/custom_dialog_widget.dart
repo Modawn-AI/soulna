@@ -33,9 +33,9 @@ class CustomDialogWidget extends StatelessWidget {
             Text(
               title,
               style: ThemeSetting.of(context).labelLarge.copyWith(
-                fontSize: 20.sp,
-                color: ThemeSetting.of(context).primaryText,
-              ),
+                    fontSize: 20.sp,
+                    color: ThemeSetting.of(context).primaryText,
+                  ),
             ),
             SizedBox(height: 16.h),
             Align(
@@ -44,8 +44,8 @@ class CustomDialogWidget extends StatelessWidget {
                 content,
                 textAlign: TextAlign.center,
                 style: ThemeSetting.of(context).bodyMedium.copyWith(
-                  color: ThemeSetting.of(context).primaryText,
-                ),
+                      color: ThemeSetting.of(context).primaryText,
+                    ),
               ),
             ),
             SizedBox(height: 30.h),
@@ -54,8 +54,8 @@ class CustomDialogWidget extends StatelessWidget {
                 Expanded(
                   child: ButtonWidget.roundedButtonGrey(
                     context: context,
-                    text: LocaleKeys.cancel.tr(),
-                    onTap:()=>context.pop(),
+                    text: LocaleKeys.cancel_text.tr(),
+                    onTap: () => context.pop(),
                   ),
                 ),
                 SizedBox(width: 10.w),

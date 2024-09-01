@@ -43,7 +43,7 @@ class _SignupEmailState extends State<SignupEmail> {
                 height: 30,
               ),
               Text(
-                LocaleKeys.email.tr(),
+                LocaleKeys.email_text.tr(),
                 style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
               ),
               const SizedBox(
@@ -58,7 +58,7 @@ class _SignupEmailState extends State<SignupEmail> {
                     child: ButtonWidget.roundedButtonOrange(
                         context: context,
                         height: 30,
-                        text: LocaleKeys.confirm.tr(),
+                        text: LocaleKeys.confirm_text.tr(),
                         color: ThemeSetting.of(context).black2,
                         onTap: () {
                           authCon.showVerificationCode.value = true;
@@ -95,7 +95,7 @@ class _SignupEmailState extends State<SignupEmail> {
               ),
               ButtonWidget.gradientButton(
                   context: context,
-                  text: LocaleKeys.next.tr(),
+                  text: LocaleKeys.next_text.tr(),
                   color1: ThemeSetting.of(context).black1,
                   color2: ThemeSetting.of(context).black2,
                   onTap: () {

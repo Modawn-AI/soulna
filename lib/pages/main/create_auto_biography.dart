@@ -129,7 +129,7 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
                   ),
                   containerWidget(
                       image: AppAssets.instagram,
-                      title: LocaleKeys.instagram.tr(),
+                      title: LocaleKeys.instagram_text.tr(),
                       description: LocaleKeys.link_instagram_create_data.tr(),
                       isAlbum: false,
                       showBorder: selectedValue == 'Instagram' ? true : false,
@@ -148,14 +148,14 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
                         Row(
                           children: [
                             Text(
-                              "${list.length} ${LocaleKeys.pictures.tr()}",
+                              "${list.length} ${LocaleKeys.pictures_text.tr()}",
                               style: ThemeSetting.of(context).bodyMedium,
                             ),
                             SizedBox(width: 10.w),
                             ButtonWidget.squareButtonOrange(
                               context: context,
                               height: 24.h,
-                              text: LocaleKeys.edit.tr(),
+                              text: LocaleKeys.edit_text.tr(),
                               buttonBackgroundColor: ThemeSetting.of(context).primaryText,
                               textStyle: ThemeSetting.of(context).captionMedium.copyWith(
                                     color: ThemeSetting.of(context).secondaryBackground,

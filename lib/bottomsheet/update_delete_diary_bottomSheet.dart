@@ -12,10 +12,7 @@ class UpdateDeleteDiaryBottomSheet {
           height: MediaQuery.of(context).size.height * 0.20,
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          decoration: BoxDecoration(
-              color: ThemeSetting.of(context).secondaryBackground,
-              borderRadius: const BorderRadius.horizontal(
-                  right: Radius.circular(15), left: Radius.circular(15))),
+          decoration: BoxDecoration(color: ThemeSetting.of(context).secondaryBackground, borderRadius: const BorderRadius.horizontal(right: Radius.circular(15), left: Radius.circular(15))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,14 +38,11 @@ class UpdateDeleteDiaryBottomSheet {
                     builder: (context) => CustomDialogWidget(
                       context: context,
                       title: LocaleKeys.delete_my_diary.tr(),
-                      content:
-                          LocaleKeys.would_you_like_to_delete_the_diary.tr(),
-                      confirmText: LocaleKeys.delete.tr(),
+                      content: LocaleKeys.would_you_like_to_delete_the_diary.tr(),
+                      confirmText: LocaleKeys.delete_text.tr(),
                       onConfirm: () {
                         context.pop();
-                        CustomSnackBarWidget.showSnackBar(
-                            context: context,
-                            message: LocaleKeys.it_has_been_deleted.tr());
+                        CustomSnackBarWidget.showSnackBar(context: context, message: LocaleKeys.it_has_been_deleted.tr());
                       },
                     ),
                   );

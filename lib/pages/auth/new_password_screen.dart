@@ -38,7 +38,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
               ),
               SizedBox(height: 20.h),
               Text(
-                LocaleKeys.password.tr(),
+                LocaleKeys.password_text.tr(),
                 style: ThemeSetting.of(context).captionMedium.copyWith(
                       color: ThemeSetting.of(context).primary,
                     ),

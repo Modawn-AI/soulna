@@ -2,6 +2,7 @@ import 'package:Soulna/utils/package_exporter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'package:Soulna/utils/app_assets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HeaderWidget {
   static AppBar headerBack({required BuildContext context, void Function()? onTap, Color? backgroundColor}) => AppBar(
@@ -107,6 +108,7 @@ class HeaderWidget {
   static AppBar headerWithLogoAndInstagram({
     required BuildContext context,
     required Widget title,
+    bool instagramLogin = false,
     void Function()? leadingOnTap,
     void Function()? actionOnTap,
   }) =>
@@ -132,10 +134,10 @@ class HeaderWidget {
             child: Padding(
               padding: const EdgeInsets.only(right: 15, top: 11),
               child: Image.asset(
-                AppAssets.instagram,
+                instagramLogin ? AppAssets.iconInstagramColor : AppAssets.iconInstagram,
                 height: 30,
                 width: 30,
-                color: ThemeSetting.of(context).primaryText,
+                color: instagramLogin ? null : ThemeSetting.of(context).primaryText,
               ),
             ),
           )

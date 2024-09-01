@@ -40,13 +40,13 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                     alignment: Alignment.center,
                     child: Text(
                       textAlign: TextAlign.center,
-                      "${LocaleKeys.howdy.tr()}\n${LocaleKeys.hows_you_day_going.tr()}",
+                      "${LocaleKeys.howdy_text.tr()}\n${LocaleKeys.hows_you_day_going.tr()}",
                       style: ThemeSetting.of(context).labelLarge,
                     ),
                   ),
                   const SizedBox(height: 65),
                   Text(
-                    LocaleKeys.name.tr(),
+                    LocaleKeys.name_text.tr(),
                     style: ThemeSetting.of(context).captionMedium.copyWith(
                           color: ThemeSetting.of(context).primary,
                         ),
@@ -59,7 +59,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                   ),
                   const SizedBox(height: 40),
                   Text(
-                    LocaleKeys.gender.tr(),
+                    LocaleKeys.gender_text.tr(),
                     style: ThemeSetting.of(context).captionLarge.copyWith(color: ThemeSetting.of(context).primary),
                   ),
                   const SizedBox(
@@ -74,7 +74,7 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                   ButtonWidget.roundedButtonOrange(
                       context: context,
                       color: ThemeSetting.of(context).black2,
-                      text: LocaleKeys.save.tr(),
+                      text: LocaleKeys.save_text.tr(),
                       onTap: () {
                         if (_formKey.currentState!.validate() && gender != "") {
                         } else {

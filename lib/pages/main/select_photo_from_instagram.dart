@@ -12,9 +12,8 @@ import 'package:Soulna/widgets/custom_snackbar_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:insta_login/insta_login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // This file defines the SelectPhotoScreen widget, which is used for selecting photos.
 //Main screen ->  select photo screen -> set timeline -> create dairy
@@ -35,16 +34,21 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
   final List<int> selectedIndices = [];
   final List<int> originalIndices = [];
 
+  @override
+  void initState() {
+    super.initState();
+    getMedia();
+    // getEnvLoader();
+  }
+
   getMedia() async {
     mediaList = await SharedPreferencesManager.getMediaListFromSharedPreferences(key: SharedprefString.mediaList);
     log('Media List ${mediaList.length}');
     setState(() {});
   }
 
-  @override
-  void initState() {
-    getMedia();
-    super.initState();
+  getEnvLoader() async {
+    await dotenv.load(fileName: ".env");
   }
 
   @override
@@ -166,9 +170,9 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                       MaterialPageRoute(
                         builder: (context) {
                           return InstagramView(
-                            instaAppId: '864298968952275',
-                            instaAppSecret: '4cf5ddaeed3021a49f23c422043a7b7d',
-                            redirectUrl: 'https://socialsizzle.herokuapp.com/auth/',
+                            instaAppId: dotenv.env['INSTAGRAM_APP_ID'],
+                            instaAppSecret: dotenv.env['INSTAGRAM_APP_SECRET'],
+                            redirectUrl: dotenv.env['INSTAGRAM_REDIRECT_URL'],
                             onComplete: (_token, _userid, _username) {
                               WidgetsBinding.instance.addPostFrameCallback(
                                 (timeStamp) async {
@@ -187,9 +191,6 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
                                     mediaList = value;
                                     setState(() {});
                                     await SharedPreferencesManager.saveMediaListToSharedPreferences(key: SharedprefString.mediaList, mediaList: mediaList);
-                                    // log('Media ${mediaList.length}');
-                                    // log('Media ${mediaList.first.toString()}');
-
                                     setState(() {});
                                   });
                                 },

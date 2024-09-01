@@ -77,7 +77,7 @@ class CreateDairyBottomSheet {
                 height: 16,
               ),
               Text(
-                'A total of ${selectedImages.length} photos have been selected.\nMake a diary for ${Utils.getTodayMDFormatted()}', // diary_total_select
+                LocaleKeys.diary_total_select.tr(namedArgs: {'selectedImages': selectedImages.length.toString(), 'today': Utils.getTodayMDFormatted()}),
                 textAlign: TextAlign.center,
                 style: ThemeSetting.of(context).headlineLarge,
               ),

@@ -63,6 +63,7 @@ class AppAssets {
   static const String iconEdit = 'assets/icon/icon_edit.png';
   static const String iconFortune = 'assets/icon/icon_fortune.png';
   static const String iconInstagram = 'assets/icon/icon_instagram.png';
+  static const String iconInstagramColor = 'assets/icon/icon_instagram_c.png';
   static const String iconNotice = 'assets/icon/icon_notice.png';
   static const String iconService = 'assets/icon/icon_service.png';
   static const String iconSettings = 'assets/icon/icon_settings.png';
@@ -78,6 +79,7 @@ class AppAssets {
   static const String menu = 'assets/icon/headerIcon/menu.png';
   static const String delete = 'assets/icon/headerIcon/delete.png';
   static const String instagram = 'assets/icon/headerIcon/instagram.png';
+
   static const String list = 'assets/icon/headerIcon/list.png';
   static const String more = 'assets/icon/headerIcon/more.png';
   static const String share = 'assets/icon/headerIcon/share.png';

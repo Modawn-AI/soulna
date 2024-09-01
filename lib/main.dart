@@ -15,6 +15,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -38,7 +39,7 @@ void main() async {
   clearSecureStorageOnReinstall();
   setupLocator();
 
-  //await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
   await _initializeFirebase();
 
   final socialManager = SocialManager.getInstance();
@@ -52,7 +53,7 @@ void main() async {
         ChangeNotifierProvider<TenTwelveProvider>(create: (_) => TenTwelveProvider()),
       ],
       child: EasyLocalization(
-        supportedLocales: const [Locale('en')],
+        supportedLocales: const [Locale('en'), Locale('ko')],
         path: 'assets/translations',
         assetLoader: const CodegenLoader(),
         fallbackLocale: const Locale('en'),
