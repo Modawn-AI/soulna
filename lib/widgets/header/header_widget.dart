@@ -1,8 +1,6 @@
+import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-
-import 'package:Soulna/utils/app_assets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HeaderWidget {
   static AppBar headerBack({required BuildContext context, void Function()? onTap, Color? backgroundColor}) => AppBar(
@@ -11,7 +9,7 @@ class HeaderWidget {
         elevation: 0,
         leadingWidth: 48,
         leading: GestureDetector(
-          onTap: onTap ?? () => Navigator.pop(context),
+          onTap: onTap ?? () => Navigator.pop(context, true),
           child: Padding(
             padding: const EdgeInsets.only(left: 15, top: 11),
             child: Image.asset(

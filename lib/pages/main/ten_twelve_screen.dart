@@ -40,216 +40,231 @@ class _TenTwelveScreenState extends State<TenTwelveScreen> {
         backgroundColor: Utils.getElementBgToColor(context, myElementName),
         body: SafeArea(
           bottom: false,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: ListView(
-              children: [
-                HeaderWidget.headerBack(context: context, backgroundColor: ThemeSetting.of(context).redAccent),
-                Image.asset(
-                  AppAssets.logo,
-                  height: 37,
-                  width: 37,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: Text(
-                    LocaleKeys.your_korean_zodiac.tr(),
-                    style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Text(
-                    titleString[0],
-                    style: ThemeSetting.of(context).displayMedium.copyWith(
-                          fontFamily: "ChosunGs",
-                        ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "${titleString[2]} (${titleString[1]})",
-                  style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                Column(
+          child: Stack(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ListView(
                   children: [
-                    Container(
-                      height: 260,
-                      width: 212,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Utils.getElementToColor(context, myElementName),
-                          )),
-                      padding: const EdgeInsets.all(4),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset(
-                          "$kResouceUrl${tenTwelveModel.picture}",
+                    Image.asset(
+                      AppAssets.logo,
+                      height: 37,
+                      width: 37,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Center(
+                      child: Text(
+                        LocaleKeys.your_korean_zodiac.tr(),
+                        style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Text(
+                        titleString[0],
+                        style: ThemeSetting.of(context).displayMedium.copyWith(
+                              fontFamily: "ChosunGs",
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "${titleString[2]} (${titleString[1]})",
+                      style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    Column(
+                      children: [
+                        Container(
+                          height: 260,
+                          width: 212,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Utils.getElementToColor(context, myElementName),
+                              )),
+                          padding: const EdgeInsets.all(4),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.asset(
+                              "$kResouceUrl${tenTwelveModel.picture}",
+                            ),
+                          ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: ThemeSetting.of(context).secondaryBackground,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  child: Image.asset(
+                                    AppAssets.dotLine,
+                                    color: ThemeSetting.of(context).primaryText,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 67,
+                                  padding: const EdgeInsets.all(2),
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                    image: AssetImage(
+                                      AppAssets.result,
+                                    ),
+                                  )),
+                                  child: Center(
+                                    child: Text(
+                                      LocaleKeys.result_text.tr(),
+                                      style: ThemeSetting.of(context).captionMedium,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Image.asset(
+                                    AppAssets.dotLine,
+                                    color: ThemeSetting.of(context).primaryText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const CustomDividerWidget(
+                            thickness: 1,
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          CircleAvatar(
+                            radius: 45,
+                            backgroundColor: ThemeSetting.of(context).common2,
+                            child: Image.asset(
+                              ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
+                              height: 60,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Wrap(
+                            children: List.generate(
+                              tenTwelveModel.description.text.length,
+                              (index) {
+                                return sajuDescriptionText(
+                                  context,
+                                  tenTwelveModel!.description.text[index].title,
+                                  tenTwelveModel.description.text[index].paragraph,
+                                );
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child: Wrap(
+                              spacing: 5,
+                              runSpacing: 5,
+                              alignment: WrapAlignment.center,
+                              children: List.generate(
+                                thingsList.length,
+                                (index) {
+                                  BookDetailModel detail = thingsList[index];
+                                  return Chip(
+                                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    padding: const EdgeInsets.all(2),
+                                    avatar: Text(detail.image!),
+                                    backgroundColor: ThemeSetting.of(context).secondaryBackground,
+                                    label: Text(
+                                      detail.title,
+                                      style: ThemeSetting.of(context).captionLarge,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                          color: ThemeSetting.of(context).common2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(50)),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 80,
+                          ),
+                          Text(
+                            LocaleKeys.share_my_ai_diary_to_your_friend.tr(),
+                            style: ThemeSetting.of(context).captionLarge,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child: ButtonWidget.gradientButtonWithImage(
+                                context: context,
+                                text: LocaleKeys.share_text.tr(),
+                                imageString: AppAssets.heart,
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return showLinksDialog();
+                                    },
+                                  );
+                                }),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
-                Container(
-                  decoration: BoxDecoration(
-                    color: ThemeSetting.of(context).secondaryBackground,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 30),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
-                            Flexible(
-                              child: Image.asset(
-                                AppAssets.dotLine,
-                                color: ThemeSetting.of(context).primaryText,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              height: 30,
-                              width: 67,
-                              padding: const EdgeInsets.all(2),
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                image: AssetImage(
-                                  AppAssets.result,
-                                ),
-                              )),
-                              child: Center(
-                                child: Text(
-                                  LocaleKeys.result_text.tr(),
-                                  style: ThemeSetting.of(context).captionMedium,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Flexible(
-                              child: Image.asset(
-                                AppAssets.dotLine,
-                                color: ThemeSetting.of(context).primaryText,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const CustomDividerWidget(
-                        thickness: 1,
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      CircleAvatar(
-                        radius: 45,
-                        backgroundColor: ThemeSetting.of(context).common2,
-                        child: Image.asset(
-                          ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
-                          height: 60,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Wrap(
-                        children: List.generate(
-                          tenTwelveModel.description.text.length,
-                          (index) {
-                            return sajuDescriptionText(
-                              context,
-                              tenTwelveModel!.description.text[index].title,
-                              tenTwelveModel.description.text[index].paragraph,
-                            );
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: Wrap(
-                          spacing: 5,
-                          runSpacing: 5,
-                          alignment: WrapAlignment.center,
-                          children: List.generate(
-                            thingsList.length,
-                            (index) {
-                              BookDetailModel detail = thingsList[index];
-                              return Chip(
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                padding: const EdgeInsets.all(2),
-                                avatar: Text(detail.image!),
-                                backgroundColor: ThemeSetting.of(context).secondaryBackground,
-                                label: Text(
-                                  detail.title,
-                                  style: ThemeSetting.of(context).captionLarge,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: ThemeSetting.of(context).common2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(50)),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Text(
-                        LocaleKeys.share_my_ai_diary_to_your_friend.tr(),
-                        style: ThemeSetting.of(context).captionLarge,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: ButtonWidget.gradientButtonWithImage(
-                            context: context,
-                            text: LocaleKeys.share_text.tr(),
-                            imageString: AppAssets.heart,
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return showLinksDialog();
-                                },
-                              );
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: HeaderWidget.headerBack(
+                  context: context,
+                  backgroundColor: ThemeSetting.of(context).redAccent,
+                  onTap: () {
+                    context.goNamed(mainScreen);
+                  },
                 ),
-              ],
-            ),
+              )
+            ],
           ),
         ),
       );

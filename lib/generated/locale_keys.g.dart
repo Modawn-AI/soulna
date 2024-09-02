@@ -160,6 +160,7 @@ abstract class  LocaleKeys {
   static const time_text = 'time_text';
   static const setting_text = 'setting_text';
   static const dark_mode = 'dark_mode';
+  static const language_setting = 'language_setting';
   static const logout_text = 'logout_text';
   static const you_want_to_log_out = 'you_want_to_log_out';
   static const cancel_text = 'cancel_text';

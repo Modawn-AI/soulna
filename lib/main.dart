@@ -1,14 +1,14 @@
+import 'package:Soulna/auth/firebase_user_provider.dart';
+import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/auto_biography_model.dart';
 import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
-import 'package:Soulna/provider/ten_twelve_provider.dart';
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-import 'package:Soulna/auth/firebase_user_provider.dart';
-import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/user_model.dart';
+import 'package:Soulna/provider/ten_twelve_provider.dart';
 import 'package:Soulna/utils/custom_timeago_messages.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/utils/shared_preference.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,7 +36,6 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  clearSecureStorageOnReinstall();
   setupLocator();
 
   await dotenv.load(fileName: ".env");
@@ -46,6 +45,7 @@ void main() async {
   timeago.setLocaleMessages("ko", KoCustomMessages());
   await EasyLocalization.ensureInitialized();
   ThemeSetting.initialize();
+  clearSecureStorageOnReinstall();
   runApp(
     MultiProvider(
       providers: [
@@ -102,6 +102,7 @@ void setupLocator() {
 }
 
 String? _currentJwtToken;
+
 String get currentJwtToken => _currentJwtToken ?? '';
 final jwtTokenStream = FirebaseAuth.instance.idTokenChanges().map((user) async => _currentJwtToken = await user?.getIdToken()).asBroadcastStream();
 
@@ -118,6 +119,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String authStatus = 'Unknown';
+
   // ThemeMode _themeMode = ThemeSetting.themeMode;
 
   late AppStateNotifier _appStateNotifier;
