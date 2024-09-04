@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:Soulna/models/bookDetail/book_detail_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
@@ -9,6 +11,9 @@ import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 
 //Not linked to any screen
 //Same as book details screen with some changes
@@ -25,6 +30,8 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
   List<BookDetailModel> thingsList = [];
   UserInfoData? user;
   SajuDailyService? sajuDailyService;
+
+  ScreenshotController screenshotController = ScreenshotController();
 
   @override
   void initState() {
@@ -54,6 +61,23 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
     }
   }
 
+  Future<void> _captureAndShareScreenshot() async {
+    try {
+      final Uint8List? imageBytes = await screenshotController.capture(delay: Duration(milliseconds: 10));
+      if (imageBytes != null) {
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = '${directory.path}/saju_daily_${DateTime.now().millisecondsSinceEpoch}.png';
+        final File imageFile = File(imagePath);
+        await imageFile.writeAsBytes(imageBytes);
+
+        final xFile = XFile(imagePath);
+        await Share.shareXFiles([xFile], text: 'My Saju Daily Results');
+      }
+    } catch (e) {
+      print('Error capturing or sharing screenshot: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List hashTag = sajuDailyService!.sajuDailyInfo != null ? sajuDailyService!.sajuDailyInfo.hashtag : [];
@@ -70,277 +94,283 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              color: Utils.getElementBgToColor(context, myElementName),
-              width: MediaQuery.of(context).size.width,
-              child: ListView(
-                children: [
-                  Image.asset(
-                    AppAssets.logo,
-                    height: 38,
-                    width: 38,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Center(
-                    child: Text(
-                      Utils.getTodayMDYFormatted(),
-                      style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        sajuDailyService!.sajuDailyInfo.sajuDescription.title,
-                        style: ThemeSetting.of(context).labelLarge,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Column(
+            Screenshot(
+              controller: screenshotController,
+              child: SingleChildScrollView(
+                child: Container(
+                  color: Utils.getElementBgToColor(context, myElementName),
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
                     children: [
-                      Container(
-                        height: 270,
-                        width: 222,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            width: 2,
-                            color: Utils.getElementToColor(context, myElementName),
+                      Image.asset(
+                        AppAssets.logo,
+                        height: 38,
+                        width: 38,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Center(
+                        child: Text(
+                          Utils.getTodayMDYFormatted(),
+                          style: ThemeSetting.of(context).headlineMedium.copyWith(color: ThemeSetting.of(context).primaryText),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            sajuDailyService!.sajuDailyInfo.sajuDescription.title,
+                            style: ThemeSetting.of(context).labelLarge,
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                        padding: const EdgeInsets.all(4),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            "$kResouceUrl${user!.userModel.tenTwelve.picture}",
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            height: 270,
+                            width: 222,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                width: 2,
+                                color: Utils.getElementToColor(context, myElementName),
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(4),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset(
+                                "$kResouceUrl${user!.userModel.tenTwelve.picture}",
+                              ),
+                            ),
                           ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 30,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          ),
+                          color: ThemeSetting.of(context).secondaryBackground,
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Image.asset(
+                                      AppAssets.dotLine,
+                                      color: ThemeSetting.of(context).primaryText,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    width: 67,
+                                    padding: const EdgeInsets.all(2),
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                      image: AssetImage(
+                                        AppAssets.result,
+                                      ),
+                                    )),
+                                    child: Center(
+                                      child: Text(
+                                        LocaleKeys.result_text.tr(),
+                                        style: ThemeSetting.of(context).captionMedium,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Flexible(
+                                    child: Image.asset(
+                                      AppAssets.dotLine,
+                                      color: ThemeSetting.of(context).primaryText,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Text(
+                              LocaleKeys.avoid_today.tr(),
+                              style: ThemeSetting.of(context).titleLarge,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "$elementName $animalName",
+                              style: ThemeSetting.of(context).titleLarge,
+                            ),
+                            const SizedBox(
+                              height: 11,
+                            ),
+                            Container(
+                              height: 270,
+                              width: 222,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  width: 2,
+                                  color: Utils.getElementToColor(context, elementName),
+                                ),
+                              ),
+                              padding: const EdgeInsets.all(4),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.asset(
+                                  "$kResouceUrl${sajuDailyService!.sajuDailyInfo.dailyGanji}",
+                                  height: 250,
+                                  width: 202,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 22,
+                            ),
+                            const CustomDividerWidget(
+                              thickness: 2,
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            CircleAvatar(
+                              radius: 45,
+                              backgroundColor: ThemeSetting.of(context).common2,
+                              child: Image.asset(
+                                ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
+                                height: 60,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Wrap(
+                              children: List.generate(
+                                sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList.length,
+                                (index) {
+                                  return sajuDescriptionText(
+                                    context,
+                                    sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList[index].title,
+                                    sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList[index].paragraph,
+                                  );
+                                },
+                              ),
+                            ),
+                            Wrap(
+                              spacing: 5,
+                              runSpacing: 10,
+                              children: List.generate(
+                                hashTag.length,
+                                (index) {
+                                  return ButtonWidget.roundedButtonOrange(
+                                    context: context,
+                                    text: hashTag[index],
+                                    height: 30,
+                                    color: ThemeSetting.of(context).alternate,
+                                    textStyle: ThemeSetting.of(context).captionLarge.copyWith(
+                                          color: ThemeSetting.of(context).primary,
+                                        ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Divider(
+                              color: ThemeSetting.of(context).common0,
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 18),
+                              child: Wrap(
+                                spacing: 5,
+                                runSpacing: 5,
+                                alignment: WrapAlignment.center,
+                                children: List.generate(
+                                  thingsList.length,
+                                  (index) {
+                                    BookDetailModel detail = thingsList[index];
+                                    return Chip(
+                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      padding: const EdgeInsets.all(2),
+                                      avatar: Text(detail.image!),
+                                      backgroundColor: ThemeSetting.of(context).secondaryBackground,
+                                      label: Text(
+                                        detail.title,
+                                        style: ThemeSetting.of(context).captionLarge,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                          color: ThemeSetting.of(context).common2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 100,
+                            ),
+                            Text(
+                              LocaleKeys.share_my_ai_diary_to_your_friend.tr(),
+                              style: ThemeSetting.of(context).captionLarge,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 18),
+                              child: ButtonWidget.gradientButtonWithImage(
+                                  context: context,
+                                  text: LocaleKeys.share_text.tr(),
+                                  imageString: AppAssets.heart,
+                                  onTap: () {
+                                    // showModalBottomSheet(
+                                    //   context: context,
+                                    //   builder: (context) {
+                                    //     return showLinksDialog();
+                                    //   },
+                                    // );
+                                    _captureAndShareScreenshot();
+                                  }),
+                            )
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 30,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                      color: ThemeSetting.of(context).secondaryBackground,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: Image.asset(
-                                  AppAssets.dotLine,
-                                  color: ThemeSetting.of(context).primaryText,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                height: 30,
-                                width: 67,
-                                padding: const EdgeInsets.all(2),
-                                decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                  image: AssetImage(
-                                    AppAssets.result,
-                                  ),
-                                )),
-                                child: Center(
-                                  child: Text(
-                                    LocaleKeys.result_text.tr(),
-                                    style: ThemeSetting.of(context).captionMedium,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                child: Image.asset(
-                                  AppAssets.dotLine,
-                                  color: ThemeSetting.of(context).primaryText,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          LocaleKeys.avoid_today.tr(),
-                          style: ThemeSetting.of(context).titleLarge,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "$elementName $animalName",
-                          style: ThemeSetting.of(context).titleLarge,
-                        ),
-                        const SizedBox(
-                          height: 11,
-                        ),
-                        Container(
-                          height: 270,
-                          width: 222,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              width: 2,
-                              color: Utils.getElementToColor(context, elementName),
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(4),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.asset(
-                              "$kResouceUrl${sajuDailyService!.sajuDailyInfo.dailyGanji}",
-                              height: 250,
-                              width: 202,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 22,
-                        ),
-                        const CustomDividerWidget(
-                          thickness: 2,
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        CircleAvatar(
-                          radius: 45,
-                          backgroundColor: ThemeSetting.of(context).common2,
-                          child: Image.asset(
-                            ThemeSetting.isLightTheme(context) ? AppAssets.character : AppAssets.characterDark,
-                            height: 60,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Wrap(
-                          children: List.generate(
-                            sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList.length,
-                            (index) {
-                              return sajuDescriptionText(
-                                context,
-                                sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList[index].title,
-                                sajuDailyService!.sajuDailyInfo.sajuDescription.sajuTextList[index].paragraph,
-                              );
-                            },
-                          ),
-                        ),
-                        Wrap(
-                          spacing: 5,
-                          runSpacing: 10,
-                          children: List.generate(
-                            hashTag.length,
-                            (index) {
-                              return ButtonWidget.roundedButtonOrange(
-                                context: context,
-                                text: hashTag[index],
-                                height: 30,
-                                color: ThemeSetting.of(context).alternate,
-                                textStyle: ThemeSetting.of(context).captionLarge.copyWith(
-                                      color: ThemeSetting.of(context).primary,
-                                    ),
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Divider(
-                          color: ThemeSetting.of(context).common0,
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: Wrap(
-                            spacing: 5,
-                            runSpacing: 5,
-                            alignment: WrapAlignment.center,
-                            children: List.generate(
-                              thingsList.length,
-                              (index) {
-                                BookDetailModel detail = thingsList[index];
-                                return Chip(
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                  padding: const EdgeInsets.all(2),
-                                  avatar: Text(detail.image!),
-                                  backgroundColor: ThemeSetting.of(context).secondaryBackground,
-                                  label: Text(
-                                    detail.title,
-                                    style: ThemeSetting.of(context).captionLarge,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: ThemeSetting.of(context).common2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 100,
-                        ),
-                        Text(
-                          LocaleKeys.share_my_ai_diary_to_your_friend.tr(),
-                          style: ThemeSetting.of(context).captionLarge,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: ButtonWidget.gradientButtonWithImage(
-                              context: context,
-                              text: LocaleKeys.share_text.tr(),
-                              imageString: AppAssets.heart,
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return showLinksDialog();
-                                  },
-                                );
-                              }),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
             Positioned(
