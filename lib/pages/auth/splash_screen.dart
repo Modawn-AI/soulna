@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/package_exporter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:Soulna/utils/package_exporter.dart';
-
-import 'package:flutter/services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,11 +29,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   @override
   void initState() {
-    // Timer(
-    //   const Duration(seconds: 3),
-    //   () => context.goNamed(authScreen),
-    // );
-
     super.initState();
     _controller = AnimationController(vsync: this, duration: const Duration(seconds: 2));
     _controller.forward();
@@ -72,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   Future<void> checkLogin() async {
     // SharedPreferencesManager.deleteAllKeys("SplashPage == checkLogin");
     // SocialManager().appleLogout(callback: () {});
+
     User? userInfo = await sm.tryAutoLogin();
     if (userInfo == null) {
       try {
@@ -86,6 +81,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         }
       }
     } else {
+      // if (sm.isFirst.value) {
+      //   if (Platform.isIOS) {
+      //     SocialManager().appleLogout(callback: () {});
+      //   }
+      //   sm.isFirst.value = false;
+      // }
       if (mounted) {
         String? accessToken = await userInfo.getIdToken();
         NetworkManager().saveTokens(accessToken!, accessToken);

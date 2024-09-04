@@ -109,7 +109,7 @@
   "article_2": "Article 2 (Effectiveness and Amendment of the Terms)",
   "article_2_des": "① The content of these Terms will be posted on the ModOn website or on the screens of individual services, or notified through other means, and will take effect for all of you who agree to these Terms.\\n\\n② The Company may amend these Terms within the scope not violating relevant laws. When these Terms are amended, the Company will generally announce or notify you of the changes through the service notice at least 15 days before the effective date. If the amendments include terms disadvantageous to you, the Company will notify you individually through email sent to the email address registered in your Kakao Account (or through other electronic means such as sending a message within the service or displaying a notification message within the service) at least 30 days before the effective date, or through KakaoTalk message or text message to the mobile phone number you have registered. \\n\\n③ The Company will clearly notify that if you do not express your refusal to accept the amended Terms within 7 days from the date of notice or notification pursuant to the preceding clause, it will be deemed that you have accepted the amended Terms. If you do not agree to the amended Terms, you may terminate the service agreement.",
   "privacy_policy": "Privacy Policy",
-  "loading_longer_wait": "It's taking a while to get the information. Please wait a little longer.",
+  "loading_longer_wait": "It's taking a while to get the information. \nPlease wait a little longer.",
   "wait_a_moment": "Wait a moment..",
   "the_life_story_of_hopeful_name": "The life story of hopeful {name}.",
   "my_auto_biography_keyword": "My Auto Biography's Keyword",
@@ -158,6 +158,7 @@
   "time_text": "Time",
   "setting_text": "Setting",
   "dark_mode": "Dark Mode",
+  "language_setting": "Language Setting",
   "logout_text": "Log out",
   "you_want_to_log_out": "Are you sure you want to log out?",
   "cancel_text": "Cancel"

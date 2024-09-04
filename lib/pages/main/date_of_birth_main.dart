@@ -1,18 +1,19 @@
 import 'dart:convert';
 
+import 'package:Soulna/models/ten_twelve_model.dart';
+import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/provider/ten_twelve_provider.dart';
 import 'package:Soulna/utils/app_assets.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_checkbox_widget.dart';
+import 'package:Soulna/widgets/custom_gender_button.dart';
 import 'package:Soulna/widgets/custom_ios_date_picker.dart';
+import 'package:Soulna/widgets/custom_textfield_widget.dart';
 import 'package:Soulna/widgets/custom_time_range_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
-import 'package:Soulna/widgets/custom_gender_button.dart';
-import 'package:Soulna/widgets/custom_textfield_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:Soulna/models/ten_twelve_model.dart';
 
 // This file defines the DateOfBirthMain widget, which is used for entering the date of birth.
 //Main screen -> set date of birth
@@ -85,7 +86,9 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
             if (result) {
               context.read<TenTwelveProvider>().setTenTwelveModel(_tenTwelveModel!);
 
-              context.pushReplacementNamed(tenTwelveScreen);
+              context.pushReplacementNamed(tenTwelveScreen, queryParameters: {
+                'isCreateTenTwelve': 'true',
+              });
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('API call failed. Please try again.')),
@@ -105,6 +108,8 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
     }
     if (response['status'] == 'success') {
       _tenTwelveModel = TenTwelveModel.fromJson(response['tentwelve']['ten_twelve']);
+      UserModel model = UserModel.fromJson(response['user_data']);
+      GetIt.I.get<UserInfoData>().updateUserInfo(model);
       return true;
     }
     return false;

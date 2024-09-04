@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/pages/auth/auth_screen.dart';
 import 'package:Soulna/pages/auth/find_password.dart';
@@ -14,8 +15,8 @@ import 'package:Soulna/pages/drawer/awaiting_response_screen.dart';
 import 'package:Soulna/pages/drawer/customer_service.dart';
 import 'package:Soulna/pages/drawer/notice_screen.dart';
 import 'package:Soulna/pages/drawer/one_to_one_screen.dart';
-import 'package:Soulna/pages/drawer/past_journal.dart';
 import 'package:Soulna/pages/drawer/past_fortune_screen.dart';
+import 'package:Soulna/pages/drawer/past_journal.dart';
 import 'package:Soulna/pages/drawer/privacy_policy_update_notice_screen.dart';
 import 'package:Soulna/pages/drawer/response_completed_screen.dart';
 import 'package:Soulna/pages/drawer/terms_and_conditions.dart';
@@ -30,11 +31,11 @@ import 'package:Soulna/pages/settings/account_setting_screen.dart';
 import 'package:Soulna/pages/settings/date_of_birth_screen.dart';
 import 'package:Soulna/pages/settings/settings_screen.dart';
 import 'package:Soulna/provider/base_auth_user_provider.dart';
+import 'package:Soulna/utils/serialization_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:Soulna/utils/serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 
@@ -50,6 +51,7 @@ class AppStateNotifier extends ChangeNotifier {
   }
 
   static AppStateNotifier? _instance;
+
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
 
   BaseAuthUser? initialUser;
@@ -60,13 +62,19 @@ class AppStateNotifier extends ChangeNotifier {
   bool notifyOnAuthChange = true;
 
   bool get loading => user == null || showSplashImage;
+
   bool get loggedIn => user?.loggedIn ?? false;
+
   bool get initiallyLoggedIn => initialUser?.loggedIn ?? false;
+
   bool get shouldRedirect => loggedIn && _redirectLocation != null;
 
   String getRedirectLocation() => _redirectLocation!;
+
   bool hasRedirect() => _redirectLocation != null;
+
   void setRedirectLocationIfUnset(String loc) => _redirectLocation ??= loc;
+
   void clearRedirectLocation() => _redirectLocation = null;
 
   /// Mark as not needing to notify on a sign in / out when we intend
@@ -226,7 +234,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, SocialManager socialMan
         ),
         FFRoute(
           name: tenTwelveScreen,
-          builder: (context, params) => const TenTwelveScreen(),
+          builder: (context, params) => const TenTwelveScreen(
+              // isCreateTenTwelve: params.state.uri.queryParameters['isCreateTenTwelve']!,
+              ),
         ),
         FFRoute(
           name: pastFortuneScreen,
@@ -321,9 +331,9 @@ extension _GoRouterStateExtensions on GoRouterState {
     ..addAll(extraMap);
 
   TransitionInfo get transitionInfo => TransitionInfo.appDefault();
-  // TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
-  //     ? extraMap[kTransitionInfoKey] as TransitionInfo
-  //     : TransitionInfo.appDefault();
+// TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
+//     ? extraMap[kTransitionInfoKey] as TransitionInfo
+//     : TransitionInfo.appDefault();
 }
 
 class FFParameters {

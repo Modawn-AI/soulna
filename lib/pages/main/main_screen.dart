@@ -50,6 +50,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   late UserInfoData userInfoData;
   bool isUserInfo = false;
 
+  // 첫 로딩 시 유저 정보가 없을 경우를 대비한 변수
   UserInfoData? user;
   final authCon = Get.put(AuthController());
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -112,7 +113,24 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    user = GetIt.I.get<UserInfoData>();
+    _updateUserData();
+  }
+
+  @override
+  void didUpdateWidget(covariant MainScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateUserData();
+  }
+
+  void _updateUserData() {
+    final newUser = GetIt.I.get<UserInfoData>();
+    if (newUser.userModel != null) {
+      setState(() {
+        user = newUser;
+        userInfoData = newUser;
+        isUserInfo = true;
+      });
+    }
   }
 
   getSharedPrefData() async {
@@ -330,25 +348,26 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                         fit: BoxFit.contain,
                                       ),
                                     ),
-                                  Positioned(
-                                    top: 16,
-                                    left: 20,
-                                    right: 20,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                                      decoration: BoxDecoration(
-                                        color: ThemeSetting.of(context).black2.withOpacity(0.3),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Text(
-                                        image.text,
-                                        style: ThemeSetting.of(context).titleMedium.copyWith(
-                                              color: ThemeSetting.of(context).white,
-                                            ),
-                                        textAlign: TextAlign.center,
+                                  if (e.key != 0 || isUserInfo == false)
+                                    Positioned(
+                                      top: 16,
+                                      left: 20,
+                                      right: 20,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                                        decoration: BoxDecoration(
+                                          color: ThemeSetting.of(context).black2.withOpacity(0.3),
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          image.text,
+                                          style: ThemeSetting.of(context).titleMedium.copyWith(
+                                                color: ThemeSetting.of(context).white,
+                                              ),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
                                     ),
-                                  ),
                                   Container(
                                     height: 50,
                                     decoration: BoxDecoration(

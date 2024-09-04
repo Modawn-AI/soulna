@@ -1,8 +1,9 @@
 import 'package:Soulna/manager/social_manager.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:Soulna/utils/app_assets.dart';
-import '../../utils/package_exporter.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
+
+import '../../utils/package_exporter.dart';
 
 //This file defines the AuthScreen widget, which serves as the main authentication screen for the application.
 class AuthScreen extends StatefulWidget {
@@ -45,26 +46,24 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     ));
     return Scaffold(
       backgroundColor: ThemeSetting.of(context).tertiary,
-      body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Spacer(flex: isContainerVisible ? 1 : 2),
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Spacer(flex: isContainerVisible ? 1 : 2),
+            SlideTransition(
+              position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(logoAnimationController),
+              child: Image.asset(AppAssets.logo, height: 90),
+            ),
+            if (isContainerVisible) ...[
+              const Spacer(),
               SlideTransition(
-                position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(logoAnimationController),
-                child: Image.asset(AppAssets.logo, height: 90),
+                position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(containerAnimationController),
+                child: _buildSecondaryWidget(),
               ),
-              if (isContainerVisible) ...[
-                const Spacer(),
-                SlideTransition(
-                  position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(containerAnimationController),
-                  child: _buildSecondaryWidget(),
-                ),
-              ],
             ],
-          ),
+          ],
         ),
       ),
     );
