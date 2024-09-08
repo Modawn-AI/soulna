@@ -172,8 +172,15 @@ class Utils {
 
   static String getTodayMDFormatted() {
     final now = DateTime.now();
-    final formatter = DateFormat('MMMM d', NetworkManager().locale.toString());
-    return formatter.format(now);
+    final locale = NetworkManager().locale.toString();
+    final formatter = DateFormat('MMMM d', locale);
+    var formattedDate = formatter.format(now);
+
+    if (locale == 'ko_KR' || locale == 'ko') {
+      formattedDate += '일';
+    }
+
+    return formattedDate;
   }
 
   static String getTodayMDYFormatted() {

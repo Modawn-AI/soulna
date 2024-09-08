@@ -130,7 +130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const SizedBox(
                   width: 10,
                 ),
-                Text(LocaleKeys.dark_mode.tr(), // language_setting
+                Text(LocaleKeys.language_setting.tr(), // language_setting
                     style: ThemeSetting.of(context).bodyMedium.copyWith(
                           color: ThemeSetting.of(context).primaryText,
                           fontSize: 16,

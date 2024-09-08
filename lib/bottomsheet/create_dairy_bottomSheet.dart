@@ -242,28 +242,31 @@ class CreateDairyBottomSheet {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   child: ButtonWidget.gradientButtonWithImage(
-                      context: context,
-                      text: LocaleKeys.diary_create.tr(),
-                      onTap: () async {
-                        final apiCallFuture = _mockApiCall(selectedImages, screen, isInstagram);
+                    context: context,
+                    text: LocaleKeys.diary_create.tr(),
+                    onTap: () async {
+                      final apiCallFuture = _mockApiCall(selectedImages, screen, isInstagram);
 
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AnimationScreen(
-                              apiFuture: apiCallFuture,
-                              useLottieAnimation: false,
-                              onApiComplete: (bool result) {
-                                if (result) {
-                                  context.pushReplacementNamed(screen);
-                                }
-                              },
-                            ),
+                      final result = await Navigator.push<bool>(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AnimationScreen(
+                            apiFuture: apiCallFuture,
+                            useLottieAnimation: false,
+                            onApiComplete: (bool result) {
+                              Navigator.pop(context, result);
+                            },
                           ),
-                        );
+                        ),
+                      );
 
+                      if (result == true) {
                         context.pushReplacementNamed(screen);
-                      }),
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
                 ),
               ),
               const SizedBox(

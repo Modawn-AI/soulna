@@ -158,7 +158,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       ImageModel(
         linear1: Utils.getElementToColor(context, myElementName),
         linear2: ThemeSetting.of(context).black1,
-        image: isUserInfo ? "$kResouceUrl${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
+        image: isUserInfo ? "$kCardResource3DUrl${userInfoData.userModel.tenTwelve.picture}" : AppAssets.image1,
         text: LocaleKeys.check_your_fortune_for_today.tr(),
         buttonText: LocaleKeys.daily_vibe_check.tr(),
         route: dateOfBirthMain,
@@ -291,8 +291,18 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                             _callApiAutoBiography();
                           } else {
                             log('Key ${e.key}');
-                            SharedPreferencesManager.setString(key: SharedprefString.cardNumber, value: e.key.toString());
-                            context.pushNamed(image.route);
+                            UserInfoData userData = GetIt.I.get<UserInfoData>();
+                            if (userData.userModel != null) {
+                              if (userData.userModel!.tenTwelve != null && e.key == 0) {
+                                _callApiSajuDaily();
+                              } else {
+                                SharedPreferencesManager.setString(key: SharedprefString.cardNumber, value: e.key.toString());
+                                context.pushNamed(image.route);
+                              }
+                            } else {
+                              SharedPreferencesManager.setString(key: SharedprefString.cardNumber, value: e.key.toString());
+                              context.pushNamed(image.route);
+                            }
                           }
                         },
                         child: Container(
@@ -500,7 +510,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               Flexible(
                                 flex: 2,
                                 child: Text(
-                                  LocaleKeys.natural_born_fortune.tr(),
+                                  LocaleKeys.fortune_from_the_heavens.tr(),
                                   style: ThemeSetting.of(context).bodyMedium.copyWith(
                                         fontWeight: FontWeight.w700,
                                         color: ThemeSetting.of(context).black1,

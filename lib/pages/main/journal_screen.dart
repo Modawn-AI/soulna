@@ -58,10 +58,11 @@ class _JournalScreenState extends State<JournalScreen> {
       statusBarColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
     ));
     return Scaffold(
-        backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
-        body: SafeArea(
-          child: showHeader == false ? journalList() : journalScroll(),
-        ));
+      backgroundColor: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
+      body: SafeArea(
+        child: showHeader == false ? journalList() : journalScroll(),
+      ),
+    );
   }
 
   journalList() {
@@ -295,20 +296,26 @@ class _JournalScreenState extends State<JournalScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).black1 : ThemeSetting.of(context).tertiary1),
+                    border: Border.all(
+                      color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).black1 : ThemeSetting.of(context).tertiary1,
+                      width: 2,
+                    ),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CachedNetworkImage(
-                      imageUrl: journalImage[index],
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(
-                        color: Colors.grey[300],
-                        child: const Center(child: CircularProgressIndicator()),
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        color: Colors.grey[300],
-                        child: const Center(child: Icon(Icons.error)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: journalImage[index],
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          color: Colors.grey[300],
+                          child: const Center(child: CircularProgressIndicator()),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          color: Colors.grey[300],
+                          child: const Center(child: Icon(Icons.error)),
+                        ),
                       ),
                     ),
                   ),

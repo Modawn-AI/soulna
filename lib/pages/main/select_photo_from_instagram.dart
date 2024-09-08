@@ -163,80 +163,87 @@ class _SelectPhotoFromInstagramState extends State<SelectPhotoFromInstagram> {
               )
             else
               ButtonWidget.borderButton(
-                  context: context,
-                  text: LocaleKeys.connect_with_instagram.tr(),
-                  onTap: () async {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return InstagramView(
-                            instaAppId: dotenv.env['INSTAGRAM_APP_ID'],
-                            instaAppSecret: dotenv.env['INSTAGRAM_APP_SECRET'],
-                            redirectUrl: dotenv.env['INSTAGRAM_REDIRECT_URL'],
-                            onComplete: (_token, _userid, _username) {
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                (timeStamp) async {
-                                  token = _token;
-                                  userid = _userid;
-                                  username = _username;
-                                  log('User Id ${userid}');
-                                  log('Toekn ${token}');
-
-                                  await Instaservices()
-                                      .fetchUserMedia(
-                                    userId: userid,
-                                    accessToken: token,
-                                  )
-                                      .then((value) async {
-                                    mediaList = value;
-                                    setState(() {});
-                                    await SharedPreferencesManager.saveMediaListToSharedPreferences(key: SharedprefString.mediaList, mediaList: mediaList);
-                                    setState(() {});
-                                  });
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  }),
+                context: context,
+                text: LocaleKeys.connect_with_instagram.tr(),
+                onTap: () async {
+                  await instagramLogin();
+                },
+              ),
             if (mediaList.isNotEmpty)
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ButtonWidget.roundedButtonOrange(
-                            context: context,
-                            width: MediaQuery.of(context).size.width,
-                            text: LocaleKeys.set_timeline.tr(),
-                            onTap: () {
-                              if (selectedIndices.length > 10) {
-                                CustomSnackBarWidget.showSnackBar(context: context, message: 'You can select only 10 images');
-                                // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                //   content: Text('You can select only 10 images'),
-                                // ));
-                              } else {
-                                //log('selectedIndices ${selectedIndices.length}');
-                                originalIndices.addAll(List.generate(selectedIndices.length, (index) => index));
+                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ButtonWidget.roundedButtonOrange(
+                        context: context,
+                        width: MediaQuery.of(context).size.width,
+                        text: LocaleKeys.set_timeline.tr(),
+                        onTap: () {
+                          if (selectedIndices.length > 10) {
+                            CustomSnackBarWidget.showSnackBar(context: context, message: 'You can select only 10 images');
+                            // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            //   content: Text('You can select only 10 images'),
+                            // ));
+                          } else {
+                            //log('selectedIndices ${selectedIndices.length}');
+                            originalIndices.addAll(List.generate(selectedIndices.length, (index) => index));
 
-                                SetTimelineBottomSheet.setTimeLineBottomSheet(
-                                  context: context,
-                                  selectedImages: list,
-                                  showHand: true,
-                                  isNetwork: true,
-                                  originalIndices: originalIndices,
-                                  screen: autobiographyScreen,
-                                  isInstagram: true,
-                                );
-                              }
-                            }),
+                            SetTimelineBottomSheet.setTimeLineBottomSheet(
+                              context: context,
+                              selectedImages: list,
+                              showHand: true,
+                              isNetwork: true,
+                              originalIndices: originalIndices,
+                              screen: autobiographyScreen,
+                              isInstagram: true,
+                            );
+                          }
+                        },
                       ),
-                    ],
-                  ))
+                    ),
+                  ],
+                ),
+              )
           ],
         ),
+      ),
+    );
+  }
+
+  Future<void> instagramLogin() async {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return InstagramView(
+            instaAppId: dotenv.env['INSTAGRAM_APP_ID'],
+            instaAppSecret: dotenv.env['INSTAGRAM_APP_SECRET'],
+            redirectUrl: dotenv.env['INSTAGRAM_REDIRECT_URL'],
+            onComplete: (_token, _userid, _username) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (timeStamp) async {
+                  token = _token;
+                  userid = _userid;
+                  username = _username;
+                  log('User Id ${userid}');
+                  log('Toekn ${token}');
+
+                  await Instaservices()
+                      .fetchUserMedia(
+                    userId: userid,
+                    accessToken: token,
+                  )
+                      .then((value) async {
+                    mediaList = value;
+                    setState(() {});
+                    await SharedPreferencesManager.saveMediaListToSharedPreferences(key: SharedprefString.mediaList, mediaList: mediaList);
+                    setState(() {});
+                  });
+                },
+              );
+            },
+          );
+        },
       ),
     );
   }

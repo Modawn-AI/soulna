@@ -12,7 +12,6 @@ import 'package:Soulna/widgets/custom_divider_widget.dart';
 import 'package:Soulna/widgets/header/header_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/rendering.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -34,12 +33,9 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
   UserInfoData? user;
   SajuDailyService? sajuDailyService;
 
-  int _counter = 0;
-  Uint8List _imageFile = Uint8List(0);
-  ScreenshotController screenshotController = ScreenshotController();
-
   final GlobalKey _printKey = GlobalKey();
   final ScrollController _scrollController = ScrollController();
+  bool _isCapturing = false;
 
   @override
   void initState() {
@@ -98,6 +94,25 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                 },
               ),
             ),
+            if (_isCapturing)
+              Positioned.fill(
+                child: Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: 16),
+                        Text(
+                          '캡처 중...',
+                          style: ThemeSetting.of(context).bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -109,6 +124,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
       key: _printKey,
       child: SingleChildScrollView(
         controller: _scrollController,
+        physics: _isCapturing ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
         child: Container(
           color: Utils.getElementBgToColor(context, myElementName),
           width: MediaQuery.of(context).size.width,
@@ -161,7 +177,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.asset(
-                        "$kResouceUrl${user!.userModel.tenTwelve.picture}",
+                        "$kCardResource3DUrl${user!.userModel.tenTwelve.picture}",
                       ),
                     ),
                   ),
@@ -256,7 +272,7 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.asset(
-                          "$kResouceUrl${sajuDailyService!.sajuDailyInfo.dailyGanji}",
+                          "$kCardResource3DUrl${sajuDailyService!.sajuDailyInfo.dailyGanji}",
                           height: 250,
                           width: 202,
                         ),
@@ -368,18 +384,6 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
                           text: LocaleKeys.share_text.tr(),
                           imageString: AppAssets.heart,
                           onTap: () {
-                            // screenshotController.capture(delay: Duration(milliseconds: 10)).then((capturedImage) async {
-                            //   ShowCapturedWidget(context, capturedImage!);
-                            //   final directory = await getTemporaryDirectory();
-                            //   final imagePath = '${directory.path}/screenshot.png';
-                            //   final imageFile = File(imagePath);
-                            //   await imageFile.writeAsBytes(capturedImage);
-                            //
-                            //   // Share the image
-                            //   await Share.shareXFiles([XFile(imagePath)], text: 'Check out my Saju Daily!');
-                            // }).catchError((onError) {
-                            //   print(onError);
-                            // });
                             captureAndShareScreenshot();
                             // showModalBottomSheet(
                             //   context: context,
@@ -427,66 +431,26 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
     );
   }
 
-  Future<dynamic> ShowCapturedWidget(BuildContext context, Uint8List capturedImage) {
-    return showDialog(
-      useSafeArea: false,
-      context: context,
-      builder: (context) => Scaffold(
-        appBar: AppBar(
-          title: Text("Captured widget screenshot"),
-        ),
-        body: Center(child: Image.memory(capturedImage)),
-      ),
-    );
-  }
-
-  Future<void> captureAndShareScreenshot2() async {
-    try {
-      // Request storage permission
-      var status = await Permission.storage.request();
-      if (status.isDenied) {
-        // Handle permission denied
-        return;
-      }
-
-      // Capture the screenshot
-      final capture = await screenshotController.captureFromWidget(
-        InheritedTheme.captureAll(
-          context,
-          Material(
-            child: build(context),
-          ),
-        ),
-        delay: const Duration(milliseconds: 100),
-        pixelRatio: 3.0,
-      );
-
-      // Get temporary directory
-      final directory = await getTemporaryDirectory();
-      final imagePath = '${directory.path}/screenshot.png';
-      final imageFile = File(imagePath);
-      await imageFile.writeAsBytes(capture);
-
-      // Share the image
-      await Share.shareXFiles([XFile(imagePath)], text: 'Check out my Saju Daily!');
-    } catch (e) {
-      print('Error capturing or sharing screenshot: $e');
-    }
-  }
-
   Future<void> captureAndShareScreenshot() async {
     try {
-      // Request storage permission
+      setState(() {
+        _isCapturing = true;
+      });
+
       var status = await Permission.storage.request();
       if (status.isDenied) {
-        print('Storage permission denied');
+        setState(() {
+          _isCapturing = false;
+        });
         return;
       }
 
       final RenderRepaintBoundary boundary = _printKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-      final double pixelRatio = 3.0; // Increased pixel ratio for higher quality
+      final double pixelRatio = MediaQuery.of(context).devicePixelRatio;
       final Size size = boundary.size;
       final double totalHeight = _scrollController.position.maxScrollExtent + size.height;
+      final int imageHeight = (size.height * pixelRatio).toInt();
+      final int fullImageHeight = (totalHeight * pixelRatio).toInt();
 
       List<img.Image> images = [];
       double capturedHeight = 0;
@@ -494,10 +458,10 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
       while (capturedHeight < totalHeight) {
         await _scrollController.animateTo(
           capturedHeight,
-          duration: Duration(milliseconds: 10),
+          duration: Duration(milliseconds: 100),
           curve: Curves.linear,
         );
-        await Future.delayed(Duration(milliseconds: 10)); // Wait for rendering
+        await Future.delayed(Duration(milliseconds: 300));
 
         ui.Image image = await boundary.toImage(pixelRatio: pixelRatio);
         ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
@@ -511,58 +475,67 @@ class _SajuDailyScreenState extends State<SajuDailyScreen> {
         capturedHeight += size.height;
       }
 
-      // Calculate the height of the last partial screen
-      double remainingHeight = totalHeight - (images.length - 1) * size.height;
-      int remainingPixels = (remainingHeight * pixelRatio).ceil();
-
-      // Crop the last image from the bottom
-      img.Image lastImage = images.last;
-      img.Image croppedLastImage = img.copyCrop(
-        lastImage,
-        x: 0,
-        y: lastImage.height - remainingPixels,
-        width: lastImage.width,
-        height: remainingPixels,
-      );
-
-      // Combine images
       final img.Image fullImage = img.Image(
-        width: images[0].width,
-        height: (images.length - 1) * images[0].height + remainingPixels,
+        width: (size.width * pixelRatio).toInt(),
+        height: fullImageHeight,
       );
 
       int offsetY = 0;
-      for (int i = 0; i < images.length - 1; i++) {
-        img.compositeImage(
-          fullImage,
-          images[i],
-          dstY: offsetY,
-        );
-        offsetY += images[i].height;
+      for (int i = 0; i < images.length; i++) {
+        int heightToCopy;
+
+        if (i == images.length - 1) {
+          // 마지막 이미지는 남은 높이만큼 합침
+          heightToCopy = fullImageHeight - offsetY;
+          if (heightToCopy <= 0) break;
+
+          // 마지막 이미지는 아래쪽에 맞추어 합침
+          img.Image croppedImage = img.copyCrop(
+            images[i],
+            x: 0,
+            y: images[i].height - heightToCopy, // 아래쪽에서 남은 부분만 잘라냄
+            width: images[i].width,
+            height: heightToCopy,
+          );
+
+          img.compositeImage(fullImage, croppedImage, dstY: fullImageHeight - heightToCopy); // 마지막 이미지는 아래쪽부터 붙임
+        } else {
+          // 그 외 이미지는 위에서부터 합침
+          heightToCopy = imageHeight;
+
+          img.Image croppedImage = img.copyCrop(
+            images[i],
+            x: 0,
+            y: 0,
+            width: images[i].width,
+            height: heightToCopy,
+          );
+
+          img.compositeImage(fullImage, croppedImage, dstY: offsetY);
+          offsetY += heightToCopy;
+        }
       }
 
-      // Add the cropped last image
-      img.compositeImage(
-        fullImage,
-        croppedLastImage,
-        dstY: offsetY,
-      );
-
-      // Use high quality PNG encoding
-      final pngEncoder = img.PngEncoder(level: 0); // 0 is no compression, highest quality
+      final pngEncoder = img.PngEncoder(level: 0);
       final pngBytes = pngEncoder.encode(fullImage);
 
-      // Get temporary directory
       final directory = await getTemporaryDirectory();
       final imagePath = '${directory.path}/high_quality_screenshot.png';
       final imageFile = File(imagePath);
       await imageFile.writeAsBytes(pngBytes);
 
-      // Share the image
+      setState(() {
+        _isCapturing = false;
+      });
+
       await Share.shareXFiles([XFile(imagePath)], text: 'Check out my high-quality Saju Daily!');
     } catch (e, stackTrace) {
       print('Error capturing or sharing screenshot: $e');
       print('Stack trace: $stackTrace');
+
+      setState(() {
+        _isCapturing = false;
+      });
 
       showDialog(
         context: context,

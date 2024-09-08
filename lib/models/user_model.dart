@@ -44,7 +44,14 @@ class UserInfoData {
   UserModel? _userModel;
   get userModel => _userModel;
 
+  String _imageType = '';
+  get imageType => _imageType;
+
   void updateUserInfo(UserModel userModel) {
     _userModel = userModel;
+  }
+
+  void updateImageType(String imageType) {
+    _imageType = imageType;
   }
 }

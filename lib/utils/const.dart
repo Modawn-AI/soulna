@@ -33,7 +33,9 @@ const String kOnboardingDataSPKey = "onboardingDataKey";
 const String kOnboardingAudioSPKey = "onboardingAudioKey";
 
 // folder name
-const String kResouceUrl = "assets/card_3d/";
+const String kCardResource3DUrl = "assets/card_3d/";
+const String kCardResourceKArtUrl = "assets/card_kart/";
+const String kCardResourceTorotUrl = "assets/card_torot/";
 
 // deep link
 

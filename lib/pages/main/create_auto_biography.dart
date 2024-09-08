@@ -65,6 +65,8 @@ class _CreateAutoBiographyState extends State<CreateAutoBiography> {
                     onApiComplete: (bool result) {
                       if (result) {
                         context.pushReplacementNamed(animationScreen);
+                      } else {
+                        context.pop();
                       }
                     },
                     useLottieAnimation: false,

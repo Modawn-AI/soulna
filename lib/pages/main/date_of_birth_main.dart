@@ -93,6 +93,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('API call failed. Please try again.')),
               );
+              Navigator.pop(context);
             }
           },
         ),
