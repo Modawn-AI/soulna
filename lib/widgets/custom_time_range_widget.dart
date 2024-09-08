@@ -37,9 +37,7 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
       context: context,
       initialTime: initialTime,
       initialEntryMode: TimePickerEntryMode.input,
-
       builder: (context, child) => Theme(
-
         data: Theme.of(context).copyWith(
             timePickerTheme: TimePickerThemeData(
               dialBackgroundColor: ThemeSetting.of(context).secondaryBackground,
@@ -52,12 +50,10 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
               hourMinuteColor: ThemeSetting.of(context).secondaryBackground,
               // backgroundColor: ThemeSetting.of(context).secondaryBackground,
               cancelButtonStyle: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all<Color>(
-                    ThemeSetting.of(context).primary),
+                foregroundColor: WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
               ),
               confirmButtonStyle: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all<Color>(
-                    ThemeSetting.of(context).primary),
+                foregroundColor: WidgetStateProperty.all<Color>(ThemeSetting.of(context).primary),
               ),
               inputDecorationTheme: InputDecorationTheme(
                 labelStyle: ThemeSetting.of(context).headlineLarge.copyWith(
@@ -106,13 +102,8 @@ class _CustomRangeTimePickerState extends State<CustomRangeTimePicker> {
       child: Container(
         height: 50.h,
         decoration: BoxDecoration(
-          color: ThemeSetting.isLightTheme(context)
-              ? ThemeSetting.of(context).secondaryBackground
-              : ThemeSetting.of(context).common2,
-          border: Border.all(
-              color: ThemeSetting.isLightTheme(context)
-                  ? ThemeSetting.of(context).common0
-                  : ThemeSetting.of(context).common2),
+          color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).secondaryBackground : ThemeSetting.of(context).common2,
+          border: Border.all(color: ThemeSetting.isLightTheme(context) ? ThemeSetting.of(context).common0 : ThemeSetting.of(context).common2),
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: Row(

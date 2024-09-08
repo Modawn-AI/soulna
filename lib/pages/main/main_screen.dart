@@ -90,14 +90,14 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Timer(
         const Duration(milliseconds: 400),
-        () {
-          _animationController.forward().whenComplete(
-                (authCon.isPremium.value == false)
-                    ? () {
-                        return Subscription.subscriptionWidget(context: context);
-                      }
-                    : () {},
-              );
+        () async {
+          await _animationController.forward();
+          if (!authCon.isPremium.value) {
+            bool shouldShow = await shouldShowSubscription();
+            if (shouldShow) {
+              Subscription.subscriptionWidget(context: context);
+            }
+          }
         },
       );
     });
@@ -136,6 +136,19 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   getSharedPrefData() async {
     final prefs = await SharedPreferences.getInstance();
     isInstaConnected = prefs.containsKey(kInstagramTokenSP);
+  }
+
+  Future<bool> shouldShowSubscription() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastShown = prefs.getInt('lastSubscriptionShown') ?? 0;
+    final now = DateTime.now().millisecondsSinceEpoch;
+
+    if (now - lastShown >= 7 * 24 * 60 * 60 * 1000) {
+      // 7 days in milliseconds
+      await prefs.setInt('lastSubscriptionShown', now);
+      return true;
+    }
+    return false;
   }
 
   @override

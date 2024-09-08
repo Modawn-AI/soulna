@@ -29,7 +29,7 @@ class _PastJournalState extends State<PastJournal> {
   DateTime selectedDate = DateTime.now();
   String selectedJournal = '';
   bool isLoading = false;
-  final List<NeatCleanCalendarEvent> _eventList = [];
+  final Set<NeatCleanCalendarEvent> _eventList = {};
   final Map<String, JournalModel> _journalCache = {};
 
   final authCon = Get.put(AuthController());
@@ -45,6 +45,12 @@ class _PastJournalState extends State<PastJournal> {
     super.didChangeDependencies();
     selectedDate = authCon.selectedDate.value;
     _fetchJournalData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (index == 1) {
+        // index 1이 캘린더 뷰를 나타낸다고 가정
+        _onDateSelected(DateTime.now());
+      }
+    });
   }
 
   Future<void> _fetchJournalData() async {
@@ -127,68 +133,84 @@ class _PastJournalState extends State<PastJournal> {
   }
 
   Widget pastJournal() {
-    return showData == true
-        ? ListView.separated(
-            shrinkWrap: true,
-            itemCount: _eventList.length,
-            itemBuilder: (context, index) => GestureDetector(
-              onTap: () {},
-              child: listTile(
-                date: DateFormat.yMMMMd().format(_eventList[index].startTime),
-                description: _eventList[index].summary ?? '',
-              ),
-            ),
-            padding: EdgeInsets.zero,
-            separatorBuilder: (BuildContext context, int index) {
-              return CustomDividerWidget(
-                color: ThemeSetting.of(context).common0,
-                thickness: 1,
-              );
-            },
-          )
-        : noDataFound();
+    if (!showData) {
+      return noDataFound();
+    }
+
+    // 이벤트 리스트를 날짜 기준으로 정렬 (최신 순)
+    final sortedEvents = List<NeatCleanCalendarEvent>.from(_eventList)..sort((a, b) => b.startTime.compareTo(a.startTime));
+
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: sortedEvents.length,
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () async {
+          await _onDateSelected(sortedEvents[index].startTime);
+          context.pushNamed(journalScreen);
+        },
+        child: listTile(
+          date: DateFormat.yMMMMd().format(sortedEvents[index].startTime),
+          description: sortedEvents[index].summary ?? '',
+        ),
+      ),
+      padding: EdgeInsets.zero,
+      separatorBuilder: (BuildContext context, int index) {
+        return CustomDividerWidget(
+          color: ThemeSetting.of(context).common0,
+          thickness: 1,
+        );
+      },
+    );
   }
 
-  Widget pastJournalCalenderView() => CustomCalendarWidget(
-        eventsList: _eventList,
-        initialDate: selectedDate,
-        onDateSelected: (date) {
-          _onDateSelected(date);
-        },
-        showEventWidget: Builder(
-          builder: (context) {
-            if (isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+  Widget pastJournalCalenderView() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (selectedJournal.isEmpty && !isLoading) {
+        _onDateSelected(DateTime.now());
+      }
+    });
 
-            if (selectedJournal.isEmpty) {
-              return Center(
-                child: Text(
-                  LocaleKeys.no_journal_avaliable_select.tr(),
-                  style: ThemeSetting.of(context).bodyMedium.copyWith(
-                        color: ThemeSetting.of(context).disabledText,
-                      ),
-                ),
-              );
-            }
+    return CustomCalendarWidget(
+      eventsList: _eventList.toList(),
+      initialDate: selectedDate,
+      onDateSelected: (date) {
+        _onDateSelected(date);
+      },
+      showEventWidget: Builder(
+        builder: (context) {
+          if (isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            return ListView(
-              shrinkWrap: true,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    context.pushNamed(journalScreen);
-                  },
-                  child: listTile(
-                    date: DateFormat.yMMMMd().format(selectedDate),
-                    description: selectedJournal,
-                  ),
-                ),
-              ],
+          if (selectedJournal.isEmpty) {
+            return Center(
+              child: Text(
+                LocaleKeys.no_journal_avaliable_select.tr(),
+                style: ThemeSetting.of(context).bodyMedium.copyWith(
+                      color: ThemeSetting.of(context).disabledText,
+                    ),
+              ),
             );
-          },
-        ),
-      );
+          }
+
+          return ListView(
+            shrinkWrap: true,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  context.pushNamed(journalScreen);
+                },
+                child: listTile(
+                  date: DateFormat.yMMMMd().format(selectedDate),
+                  description: selectedJournal,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
   Widget listTile({required String date, required String description}) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -215,7 +237,7 @@ class _PastJournalState extends State<PastJournal> {
   Widget noDataFound() {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Container(
@@ -302,7 +324,9 @@ class _PastJournalState extends State<PastJournal> {
     );
   }
 
-  void _onDateSelected(DateTime date) async {
+  Future<void> _onDateSelected(DateTime date) async {
+    if (!mounted) return;
+
     setState(() {
       selectedDate = date;
       isLoading = true;
@@ -325,23 +349,22 @@ class _PastJournalState extends State<PastJournal> {
           JournalModel model = JournalModel.fromJson(response['data']['journal_entry']);
           _journalCache[formattedDate] = model;
           GetIt.I.get<JournalService>().updateJournal(model);
+
           setState(() {
             selectedJournal = model.title;
             isLoading = false;
-          });
 
-          if (!_eventList.any((event) => event.startTime == date)) {
-            setState(() {
-              _eventList.add(
-                NeatCleanCalendarEvent(
-                  formattedDate,
-                  startTime: date,
-                  endTime: date,
-                  color: ThemeSetting.of(context).primary,
-                ),
-              );
-            });
-          }
+            // 기존 이벤트 제거 후 새 이벤트 추가
+            _eventList.removeWhere((event) => event.startTime.year == date.year && event.startTime.month == date.month && event.startTime.day == date.day);
+            _eventList.add(
+              NeatCleanCalendarEvent(
+                model.title,
+                startTime: date,
+                endTime: date,
+                color: ThemeSetting.of(context).primary,
+              ),
+            );
+          });
         } else {
           setState(() {
             selectedJournal = LocaleKeys.no_journal_avaliable_this.tr();

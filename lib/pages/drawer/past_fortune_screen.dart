@@ -27,7 +27,7 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
   DateTime selectedDate = DateTime.now();
   String selectedFortune = '';
   bool isLoading = false;
-  final List<NeatCleanCalendarEvent> _eventList = [];
+  final Set<NeatCleanCalendarEvent> _eventList = {};
   final Map<String, SajuDailyModel> _fortuneCache = {};
 
   final authCon = Get.put(AuthController());
@@ -43,6 +43,13 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
     super.didChangeDependencies();
     selectedDate = authCon.selectedDate.value;
     _fetchSajuData();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (index == 1) {
+        // index 1이 캘린더 뷰를 나타낸다고 가정
+        _onDateSelected(DateTime.now());
+      }
+    });
   }
 
   Future<void> _fetchSajuData() async {
@@ -125,65 +132,85 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
   }
 
   Widget pastFortune() {
-    return showData == true
-        ? ListView.separated(
-            shrinkWrap: true,
-            itemCount: _eventList.length,
-            itemBuilder: (context, index) => listTile(
-              date: DateFormat.yMMMMd().format(_eventList[index].startTime),
-              description: _eventList[index].summary,
-            ),
-            padding: EdgeInsets.zero,
-            separatorBuilder: (BuildContext context, int index) {
-              return CustomDividerWidget(
-                color: ThemeSetting.of(context).common0,
-                thickness: 1,
-              );
-            },
-          )
-        : noDataFound();
+    if (!showData) {
+      return noDataFound();
+    }
+
+    // 이벤트 리스트를 날짜 기준으로 정렬 (최신 순)
+    final sortedEvents = List<NeatCleanCalendarEvent>.from(_eventList)..sort((a, b) => b.startTime.compareTo(a.startTime));
+
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: sortedEvents.length,
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () {
+          _onDateSelected(sortedEvents[index].startTime);
+          context.pushNamed(sajuDailyScreen);
+        },
+        child: listTile(
+          date: DateFormat.yMMMMd().format(sortedEvents[index].startTime),
+          description: sortedEvents[index].summary,
+        ),
+      ),
+      padding: EdgeInsets.zero,
+      separatorBuilder: (BuildContext context, int index) {
+        return CustomDividerWidget(
+          color: ThemeSetting.of(context).common0,
+          thickness: 1,
+        );
+      },
+    );
   }
 
-  Widget pastFortuneCalenderView() => CustomCalendarWidget(
-        eventsList: _eventList,
-        initialDate: selectedDate,
-        onDateSelected: (date) {
-          _onDateSelected(date);
-        },
-        showEventWidget: Builder(
-          builder: (context) {
-            if (isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+  Widget pastFortuneCalenderView() {
+    // 컴포넌트가 처음 생성될 때 오늘 날짜에 대한 데이터를 로드
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (selectedFortune.isEmpty && !isLoading) {
+        _onDateSelected(DateTime.now());
+      }
+    });
 
-            if (selectedFortune.isEmpty) {
-              return Center(
-                child: Text(
-                  StringTranslateExtension(LocaleKeys.no_fortune_select_date).tr(), //
-                  style: ThemeSetting.of(context).bodyMedium.copyWith(
-                        color: ThemeSetting.of(context).disabledText,
-                      ),
-                ),
-              );
-            }
+    return CustomCalendarWidget(
+      eventsList: _eventList.toList(),
+      initialDate: selectedDate,
+      onDateSelected: (date) {
+        _onDateSelected(date);
+      },
+      showEventWidget: Builder(
+        builder: (context) {
+          if (isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            return ListView(
-              shrinkWrap: true,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    context.pushNamed(sajuDailyScreen);
-                  },
-                  child: listTile(
-                    date: DateFormat.yMMMMd().format(selectedDate),
-                    description: selectedFortune,
-                  ),
-                ),
-              ],
+          if (selectedFortune.isEmpty) {
+            return Center(
+              child: Text(
+                StringTranslateExtension(LocaleKeys.no_fortune_select_date).tr(),
+                style: ThemeSetting.of(context).bodyMedium.copyWith(
+                      color: ThemeSetting.of(context).disabledText,
+                    ),
+              ),
             );
-          },
-        ),
-      );
+          }
+
+          return ListView(
+            shrinkWrap: true,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  context.pushNamed(sajuDailyScreen);
+                },
+                child: listTile(
+                  date: DateFormat.yMMMMd().format(selectedDate),
+                  description: selectedFortune,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
   Widget listTile({required String date, required String description}) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -298,6 +325,8 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
   }
 
   void _onDateSelected(DateTime date) async {
+    if (!mounted) return;
+
     setState(() {
       selectedDate = date;
       isLoading = true;
@@ -306,51 +335,43 @@ class _PastFortuneScreenState extends State<PastFortuneScreen> {
 
     String formattedDate = DateFormat('yyyy-MM-dd').format(date);
 
-    if (_fortuneCache.containsKey(formattedDate)) {
-      // 캐시된 데이터가 있으면 사용
+    try {
+      SajuDailyModel model;
+      if (_fortuneCache.containsKey(formattedDate)) {
+        model = _fortuneCache[formattedDate]!;
+      } else {
+        dynamic response = await ApiCalls().getDateToSaju(formattedDate);
+        if (response != null && response['status'] == 'success') {
+          model = SajuDailyModel.fromJson(response['data']['daily_entry']);
+          _fortuneCache[formattedDate] = model;
+          GetIt.I.get<SajuDailyService>().setSajuDailyInfo(model);
+        } else {
+          throw Exception('API 응답이 성공이 아닙니다.');
+        }
+      }
+
+      if (!mounted) return;
+
       setState(() {
-        selectedFortune = _fortuneCache[formattedDate]!.sajuDescription.title;
+        selectedFortune = model.sajuDescription.title;
+        isLoading = false;
+
+        // 기존 이벤트 제거 후 새 이벤트 추가
+        _eventList.removeWhere((event) => event.startTime.year == date.year && event.startTime.month == date.month && event.startTime.day == date.day);
+        _eventList.add(NeatCleanCalendarEvent(
+          model.sajuDescription.title,
+          startTime: date,
+          endTime: date,
+          color: ThemeSetting.of(context).primary,
+        ));
+      });
+    } catch (e) {
+      debugPrint('Error fetching fortune: $e');
+      if (!mounted) return;
+      setState(() {
+        selectedFortune = 'Error fetching fortune. Please try again.';
         isLoading = false;
       });
-    } else {
-      try {
-        dynamic response = await ApiCalls().getDateToSaju(formattedDate);
-
-        if (response != null && response['status'] == 'success') {
-          SajuDailyModel model = SajuDailyModel.fromJson(response['data']['daily_entry']);
-          _fortuneCache[formattedDate] = model; // 캐시에 저장
-          GetIt.I.get<SajuDailyService>().setSajuDailyInfo(model);
-          setState(() {
-            selectedFortune = model.sajuDescription.title;
-            isLoading = false;
-          });
-
-          // _eventList 업데이트
-          if (!_eventList.any((event) => event.startTime == date)) {
-            setState(() {
-              _eventList.add(
-                NeatCleanCalendarEvent(
-                  formattedDate,
-                  startTime: date,
-                  endTime: date,
-                  color: ThemeSetting.of(context).primary,
-                ),
-              );
-            });
-          }
-        } else {
-          setState(() {
-            selectedFortune = 'No fortune available for this date.'; // no_fortune_available_this
-            isLoading = false;
-          });
-        }
-      } catch (e) {
-        debugPrint('Error fetching fortune: $e');
-        setState(() {
-          selectedFortune = 'Error fetching fortune. Please try again.'; // error_fetching_fortune
-          isLoading = false;
-        });
-      }
     }
   }
 }

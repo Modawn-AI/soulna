@@ -266,10 +266,16 @@ class NetworkManager {
       queuedRequest.requestFunction().then((response) {
         queuedRequest.completer.complete(response.data);
       }).catchError((error) {
-        if (error is DioException && error.response?.statusCode == 401) {
-          _handleTokenExpiration(queuedRequest);
-        } else {
-          queuedRequest.completer.completeError(_handleError(error));
+        try {
+          final customError = _handleError(error);
+          if (customError is CustomException && customError.code == 'SERVER_ERROR') {
+            // Handle 500 error specifically if needed
+            debugPrint('Server error occurred: ${customError.message}');
+          }
+          queuedRequest.completer.completeError(customError);
+        } catch (e) {
+          debugPrint('Error in error handling: $e');
+          queuedRequest.completer.completeError(CustomException('An unexpected error occurred', 'UNEXPECTED_ERROR'));
         }
       });
     }
@@ -291,15 +297,26 @@ class NetworkManager {
     debugPrint('NetworkManager Error: $error');
 
     if (error is DioException) {
-      final errorData = error.response?.data;
+      final response = error.response;
+      final statusCode = response?.statusCode;
+      final errorData = response?.data;
+
+      if (statusCode == 500) {
+        return CustomException('Server error occurred', 'SERVER_ERROR');
+      }
+
       if (errorData != null && errorData is Map<String, dynamic>) {
-        final message = errorData['message'];
-        final code = errorData['code'] ?? "UNKNOWN";
+        final message = errorData['message'] as String? ?? 'Unknown error occurred';
+        final code = errorData['code'] as String? ?? 'UNKNOWN_ERROR';
         return CustomException(message, code);
       }
+
+      // Handle case where errorData is not a Map or is null
+      return CustomException(error.message ?? 'Network error occurred', 'NETWORK_ERROR');
     }
 
-    return error;
+    // If it's not a DioException, return a generic CustomException
+    return CustomException('An unexpected error occurred', 'UNEXPECTED_ERROR');
   }
 
   Future<void> _ensureTokenIsValid() async {

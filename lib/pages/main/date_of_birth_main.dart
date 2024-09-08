@@ -76,7 +76,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
   Future<void> _callApiAndNavigate() async {
     final apiCallFuture = _mockApiCall();
 
-    await Navigator.push(
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AnimationScreen(
@@ -102,18 +102,27 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
   }
 
   Future<bool> _mockApiCall() async {
-    String userJson = generateUserJson();
-    dynamic response = await ApiCalls().tenTwelveCall(info: userJson);
-    if (response == null) {
+    try {
+      String userJson = generateUserJson();
+      dynamic response = await ApiCalls().tenTwelveCall(info: userJson);
+      if (response == null) {
+        return false;
+      }
+      if (response['status'] == 'success') {
+        _tenTwelveModel = TenTwelveModel.fromJson(response['tentwelve']['ten_twelve']);
+        UserModel model = UserModel.fromJson(response['user_data']);
+        GetIt.I.get<UserInfoData>().updateUserInfo(model);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      if (e is CustomException) {
+        debugPrint('CustomException in _mockApiCall: ${e.message}');
+      } else {
+        debugPrint('Unexpected error in _mockApiCall: $e');
+      }
       return false;
     }
-    if (response['status'] == 'success') {
-      _tenTwelveModel = TenTwelveModel.fromJson(response['tentwelve']['ten_twelve']);
-      UserModel model = UserModel.fromJson(response['user_data']);
-      GetIt.I.get<UserInfoData>().updateUserInfo(model);
-      return true;
-    }
-    return false;
   }
 
   void _handleDateSelected(DateTime date) {
@@ -185,7 +194,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
                   const SizedBox(width: 10),
                   Flexible(
                     child: Text(
-                      LocaleKeys.automatically_creates_journal.tr(),
+                      LocaleKeys.create_tentwelve_desc.tr(),
                       style: ThemeSetting.of(context).captionMedium,
                     ),
                   )
@@ -322,7 +331,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
             context: context,
             width: MediaQuery.of(context).size.width,
             color: ThemeSetting.of(context).black2,
-            text: LocaleKeys.daily_vibe_check.tr(),
+            text: LocaleKeys.create_tentwelve_button.tr(),
             onTap: _callApiAndNavigate,
           ),
         ),
