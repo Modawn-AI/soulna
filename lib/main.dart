@@ -53,7 +53,7 @@ void main() async {
         ChangeNotifierProvider<TenTwelveProvider>(create: (_) => TenTwelveProvider()),
       ],
       child: EasyLocalization(
-        supportedLocales: const [Locale('en'), Locale('ko')],
+        supportedLocales: const [Locale('en'), Locale('ko'), Locale('mn')],
         path: 'assets/translations',
         assetLoader: const CodegenLoader(),
         fallbackLocale: const Locale('en'),

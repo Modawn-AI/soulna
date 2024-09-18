@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:Soulna/models/auto_biography_model.dart';
 import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/utils/app_assets.dart';
@@ -348,8 +349,8 @@ class CreateDairyBottomSheet {
             return false;
           }
           if (response['status'] == 'success') {
-            JournalModel model = JournalModel.fromJson(response['autobiography']);
-            GetIt.I.get<JournalService>().updateJournal(model);
+            AutoBiographyModelModel model = AutoBiographyModelModel.fromJson(response['autobiography']);
+            GetIt.I.get<AutoBiographyService>().updateAutoBiography(model);
           }
           return true;
         } else {
@@ -360,7 +361,7 @@ class CreateDairyBottomSheet {
           }
           if (response['status'] == 'success') {
             JournalModel model = JournalModel.fromJson(response['journal']);
-            GetIt.I.get<JournalService>().updateJournal(model);
+            GetIt.I.get<JournalService>().updateJournal(model, DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
           }
         }
 

@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:Soulna/bottomsheet/subscription_bottomsheet.dart';
 import 'package:Soulna/controller/auth_controller.dart';
 import 'package:Soulna/manager/social_manager.dart';
 import 'package:Soulna/models/auto_biography_model.dart';
 import 'package:Soulna/models/image_model.dart';
-import 'package:Soulna/models/journal_model.dart';
 import 'package:Soulna/models/saju_daily_model.dart';
 import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/pages/drawer/drawer_screen.dart';
@@ -25,7 +24,7 @@ import 'package:flutter/services.dart';
 import 'package:get/instance_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// This file defines the MainScreen widget, which is the main screen of the application.
+// 이 파일은 애플리케이션의 메인 화면인 MainScreen 위젯을 정의합니다.
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -59,9 +58,17 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   bool isInstaConnected = false;
 
+  final random = Random();
+
+  // **추가된 부분: 세 번째 아이템에 사용할 랜덤 이미지 경로**
+  late String randomImageForThirdItem;
+
   @override
   void initState() {
     super.initState();
+
+    // **추가된 부분: 랜덤 이미지 초기화**
+    randomImageForThirdItem = "assets/images/picture_${random.nextInt(8) + 1}.png";
 
     getSharedPrefData();
     if (SocialManager().isUserInfo.value) {
@@ -144,7 +151,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     final now = DateTime.now().millisecondsSinceEpoch;
 
     if (now - lastShown >= 7 * 24 * 60 * 60 * 1000) {
-      // 7 days in milliseconds
+      // 7일을 밀리초로 계산
       await prefs.setInt('lastSubscriptionShown', now);
       return true;
     }
@@ -187,7 +194,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       ImageModel(
         linear1: ThemeSetting.of(context).linearContainer5,
         linear2: ThemeSetting.of(context).linearContainer6,
-        image: AppAssets.image3,
+        // **변경된 부분: 랜덤 이미지를 사용**
+        image: randomImageForThirdItem,
         text: LocaleKeys.create_your_autoBiography.tr(),
         buttonText: LocaleKeys.create_text.tr(),
         route: createAutoBiography,
@@ -216,12 +224,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         ),
         instagramLogin: isInstaConnected,
         actionOnTap: () async {
-          // dynamic response = await ApiCalls().getUserData();
-
-          // if(response['status'] == 'success') {
-          //   SajuDailyInfo model = SajuDailyInfo.fromJson(response['daily']);
-          //   print(model);
-          // }
+          // 동적 응답 처리 부분 주석 처리됨
         },
         leadingOnTap: () => scaffoldKey.currentState?.openDrawer(),
       ),
@@ -303,7 +306,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           } else if (e.key == 2) {
                             _callApiAutoBiography();
                           } else {
-                            log('Key ${e.key}');
+                            debugPrint('Key ${e.key}');
                             UserInfoData userData = GetIt.I.get<UserInfoData>();
                             if (userData.userModel != null) {
                               if (userData.userModel!.tenTwelve != null && e.key == 0) {
@@ -341,14 +344,32 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                     width: double.infinity,
                                     margin: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 20),
                                     decoration: BoxDecoration(
-                                      border: Border(right: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), left: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5), top: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5)),
+                                      border: Border(
+                                        right: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5),
+                                        left: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5),
+                                        top: BorderSide(color: ThemeSetting.of(context).common0, width: 1.5),
+                                      ),
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(20),
                                         topRight: Radius.circular(20),
                                       ),
                                     ),
                                   ),
-                                  if (isUserInfo && e.key == 0)
+                                  // **변경된 부분: 세 번째 아이템에만 라운드 적용 및 랜덤 이미지 사용**
+                                  if (e.key == 2) // 세 번째 아이템일 경우
+                                    Positioned.fill(
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 22),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(20), // 라운드 코너 적용
+                                          child: Image.asset(
+                                            image.image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  else if (isUserInfo && e.key == 0)
                                     Positioned.fill(
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(10, 10, 10, 22),
@@ -425,26 +446,27 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   ).toList(),
                   carouselController: _controller,
                   options: CarouselOptions(
-                      viewportFraction: 0.8,
-                      disableCenter: true,
-                      enableInfiniteScroll: false,
-                      reverse: false,
-                      padEnds: true,
-                      aspectRatio: 0.7,
-                      height: 500,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          if (index > previousIndex) {
-                            _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value + 0.25).animate(_logoAniCon);
-                          } else {
-                            _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value - 0.25).animate(_logoAniCon);
-                          }
-                          _logoAniCon.forward(from: 0);
-                          previousIndex = index;
+                    viewportFraction: 0.8,
+                    disableCenter: true,
+                    enableInfiniteScroll: false,
+                    reverse: false,
+                    padEnds: true,
+                    aspectRatio: 0.7,
+                    height: 500,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        if (index > previousIndex) {
+                          _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value + 0.25).animate(_logoAniCon);
+                        } else {
+                          _logoAnimation = Tween<double>(begin: _logoAnimation.value, end: _logoAnimation.value - 0.25).animate(_logoAniCon);
+                        }
+                        _logoAniCon.forward(from: 0);
+                        previousIndex = index;
 
-                          currentIndex = index;
-                        });
-                      }),
+                        currentIndex = index;
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
@@ -465,17 +487,17 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: images.asMap().entries.map((entry) {
                     return GestureDetector(
-                      //onTap: () => _controller.animateToPage(entry.key),
+                      // onTap: () => _controller.animateToPage(entry.key),
                       child: Container(
-                          width: 90,
-                          height: 4,
-                          // margin: const EdgeInsets .symmetric(
-                          //     vertical: 8.0, horizontal: 4.0),
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.horizontal(
-                                left: Radius.circular(3),
-                              ),
-                              color: currentIndex == entry.key ? ThemeSetting.of(context).primary : ThemeSetting.of(context).common1)),
+                        width: 90,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.horizontal(
+                            left: Radius.circular(3),
+                          ),
+                          color: currentIndex == entry.key ? ThemeSetting.of(context).primary : ThemeSetting.of(context).common1,
+                        ),
+                      ),
                     );
                   }).toList(),
                 ),
@@ -616,7 +638,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     try {
       dynamic response = await ApiCalls().sajuDailyCall();
       if (response == null) {
-        throw Exception('API call failed');
+        throw Exception('API 호출 실패');
       }
       if (response['status'] == 'success') {
         SajuDailyModel model = SajuDailyModel.fromJson(response['daily']);
@@ -655,48 +677,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     try {
       dynamic response = await ApiCalls().getAutoBiographyData();
       if (response == null) {
-        throw Exception('API call failed');
+        throw Exception('API 호출 실패');
       }
       if (response['autobiography']['2024-08-11'] != null) {
         AutoBiographyModelModel model = AutoBiographyModelModel.fromJson(response['autobiography']['2024-08-11']);
         GetIt.I.get<AutoBiographyService>().updateAutoBiography(model);
-      } else {
-        return false;
-      }
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  Future<void> _callApiJournal() async {
-    final apiCallFuture = _getJournalApiCall();
-
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AnimationScreen(
-          apiFuture: apiCallFuture,
-          onApiComplete: (bool result) {
-            if (result) {
-              context.pushReplacementNamed(journalScreen);
-            }
-          },
-          useLottieAnimation: true,
-        ),
-      ),
-    );
-  }
-
-  Future<bool> _getJournalApiCall() async {
-    try {
-      dynamic response = await ApiCalls().getJournalList();
-      if (response == null) {
-        throw Exception('API call failed');
-      }
-      if (response['journal']['2024-08-11'] != null) {
-        JournalModel model = JournalModel.fromJson(response['journal']['2024-08-11']);
-        GetIt.I.get<JournalService>().updateJournal(model);
       } else {
         return false;
       }

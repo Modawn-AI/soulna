@@ -41,8 +41,10 @@ class ContentItem {
 class JournalService {
   JournalModel? _journalModel;
   get journalModel => _journalModel;
+  DateTime? _selectedDate;
+  get selectedDate => _selectedDate;
 
-  void updateJournal(JournalModel journalModel) {
+  void updateJournal(JournalModel journalModel, DateTime selectedDate) {
     _journalModel = journalModel;
   }
 }

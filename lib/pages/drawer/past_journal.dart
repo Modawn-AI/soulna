@@ -338,6 +338,7 @@ class _PastJournalState extends State<PastJournal> {
     if (_journalCache.containsKey(formattedDate)) {
       // 캐시된 데이터가 있으면 사용
       setState(() {
+        GetIt.I.get<JournalService>().updateJournal(_journalCache[formattedDate]!, selectedDate);
         selectedJournal = _journalCache[formattedDate]!.title;
         isLoading = false;
       });
@@ -348,7 +349,7 @@ class _PastJournalState extends State<PastJournal> {
         if (response['status'] == 'success' && response['data']['journal_entry'] != null) {
           JournalModel model = JournalModel.fromJson(response['data']['journal_entry']);
           _journalCache[formattedDate] = model;
-          GetIt.I.get<JournalService>().updateJournal(model);
+          GetIt.I.get<JournalService>().updateJournal(model, selectedDate);
 
           setState(() {
             selectedJournal = model.title;

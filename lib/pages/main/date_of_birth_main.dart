@@ -5,6 +5,7 @@ import 'package:Soulna/models/user_model.dart';
 import 'package:Soulna/pages/main/animation_screen.dart';
 import 'package:Soulna/provider/ten_twelve_provider.dart';
 import 'package:Soulna/utils/app_assets.dart';
+import 'package:Soulna/utils/locale.dart';
 import 'package:Soulna/utils/package_exporter.dart';
 import 'package:Soulna/widgets/button/button_widget.dart';
 import 'package:Soulna/widgets/custom_checkbox_widget.dart';
@@ -67,7 +68,7 @@ class _DateOfBirthMainState extends State<DateOfBirthMain> {
       "birthdate": _birthdateController.text,
       "time_of_birth": timeOfBirth,
       "gender": selectedGender,
-      "language": "Korean",
+      "language": CustomLocale.getLanguageCodeToName(context.locale.languageCode),
     };
 
     return jsonEncode(userMap);
